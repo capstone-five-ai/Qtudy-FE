@@ -1,12 +1,21 @@
 import { DefaultTheme } from 'styled-components';
 
-// 예시. 디자인에 따라 변경 필요
 const colors = {
-  header: '#1565C0',
-  primary: '#2196F3',
-  white: '#ffffff',
-  black: '#000000',
-  border: '#E5E5E5',
+  /** Brand Colors */
+  mainMint: '#3ED7CD',
+  mainMintDark: '#36BDB4',
+  mainMintLight: '#FBFFFF',
+
+  /** Grayscale Colors */
+  grayScale01: '#000000',
+  grayScale02: '#424242',
+  grayScale03: '#757575',
+  grayScale04: '#9e9e9e',
+  grayScale05: '#bdbdbd',
+  grayScale06: '#e0e0e0',
+  grayScale07: '#fafafa',
+  grayScale08: '#fcfcfc',
+  grayScale09: '#ffffff',
 };
 
 const fontSize = {
