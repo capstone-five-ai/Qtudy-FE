@@ -16,6 +16,10 @@ const colors = {
   grayScale07: '#fafafa',
   grayScale08: '#fcfcfc',
   grayScale09: '#ffffff',
+
+  /** Kakao Colors */
+  kakaoYellow: '#FEE500',
+  kakaoBlack: '#000000',
 };
 
 const fontSize = {
