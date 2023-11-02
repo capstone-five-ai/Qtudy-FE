@@ -11,10 +11,20 @@ const Container = styled.div`
   .menu-button {
     padding: 12px 2px;
     color: ${(props) => props.theme.colors.grayScale03};
+
+    &:hover {
+      color: ${(props) => props.theme.colors.grayScale02};
+      border-bottom: solid 2px;
+      border-color: ${(props) => props.theme.colors.mainMint};
+    }
   }
 
   .logout-button {
     color: ${(props) => props.theme.colors.grayScale04};
+
+    &:hover {
+      color: ${(props) => props.theme.colors.grayScale02};
+    }
   }
 
   .login-button {
