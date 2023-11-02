@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Wrapper from '../Wrapper/Wrapper';
+import MainWrapper from '../Wrapper/MainWrapper';
 import MenuBar from './MenuBar';
 
 const Container = styled.div`
@@ -12,12 +12,12 @@ const Container = styled.div`
 
 function Header() {
   return (
-    <Wrapper>
+    <MainWrapper>
       <Container>
         <img alt="main-logo" src="/src/assets/logo/logo_main.svg" width="88px" />
         <MenuBar />
       </Container>
-    </Wrapper>
+    </MainWrapper>
   );
 }
 

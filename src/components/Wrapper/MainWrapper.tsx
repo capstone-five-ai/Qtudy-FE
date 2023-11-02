@@ -5,12 +5,12 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
-interface WrapperProps {
+interface MainWrapperProps {
   children: React.ReactNode;
 }
 
-function Wrapper({ children }: WrapperProps) {
+function MainWrapper({ children }: MainWrapperProps) {
   return <Container>{children}</Container>;
 }
 
-export default Wrapper;
+export default MainWrapper;
