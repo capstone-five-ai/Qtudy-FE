@@ -38,7 +38,7 @@ const MenuButton = styled.button`
 
   font-family: NotoSansMedium;
   font-size: 14px;
-  background-color: white;
+  background-color: transparent;
   border: none;
   cursor: pointer;
 `;
