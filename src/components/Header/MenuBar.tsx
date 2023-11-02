@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useState } from 'react';
-import HEADER_MENU_LIST from '../../constants';
+import { HEADER_MENU_LIST } from '../../constants';
 
 const Container = styled.div`
   display: flex;
