@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 
-const Container = styled.label`
+const Container = styled.label<{ $disabled: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 12px;
   padding: 1px;
+  cursor: ${(props) => (props.$disabled ? 'default' : 'pointer')};
 
   input[type='radio'] {
     -webkit-appearance: none;
@@ -17,7 +18,7 @@ const Container = styled.label`
     background-color: white;
     box-shadow: 0 0 0 1px ${(props) => props.theme.colors.grayScale05};
     border-radius: 50%;
-    cursor: pointer;
+    cursor: ${(props) => (props.$disabled ? 'default' : 'pointer')};
   }
 
   input[type='radio']:checked {
@@ -34,7 +35,7 @@ const Container = styled.label`
 
 function RadioButton({ ...props }) {
   return (
-    <Container>
+    <Container $disabled={...props.disabled}>
       <input type="radio" {...props} />
       <span>{{ ...props }.value}</span>
     </Container>
