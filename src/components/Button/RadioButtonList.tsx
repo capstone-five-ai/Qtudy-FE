@@ -25,11 +25,12 @@ const ButtonContainer = styled.div`
 interface RadioButtonListProps {
   buttonLabel: string;
   buttonList: string[];
-  checked: string;
-  setChecked: (isCheck: string) => void;
+  checkedValue: string;
+  setCheckedValue: (isCheck: string) => void;
+  disabled: boolean;
 }
 
-function RadioButtonList({ buttonLabel, buttonList, checked, setChecked }: RadioButtonListProps) {
+function RadioButtonList({ buttonLabel, buttonList, checkedValue, setCheckedValue, disabled }: RadioButtonListProps) {
   return (
     <Container>
       <div className="title">{buttonLabel}</div>
@@ -39,8 +40,9 @@ function RadioButtonList({ buttonLabel, buttonList, checked, setChecked }: Radio
             key={button}
             value={button}
             name={buttonLabel}
-            checked={checked === button}
-            onChange={() => setChecked(button)}
+            checked={checkedValue === button}
+            onChange={() => setCheckedValue(button)}
+            disabled={disabled}
           />
         ))}
       </ButtonContainer>
