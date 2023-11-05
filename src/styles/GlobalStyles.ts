@@ -8,6 +8,10 @@ import NanumSquareNeo from '../assets/fonts/NanumSquareNeo-Variable.woff';
 const GlobalStyles = createGlobalStyle`
   ${reset}
 
+  body {
+    line-height: normal;
+  }
+
   @font-face {
     font-family: NotoSansRegular;
     src: url(${NotoSansRegular}) format('woff');
