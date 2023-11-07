@@ -9,8 +9,10 @@ function MainWrapper({ children }: MainWrapperProps) {
 }
 
 const Container = styled.div`
-  width: 1160px;
+  min-width: 535px;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 0px 20px;
 `;
 
 export default MainWrapper;

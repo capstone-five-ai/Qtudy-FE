@@ -31,6 +31,7 @@ const Container = styled.div`
 const ChildrenContainer = styled.div`
   padding-top: 20px;
   padding-bottom: 33px;
+  width: 100%;
 `;
 
 const InnerContainer = styled.div`
