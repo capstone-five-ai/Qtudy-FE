@@ -1,5 +1,23 @@
 import styled from 'styled-components';
 
+interface TabBarProps {
+  tabList: string[];
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+}
+
+function TabBar({ tabList, activeTab, setActiveTab }: TabBarProps) {
+  return (
+    <Wrapper>
+      {tabList.map((tab) => (
+        <TabButton key={tab} $active={tab === activeTab} onClick={() => setActiveTab(tab)}>
+          {tab}
+        </TabButton>
+      ))}
+    </Wrapper>
+  );
+}
+
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
@@ -25,23 +43,5 @@ const TabButton = styled.div<{ $active: boolean }>`
   border-color: ${(props) => (props.$active ? props.theme.colors.mainMint : 'transparent')};
   cursor: pointer;
 `;
-
-interface TabBarProps {
-  tabList: string[];
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
-}
-
-function TabBar({ tabList, activeTab, setActiveTab }: TabBarProps) {
-  return (
-    <Wrapper>
-      {tabList.map((tab) => (
-        <TabButton key={tab} $active={tab === activeTab} onClick={() => setActiveTab(tab)}>
-          {tab}
-        </TabButton>
-      ))}
-    </Wrapper>
-  );
-}
 
 export default TabBar;

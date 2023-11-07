@@ -1,10 +1,5 @@
 import styled from 'styled-components';
 
-const Container = styled.div`
-  width: 1160px;
-  margin: 0 auto;
-`;
-
 interface MainWrapperProps {
   children: React.ReactNode;
 }
@@ -12,5 +7,10 @@ interface MainWrapperProps {
 function MainWrapper({ children }: MainWrapperProps) {
   return <Container>{children}</Container>;
 }
+
+const Container = styled.div`
+  width: 1160px;
+  margin: 0 auto;
+`;
 
 export default MainWrapper;
