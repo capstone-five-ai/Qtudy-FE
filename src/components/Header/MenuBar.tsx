@@ -1,7 +1,44 @@
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useState } from 'react';
-import HEADER_MENU_LIST from '../../constants';
+import { HEADER_MENU_LIST } from '../../constants';
+
+function MenuBar() {
+  const location = useLocation();
+  const [login, setLogin] = useState<boolean>(true); // 로그인 여부를 표현하기 위한 임시 수단
+
+  const handleLogout = () => {
+    // TODO: 로그아웃 기능 구현
+    setLogin(false);
+  };
+
+  const handleLogin = () => {
+    // TODO: 로그인 기능 구현
+    setLogin(true);
+  };
+
+  return (
+    <Container>
+      {HEADER_MENU_LIST.map((menu) => (
+        <Link key={menu.menu} to={menu.path} style={{ textDecoration: 'none' }}>
+          <MenuButton className={`menu-button ${location.pathname === menu.path ? 'active' : undefined}`}>
+            {menu.menu}
+          </MenuButton>
+        </Link>
+      ))}
+      {login ? (
+        <MenuButton className="logout-button" type="button" onClick={handleLogout}>
+          로그아웃
+        </MenuButton>
+      ) : (
+        <MenuButton className="login-button" type="button" onClick={handleLogin}>
+          <img alt="kakao-login-icon" src="/src/assets/icons/icon_kakao.svg" />
+          <span>Login</span>
+        </MenuButton>
+      )}
+    </Container>
+  );
+}
 
 const Container = styled.div`
   display: flex;
@@ -52,42 +89,5 @@ const MenuButton = styled.button`
   border: none;
   cursor: pointer;
 `;
-
-function MenuBar() {
-  const location = useLocation();
-  const [login, setLogin] = useState<boolean>(true); // 로그인 여부를 표현하기 위한 임시 수단
-
-  const handleLogout = () => {
-    // TODO: 로그아웃 기능 구현
-    setLogin(false);
-  };
-
-  const handleLogin = () => {
-    // TODO: 로그인 기능 구현
-    setLogin(true);
-  };
-
-  return (
-    <Container>
-      {HEADER_MENU_LIST.map((menu) => (
-        <Link key={menu.menu} to={menu.path} style={{ textDecoration: 'none' }}>
-          <MenuButton className={`menu-button ${location.pathname === menu.path ? 'active' : undefined}`}>
-            {menu.menu}
-          </MenuButton>
-        </Link>
-      ))}
-      {login ? (
-        <MenuButton className="logout-button" type="button" onClick={handleLogout}>
-          로그아웃
-        </MenuButton>
-      ) : (
-        <MenuButton className="login-button" type="button" onClick={handleLogin}>
-          <img alt="kakao-login-icon" src="/src/assets/icons/icon_kakao.svg" />
-          <span>Login</span>
-        </MenuButton>
-      )}
-    </Container>
-  );
-}
 
 export default MenuBar;
