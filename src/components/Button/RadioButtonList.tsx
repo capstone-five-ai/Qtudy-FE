@@ -6,7 +6,7 @@ interface RadioButtonListProps {
   buttonList: string[];
   checkedButton: { [key: string]: string };
   setCheckedButton: (checked: { [key: string]: string }) => void;
-  disabled?: boolean;
+  disabled: boolean;
 }
 
 function RadioButtonList({ buttonLabel, buttonList, checkedButton, setCheckedButton, disabled }: RadioButtonListProps) {
@@ -28,10 +28,6 @@ function RadioButtonList({ buttonLabel, buttonList, checkedButton, setCheckedBut
     </Container>
   );
 }
-
-RadioButtonList.defaultProps = {
-  disabled: false,
-};
 
 export default RadioButtonList;
 

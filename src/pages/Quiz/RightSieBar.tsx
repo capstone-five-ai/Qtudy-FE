@@ -10,7 +10,11 @@ const LIST = [
   { label: '난이도', button: ['상', '중', '하'] },
 ];
 
-function RightSideBar() {
+interface RightSideBarProps {
+  disabled?: boolean;
+}
+
+function RightSideBar({ disabled = false }: RightSideBarProps) {
   const [optionInput, setOptionInput] = useState<{ [key: string]: string }>({
     '문제 유형': '',
     문제량: '',
@@ -32,15 +36,26 @@ function RightSideBar() {
             buttonList={list.button}
             checkedButton={optionInput}
             setCheckedButton={setOptionInput}
-            disabled={false}
+            disabled={disabled}
           />
         ))}
-        <FileNameInputField name="file" value={optionInput['파일명']} onChange={handleFileInputChange} />
-        <LargeButton type="button">생성하기</LargeButton>
+        <FileNameInputField
+          name="file"
+          value={optionInput['파일명']}
+          onChange={handleFileInputChange}
+          disabled={disabled}
+        />
+        <LargeButton type="button" disabled={disabled}>
+          생성하기
+        </LargeButton>
       </InnerContainer>
     </Container>
   );
 }
+
+RightSideBar.defaultProps = {
+  disabled: false,
+};
 
 export default RightSideBar;
 

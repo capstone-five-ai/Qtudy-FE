@@ -5,13 +5,17 @@ type ButtonType = JSX.IntrinsicElements['button']['type'];
 interface LargeButtonProps {
   type: ButtonType;
   children: React.ReactNode;
-  disabled?: boolean;
+  disabled: boolean;
   onClick?: () => void;
 }
 
-function LargeButton({ type, children, disabled = false, onClick }: LargeButtonProps) {
+LargeButton.defaultProps = {
+  onClick() {},
+};
+
+function LargeButton({ type, children, disabled, onClick }: LargeButtonProps) {
   return (
-    <Container>
+    <Container $disabled={disabled}>
       <button type={type === 'button' ? 'button' : 'submit'} disabled={disabled} onClick={onClick}>
         {children}
       </button>
@@ -19,18 +23,13 @@ function LargeButton({ type, children, disabled = false, onClick }: LargeButtonP
   );
 }
 
-LargeButton.defaultProps = {
-  disabled: false,
-  onClick() {},
-};
-
 export default LargeButton;
 
-const Container = styled.div`
+const Container = styled.div<{ $disabled: boolean }>`
   width: 288px;
   height: 48px;
   border-radius: 8px;
-  box-shadow: 8px 4px 20px 0px rgba(54, 189, 180, 0.32);
+  box-shadow: ${(props) => !props.$disabled && '8px 4px 20px 0px rgba(54, 189, 180, 0.32)'};
 
   button {
     width: 100%;
