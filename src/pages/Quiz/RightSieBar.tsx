@@ -62,7 +62,7 @@ export default RightSideBar;
 const Container = styled.div`
   box-sizing: border-box;
   width: 360px;
-  min-height: calc(100vh - 254px);
+  min-height: 524px;
   padding: 24px 0px;
 `;
 
