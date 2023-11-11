@@ -10,6 +10,7 @@ const Input = styled.input`
   padding: 5px 12px;
   border: none;
   border-bottom: 1px solid ${(props) => props.theme.colors.grayScale06};
+  background-color: transparent;
 
   font-family: NotoSansRegular;
   font-size: 12px;
