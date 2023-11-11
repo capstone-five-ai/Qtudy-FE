@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from './layouts';
 import Home from './pages/home';
-import CreateQuiz from './pages/Quiz';
+import CreateQuiz from './pages/CreateQuiz';
 
 const routes = [
   {
