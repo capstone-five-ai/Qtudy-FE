@@ -11,11 +11,16 @@ const LIST = [
 ];
 
 function RightSideBar() {
-  const [checkedButton, setCheckedButton] = useState<{ [key: string]: string }>({
+  const [optionInput, setOptionInput] = useState<{ [key: string]: string }>({
     '문제 유형': '',
     문제량: '',
     난이도: '',
+    파일명: '',
   });
+
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setOptionInput({ ...optionInput, 파일명: e.target.value });
+  };
 
   return (
     <Container>
@@ -25,12 +30,12 @@ function RightSideBar() {
             key={list.label}
             buttonLabel={list.label}
             buttonList={list.button}
-            checkedButton={checkedButton}
-            setCheckedButton={setCheckedButton}
+            checkedButton={optionInput}
+            setCheckedButton={setOptionInput}
             disabled={false}
           />
         ))}
-        <FileNameInputField name="file" />
+        <FileNameInputField name="file" value={optionInput['파일명']} onChange={handleFileInputChange} />
         <LargeButton type="button">생성하기</LargeButton>
       </InnerContainer>
     </Container>
