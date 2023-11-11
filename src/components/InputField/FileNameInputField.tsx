@@ -5,7 +5,7 @@ function FileNameInputField({ ...props }) {
   return (
     <Container>
       <div className="title">파일명</div>
-      <InputField {...props} />
+      <InputField placeholder="지정하실 파일명을 입력해주세요." {...props} />
     </Container>
   );
 }
