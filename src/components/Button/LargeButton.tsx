@@ -1,5 +1,31 @@
 import styled from 'styled-components';
 
+type ButtonType = JSX.IntrinsicElements['button']['type'];
+
+interface LargeButtonProps {
+  type: ButtonType;
+  children: React.ReactNode;
+  disabled?: boolean;
+  onClick?: () => void;
+}
+
+function LargeButton({ type, children, disabled = false, onClick }: LargeButtonProps) {
+  return (
+    <Container>
+      <button type={type === 'button' ? 'button' : 'submit'} disabled={disabled} onClick={onClick}>
+        {children}
+      </button>
+    </Container>
+  );
+}
+
+LargeButton.defaultProps = {
+  disabled: false,
+  onClick() {},
+};
+
+export default LargeButton;
+
 const Container = styled.div`
   width: 288px;
   height: 48px;
@@ -29,29 +55,3 @@ const Container = styled.div`
     cursor: default;
   }
 `;
-
-type ButtonType = JSX.IntrinsicElements['button']['type'];
-
-interface LargeButtonProps {
-  type: ButtonType;
-  children: React.ReactNode;
-  disabled?: boolean;
-  onClick?: () => void;
-}
-
-function LargeButton({ type, children, disabled = false, onClick }: LargeButtonProps) {
-  return (
-    <Container>
-      <button type={type === 'button' ? 'button' : 'submit'} disabled={disabled} onClick={onClick}>
-        {children}
-      </button>
-    </Container>
-  );
-}
-
-LargeButton.defaultProps = {
-  disabled: false,
-  onClick() {},
-};
-
-export default LargeButton;

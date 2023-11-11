@@ -1,5 +1,16 @@
 import styled from 'styled-components';
 
+function RadioButton({ ...props }) {
+  return (
+    <Container $disabled={...props.disabled}>
+      <input type="radio" {...props} />
+      <span>{{ ...props }.value}</span>
+    </Container>
+  );
+}
+
+export default RadioButton;
+
 const Container = styled.label<{ $disabled: boolean }>`
   display: flex;
   flex-direction: row;
@@ -32,14 +43,3 @@ const Container = styled.label<{ $disabled: boolean }>`
     font-size: 14px;
   }
 `;
-
-function RadioButton({ ...props }) {
-  return (
-    <Container $disabled={...props.disabled}>
-      <input type="radio" {...props} />
-      <span>{{ ...props }.value}</span>
-    </Container>
-  );
-}
-
-export default RadioButton;
