@@ -14,7 +14,7 @@ interface RightSideBarProps {
   disabled?: boolean;
 }
 
-function RightSideBar({ disabled = false }: RightSideBarProps) {
+function CreateRightSideBar({ disabled = false }: RightSideBarProps) {
   const [optionInput, setOptionInput] = useState<{ [key: string]: string }>({
     '문제 유형': '',
     문제량: '',
@@ -53,16 +53,15 @@ function RightSideBar({ disabled = false }: RightSideBarProps) {
   );
 }
 
-RightSideBar.defaultProps = {
+CreateRightSideBar.defaultProps = {
   disabled: false,
 };
 
-export default RightSideBar;
+export default CreateRightSideBar;
 
 const Container = styled.div`
   box-sizing: border-box;
   width: 360px;
-  min-height: 524px;
   padding: 24px 0px;
 `;
 
