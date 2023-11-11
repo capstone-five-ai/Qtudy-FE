@@ -22,8 +22,9 @@
   "rules": {
     "prettier/prettier": ["error", { "endOfLine": "auto" }],
     "react/react-in-jsx-scope": "off",
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "react/jsx-props-no-spreading": "off",
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "import/no-extraneous-dependencies": ["off"],
+    "@typescript-eslint/no-use-before-define": 0
   }
 }

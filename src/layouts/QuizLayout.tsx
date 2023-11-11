@@ -5,24 +5,6 @@ import TabBar from '../components/TapBar/TabBar';
 import ContentHeader from '../components/Header/ContentHeader';
 import MainWrapper from '../components/Wrapper/MainWrapper';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const ChildrenContainer = styled.div`
-  padding-top: 20px;
-  padding-bottom: 33px;
-`;
-
-const InnerContainer = styled.div`
-  background-color: ${(props) => props.theme.colors.grayScale08};
-  min-height: calc(100vh - 254px);
-  border-radius: 8px;
-  box-shadow: 0px 0px 4px 0px rgba(189, 189, 189, 0.28);
-`;
-
 function QuizLayout({ children }: { children: React.ReactNode }) {
   const [activeTab, setActiveTab] = useState(TAB_AI_QUIZ_CREATION[0]);
   return (
@@ -39,3 +21,22 @@ function QuizLayout({ children }: { children: React.ReactNode }) {
 }
 
 export default QuizLayout;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ChildrenContainer = styled.div`
+  padding-top: 20px;
+  padding-bottom: 33px;
+  width: 100%;
+`;
+
+const InnerContainer = styled.div`
+  background-color: ${(props) => props.theme.colors.grayScale08};
+  min-height: calc(100vh - 254px);
+  border-radius: 8px;
+  box-shadow: 0px 0px 4px 0px rgba(189, 189, 189, 0.28);
+`;
