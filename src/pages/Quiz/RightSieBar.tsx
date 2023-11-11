@@ -11,20 +11,26 @@ const LIST = [
 ];
 
 function RightSideBar() {
-  const [checked, setChecked] = useState<string>('');
+  const [checkedButton, setCheckedButton] = useState<{ [key: string]: string }>({
+    '문제 유형': '',
+    문제량: '',
+    난이도: '',
+  });
+
   return (
     <Container>
       <InnerContainer>
         {LIST.map((list) => (
           <RadioButtonList
+            key={list.label}
             buttonLabel={list.label}
             buttonList={list.button}
-            checkedValue={checked}
-            setCheckedValue={setChecked}
+            checkedButton={checkedButton}
+            setCheckedButton={setCheckedButton}
             disabled={false}
           />
         ))}
-        <FileNameInputField />
+        <FileNameInputField name="file" />
         <LargeButton type="button">생성하기</LargeButton>
       </InnerContainer>
     </Container>
@@ -43,7 +49,7 @@ const Container = styled.div`
 const InnerContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 30px;
 
   height: 100%;
   padding: 0px 36px;

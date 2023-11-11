@@ -4,12 +4,12 @@ import RadioButton from './RadioButton';
 interface RadioButtonListProps {
   buttonLabel: string;
   buttonList: string[];
-  checkedValue: string;
-  setCheckedValue: (isCheck: string) => void;
+  checkedButton: { [key: string]: string };
+  setCheckedButton: (checked: { [key: string]: string }) => void;
   disabled?: boolean;
 }
 
-function RadioButtonList({ buttonLabel, buttonList, checkedValue, setCheckedValue, disabled }: RadioButtonListProps) {
+function RadioButtonList({ buttonLabel, buttonList, checkedButton, setCheckedButton, disabled }: RadioButtonListProps) {
   return (
     <Container>
       <div className="title">{buttonLabel}</div>
@@ -19,8 +19,8 @@ function RadioButtonList({ buttonLabel, buttonList, checkedValue, setCheckedValu
             key={button}
             value={button}
             name={buttonLabel}
-            checked={checkedValue === button}
-            onChange={() => setCheckedValue(button)}
+            checked={checkedButton[buttonLabel] === button}
+            onChange={() => setCheckedButton({ ...checkedButton, [buttonLabel]: button })}
             disabled={disabled}
           />
         ))}
