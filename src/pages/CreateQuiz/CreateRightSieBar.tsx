@@ -46,7 +46,7 @@ function CreateRightSideBar({ disabled = false }: RightSideBarProps) {
           disabled={disabled}
         />
         <LargeButton type="button" disabled={disabled}>
-          생성하기
+          Generate
         </LargeButton>
       </InnerContainer>
     </Container>

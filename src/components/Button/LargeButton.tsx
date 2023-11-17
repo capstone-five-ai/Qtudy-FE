@@ -29,14 +29,14 @@ const Container = styled.div<{ $disabled: boolean }>`
   width: 288px;
   height: 48px;
   border-radius: 8px;
-  box-shadow: ${(props) => !props.$disabled && '8px 4px 20px 0px rgba(54, 189, 180, 0.32)'};
+  box-shadow: ${(props) => !props.$disabled && `8px 4px 20px 0px ${props.theme.colors.mainMintShadow}`};
 
   button {
     width: 100%;
     height: 100%;
     border: none;
     border-radius: 8px;
-    background: ${(props) => props.theme.colors.mainMint};
+    background: ${(props) => props.theme.gradation.mainMintGra};
     cursor: pointer;
 
     color: ${(props) => props.theme.colors.grayScale09};
@@ -45,7 +45,7 @@ const Container = styled.div<{ $disabled: boolean }>`
     font-weight: 700;
 
     &:hover {
-      background: ${(props) => props.theme.colors.mainMintDark};
+      background: ${(props) => props.theme.gradation.mainMintDarkGra};
     }
   }
 
