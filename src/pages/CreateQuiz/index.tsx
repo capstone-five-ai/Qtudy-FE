@@ -17,6 +17,5 @@ export default CreateQuiz;
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-between;
   min-height: 524px;
 `;

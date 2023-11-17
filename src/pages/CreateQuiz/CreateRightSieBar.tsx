@@ -63,6 +63,7 @@ const Container = styled.div`
   box-sizing: border-box;
   width: 360px;
   padding: 24px 0px;
+  margin-left: auto;
 `;
 
 const InnerContainer = styled.div`
