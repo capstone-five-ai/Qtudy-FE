@@ -5,6 +5,7 @@ const colors = {
   mainMint: '#3ED7CD',
   mainMintDark: '#36BDB4',
   mainMintLight: '#FBFFFF',
+  mainMintShadow: 'rgba(54, 189, 180, 0.32)',
 
   /** Grayscale Colors */
   grayScale01: '#000000',
@@ -28,12 +29,19 @@ const fontSize = {
   text: 14,
 };
 
+const gradation = {
+  mainMintGra: 'linear-gradient(rgba(62, 215, 205, 0.6), rgba(62, 215, 205, 1))',
+  mainMintDarkGra: 'linear-gradient(rgba(54, 189, 180, 0.6), rgba(54, 189, 180, 1))',
+};
+
 export type ColorsTypes = typeof colors;
 export type FontSizeTypes = typeof fontSize;
+export type GradationTypes = typeof gradation;
 
 const theme: DefaultTheme = {
   colors,
   fontSize,
+  gradation,
 };
 
 export default theme;
