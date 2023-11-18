@@ -2,7 +2,6 @@ import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import NanumSquareBold from '../assets/fonts/NanumSquareNeoTTF-cBd.woff';
 import NanumSquareExtraBold from '../assets/fonts/NanumSquareNeoTTF-dEb.woff';
-import NanumSquareNeo from '../assets/fonts/NanumSquareNeo-Variable.woff';
 import NotoSansBold from '../assets/fonts/NotoSansKR-Bold.woff';
 import NotoSansMedium from '../assets/fonts/NotoSansKR-Medium.woff';
 import NotoSansRegular from '../assets/fonts/NotoSansKR-Regular.woff';
@@ -41,12 +40,6 @@ const GlobalStyles = createGlobalStyle`
   @font-face {
     font-family: NanumSquareExtraBold;
     src: url(${NanumSquareExtraBold}) format('woff');
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: NanumSquareNeo;
-    src: url(${NanumSquareNeo}) format('woff');
     font-style: normal;
   }
 `;

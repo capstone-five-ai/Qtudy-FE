@@ -8,7 +8,6 @@ const NotoSansBold = 'NotoSansBold';
 
 const NanumSquareBold = 'NanumSquareBold';
 const NanumSquareExtraBold = 'NanumSquareExtraBold';
-const NanumSquareNeo = 'NanumSquareNeo';
 
 interface Style {
   type: string;
@@ -105,7 +104,7 @@ const typographies: Style[] = [
   },
   {
     type: 'button',
-    font: NanumSquareNeo,
+    font: NanumSquareExtraBold,
     size: 14,
     lineHeight: 'auto',
     letterSpacing: 0,
