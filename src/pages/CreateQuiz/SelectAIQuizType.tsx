@@ -13,7 +13,7 @@ function SelectAIQuizType({ setCreateType }: SelectAIQuizTypeProps) {
         <UploadIcon />
         <Text>
           <span className="main">파일 업로드</span>
-          <span>(.pdf, .txt, .jpg, .png)</span>
+          <span className="sub">(.pdf, .txt, .jpg, .png)</span>
         </Text>
       </TypeContainer>
       <TypeContainer onClick={() => setCreateType('text')}>

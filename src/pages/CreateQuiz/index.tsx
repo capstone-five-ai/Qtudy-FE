@@ -3,6 +3,7 @@ import { useState } from 'react';
 import QuizLayout from '../../layouts/QuizLayout';
 import CreateRightSideBar from './CreateRightSieBar';
 import SelectAIQuizType from './SelectAIQuizType';
+import UploadType from './UploadType';
 
 function CreateQuiz() {
   const [createType, setCreateType] = useState<'upload' | 'text' | null>(null);
@@ -11,6 +12,7 @@ function CreateQuiz() {
     <QuizLayout>
       <Container>
         {!createType && <SelectAIQuizType setCreateType={setCreateType} />}
+        {createType === 'upload' && <UploadType />}
         <CreateRightSideBar />
       </Container>
     </QuizLayout>
