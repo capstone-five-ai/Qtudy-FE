@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Typography from '../Typography';
 
 type ButtonType = JSX.IntrinsicElements['button']['type'];
 
@@ -17,7 +18,9 @@ function LargeButton({ type, children, disabled, onClick }: LargeButtonProps) {
   return (
     <Container $disabled={disabled}>
       <button type={type === 'button' ? 'button' : 'submit'} disabled={disabled} onClick={onClick}>
-        {children}
+        <Typography variant="button" color="grayScale09">
+          {children}
+        </Typography>
       </button>
     </Container>
   );
@@ -38,11 +41,6 @@ const Container = styled.div<{ $disabled: boolean }>`
     border-radius: 8px;
     background: ${(props) => props.theme.gradation.mainMintGra};
     cursor: pointer;
-
-    color: ${(props) => props.theme.colors.grayScale09};
-    font-family: NanumSquareNeo;
-    font-size: 16px;
-    font-weight: 700;
 
     &:hover {
       background: ${(props) => props.theme.gradation.mainMintDarkGra};

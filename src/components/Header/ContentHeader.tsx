@@ -1,11 +1,16 @@
 import styled from 'styled-components';
 import { PageContentType } from '../../types';
+import Typography from '../Typography';
 
 function ContentHeader({ text }: { text: PageContentType }) {
   return (
     <Container>
-      <div className="main-text">{text.main}</div>
-      <div className="sub-text">{text.sub}</div>
+      <Typography variant="h3" color="grayScale02">
+        {text.main}
+      </Typography>
+      <Typography variant="detail" color="grayScale03">
+        {text.sub}
+      </Typography>
     </Container>
   );
 }
@@ -16,18 +21,6 @@ const Container = styled.div`
   gap: 6px;
   text-align: center;
   padding: 20px 0px;
-
-  .main-text {
-    font-family: NotoSansBold;
-    font-size: 16px;
-    color: ${(props) => props.theme.colors.grayScale02};
-  }
-
-  .sub-text {
-    font-family: NotoSansMedium;
-    font-size: 12px;
-    color: ${(props) => props.theme.colors.grayScale03};
-  }
 `;
 
 export default ContentHeader;
