@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import QuizLayout from '../../layouts/QuizLayout';
 import CreateRightSideBar from './CreateRightSieBar';
+import SelectAIQuizType from './SelectAIQuizType';
 
 function CreateQuiz() {
   return (
     <QuizLayout>
       <Container>
-        <div>퀴즈</div>
+        <SelectAIQuizType />
         <CreateRightSideBar />
       </Container>
     </QuizLayout>
