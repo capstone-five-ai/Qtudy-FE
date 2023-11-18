@@ -1,13 +1,16 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import QuizLayout from '../../layouts/QuizLayout';
 import CreateRightSideBar from './CreateRightSieBar';
 import SelectAIQuizType from './SelectAIQuizType';
 
 function CreateQuiz() {
+  const [createType, setCreateType] = useState<'upload' | 'text' | null>(null);
+
   return (
     <QuizLayout>
       <Container>
-        <SelectAIQuizType />
+        {!createType && <SelectAIQuizType setCreateType={setCreateType} />}
         <CreateRightSideBar />
       </Container>
     </QuizLayout>

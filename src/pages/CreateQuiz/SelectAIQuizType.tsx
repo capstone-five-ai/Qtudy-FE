@@ -2,17 +2,21 @@ import styled from 'styled-components';
 import { ReactComponent as UploadIcon } from '../../assets/svg/icon-upload.svg';
 import { ReactComponent as TextIcon } from '../../assets/svg/icon-text.svg';
 
-function SelectAIQuizType() {
+interface SelectAIQuizTypeProps {
+  setCreateType: React.Dispatch<React.SetStateAction<'upload' | 'text' | null>>;
+}
+
+function SelectAIQuizType({ setCreateType }: SelectAIQuizTypeProps) {
   return (
     <Container>
-      <TypeContainer>
+      <TypeContainer onClick={() => setCreateType('upload')}>
         <UploadIcon />
         <Text>
           <span className="main">파일 업로드</span>
           <span>(.pdf, .txt, .jpg, .png)</span>
         </Text>
       </TypeContainer>
-      <TypeContainer>
+      <TypeContainer onClick={() => setCreateType('text')}>
         <TextIcon />
         <Text>
           <span className="main">텍스트 직접 입력</span>
