@@ -3,14 +3,22 @@ import RadioButton from './RadioButton';
 import Typography from '../Typography';
 
 interface RadioButtonListProps {
-  buttonLabel: string;
-  buttonList: string[];
-  checkedButton: { [key: string]: string };
-  setCheckedButton: (checked: { [key: string]: string }) => void;
-  disabled: boolean;
+  optionInputKey: string; // 설정 변수 내 키 값
+  optionInput: { [key: string]: string }; // 설정 변수
+  setOptionInput: React.Dispatch<React.SetStateAction<{ [key: string]: string }>>; // 설정 수정 함수
+  buttonLabel: string; // 설정 라벨
+  buttonList: string[]; // 설정 하나의 내부 버튼 목록
+  disabled: boolean; // 버튼 활성화 여부
 }
 
-function RadioButtonList({ buttonLabel, buttonList, checkedButton, setCheckedButton, disabled }: RadioButtonListProps) {
+function RadioButtonList({
+  optionInputKey,
+  optionInput,
+  setOptionInput,
+  buttonLabel,
+  buttonList,
+  disabled,
+}: RadioButtonListProps) {
   return (
     <Container>
       <Typography variant="subtitle" color="grayScale02">
@@ -22,8 +30,8 @@ function RadioButtonList({ buttonLabel, buttonList, checkedButton, setCheckedBut
             key={button}
             value={button}
             name={buttonLabel}
-            checked={checkedButton[buttonLabel] === button}
-            onChange={() => setCheckedButton({ ...checkedButton, [buttonLabel]: button })}
+            checked={optionInput[optionInputKey] === button}
+            onChange={() => setOptionInput({ ...optionInput, [optionInputKey]: button })}
             disabled={disabled}
           />
         ))}
