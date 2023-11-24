@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 
 function RadioButton({ ...props }) {
+  const { disabled, value } = props;
+
   return (
-    <Container $disabled={...props.disabled}>
+    <Container $disabled={disabled}>
       <input type="radio" {...props} />
-      <span>{{ ...props }.value}</span>
+      <span>{value}</span>
     </Container>
   );
 }
