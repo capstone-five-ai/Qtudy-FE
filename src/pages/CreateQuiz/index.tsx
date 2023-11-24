@@ -10,17 +10,17 @@ import TextType from './TextType';
 function CreateQuiz() {
   const [createType] = useSearchParams();
   const type = createType.get('type');
-  const [optionInput, setOptionInput] = useState<{ [key: string]: string }>({
+  const [inputOption, setInputOption] = useState<{ [key: string]: string }>({
     type: '', // 문제 유형
     amount: '', // 문제량
     difficulty: '', // 난이도
     file: '', // 파일명
   });
-  const [textInput, setTextInput] = useState('');
+  const [inputText, setInputText] = useState('');
 
   useEffect(() => {
     if (!type) {
-      setOptionInput({
+      setInputOption({
         type: '',
         amount: '',
         difficulty: '',
@@ -38,11 +38,11 @@ function CreateQuiz() {
       <Container>
         {!type && <SelectAIQuizType />}
         {type === 'upload' && <UploadType />}
-        {type === 'text' && <TextType textInput={textInput} setTextInput={setTextInput} />}
+        {type === 'text' && <TextType inputText={inputText} setInputText={setInputText} />}
         <CreateRightSideBar
           disabled={!type}
-          optionInput={optionInput}
-          setOptionInput={setOptionInput}
+          inputOption={inputOption}
+          setInputOption={setInputOption}
           handleSubmit={handleSubmit}
         />
       </Container>

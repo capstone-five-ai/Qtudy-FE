@@ -10,18 +10,18 @@ const LIST = [
 
 interface RightSideBarProps {
   disabled?: boolean; // 사이드바 활성 여부
-  optionInput: { [key: string]: string }; // 설정 변수
-  setOptionInput: React.Dispatch<React.SetStateAction<{ [key: string]: string }>>; // 설정 수정 함수
+  inputOption: { [key: string]: string }; // 설정 변수
+  setInputOption: React.Dispatch<React.SetStateAction<{ [key: string]: string }>>; // 설정 수정 함수
   handleSubmit: () => void;
 }
 
-function CreateRightSideBar({ disabled = false, optionInput, setOptionInput, handleSubmit }: RightSideBarProps) {
-  const handleChangeFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setOptionInput({ ...optionInput, [e.target.name]: e.target.value });
+function CreateRightSideBar({ disabled = false, inputOption, setInputOption, handleSubmit }: RightSideBarProps) {
+  const handleFileNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputOption({ ...inputOption, [e.target.name]: e.target.value });
   };
 
   return (
-    <SideBar buttonDisabled={Object.values(optionInput).includes('')} handleSubmit={handleSubmit}>
+    <SideBar buttonDisabled={Object.values(inputOption).includes('')} handleSubmit={handleSubmit}>
       <>
         {LIST.map((list) => (
           <RadioButtonList
@@ -29,12 +29,12 @@ function CreateRightSideBar({ disabled = false, optionInput, setOptionInput, han
             optionInputKey={list.dataKey}
             buttonLabel={list.label}
             buttonList={list.button}
-            optionInput={optionInput}
-            setOptionInput={setOptionInput}
+            inputOption={inputOption}
+            setInputOption={setInputOption}
             disabled={disabled}
           />
         ))}
-        <FileNameInputField name="file" value={optionInput.file} onChange={handleChangeFileInput} disabled={disabled} />
+        <FileNameInputField name="file" value={inputOption.file} onChange={handleFileNameChange} disabled={disabled} />
       </>
     </SideBar>
   );
