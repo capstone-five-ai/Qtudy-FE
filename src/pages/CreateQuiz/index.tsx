@@ -16,11 +16,10 @@ function CreateQuiz() {
     difficulty: '', // 난이도
     file: '', // 파일명
   });
+  const [textInput, setTextInput] = useState('');
 
   const handleSubmit = () => {
     // TODO: 문제 생성 시작
-    console.log(optionInput);
-    console.log(type);
   };
 
   return (
@@ -28,7 +27,7 @@ function CreateQuiz() {
       <Container>
         {!type && <SelectAIQuizType />}
         {type === 'upload' && <UploadType />}
-        {type === 'text' && <TextType />}
+        {type === 'text' && <TextType textInput={textInput} setTextInput={setTextInput} />}
         <CreateRightSideBar
           disabled={!type}
           optionInput={optionInput}
@@ -36,9 +35,6 @@ function CreateQuiz() {
           handleSubmit={handleSubmit}
         />
       </Container>
-      <button type="button" onClick={handleSubmit}>
-        테스트
-      </button>
     </QuizLayout>
   );
 }
