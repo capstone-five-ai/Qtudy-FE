@@ -45,7 +45,7 @@ function CreateRightSideBar({ disabled = false }: RightSideBarProps) {
           onChange={handleFileInputChange}
           disabled={disabled}
         />
-        <LargeButton type="button" disabled={disabled}>
+        <LargeButton type="button" disabled={Object.values(optionInput).includes('')}>
           Generate
         </LargeButton>
       </InnerContainer>

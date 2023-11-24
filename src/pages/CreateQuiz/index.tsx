@@ -16,7 +16,7 @@ function CreateQuiz() {
         {!type && <SelectAIQuizType />}
         {type === 'upload' && <UploadType />}
         {type === 'text' && <TextType />}
-        <CreateRightSideBar />
+        <CreateRightSideBar disabled={!type} />
       </Container>
     </QuizLayout>
   );
