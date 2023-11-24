@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { ReactComponent as UploadIcon } from '../../assets/svg/icon-upload.svg';
-import { ReactComponent as TextIcon } from '../../assets/svg/icon-text.svg';
+import { ReactComponent as UploadIcon } from '../../assets/icons/icon-upload.svg';
+import { ReactComponent as TextIcon } from '../../assets/icons/icon-text.svg';
 
 interface SelectAIQuizTypeProps {
   setCreateType: React.Dispatch<React.SetStateAction<'upload' | 'text' | null>>;

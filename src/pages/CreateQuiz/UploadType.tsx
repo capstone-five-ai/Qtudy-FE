@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as UploadIcon } from '../../assets/svg/icon-upload.svg';
+import { ReactComponent as UploadIcon } from '../../assets/icons/icon-upload.svg';
 
 function UploadType() {
   return (
