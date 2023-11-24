@@ -9,6 +9,14 @@ import NotoSansRegular from '../assets/fonts/NotoSansKR-Regular.woff';
 const GlobalStyles = createGlobalStyle`
   ${reset}
 
+  * {
+    box-sizing: border-box;
+  }
+
+  *:focus {
+    outline: none;
+  }
+
   body {
     line-height: normal;
   }
