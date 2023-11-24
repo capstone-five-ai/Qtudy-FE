@@ -17,6 +17,7 @@ function RadioButton({ ...props }) {
 export default RadioButton;
 
 const Container = styled.label<{ $disabled: boolean }>`
+  width: max-content;
   display: flex;
   flex-direction: row;
   align-items: center;
