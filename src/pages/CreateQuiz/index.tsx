@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useSearchParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import QuizLayout from '../../layouts/QuizLayout';
 import CreateRightSideBar from './CreateRightSieBar';
 import SelectAIQuizType from './SelectAIQuizType';
@@ -17,6 +17,17 @@ function CreateQuiz() {
     file: '', // 파일명
   });
   const [textInput, setTextInput] = useState('');
+
+  useEffect(() => {
+    if (!type) {
+      setOptionInput({
+        type: '',
+        amount: '',
+        difficulty: '',
+        file: '',
+      });
+    }
+  }, [type]);
 
   const handleSubmit = () => {
     // TODO: 문제 생성 시작
