@@ -1,27 +1,35 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { ReactComponent as UploadIcon } from '../../assets/icons/icon-upload.svg';
 import { ReactComponent as TextIcon } from '../../assets/icons/icon-text.svg';
+import Typography from '../../components/Typography';
 
-interface SelectAIQuizTypeProps {
-  setCreateType: React.Dispatch<React.SetStateAction<'upload' | 'text' | null>>;
-}
-
-function SelectAIQuizType({ setCreateType }: SelectAIQuizTypeProps) {
+function SelectAIQuizType() {
   return (
     <Container>
-      <TypeContainer onClick={() => setCreateType('upload')}>
-        <UploadIcon />
-        <Text>
-          <span className="main">파일 업로드</span>
-          <span className="sub">(.pdf, .txt, .jpg, .png)</span>
-        </Text>
-      </TypeContainer>
-      <TypeContainer onClick={() => setCreateType('text')}>
-        <TextIcon />
-        <Text>
-          <span className="main">텍스트 직접 입력</span>
-        </Text>
-      </TypeContainer>
+      <Link to="?type=upload" style={{ textDecoration: 'none' }}>
+        <TypeContainer>
+          <UploadIcon />
+          <Text>
+            <Typography variant="subtitle" color="grayScale02">
+              파일 업로드
+            </Typography>
+            <Typography variant="caption3" color="grayScale02">
+              (.pdf, .txt, .jpg, .png)
+            </Typography>
+          </Text>
+        </TypeContainer>
+      </Link>
+      <Link to="?type=text" style={{ textDecoration: 'none' }}>
+        <TypeContainer>
+          <TextIcon />
+          <Text>
+            <Typography variant="subtitle" color="grayScale02">
+              텍스트 직접 입력
+            </Typography>
+          </Text>
+        </TypeContainer>
+      </Link>
     </Container>
   );
 }
@@ -48,6 +56,7 @@ const TypeContainer = styled.div`
   height: 220px;
   border-radius: 12px;
   box-shadow: 0px 0px 8px 0px rgba(189, 189, 189, 0.2);
+
   &:hover {
     box-shadow: 0px 0px 8px 0px rgba(54, 189, 180, 0.24);
     path {
@@ -61,10 +70,7 @@ const Text = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  .main {
-    font-family: NotoSansMedium;
-    font-size: 14px;
-  }
+
   .sub {
     font-family: NotoSansRegular;
     font-size: 13px;
