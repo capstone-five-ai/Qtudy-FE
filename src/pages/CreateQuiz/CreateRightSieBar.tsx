@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import RadioButtonList from '../../components/Button/RadioButtonList';
 import LargeButton from '../../components/Button/LargeButton';
-import FileNameInputField from '../../components/InputField/FileNameInputField';
+import FileNameInputField from '../../components/Input/FileNameInputField';
 
 const LIST = [
   { label: '문제 유형', button: ['객관식', '주관식'] },
@@ -60,7 +60,6 @@ CreateRightSideBar.defaultProps = {
 export default CreateRightSideBar;
 
 const Container = styled.div`
-  box-sizing: border-box;
   width: 360px;
   padding: 24px 0px;
   margin-left: auto;
