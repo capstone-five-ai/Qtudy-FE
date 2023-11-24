@@ -13,7 +13,9 @@ const Input = styled.input`
   background-color: transparent;
 
   font-family: NotoSansRegular;
-  font-size: 12px;
+  font-size: 13px;
+  line-height: auto;
+  letter-spacing: 0;
 
   &::placeholder {
     color: ${(props) => props.theme.colors.grayScale05};

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Typography from '../Typography';
 
 interface TabBarProps {
   tabList: string[];
@@ -11,7 +12,9 @@ function TabBar({ tabList, activeTab, setActiveTab }: TabBarProps) {
     <Wrapper>
       {tabList.map((tab) => (
         <TabButton key={tab} $active={tab === activeTab} onClick={() => setActiveTab(tab)}>
-          {tab}
+          <Typography variant="subtitle" color={tab === activeTab ? 'mainMintDark' : 'grayScale03'}>
+            {tab}
+          </Typography>
         </TabButton>
       ))}
     </Wrapper>
@@ -36,9 +39,6 @@ const TabButton = styled.div<{ $active: boolean }>`
   width: 280px;
   height: 60px;
 
-  font-family: NotoSansMedium;
-  font-size: 14px;
-  color: ${(props) => (props.$active ? props.theme.colors.mainMintDark : props.theme.colors.grayScale03)};
   border-bottom: 2px solid;
   border-color: ${(props) => (props.$active ? props.theme.colors.mainMint : 'transparent')};
   cursor: pointer;

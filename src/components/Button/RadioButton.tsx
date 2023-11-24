@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Typography from '../Typography';
 
 function RadioButton({ ...props }) {
   const { disabled, value } = props;
@@ -6,7 +7,9 @@ function RadioButton({ ...props }) {
   return (
     <Container $disabled={disabled}>
       <input type="radio" {...props} />
-      <span>{value}</span>
+      <Typography variant="body2" color="grayScale03">
+        {value}
+      </Typography>
     </Container>
   );
 }
@@ -38,10 +41,5 @@ const Container = styled.label<{ $disabled: boolean }>`
     background-color: ${(props) => props.theme.colors.mainMint};
     border: 3px solid white;
     box-shadow: 0 0 0 1px ${(props) => props.theme.colors.mainMint};
-  }
-
-  span {
-    font-family: NotoSansRegular;
-    font-size: 14px;
   }
 `;

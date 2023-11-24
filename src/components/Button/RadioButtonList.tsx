@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import RadioButton from './RadioButton';
+import Typography from '../Typography';
 
 interface RadioButtonListProps {
   buttonLabel: string;
@@ -12,7 +13,9 @@ interface RadioButtonListProps {
 function RadioButtonList({ buttonLabel, buttonList, checkedButton, setCheckedButton, disabled }: RadioButtonListProps) {
   return (
     <Container>
-      <div className="title">{buttonLabel}</div>
+      <Typography variant="subtitle" color="grayScale02">
+        {buttonLabel}
+      </Typography>
       <ButtonContainer>
         {buttonList.map((button) => (
           <RadioButton
@@ -35,19 +38,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  font-size: 14px;
-
-  .title {
-    font-family: NotoSansMedium;
-    color: ${(props) => props.theme.colors.grayScale02};
-  }
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-
-  font-family: NotoSansRegular;
-  color: ${(props) => props.theme.colors.grayScale03};
 `;
