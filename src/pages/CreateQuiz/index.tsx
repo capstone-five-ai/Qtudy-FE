@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 import { useSearchParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 import QuizLayout from '../../layouts/QuizLayout';
 import CreateRightSideBar from './CreateRightSieBar';
 import SelectAIQuizType from './SelectAIQuizType';
 import UploadType from './UploadType';
 import TextType from './TextType';
 import { UploadedFileType } from '../../types';
+import loadingSelector from '../../recoil/selectors/loading';
 
 const DEFAULT_INPUT_OPTION = {
   type: '', // 문제 유형
@@ -23,6 +25,7 @@ function CreateQuiz() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [pdfFile, setPdfFile] = useState<UploadedFileType | null>(null);
   const [imageFiles, setImageFiles] = useState<UploadedFileType[]>([]);
+  const setLoading = useSetRecoilState(loadingSelector);
 
   useEffect(() => {
     setInputOption(DEFAULT_INPUT_OPTION);
@@ -83,6 +86,7 @@ function CreateQuiz() {
     }
 
     // TODO: 서버로 formData 전송
+    setLoading(true);
   };
 
   return (
