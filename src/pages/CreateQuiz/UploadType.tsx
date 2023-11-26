@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useMemo } from 'react';
 import { ReactComponent as UploadIcon } from '../../assets/icons/icon-upload.svg';
 import { ReactComponent as ExitIcon } from '../../assets/icons/icon-exit.svg';
 import Typography from '../../components/Typography';
@@ -21,6 +22,17 @@ function UploadType({
   handleUploadButtonClick,
   handleDelete,
 }: UploadTypeProps) {
+  const pdfObjectURL = useMemo(() => {
+    if (pdfFile) {
+      return URL.createObjectURL(pdfFile!.file);
+    }
+    return undefined;
+  }, [pdfFile]);
+
+  const imageObjectURLs = useMemo(() => {
+    return imageFiles.map((image) => URL.createObjectURL(image.file));
+  }, [imageFiles]);
+
   if (!pdfFile && imageFiles.length <= 0) {
     return (
       <Container onClick={handleUploadButtonClick}>
@@ -50,7 +62,7 @@ function UploadType({
       {pdfFile !== null && (
         <Preview>
           <ExitIcon className="exit" onClick={() => handleDelete(null)} />
-          <object data={URL.createObjectURL(pdfFile.file)} type="application/pdf" width="400" height="300">
+          <object data={pdfObjectURL} type="application/pdf" width="400" height="300">
             PDF 미리보기를 지원하지 않는 브라우저입니다.
           </object>
         </Preview>
@@ -59,7 +71,7 @@ function UploadType({
         imageFiles.map((image, index) => (
           <Preview key={image.name}>
             <ExitIcon className="exit" onClick={() => handleDelete(index)} />
-            <img src={URL.createObjectURL(image.file)} alt="이미지 미리보기" />
+            <img src={imageObjectURLs[index]} alt="이미지 미리보기" />
           </Preview>
         ))}
     </PreviewContainer>
