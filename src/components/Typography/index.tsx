@@ -77,35 +77,35 @@ const typographies: Style[] = [
   {
     type: 'detail',
     font: NanumSquareBold,
-    size: 12,
+    size: 13,
     lineHeight: 'auto',
     letterSpacing: 2,
   },
   {
     type: 'caption1',
     font: NotoSansBold,
-    size: 12,
+    size: 13,
     lineHeight: 'auto',
     letterSpacing: 0,
   },
   {
     type: 'caption2',
     font: NotoSansMedium,
-    size: 12,
+    size: 13,
     lineHeight: 'auto',
     letterSpacing: 0,
   },
   {
     type: 'caption3',
     font: NotoSansRegular,
-    size: 12,
+    size: 13,
     lineHeight: 'auto',
     letterSpacing: 0,
   },
   {
-    type: 'caption4',
-    font: NotoSansRegular,
-    size: 10,
+    type: 'button',
+    font: NanumSquareExtraBold,
+    size: 14,
     lineHeight: 'auto',
     letterSpacing: 0,
   },
@@ -145,9 +145,9 @@ Typography.defaultProps = {
 
 const STypography = styled.div<{ $style: Style; $color: keyof ColorsTypes | undefined }>`
   font-family: ${(props) => props.$style.font};
-  font-size: ${(props) => props.$style.size};
+  font-size: ${(props) => props.$style.size}px;
   line-height: ${(props) => props.$style.lineHeight};
-  letter-spacing: ${(props) => props.$style.letterSpacing};
+  letter-spacing: ${(props) => props.$style.letterSpacing}%;
 
   color: ${(props) => props.$color && props.theme.colors[props.$color]};
 `;
