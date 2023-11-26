@@ -50,12 +50,12 @@ const BrandWrapper = styled.div`
 
 const LoginWrapper = styled.div`
   position: fixed;
-  margin: 0 -20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  width: 100%;
+  width: 100vw;
+  left: 0;
   bottom: 27%;
 
   animation: ${fadeIn} 700ms ease-in-out forwards;
