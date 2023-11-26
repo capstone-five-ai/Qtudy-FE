@@ -145,9 +145,9 @@ Typography.defaultProps = {
 
 const STypography = styled.div<{ $style: Style; $color: keyof ColorsTypes | undefined }>`
   font-family: ${(props) => props.$style.font};
-  font-size: ${(props) => props.$style.size};
+  font-size: ${(props) => props.$style.size}px;
   line-height: ${(props) => props.$style.lineHeight};
-  letter-spacing: ${(props) => props.$style.letterSpacing};
+  letter-spacing: ${(props) => props.$style.letterSpacing}%;
 
   color: ${(props) => props.$color && props.theme.colors[props.$color]};
 `;
