@@ -9,16 +9,22 @@ import NotoSansRegular from '../assets/fonts/NotoSansKR-Regular.woff';
 const GlobalStyles = createGlobalStyle`
   ${reset}
 
+  body {
+    line-height: normal;
+  }
+
   @font-face {
     font-family: NotoSansRegular;
     src: url(${NotoSansRegular}) format('woff');
     font-style: normal;
   }
+
   @font-face {
     font-family: NotoSansMedium;
     src: url(${NotoSansMedium}) format('woff');
     font-style: normal;
   }
+  
   @font-face {
     font-family: NotoSansBold;
     src: url(${NotoSansBold}) format('woff');
