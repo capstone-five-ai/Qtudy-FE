@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import MenuBar from './MenuBar';
 import { ReactComponent as Logo } from '../../assets/logo/logo_main.svg';
 import Typography from '../Typography';
@@ -22,7 +23,9 @@ function Header() {
     <Container>
       <InnerContainer>
         <div className="menu-list">
-          <Logo className="logo-icon" width="113px" height="60px" />
+          <Link to="/" style={{ margin: '0px 45px' }}>
+            <Logo width="113px" height="60px" />
+          </Link>
           <MenuBar />
         </div>
         {login ? (
@@ -41,10 +44,6 @@ function Header() {
 
 const Container = styled.div`
   background-color: ${(props) => props.theme.colors.mainMintLight};
-
-  .logo-icon {
-    margin: 0px 45px;
-  }
 `;
 
 const InnerContainer = styled.div`

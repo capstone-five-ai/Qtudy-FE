@@ -54,7 +54,6 @@ const Container = styled.div`
 
 const MenuButton = styled.div`
   position: relative;
-  cursor: pointer;
 
   &:hover ${ActiveIcon} {
     background: ${(props) => props.theme.colors.mainMint};
