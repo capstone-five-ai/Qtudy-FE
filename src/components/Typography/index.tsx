@@ -9,6 +9,8 @@ const NotoSansBold = 'NotoSansBold';
 const NanumSquareBold = 'NanumSquareBold';
 const NanumSquareExtraBold = 'NanumSquareExtraBold';
 
+const AppleSDGothicNeoRegular = 'AppleSDGothicNeoRegular';
+
 interface Style {
   type: string;
   font: string;
@@ -106,6 +108,13 @@ const typographies: Style[] = [
     type: 'button',
     font: NanumSquareExtraBold,
     size: 14,
+    lineHeight: 'auto',
+    letterSpacing: 0,
+  },
+  {
+    type: 'kakaoButton',
+    font: AppleSDGothicNeoRegular,
+    size: 14.5,
     lineHeight: 'auto',
     letterSpacing: 0,
   },
