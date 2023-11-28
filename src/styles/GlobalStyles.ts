@@ -10,6 +10,10 @@ import AppleSDGothicNeoRegular from '../assets/fonts/AppleSDGothicNeo-Regular.wo
 const GlobalStyles = createGlobalStyle`
   ${reset}
 
+  * {
+    box-sizing: border-box;
+  }
+
   body {
     line-height: normal;
   }
