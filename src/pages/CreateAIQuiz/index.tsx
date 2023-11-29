@@ -8,6 +8,7 @@ import UploadType from './UploadType';
 import TextType from './TextType';
 import { UploadedFileType } from '../../types';
 import loadingSelector from '../../recoil/selectors/loading';
+import ContentWrapper from '../../components/Wrapper/ContentWrapper';
 
 const DEFAULT_INPUT_OPTION = {
   type: '', // 문제 유형
@@ -89,26 +90,28 @@ function CreateAIQuiz() {
   };
 
   return (
-    <Container>
-      {!type && <SelectAIQuizType />}
-      {type === 'upload' && (
-        <UploadType
-          inputRef={inputRef}
-          pdfFile={pdfFile}
-          imageFiles={imageFiles}
-          handleFileUpload={handleFileUpload}
-          handleUploadButtonClick={handleUploadButtonClick}
-          handleDelete={handleDelete}
+    <ContentWrapper>
+      <Container>
+        {!type && <SelectAIQuizType />}
+        {type === 'upload' && (
+          <UploadType
+            inputRef={inputRef}
+            pdfFile={pdfFile}
+            imageFiles={imageFiles}
+            handleFileUpload={handleFileUpload}
+            handleUploadButtonClick={handleUploadButtonClick}
+            handleDelete={handleDelete}
+          />
+        )}
+        {type === 'text' && <TextType inputText={inputText} setInputText={setInputText} />}
+        <CreateRightSideBar
+          disabled={!type}
+          inputOption={inputOption}
+          setInputOption={setInputOption}
+          handleSubmit={handleSubmit}
         />
-      )}
-      {type === 'text' && <TextType inputText={inputText} setInputText={setInputText} />}
-      <CreateRightSideBar
-        disabled={!type}
-        inputOption={inputOption}
-        setInputOption={setInputOption}
-        handleSubmit={handleSubmit}
-      />
-    </Container>
+      </Container>
+    </ContentWrapper>
   );
 }
 

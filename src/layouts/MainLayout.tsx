@@ -17,9 +17,7 @@ function MainLayout({ header, tabList }: MainLayoutProps) {
       <TabBar tabList={tabList} />
       <ChildrenContainer>
         <MainWrapper>
-          <InnerContainer>
-            <Outlet />
-          </InnerContainer>
+          <Outlet />
         </MainWrapper>
       </ChildrenContainer>
     </Container>
@@ -38,10 +36,4 @@ const ChildrenContainer = styled.div`
   padding-top: 20px;
   padding-bottom: 20px;
   width: 100%;
-`;
-
-const InnerContainer = styled.div`
-  background-color: ${(props) => props.theme.colors.grayScale08};
-  border-radius: 8px;
-  box-shadow: 0px 0px 4px 0px rgba(189, 189, 189, 0.28);
 `;
