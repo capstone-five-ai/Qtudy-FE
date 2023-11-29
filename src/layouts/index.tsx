@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import Header from '../components/Header';
-import Loader from '../components/Loader';
+import Loader from '../components/Modal/Loader';
 import loadingSelector from '../recoil/selectors/loading';
 
 function Layout() {
