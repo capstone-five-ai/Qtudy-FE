@@ -15,7 +15,7 @@ interface RightSideBarProps {
   handleSubmit: () => void;
 }
 
-function CreateRightSideBar({ disabled = false, inputOption, setInputOption, handleSubmit }: RightSideBarProps) {
+function RightSideBar({ disabled = false, inputOption, setInputOption, handleSubmit }: RightSideBarProps) {
   const handleFileNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputOption({ ...inputOption, [e.target.name]: e.target.value });
   };
@@ -40,8 +40,8 @@ function CreateRightSideBar({ disabled = false, inputOption, setInputOption, han
   );
 }
 
-CreateRightSideBar.defaultProps = {
+RightSideBar.defaultProps = {
   disabled: false,
 };
 
-export default CreateRightSideBar;
+export default RightSideBar;

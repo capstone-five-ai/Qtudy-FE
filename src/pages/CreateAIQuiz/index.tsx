@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useSearchParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
-import CreateRightSideBar from './CreateRightSieBar';
+import RightSideBar from './RightSideBar';
 import SelectAIQuizType from './SelectAIQuizType';
 import UploadType from './UploadType';
 import TextType from './TextType';
@@ -104,7 +104,7 @@ function CreateAIQuiz() {
           />
         )}
         {type === 'text' && <TextType inputText={inputText} setInputText={setInputText} />}
-        <CreateRightSideBar
+        <RightSideBar
           disabled={!type}
           inputOption={inputOption}
           setInputOption={setInputOption}
