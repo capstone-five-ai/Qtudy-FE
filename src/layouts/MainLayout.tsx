@@ -1,26 +1,32 @@
 import styled from 'styled-components';
-import { useState } from 'react';
-import { TAB_AI_QUIZ_CREATION, TEXT_AI_QUIZ_CREATION } from '../constants';
+import { Outlet } from 'react-router-dom';
 import TabBar from '../components/TapBar/TabBar';
 import ContentHeader from '../components/Header/ContentHeader';
 import MainWrapper from '../components/Wrapper/MainWrapper';
+import { HeaderContentType, TabType } from '../types';
 
-function QuizLayout({ children }: { children: React.ReactNode }) {
-  const [activeTab, setActiveTab] = useState(TAB_AI_QUIZ_CREATION[0]);
+interface MainLayoutProps {
+  header: HeaderContentType;
+  tabList: TabType[];
+}
+
+function MainLayout({ header, tabList }: MainLayoutProps) {
   return (
     <Container>
-      <ContentHeader text={TEXT_AI_QUIZ_CREATION} />
-      <TabBar tabList={TAB_AI_QUIZ_CREATION} activeTab={activeTab} setActiveTab={setActiveTab} />
+      <ContentHeader text={header} />
+      <TabBar tabList={tabList} />
       <ChildrenContainer>
         <MainWrapper>
-          <InnerContainer>{children}</InnerContainer>
+          <InnerContainer>
+            <Outlet />
+          </InnerContainer>
         </MainWrapper>
       </ChildrenContainer>
     </Container>
   );
 }
 
-export default QuizLayout;
+export default MainLayout;
 
 const Container = styled.div`
   display: flex;

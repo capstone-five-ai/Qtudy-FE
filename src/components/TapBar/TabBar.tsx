@@ -1,27 +1,33 @@
 import styled from 'styled-components';
+import { Link, useLocation } from 'react-router-dom';
 import Typography from '../Typography';
+import { TabType } from '../../types';
 
 interface TabBarProps {
-  tabList: string[];
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
+  tabList: TabType[];
 }
 
-function TabBar({ tabList, activeTab, setActiveTab }: TabBarProps) {
+function TabBar({ tabList }: TabBarProps) {
+  const location = useLocation();
+
   return (
-    <Wrapper>
-      {tabList.map((tab) => (
-        <TabButton key={tab} $active={tab === activeTab} onClick={() => setActiveTab(tab)}>
-          <Typography variant="subtitle" color={tab === activeTab ? 'mainMintDark' : 'grayScale03'}>
-            {tab}
-          </Typography>
-        </TabButton>
+    <Container>
+      {tabList.map((tabItem) => (
+        <Link to={tabItem.path} style={{ textDecoration: 'none' }}>
+          <TabButton key={tabItem.tab} $active={tabItem.path === location.pathname}>
+            <Typography variant="subtitle" color={tabItem.path === location.pathname ? 'mainMintDark' : 'grayScale03'}>
+              {tabItem.tab}
+            </Typography>
+          </TabButton>
+        </Link>
       ))}
-    </Wrapper>
+    </Container>
   );
 }
 
-const Wrapper = styled.div`
+export default TabBar;
+
+const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -43,5 +49,3 @@ const TabButton = styled.div<{ $active: boolean }>`
   border-color: ${(props) => (props.$active ? props.theme.colors.mainMint : 'transparent')};
   cursor: pointer;
 `;
-
-export default TabBar;

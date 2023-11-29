@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { useSearchParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
-import QuizLayout from '../../layouts/QuizLayout';
 import CreateRightSideBar from './CreateRightSieBar';
 import SelectAIQuizType from './SelectAIQuizType';
 import UploadType from './UploadType';
@@ -90,28 +89,26 @@ function CreateAIQuiz() {
   };
 
   return (
-    <QuizLayout>
-      <Container>
-        {!type && <SelectAIQuizType />}
-        {type === 'upload' && (
-          <UploadType
-            inputRef={inputRef}
-            pdfFile={pdfFile}
-            imageFiles={imageFiles}
-            handleFileUpload={handleFileUpload}
-            handleUploadButtonClick={handleUploadButtonClick}
-            handleDelete={handleDelete}
-          />
-        )}
-        {type === 'text' && <TextType inputText={inputText} setInputText={setInputText} />}
-        <CreateRightSideBar
-          disabled={!type}
-          inputOption={inputOption}
-          setInputOption={setInputOption}
-          handleSubmit={handleSubmit}
+    <Container>
+      {!type && <SelectAIQuizType />}
+      {type === 'upload' && (
+        <UploadType
+          inputRef={inputRef}
+          pdfFile={pdfFile}
+          imageFiles={imageFiles}
+          handleFileUpload={handleFileUpload}
+          handleUploadButtonClick={handleUploadButtonClick}
+          handleDelete={handleDelete}
         />
-      </Container>
-    </QuizLayout>
+      )}
+      {type === 'text' && <TextType inputText={inputText} setInputText={setInputText} />}
+      <CreateRightSideBar
+        disabled={!type}
+        inputOption={inputOption}
+        setInputOption={setInputOption}
+        handleSubmit={handleSubmit}
+      />
+    </Container>
   );
 }
 
