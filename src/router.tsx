@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from './layouts';
 import Home from './pages/home';
-import CreateQuiz from './pages/CreateQuiz';
+import CreateAIQuiz from './pages/CreateAIQuiz';
 
 const routes = [
   {
@@ -14,7 +14,7 @@ const routes = [
       },
       {
         path: 'create/quiz',
-        element: <CreateQuiz />,
+        element: <CreateAIQuiz />,
       },
     ],
   },

@@ -17,7 +17,7 @@ const DEFAULT_INPUT_OPTION = {
   file: '', // 파일명
 };
 
-function CreateQuiz() {
+function CreateAIQuiz() {
   const [createType] = useSearchParams();
   const type = createType.get('type');
   const [inputOption, setInputOption] = useState<{ [key: string]: string }>(DEFAULT_INPUT_OPTION);
@@ -115,7 +115,7 @@ function CreateQuiz() {
   );
 }
 
-export default CreateQuiz;
+export default CreateAIQuiz;
 
 const Container = styled.div`
   display: flex;

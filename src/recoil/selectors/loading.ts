@@ -1,5 +1,5 @@
 import { selector } from 'recoil';
-import loadingState from '../atoms/LoadingState';
+import loadingState from '../atoms/loadingState';
 
 const loadingSelector = selector({
   key: 'loadingSelector',
