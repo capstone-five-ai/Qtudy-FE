@@ -3,18 +3,13 @@ import { Outlet } from 'react-router-dom';
 import TabBar from '../components/TapBar/TabBar';
 import ContentHeader from '../components/Header/ContentHeader';
 import MainWrapper from '../components/Wrapper/MainWrapper';
-import { HeaderContentType, TabType } from '../types';
+import { HEADER_CONTENT } from '../constants';
 
-interface MainLayoutProps {
-  header: HeaderContentType;
-  tabList: TabType[];
-}
-
-function MainLayout({ header, tabList }: MainLayoutProps) {
+function MainLayout({ contentKey }: { contentKey: string }) {
   return (
     <Container>
-      <ContentHeader text={header} />
-      <TabBar tabList={tabList} />
+      <ContentHeader text={HEADER_CONTENT[contentKey].header} />
+      <TabBar tabList={HEADER_CONTENT[contentKey].tabs} />
       <ChildrenContainer>
         <MainWrapper>
           <Outlet />
