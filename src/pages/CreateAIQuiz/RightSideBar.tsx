@@ -1,4 +1,4 @@
-import RadioButtonList from '../../components/Button/RadioButton/RadioButtonList';
+import RadioButtonFieldList from '../../components/Button/RadioButton/RadioButtonFieldList';
 import FileNameInputField from '../../components/Input/FileNameInputField';
 import SideBar from '../../components/SideBar';
 
@@ -24,7 +24,7 @@ function RightSideBar({ disabled = false, inputOption, setInputOption, handleSub
     <SideBar buttonDisabled={Object.values(inputOption).includes('')} handleSubmit={handleSubmit}>
       <>
         {LIST.map((list) => (
-          <RadioButtonList
+          <RadioButtonFieldList
             key={list.dataKey}
             optionInputKey={list.dataKey}
             buttonLabel={list.label}

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Typography from '../../Typography';
 import RadioButtonField from './RadioButtonField';
 
-interface RadioButtonListProps {
+interface RadioButtonFieldListProps {
   optionInputKey: string; // 설정 변수 내 키 값
   inputOption: { [key: string]: string }; // 설정 변수
   setInputOption: React.Dispatch<React.SetStateAction<{ [key: string]: string }>>; // 설정 수정 함수
@@ -11,14 +11,14 @@ interface RadioButtonListProps {
   disabled: boolean; // 버튼 활성화 여부
 }
 
-function RadioButtonList({
+function RadioButtonFieldList({
   optionInputKey,
   inputOption,
   setInputOption,
   buttonLabel,
   buttonList,
   disabled,
-}: RadioButtonListProps) {
+}: RadioButtonFieldListProps) {
   return (
     <Container>
       <Typography variant="subtitle" color="grayScale02">
@@ -40,7 +40,7 @@ function RadioButtonList({
   );
 }
 
-export default RadioButtonList;
+export default RadioButtonFieldList;
 
 const Container = styled.div`
   display: flex;
