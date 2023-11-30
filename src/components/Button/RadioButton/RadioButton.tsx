@@ -3,7 +3,7 @@ import styled from 'styled-components';
 function RadioButton({ ...props }) {
   const { disabled } = props;
 
-  return <StyledInput type="radio" $disabled={disabled} {...props} />;
+  return <StyledInput type="radio" $disabled={disabled !== undefined ? disabled : false} {...props} />;
 }
 
 export default RadioButton;
