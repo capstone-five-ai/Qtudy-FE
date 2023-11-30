@@ -1,4 +1,4 @@
-import RadioButtonList from '../../components/Button/RadioButtonList';
+import RadioButtonList from '../../components/Button/RadioButton/RadioButtonList';
 import FileNameInputField from '../../components/Input/FileNameInputField';
 import SideBar from '../../components/SideBar';
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import RadioButton from './RadioButton';
-import Typography from '../Typography';
+import Typography from '../../Typography';
+import RadioButtonField from './RadioButtonField';
 
 interface RadioButtonListProps {
   optionInputKey: string; // 설정 변수 내 키 값
@@ -26,7 +26,7 @@ function RadioButtonList({
       </Typography>
       <ButtonContainer>
         {buttonList.map((button) => (
-          <RadioButton
+          <RadioButtonField
             key={button}
             value={button}
             name={buttonLabel}
