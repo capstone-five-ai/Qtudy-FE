@@ -3,20 +3,16 @@ import { useState } from 'react';
 import { ReactComponent as CheckIcon } from '../../assets/icons/icon-check.svg';
 import { ReactComponent as EditIcon } from '../../assets/icons/icon-edit.svg';
 import { ReactComponent as TrashIcon } from '../../assets/icons/icon-trash.svg';
+import { CreateOwnQuizInput } from '../../types';
 
 const PLACEHOLDER = {
   question: '퀴즈 질문을 작성해주세요.',
   option: '선지 내용을 작성해주세요.',
 };
 
-interface QuizInput {
-  input: string;
-  check: boolean;
-}
-
 export interface QuizInputFieldProps {
   type: 'question' | 'option';
-  input: QuizInput;
+  input: CreateOwnQuizInput;
   index: number;
   handleEdit: (type: string, index: number) => void;
   handleCheck: (type: string, index: number, input: string) => void;

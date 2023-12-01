@@ -1,21 +1,23 @@
-import { useState } from 'react';
 import RadioButtonList from '../../components/Button/RadioButton/RadioButtonList';
 import SideBar from '../../components/SideBar';
+import { CREATE_OWN_QUIZ_TYPE } from '../../constants';
 
 interface RightSideBarProps {
+  quizType: { [key: string]: string };
+  disabled: boolean;
+  setQuizType: React.Dispatch<React.SetStateAction<{ [key: string]: string }>>;
   handleSubmit: () => void;
 }
 
-function RightSideBar({ handleSubmit }: RightSideBarProps) {
-  const [inputOption, setInputOption] = useState<{ [key: string]: string }>({ type: '' });
+function RightSideBar({ quizType, disabled, setQuizType, handleSubmit }: RightSideBarProps) {
   return (
-    <SideBar buttonDisabled={false} handleSubmit={handleSubmit}>
+    <SideBar buttonDisabled={disabled} handleSubmit={handleSubmit}>
       <RadioButtonList
         optionInputKey="type"
         buttonLabel="문제 유형"
-        buttonList={['객관식', '주관식']}
-        inputOption={inputOption}
-        setInputOption={setInputOption}
+        buttonList={CREATE_OWN_QUIZ_TYPE}
+        inputOption={quizType}
+        setInputOption={setQuizType}
         disabled={false}
       />
     </SideBar>

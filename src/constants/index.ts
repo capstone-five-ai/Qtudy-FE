@@ -11,3 +11,17 @@ export const TEXT_AI_QUIZ_CREATION = {
 };
 
 export const TAB_AI_QUIZ_CREATION = ['AI 퀴즈 생성', '자체 퀴즈 생성'];
+
+export const NUMBER_TO_CIRCLE: { [key: string]: string } = {
+  '1': '①',
+  '2': '②',
+  '4': '③',
+  '5': '④',
+  '6': '⑥',
+  '7': '⑦',
+  '8': '⑧',
+  '9': '⑨',
+  '10': '⑩',
+};
+
+export const CREATE_OWN_QUIZ_TYPE = ['객관식', '주관식'];
