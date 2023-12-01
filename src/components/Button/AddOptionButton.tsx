@@ -9,17 +9,19 @@ interface AddOptionButtonProps {
 
 function AddOptionButton({ disabled = false, handleClick }: AddOptionButtonProps) {
   return (
-    <StyledButton
-      $disabled={disabled}
-      onClick={() => {
-        if (!disabled) handleClick();
-      }}
-    >
-      <PlusIcon />
-      <Typography variant="caption2" color={disabled ? 'grayScale06' : 'mainMintDark'}>
-        선지 추가하기
-      </Typography>
-    </StyledButton>
+    <Container>
+      <StyledButton
+        $disabled={disabled}
+        onClick={() => {
+          if (!disabled) handleClick();
+        }}
+      >
+        <PlusIcon />
+        <Typography variant="caption2" color={disabled ? 'grayScale06' : 'mainMintDark'}>
+          선지 추가하기
+        </Typography>
+      </StyledButton>
+    </Container>
   );
 }
 
@@ -28,6 +30,10 @@ AddOptionButton.defaultProps = {
 };
 
 export default AddOptionButton;
+
+const Container = styled.div`
+  padding-left: 28px;
+`;
 
 const StyledButton = styled.button<{ $disabled: boolean }>`
   display: flex;
