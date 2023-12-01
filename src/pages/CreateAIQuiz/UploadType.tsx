@@ -61,7 +61,9 @@ function UploadType({
     <PreviewContainer>
       {pdfFile !== null && (
         <Preview>
-          <ExitIcon className="exit" onClick={() => handleDelete(null)} />
+          <button type="button" className="icon-container" onClick={() => handleDelete(null)}>
+            <ExitIcon />
+          </button>
           <object data={pdfObjectURL} type="application/pdf" width="400" height="300">
             PDF 미리보기를 지원하지 않는 브라우저입니다.
           </object>
@@ -70,7 +72,9 @@ function UploadType({
       {imageFiles.length > 0 &&
         imageFiles.map((image, index) => (
           <Preview key={image.name}>
-            <ExitIcon className="exit" onClick={() => handleDelete(index)} />
+            <button type="button" className="icon-container" onClick={() => handleDelete(index)}>
+              <ExitIcon />
+            </button>
             <img src={imageObjectURLs[index]} alt="이미지 미리보기" />
           </Preview>
         ))}
@@ -106,23 +110,16 @@ const PreviewContainer = styled.div`
   height: max-content;
   padding: 16px;
   gap: 16px;
-
-  .exit {
-    position: absolute;
-    z-index: 1;
-    top: 16px;
-    right: 16px;
-    cursor: pointer;
-  }
 `;
 
 const Preview = styled.div`
   width: 245px;
   height: 138px;
-  background: ${(props) => props.theme.colors.grayScale06};
   border-radius: 4px;
+  border: 1px solid ${(props) => props.theme.colors.grayScale06};
   position: relative;
   overflow: hidden;
+  box-shadow: 0px 0px 4px 0px rgba(117, 117, 117, 0.28);
 
   object {
     width: 111%;
@@ -135,5 +132,29 @@ const Preview = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  .icon-container {
+    display: none;
+  }
+
+  &:hover {
+    .icon-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: 24px;
+      height: 24px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(117, 117, 117, 0.6);
+
+      position: absolute;
+      z-index: 1;
+      top: 12px;
+      right: 12px;
+      cursor: pointer;
+    }
   }
 `;
