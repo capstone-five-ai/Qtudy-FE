@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { ReactNode } from 'react';
-import LargeButton from '../Button/LargeButton';
+import GenerateButton from '../Button/GenerateButton';
 
 interface SideBarProps {
   buttonDisabled: boolean;
@@ -13,9 +13,7 @@ function SideBar({ buttonDisabled, handleSubmit, children }: SideBarProps) {
     <Container>
       <InnerContainer>
         <div>{children}</div>
-        <LargeButton type="button" disabled={buttonDisabled} onClick={handleSubmit}>
-          Generate
-        </LargeButton>
+        <GenerateButton disabled={buttonDisabled} onClick={handleSubmit} />
       </InnerContainer>
     </Container>
   );

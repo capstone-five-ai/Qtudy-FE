@@ -1,32 +1,30 @@
 import styled from 'styled-components';
 import Typography from '../Typography';
+import { ReactComponent as TwinkleIcon } from '../../assets/icons/icon-twinkle.svg';
 
-type ButtonType = JSX.IntrinsicElements['button']['type'];
-
-interface LargeButtonProps {
-  type: ButtonType;
-  children: React.ReactNode;
+interface GenerateButtonProps {
   disabled: boolean;
   onClick?: () => void;
 }
 
-LargeButton.defaultProps = {
+GenerateButton.defaultProps = {
   onClick() {},
 };
 
-function LargeButton({ type, children, disabled, onClick }: LargeButtonProps) {
+function GenerateButton({ disabled, onClick }: GenerateButtonProps) {
   return (
     <Container $disabled={disabled}>
-      <button type={type === 'button' ? 'button' : 'submit'} disabled={disabled} onClick={onClick}>
+      <button type="button" disabled={disabled} onClick={onClick}>
+        <TwinkleIcon />
         <Typography variant="button" color="grayScale09">
-          {children}
+          Generate
         </Typography>
       </button>
     </Container>
   );
 }
 
-export default LargeButton;
+export default GenerateButton;
 
 const Container = styled.div<{ $disabled: boolean }>`
   width: 288px;
@@ -35,6 +33,11 @@ const Container = styled.div<{ $disabled: boolean }>`
   box-shadow: ${(props) => !props.$disabled && `8px 4px 20px 0px ${props.theme.colors.mainMintShadow}`};
 
   button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
     width: 100%;
     height: 100%;
     border: none;
