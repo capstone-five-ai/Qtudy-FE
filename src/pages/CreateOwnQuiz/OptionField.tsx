@@ -5,8 +5,8 @@ import Typography from '../../components/Typography';
 interface OptionFieldProps {
   options: { input: string; check: boolean }[];
   answer: number;
-  handleEdit: (index: number) => void;
-  handleCheck: (index: number, input: string) => void;
+  handleEdit: (type: string, index: number) => void;
+  handleCheck: (type: string, index: number, input: string) => void;
   handleDelete: (index: number) => void;
   handleSetAnswer: React.Dispatch<React.SetStateAction<number>>;
 }

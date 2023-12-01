@@ -18,8 +18,8 @@ export interface QuizInputFieldProps {
   type: 'question' | 'option';
   input: QuizInput;
   index: number;
-  handleEdit: (index: number) => void;
-  handleCheck: (index: number, input: string) => void;
+  handleEdit: (type: string, index: number) => void;
+  handleCheck: (type: string, index: number, input: string) => void;
   handleDelete?: (index: number) => void;
 }
 
@@ -46,14 +46,14 @@ function QuizInputField({ type, input, index, handleEdit, handleCheck, handleDel
         {input.check ? (
           <EditIcon
             onClick={() => {
-              handleEdit(index);
+              handleEdit(type, index);
             }}
             style={{ cursor: 'pointer' }}
           />
         ) : (
           <CheckIcon
             onClick={() => {
-              handleCheck(index, currentInput);
+              handleCheck(type, index, currentInput);
             }}
             style={{ cursor: 'pointer' }}
           />

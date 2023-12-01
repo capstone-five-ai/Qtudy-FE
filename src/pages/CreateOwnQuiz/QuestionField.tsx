@@ -3,8 +3,8 @@ import QuizInputField from '../../components/Input/QuizInputField';
 
 interface QuestionFieldProps {
   input: { input: string; check: boolean };
-  handleEdit: (index: number) => void;
-  handleCheck: (index: number, input: string) => void;
+  handleEdit: (type: string, index: number) => void;
+  handleCheck: (type: string, index: number, input: string) => void;
 }
 function QuestionField({ input, handleEdit, handleCheck }: QuestionFieldProps) {
   return (
