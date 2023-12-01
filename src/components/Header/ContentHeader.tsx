@@ -20,7 +20,7 @@ const Container = styled.div`
   flex-direction: column;
   gap: 10px;
   text-align: center;
-  padding: 20px 0px;
+  padding: 28px 0px 20px;
 `;
 
 export default ContentHeader;

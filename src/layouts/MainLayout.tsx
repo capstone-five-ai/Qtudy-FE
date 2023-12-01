@@ -28,7 +28,6 @@ const Container = styled.div`
 `;
 
 const ChildrenContainer = styled.div`
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px 0px;
   width: 100%;
 `;
