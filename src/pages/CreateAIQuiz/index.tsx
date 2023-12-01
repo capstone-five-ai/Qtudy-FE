@@ -119,5 +119,5 @@ export default CreateAIQuiz;
 
 const Container = styled.div`
   display: flex;
-  min-height: 524px;
+  min-height: inherit;
 `;

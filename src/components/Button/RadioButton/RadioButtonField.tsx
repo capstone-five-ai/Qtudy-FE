@@ -23,6 +23,6 @@ const Container = styled.label<{ $disabled: boolean }>`
   flex-direction: row;
   align-items: center;
   gap: 12px;
-  padding: 1px;
+  padding: 0px 1px;
   cursor: ${(props) => (props.$disabled ? 'default' : 'pointer')};
 `;

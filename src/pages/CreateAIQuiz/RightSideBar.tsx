@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import RadioButtonFieldList from '../../components/Button/RadioButton/RadioButtonFieldList';
 import FileNameInputField from '../../components/Input/FileNameInputField';
 import SideBar from '../../components/SideBar';
@@ -22,7 +23,7 @@ function RightSideBar({ disabled = false, inputOption, setInputOption, handleSub
 
   return (
     <SideBar buttonDisabled={Object.values(inputOption).includes('')} handleSubmit={handleSubmit}>
-      <>
+      <Container>
         {LIST.map((list) => (
           <RadioButtonFieldList
             key={list.dataKey}
@@ -35,7 +36,7 @@ function RightSideBar({ disabled = false, inputOption, setInputOption, handleSub
           />
         ))}
         <FileNameInputField name="file" value={inputOption.file} onChange={handleFileNameChange} disabled={disabled} />
-      </>
+      </Container>
     </SideBar>
   );
 }
@@ -45,3 +46,9 @@ RightSideBar.defaultProps = {
 };
 
 export default RightSideBar;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+`;
