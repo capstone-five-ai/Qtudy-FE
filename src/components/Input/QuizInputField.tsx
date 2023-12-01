@@ -14,7 +14,7 @@ interface QuizInput {
   check: boolean;
 }
 
-interface QuizInputFieldProps {
+export interface QuizInputFieldProps {
   type: 'question' | 'option';
   input: QuizInput;
   index: number;
@@ -36,7 +36,12 @@ function QuizInputField({ type, input, index, handleEdit, handleCheck, handleDel
 
   return (
     <Container>
-      <StyledInput placeholder={PLACEHOLDER[type]} value={currentInput} onChange={handleInputChange} />
+      <StyledInput
+        placeholder={PLACEHOLDER[type]}
+        value={currentInput}
+        onChange={handleInputChange}
+        disabled={input.check}
+      />
       <IconContainer>
         {input.check ? (
           <EditIcon
@@ -74,6 +79,7 @@ const Container = styled.div`
   justify-content: space-between;
   gap: 20px;
 
+  width: 100%;
   background: ${(props) => props.theme.colors.grayScale09};
   padding: 12px 16px;
   border-radius: 8px;
@@ -92,6 +98,10 @@ const StyledInput = styled.input`
 
   &::placeholder {
     color: ${(props) => props.theme.colors.grayScale05};
+  }
+
+  &:disabled {
+    background: transparent;
   }
 `;
 
