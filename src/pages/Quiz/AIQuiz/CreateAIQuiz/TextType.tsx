@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import TextAreaField from '../../components/Input/TextAreaField';
+import TextAreaField from '../../../../components/Input/TextAreaField';
 
 interface TextTypeProps {
   inputText: string;

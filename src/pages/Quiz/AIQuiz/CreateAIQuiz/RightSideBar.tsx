@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import RadioButtonFieldList from '../../components/Button/RadioButton/RadioButtonFieldList';
-import FileNameInputField from '../../components/Input/FileNameInputField';
-import SideBar from '../../components/SideBar';
+import RadioButtonFieldList from '../../../../components/Button/RadioButton/RadioButtonFieldList';
+import FileNameInputField from '../../../../components/Input/FileNameInputField';
+import SideBar from '../../../../components/SideBar';
 
 const LIST = [
   { dataKey: 'type', label: '문제 유형', button: ['객관식', '주관식'] },
