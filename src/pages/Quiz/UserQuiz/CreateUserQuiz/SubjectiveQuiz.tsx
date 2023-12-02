@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import EditAnswerAccordion from '../../components/Accordion/EditAnswerAccordion';
-import { CreateOwnQuizInput } from '../../types';
+import EditAnswerAccordion from '../../../../components/Accordion/EditAnswerAccordion';
+import { CreateUserQuizInput } from '../../../../types';
 import QuestionField from './QuestionField';
 
 interface SubjectiveQuizProps {
-  question: CreateOwnQuizInput;
+  question: CreateUserQuizInput;
   answer: number;
-  commentary: CreateOwnQuizInput;
+  commentary: CreateUserQuizInput;
   handleEdit: (type: string, index: number) => void;
   handleCheck: (type: string, index: number, input: string) => void;
 }

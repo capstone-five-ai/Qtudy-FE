@@ -1,6 +1,6 @@
-import RadioButtonList from '../../components/Button/RadioButton/RadioButtonList';
-import SideBar from '../../components/SideBar';
-import { CREATE_OWN_QUIZ_TYPE } from '../../constants';
+import RadioButtonFieldList from '../../../../components/Button/RadioButton/RadioButtonFieldList';
+import SideBar from '../../../../components/SideBar';
+import { CREATE_USER_QUIZ_TYPE } from '../../../../constants';
 
 interface RightSideBarProps {
   quizType: { [key: string]: string };
@@ -12,10 +12,10 @@ interface RightSideBarProps {
 function RightSideBar({ quizType, disabled, setQuizType, handleSubmit }: RightSideBarProps) {
   return (
     <SideBar buttonDisabled={disabled} handleSubmit={handleSubmit}>
-      <RadioButtonList
+      <RadioButtonFieldList
         optionInputKey="type"
         buttonLabel="문제 유형"
-        buttonList={CREATE_OWN_QUIZ_TYPE}
+        buttonList={CREATE_USER_QUIZ_TYPE}
         inputOption={quizType}
         setInputOption={setQuizType}
         disabled={false}

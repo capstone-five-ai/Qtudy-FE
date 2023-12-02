@@ -15,7 +15,7 @@ export const HEADER_CONTENT: { [key: string]: { header: HeaderContentType; tabs:
     },
     tabs: [
       { tab: 'AI 퀴즈 생성', path: '/create/quiz/ai' },
-      { tab: '자체 퀴즈 생성', path: '/create/quiz/own' },
+      { tab: '자체 퀴즈 생성', path: '/create/quiz/user' },
     ],
   },
   createSummary: {
@@ -49,4 +49,4 @@ export const NUMBER_TO_CIRCLE: { [key: string]: string } = {
   '10': '⑩',
 };
 
-export const CREATE_OWN_QUIZ_TYPE = ['객관식', '주관식'];
+export const CREATE_USER_QUIZ_TYPE = ['객관식', '주관식'];

@@ -1,15 +1,13 @@
-import styled from 'styled-components';
 import { useState } from 'react';
-import QuizLayout from '../../layouts/QuizLayout';
 import RightSideBar from './RightSideBar';
 import MultipleQuiz from './MultipleQuiz';
-import { CREATE_OWN_QUIZ_TYPE } from '../../constants';
+import { CREATE_USER_QUIZ_TYPE } from '../../../../constants';
 import SubjectiveQuiz from './SubjectiveQuiz';
 
 const DEFAULT_INPUT = { input: '', check: false };
 
-function CreateOwnQuiz() {
-  const [quizType, setQuizType] = useState<{ [key: string]: string }>({ type: CREATE_OWN_QUIZ_TYPE[0] });
+function CreateUserQuiz() {
+  const [quizType, setQuizType] = useState<{ [key: string]: string }>({ type: CREATE_USER_QUIZ_TYPE[0] });
   const [question, setQuestion] = useState({ input: '', check: false });
   const [options, setOptions] = useState([DEFAULT_INPUT, DEFAULT_INPUT, DEFAULT_INPUT, DEFAULT_INPUT]);
   const [answer, setAnswer] = useState(-1);
@@ -56,48 +54,41 @@ function CreateOwnQuiz() {
   };
 
   return (
-    <QuizLayout>
-      <Container>
-        {quizType.type === CREATE_OWN_QUIZ_TYPE[0] && (
-          <MultipleQuiz
-            question={question}
-            options={options}
-            answer={answer}
-            commentary={commentary}
-            handleEdit={handleEdit}
-            handleCheck={handleCheck}
-            handleDelete={handleDelete}
-            handleAddOption={handleAddOption}
-            handleSetAnswer={setAnswer}
-          />
-        )}
-        {quizType.type === CREATE_OWN_QUIZ_TYPE[1] && (
-          <SubjectiveQuiz
-            question={question}
-            answer={answer}
-            commentary={commentary}
-            handleEdit={handleEdit}
-            handleCheck={handleCheck}
-          />
-        )}
-        <RightSideBar
-          quizType={quizType}
-          disabled={
-            quizType.type === CREATE_OWN_QUIZ_TYPE[0]
-              ? !(question.check && answer > 0 && commentary.check && options.every((option) => option.check === true))
-              : !(question.check && commentary.check)
-          }
-          setQuizType={setQuizType}
-          handleSubmit={handleSubmit}
+    <>
+      {quizType.type === CREATE_USER_QUIZ_TYPE[0] && (
+        <MultipleQuiz
+          question={question}
+          options={options}
+          answer={answer}
+          commentary={commentary}
+          handleEdit={handleEdit}
+          handleCheck={handleCheck}
+          handleDelete={handleDelete}
+          handleAddOption={handleAddOption}
+          handleSetAnswer={setAnswer}
         />
-      </Container>
-    </QuizLayout>
+      )}
+      {quizType.type === CREATE_USER_QUIZ_TYPE[1] && (
+        <SubjectiveQuiz
+          question={question}
+          answer={answer}
+          commentary={commentary}
+          handleEdit={handleEdit}
+          handleCheck={handleCheck}
+        />
+      )}
+      <RightSideBar
+        quizType={quizType}
+        disabled={
+          quizType.type === CREATE_USER_QUIZ_TYPE[0]
+            ? !(question.check && answer > 0 && commentary.check && options.every((option) => option.check === true))
+            : !(question.check && commentary.check)
+        }
+        setQuizType={setQuizType}
+        handleSubmit={handleSubmit}
+      />
+    </>
   );
 }
 
-export default CreateOwnQuiz;
-
-const Container = styled.div`
-  display: flex;
-  min-height: 524px;
-`;
+export default CreateUserQuiz;

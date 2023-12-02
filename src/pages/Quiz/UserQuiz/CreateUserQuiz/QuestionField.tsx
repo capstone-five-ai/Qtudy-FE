@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import QuizInputField from '../../components/Input/QuizInputField';
+import QuizInputField from '../../../../components/Input/QuizInputField';
 
 interface QuestionFieldProps {
   input: { input: string; check: boolean };

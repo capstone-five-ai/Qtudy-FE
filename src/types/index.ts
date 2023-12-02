@@ -13,7 +13,7 @@ export interface UploadedFileType {
   name: string;
 }
 
-export interface CreateOwnQuizInput {
+export interface CreateUserQuizInput {
   input: string;
   check: boolean;
 }

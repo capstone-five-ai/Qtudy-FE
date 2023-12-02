@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 import QuestionField from './QuestionField';
-import { CreateOwnQuizInput } from '../../types';
+import { CreateUserQuizInput } from '../../../../types';
 import OptionField from './OptionField';
-import AddOptionButton from '../../components/Button/AddOptionButton';
-import EditAnswerAccordion from '../../components/Accordion/EditAnswerAccordion';
+import AddOptionButton from '../../../../components/Button/AddOptionButton';
+import EditAnswerAccordion from '../../../../components/Accordion/EditAnswerAccordion';
 
 const MAX_OPTION_COUNT = 10;
 
 interface MultipleQuizProps {
-  question: CreateOwnQuizInput;
-  options: CreateOwnQuizInput[];
+  question: CreateUserQuizInput;
+  options: CreateUserQuizInput[];
   answer: number;
-  commentary: CreateOwnQuizInput;
+  commentary: CreateUserQuizInput;
   handleEdit: (type: string, index: number) => void;
   handleCheck: (type: string, index: number, input: string) => void;
   handleDelete: (index: number) => void;

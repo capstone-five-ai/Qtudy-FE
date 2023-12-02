@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import OptionRadioButton from '../../components/Button/OptionRadioButton';
-import Typography from '../../components/Typography';
+import OptionRadioButton from '../../../../components/Button/OptionRadioButton';
+import Typography from '../../../../components/Typography';
 
 interface OptionFieldProps {
   options: { input: string; check: boolean }[];

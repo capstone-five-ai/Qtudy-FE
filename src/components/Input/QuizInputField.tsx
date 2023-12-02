@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { ReactComponent as CheckIcon } from '../../assets/icons/icon-check.svg';
 import { ReactComponent as EditIcon } from '../../assets/icons/icon-edit.svg';
 import { ReactComponent as TrashIcon } from '../../assets/icons/icon-trash.svg';
-import { CreateOwnQuizInput } from '../../types';
+import { CreateUserQuizInput } from '../../types';
 
 const PLACEHOLDER = {
   question: '퀴즈 질문을 작성해주세요.',
@@ -12,7 +12,7 @@ const PLACEHOLDER = {
 
 export interface QuizInputFieldProps {
   type: 'question' | 'option';
-  input: CreateOwnQuizInput;
+  input: CreateUserQuizInput;
   index: number;
   handleEdit: (type: string, index: number) => void;
   handleCheck: (type: string, index: number, input: string) => void;
