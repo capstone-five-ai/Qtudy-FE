@@ -1,7 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from './layouts';
-import Home from './pages/home';
 import CreateQuiz from './pages/CreateQuiz';
+import Home from './pages/home';
+import Login from './pages/login';
 
 const routes = [
   {
@@ -15,6 +16,10 @@ const routes = [
       {
         path: 'create/quiz',
         element: <CreateQuiz />,
+      },
+      {
+        path: '/login',
+        element: <Login />,
       },
     ],
   },
