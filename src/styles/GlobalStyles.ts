@@ -5,9 +5,14 @@ import NanumSquareExtraBold from '../assets/fonts/NanumSquareNeoTTF-dEb.woff';
 import NotoSansBold from '../assets/fonts/NotoSansKR-Bold.woff';
 import NotoSansMedium from '../assets/fonts/NotoSansKR-Medium.woff';
 import NotoSansRegular from '../assets/fonts/NotoSansKR-Regular.woff';
+import AppleSDGothicNeoRegular from '../assets/fonts/AppleSDGothicNeo-Regular.woff';
 
 const GlobalStyles = createGlobalStyle`
   ${reset}
+
+  * {
+    box-sizing: border-box;
+  }
 
   body {
     line-height: normal;
@@ -40,6 +45,12 @@ const GlobalStyles = createGlobalStyle`
   @font-face {
     font-family: NanumSquareExtraBold;
     src: url(${NanumSquareExtraBold}) format('woff');
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: AppleSDGothicNeoRegular;
+    src: url(${AppleSDGothicNeoRegular}) format('woff');
     font-style: normal;
   }
 `;
