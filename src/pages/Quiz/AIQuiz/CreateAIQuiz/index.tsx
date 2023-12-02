@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { useSearchParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
@@ -6,9 +5,8 @@ import RightSideBar from './RightSideBar';
 import SelectAIQuizType from './SelectAIQuizType';
 import UploadType from './UploadType';
 import TextType from './TextType';
-import { UploadedFileType } from '../../types';
-import loadingSelector from '../../recoil/selectors/loading';
-import ContentWrapper from '../../components/Wrapper/ContentWrapper';
+import { UploadedFileType } from '../../../../types';
+import loadingSelector from '../../../../recoil/selectors/loading';
 
 const DEFAULT_INPUT_OPTION = {
   type: '', // 문제 유형
@@ -90,34 +88,27 @@ function CreateAIQuiz() {
   };
 
   return (
-    <ContentWrapper>
-      <Container>
-        {!type && <SelectAIQuizType />}
-        {type === 'upload' && (
-          <UploadType
-            inputRef={inputRef}
-            pdfFile={pdfFile}
-            imageFiles={imageFiles}
-            handleFileUpload={handleFileUpload}
-            handleUploadButtonClick={handleUploadButtonClick}
-            handleDelete={handleDelete}
-          />
-        )}
-        {type === 'text' && <TextType inputText={inputText} setInputText={setInputText} />}
-        <RightSideBar
-          disabled={!type}
-          inputOption={inputOption}
-          setInputOption={setInputOption}
-          handleSubmit={handleSubmit}
+    <>
+      {!type && <SelectAIQuizType />}
+      {type === 'upload' && (
+        <UploadType
+          inputRef={inputRef}
+          pdfFile={pdfFile}
+          imageFiles={imageFiles}
+          handleFileUpload={handleFileUpload}
+          handleUploadButtonClick={handleUploadButtonClick}
+          handleDelete={handleDelete}
         />
-      </Container>
-    </ContentWrapper>
+      )}
+      {type === 'text' && <TextType inputText={inputText} setInputText={setInputText} />}
+      <RightSideBar
+        disabled={!type}
+        inputOption={inputOption}
+        setInputOption={setInputOption}
+        handleSubmit={handleSubmit}
+      />
+    </>
   );
 }
 
 export default CreateAIQuiz;
-
-const Container = styled.div`
-  display: flex;
-  min-height: inherit;
-`;

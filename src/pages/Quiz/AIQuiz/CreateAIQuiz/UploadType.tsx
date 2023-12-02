@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { useMemo } from 'react';
-import { ReactComponent as UploadIcon } from '../../assets/icons/icon-upload.svg';
-import { ReactComponent as ExitIcon } from '../../assets/icons/icon-exit.svg';
-import Typography from '../../components/Typography';
-import { UploadedFileType } from '../../types';
+import { ReactComponent as UploadIcon } from '../../../../assets/icons/icon-upload.svg';
+import { ReactComponent as ExitIcon } from '../../../../assets/icons/icon-exit.svg';
+import Typography from '../../../../components/Typography';
+import { UploadedFileType } from '../../../../types';
 
 interface UploadTypeProps {
   inputRef: React.MutableRefObject<HTMLInputElement | null>;

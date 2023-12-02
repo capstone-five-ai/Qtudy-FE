@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { ReactComponent as UploadIcon } from '../../assets/icons/icon-upload.svg';
-import { ReactComponent as TextIcon } from '../../assets/icons/icon-text.svg';
-import Typography from '../../components/Typography';
+import { ReactComponent as TextIcon } from '../../../../assets/icons/icon-text.svg';
+import { ReactComponent as UploadIcon } from '../../../../assets/icons/icon-upload.svg';
+import Typography from '../../../../components/Typography';
 
 function SelectAIQuizType() {
   return (
