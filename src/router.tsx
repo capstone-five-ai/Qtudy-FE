@@ -1,7 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from './layouts';
-import CreateQuiz from './pages/CreateQuiz';
 import Home from './pages/home';
+import CreateAIQuiz from './pages/CreateAIQuiz';
+import MainLayout from './layouts/MainLayout';
 import Login from './pages/login';
 
 const routes = [
@@ -14,8 +15,14 @@ const routes = [
         element: <Home />,
       },
       {
-        path: 'create/quiz',
-        element: <CreateQuiz />,
+        path: 'create',
+        element: <MainLayout contentKey="createQuiz" />,
+        children: [
+          {
+            path: 'quiz',
+            children: [{ path: 'ai', element: <CreateAIQuiz /> }],
+          },
+        ],
       },
       {
         path: '/login',

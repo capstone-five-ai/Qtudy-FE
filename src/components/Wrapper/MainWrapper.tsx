@@ -4,6 +4,7 @@ interface MainWrapperProps {
   children: React.ReactNode;
 }
 
+// 내부 inner를 설정해주는 컴포넌트
 function MainWrapper({ children }: MainWrapperProps) {
   return <Container>{children}</Container>;
 }

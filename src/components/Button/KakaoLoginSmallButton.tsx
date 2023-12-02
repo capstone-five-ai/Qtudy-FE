@@ -1,14 +1,11 @@
 import styled from 'styled-components';
 import { ReactComponent as KakaoLogo } from '../../assets/icons/icon_kakao.svg';
-import Typography from '../Typography';
 
 function KakaoLoginSmallButton({ handleClick }: { handleClick: () => void }) {
   return (
     <Container type="button" onClick={handleClick}>
       <KakaoLogo />
-      <Typography variant="kakaoButton" color="kakaoBlack">
-        Login
-      </Typography>
+      Login
     </Container>
   );
 }
