@@ -124,14 +124,21 @@ function Typography({
   component,
   variant,
   color,
+  hoverColor,
 }: {
   children?: ReactNode;
   component?: string;
   variant: string;
   color?: keyof ColorsTypes;
+  hoverColor?: keyof ColorsTypes;
 }) {
   return (
-    <STypography as={component} $style={typographies.find((el) => el.type === variant) || defaultStyle} $color={color}>
+    <STypography
+      as={component}
+      $style={typographies.find((el) => el.type === variant) || defaultStyle}
+      $color={color}
+      $hoverColor={hoverColor}
+    >
       {children}
     </STypography>
   );
@@ -141,15 +148,24 @@ Typography.defaultProps = {
   children: null,
   component: 'div',
   color: 'grayScale02',
+  hoverColor: undefined,
 };
 
-const STypography = styled.div<{ $style: Style; $color: keyof ColorsTypes | undefined }>`
+const STypography = styled.div<{
+  $style: Style;
+  $color: keyof ColorsTypes | undefined;
+  $hoverColor: keyof ColorsTypes | undefined;
+}>`
   font-family: ${(props) => props.$style.font};
   font-size: ${(props) => props.$style.size}px;
   line-height: ${(props) => props.$style.lineHeight};
   letter-spacing: ${(props) => props.$style.letterSpacing}%;
 
   color: ${(props) => props.$color && props.theme.colors[props.$color]};
+
+  &:hover {
+    color: ${(props) => props.$hoverColor && props.theme.colors[props.$hoverColor]};
+  }
 `;
 
 export default Typography;

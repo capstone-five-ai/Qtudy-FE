@@ -3,6 +3,7 @@ import Layout from './layouts';
 import Home from './pages/home';
 import CreateAIQuiz from './pages/CreateAIQuiz';
 import MainLayout from './layouts/MainLayout';
+import Login from './pages/login';
 
 const routes = [
   {
@@ -22,6 +23,10 @@ const routes = [
             children: [{ path: 'ai', element: <CreateAIQuiz /> }],
           },
         ],
+      },
+      {
+        path: '/login',
+        element: <Login />,
       },
     ],
   },
