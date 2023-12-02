@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { PageContentType } from '../../types';
+import { HeaderContentType } from '../../types';
 import Typography from '../Typography';
 
-function ContentHeader({ text }: { text: PageContentType }) {
+function ContentHeader({ text }: { text: HeaderContentType }) {
   return (
     <Container>
       <Typography variant="h3" color="grayScale02">
@@ -18,9 +18,9 @@ function ContentHeader({ text }: { text: PageContentType }) {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
   text-align: center;
-  padding: 20px 0px;
+  padding: 28px 0px 20px;
 `;
 
 export default ContentHeader;
