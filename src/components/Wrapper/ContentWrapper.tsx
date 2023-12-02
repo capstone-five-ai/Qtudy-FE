@@ -10,10 +10,11 @@ function ContentWrapper({ children }: ContentWrapperProps) {
 }
 
 const Container = styled.div`
+  display: flex;
   background-color: ${(props) => props.theme.colors.grayScale08};
   border-radius: 8px;
   box-shadow: 0px 0px 4px 0px rgba(189, 189, 189, 0.28);
-  //min-height: calc(100vh - 65px - 190px);
+  max-height: calc(100vh - 65px - 190px);
   min-height: 572px;
 `;
 

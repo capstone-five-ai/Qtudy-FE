@@ -56,13 +56,9 @@ function MultipleQuiz({
 export default MultipleQuiz;
 
 const Container = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 40px;
-
-  margin: 40px;
-  margin-right: 36px;
+  gap: 48px;
 `;
 
 const QuizInputFieldContainer = styled.div`

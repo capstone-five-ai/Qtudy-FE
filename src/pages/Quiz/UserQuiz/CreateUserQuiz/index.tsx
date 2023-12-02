@@ -1,17 +1,23 @@
 import { useState } from 'react';
+import styled from 'styled-components';
 import RightSideBar from './RightSideBar';
 import MultipleQuiz from './MultipleQuiz';
 import { CREATE_USER_QUIZ_TYPE } from '../../../../constants';
 import SubjectiveQuiz from './SubjectiveQuiz';
+import Scrollbar from '../../../../components/Scrollbar';
 
 const DEFAULT_INPUT = { input: '', check: false };
+const DEFAULT_INPUT_COMMENTARY = {
+  input: '',
+  check: true,
+};
 
 function CreateUserQuiz() {
   const [quizType, setQuizType] = useState<{ [key: string]: string }>({ type: CREATE_USER_QUIZ_TYPE[0] });
   const [question, setQuestion] = useState({ input: '', check: false });
   const [options, setOptions] = useState([DEFAULT_INPUT, DEFAULT_INPUT, DEFAULT_INPUT, DEFAULT_INPUT]);
   const [answer, setAnswer] = useState(-1);
-  const [commentary, setCommentary] = useState(DEFAULT_INPUT);
+  const [commentary, setCommentary] = useState(DEFAULT_INPUT_COMMENTARY);
 
   const handleEdit = (type: string, index: number) => {
     if (type === 'question') {
@@ -55,28 +61,30 @@ function CreateUserQuiz() {
 
   return (
     <>
-      {quizType.type === CREATE_USER_QUIZ_TYPE[0] && (
-        <MultipleQuiz
-          question={question}
-          options={options}
-          answer={answer}
-          commentary={commentary}
-          handleEdit={handleEdit}
-          handleCheck={handleCheck}
-          handleDelete={handleDelete}
-          handleAddOption={handleAddOption}
-          handleSetAnswer={setAnswer}
-        />
-      )}
-      {quizType.type === CREATE_USER_QUIZ_TYPE[1] && (
-        <SubjectiveQuiz
-          question={question}
-          answer={answer}
-          commentary={commentary}
-          handleEdit={handleEdit}
-          handleCheck={handleCheck}
-        />
-      )}
+      <QuizContainer>
+        {quizType.type === CREATE_USER_QUIZ_TYPE[0] && (
+          <MultipleQuiz
+            question={question}
+            options={options}
+            answer={answer}
+            commentary={commentary}
+            handleEdit={handleEdit}
+            handleCheck={handleCheck}
+            handleDelete={handleDelete}
+            handleAddOption={handleAddOption}
+            handleSetAnswer={setAnswer}
+          />
+        )}
+        {quizType.type === CREATE_USER_QUIZ_TYPE[1] && (
+          <SubjectiveQuiz
+            question={question}
+            answer={answer}
+            commentary={commentary}
+            handleEdit={handleEdit}
+            handleCheck={handleCheck}
+          />
+        )}
+      </QuizContainer>
       <RightSideBar
         quizType={quizType}
         disabled={
@@ -92,3 +100,12 @@ function CreateUserQuiz() {
 }
 
 export default CreateUserQuiz;
+
+const QuizContainer = styled.div`
+  width: 100%;
+  padding: 40px;
+  padding-right: 20px;
+
+  overflow-y: scroll;
+  ${Scrollbar}
+`;
