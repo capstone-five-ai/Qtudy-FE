@@ -4,6 +4,7 @@ import Home from './pages/home';
 import CreateAIQuiz from './pages/CreateAIQuiz';
 import MainLayout from './layouts/MainLayout';
 import Login from './pages/login';
+import SelectService from './pages/selectService';
 
 const routes = [
   {
@@ -24,11 +25,15 @@ const routes = [
           },
         ],
       },
-      {
-        path: '/login',
-        element: <Login />,
-      },
     ],
+  },
+  {
+    path: 'select',
+    element: <SelectService />,
+  },
+  {
+    path: 'login',
+    element: <Login />,
   },
 ];
 
