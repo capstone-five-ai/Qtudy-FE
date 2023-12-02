@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as Arrow } from '../../assets/icons/select_arrow.svg';
 import Typography from '../../components/Typography';
@@ -11,9 +12,16 @@ type Props = {
   svgType: 'fill' | 'stroke';
   selected: boolean;
   selectedIdx: number;
+  path: string;
 };
 
-function Card({ icon, title, subTitle, content, svgType, selected, selectedIdx }: Props) {
+function Card({ icon, title, subTitle, content, svgType, selected, selectedIdx, path }: Props) {
+  const navigate = useNavigate();
+
+  const handleClickMenu = () => {
+    navigate(path);
+  };
+
   const fillOption = {
     fill: selected ? '#3ED7CD' : '#9e9e9e',
   };
@@ -28,7 +36,7 @@ function Card({ icon, title, subTitle, content, svgType, selected, selectedIdx }
   };
 
   return (
-    <Container $selected={selected} $selectedIdx={selectedIdx}>
+    <Container $selected={selected} $selectedIdx={selectedIdx} onClick={handleClickMenu}>
       <Center>
         <TitleContainer>
           {React.cloneElement(icon as React.ReactElement, getOption())}

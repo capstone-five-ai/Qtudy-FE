@@ -14,11 +14,13 @@ type MenuType = {
   subTitle: string;
   content: string;
   svgType: 'fill' | 'stroke';
+  path: string;
 };
 
 function SelectService() {
   const [selectedIdx, setSelectedIdx] = useState(-1);
 
+  // TODO: path 수정 필요
   const menus: MenuType[] = [
     {
       icon: <GenerateQuiz />,
@@ -26,6 +28,7 @@ function SelectService() {
       subTitle: 'Generate a quiz',
       content: `AI와 함께 혹은 자체적으로\n퀴즈를 만들 수 있어요`,
       svgType: 'fill',
+      path: '/create/quiz',
     },
     {
       icon: <GenerateSummary />,
@@ -33,6 +36,7 @@ function SelectService() {
       subTitle: 'Generate a summary',
       content: `AI와 함께 혹은 자체적으로\n요약 정리를 할 수 있어요`,
       svgType: 'fill',
+      path: '/create/summary',
     },
     {
       icon: <SaveAndManage />,
@@ -40,6 +44,7 @@ function SelectService() {
       subTitle: 'Save and manage',
       content: `생성한 것들을 편리하게\n저장 및 관리할 수 있어요`,
       svgType: 'stroke',
+      path: '/',
     },
   ];
 
