@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import reactTextareaAutosize from 'react-textarea-autosize';
 import Typography from '../Typography';
 import { ReactComponent as CheckIcon } from '../../assets/icons/icon-check.svg';
 import { ReactComponent as EditIcon } from '../../assets/icons/icon-edit.svg';
@@ -31,6 +32,7 @@ function EditAnswerAccordion({ answer, commentaryInput, handleEdit, handleCheck 
           </Typography>
           <CommentaryContainer>
             <StyledTextarea
+              minRows={2}
               placeholder="생성하고 싶은 해설을 입력해주세요."
               value={currentInput}
               onChange={handleTextareaChange}
@@ -64,6 +66,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  min-height: 170px;
 `;
 
 const CommentaryContainer = styled.div`
@@ -80,8 +83,7 @@ const CommentaryContainer = styled.div`
   }
 `;
 
-const StyledTextarea = styled.textarea`
-  min-height: 50px;
+const StyledTextarea = styled(reactTextareaAutosize)`
   resize: none;
   border: none;
   padding: 0;
