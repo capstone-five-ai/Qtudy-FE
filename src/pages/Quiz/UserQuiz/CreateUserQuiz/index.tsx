@@ -103,8 +103,9 @@ export default CreateUserQuiz;
 
 const QuizContainer = styled.div`
   width: 100%;
-  padding: 40px;
-  padding-right: 20px;
+  margin: 20px;
+  margin-right: 0px;
+  padding: 20px;
 
   overflow-y: scroll;
   ${Scrollbar}
