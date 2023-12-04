@@ -1,13 +1,13 @@
 import { useSearchParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
-import RightSideBar from './RightSideBar';
 import UploadType from '../../../../components/SelectAIType/UploadType';
 import TextType from '../../../../components/SelectAIType/TextType';
 import { UploadedFileType } from '../../../../types';
 import loadingSelector from '../../../../recoil/selectors/loading';
 import SelectAIType from '../../../../components/SelectAIType';
 import uploadFileUtils from '../../../../utils/uploadFileUtils';
+import CreateSideBar from '../../../../components/SideBar/CreateSideBar';
 
 const DEFAULT_INPUT_OPTION = {
   type: '', // 문제 유형
@@ -64,8 +64,12 @@ function CreateAIQuiz() {
         />
       )}
       {type === 'text' && <TextType inputText={inputText} setInputText={setInputText} />}
-      <RightSideBar
+      <CreateSideBar
+        service="quiz"
         disabled={!type}
+        buttonDisabled={
+          Object.values(inputOption).includes('') && (!pdfFile || imageFiles.length > 0 || inputText !== '')
+        }
         inputOption={inputOption}
         setInputOption={setInputOption}
         handleSubmit={handleSubmit}
