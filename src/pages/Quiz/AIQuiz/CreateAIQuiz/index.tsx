@@ -63,7 +63,7 @@ function CreateAIQuiz() {
           }
         />
       )}
-      {type === 'text' && <TextType inputText={inputText} setInputText={setInputText} />}
+      {type === 'text' && <TextType service="quiz" inputText={inputText} setInputText={setInputText} />}
       <CreateSideBar
         service="quiz"
         disabled={!type}

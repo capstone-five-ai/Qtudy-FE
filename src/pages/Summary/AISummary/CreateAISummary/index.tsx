@@ -55,7 +55,7 @@ function CreateAISummary() {
           }
         />
       )}
-      {type === 'text' && <TextType inputText={inputText} setInputText={setInputText} />}
+      {type === 'text' && <TextType service="summary" inputText={inputText} setInputText={setInputText} />}
       <CreateSideBar
         service="summary"
         disabled={!type}
