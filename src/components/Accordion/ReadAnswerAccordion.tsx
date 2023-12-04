@@ -17,11 +17,9 @@ function ReadAnswerAccordion({ answer, commentary }: ReadAnswerAccordionProps) {
       <AnswerAccordionTitle show={show} setShow={setShow} />
       {show && (
         <CommentaryContainer>
-          <div className="answer">
-            <Typography variant="subtitle" color="grayScale02">
-              {`정답 ${NUMBER_TO_CIRCLE[answer]}`}
-            </Typography>
-          </div>
+          <Typography variant="subtitle" color="grayScale02">
+            {`정답 ${NUMBER_TO_CIRCLE[answer]}`}
+          </Typography>
           <div className="commentary">
             <Typography variant="body3" color="grayScale02">
               {commentary}
@@ -51,9 +49,5 @@ const CommentaryContainer = styled.div`
 
   .commentary {
     white-space: pre-wrap;
-  }
-
-  .icon {
-    align-self: flex-end;
   }
 `;
