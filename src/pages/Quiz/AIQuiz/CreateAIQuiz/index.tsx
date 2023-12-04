@@ -1,12 +1,14 @@
 import { useSearchParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
+import styled from 'styled-components';
 import RightSideBar from './RightSideBar';
 import SelectAIQuizType from './SelectAIQuizType';
 import UploadType from './UploadType';
 import TextType from './TextType';
 import { UploadedFileType } from '../../../../types';
 import loadingSelector from '../../../../recoil/selectors/loading';
+import Scrollbar from '../../../../components/Scrollbar';
 
 const DEFAULT_INPUT_OPTION = {
   type: '', // 문제 유형
@@ -89,18 +91,20 @@ function CreateAIQuiz() {
 
   return (
     <>
-      {!type && <SelectAIQuizType />}
-      {type === 'upload' && (
-        <UploadType
-          inputRef={inputRef}
-          pdfFile={pdfFile}
-          imageFiles={imageFiles}
-          handleFileUpload={handleFileUpload}
-          handleUploadButtonClick={handleUploadButtonClick}
-          handleDelete={handleDelete}
-        />
-      )}
-      {type === 'text' && <TextType inputText={inputText} setInputText={setInputText} />}
+      <Container>
+        {!type && <SelectAIQuizType />}
+        {type === 'upload' && (
+          <UploadType
+            inputRef={inputRef}
+            pdfFile={pdfFile}
+            imageFiles={imageFiles}
+            handleFileUpload={handleFileUpload}
+            handleUploadButtonClick={handleUploadButtonClick}
+            handleDelete={handleDelete}
+          />
+        )}
+        {type === 'text' && <TextType inputText={inputText} setInputText={setInputText} />}
+      </Container>
       <RightSideBar
         disabled={!type}
         inputOption={inputOption}
@@ -112,3 +116,11 @@ function CreateAIQuiz() {
 }
 
 export default CreateAIQuiz;
+
+const Container = styled.div`
+  width: 100%;
+  margin: 16px 0px;
+
+  overflow-y: scroll;
+  ${Scrollbar}
+`;
