@@ -119,12 +119,14 @@ const Preview = styled.div`
     position: absolute;
     top: -70px;
     left: -4px;
+    opacity: 0.6;
   }
 
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    opacity: 0.6;
   }
 
   .icon-container {
@@ -148,6 +150,14 @@ const Preview = styled.div`
       top: 12px;
       right: 12px;
       cursor: pointer;
+    }
+
+    img {
+      opacity: 1;
+    }
+
+    object {
+      opacity: 1;
     }
   }
 `;
