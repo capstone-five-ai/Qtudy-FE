@@ -60,7 +60,7 @@ function CreateAISummary() {
         service="summary"
         disabled={!type}
         buttonDisabled={
-          Object.values(inputOption).includes('') && (!pdfFile || imageFiles.length > 0 || inputText !== '')
+          Object.values(inputOption).includes('') || (!pdfFile && imageFiles.length === 0 && inputText === '')
         }
         inputOption={inputOption}
         setInputOption={setInputOption}
