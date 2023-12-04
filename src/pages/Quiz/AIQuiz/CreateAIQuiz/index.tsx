@@ -2,11 +2,11 @@ import { useSearchParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import RightSideBar from './RightSideBar';
-import SelectAIQuizType from './SelectAIQuizType';
 import UploadType from './UploadType';
 import TextType from './TextType';
 import { UploadedFileType } from '../../../../types';
 import loadingSelector from '../../../../recoil/selectors/loading';
+import SelectAIType from '../../../../components/SelectAIType';
 
 const DEFAULT_INPUT_OPTION = {
   type: '', // 문제 유형
@@ -89,7 +89,7 @@ function CreateAIQuiz() {
 
   return (
     <>
-      {!type && <SelectAIQuizType />}
+      {!type && <SelectAIType service="quiz" />}
       {type === 'upload' && (
         <UploadType
           inputRef={inputRef}
