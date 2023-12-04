@@ -4,24 +4,17 @@ import { ReactComponent as UploadIcon } from '../../../../assets/icons/icon-uplo
 import { ReactComponent as ExitIcon } from '../../../../assets/icons/icon-exit.svg';
 import Typography from '../../../../components/Typography';
 import { UploadedFileType } from '../../../../types';
+import uploadFileUtils from '../../../../utils/uploadFileUtils';
 
 interface UploadTypeProps {
   inputRef: React.MutableRefObject<HTMLInputElement | null>;
   pdfFile: UploadedFileType | null;
   imageFiles: UploadedFileType[];
   handleFileUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleUploadButtonClick: () => void;
   handleDelete: (index: number | null) => void;
 }
 
-function UploadType({
-  inputRef,
-  pdfFile,
-  imageFiles,
-  handleFileUpload,
-  handleUploadButtonClick,
-  handleDelete,
-}: UploadTypeProps) {
+function UploadType({ inputRef, pdfFile, imageFiles, handleFileUpload, handleDelete }: UploadTypeProps) {
   const pdfObjectURL = useMemo(() => {
     if (pdfFile) {
       return URL.createObjectURL(pdfFile!.file);
@@ -35,7 +28,7 @@ function UploadType({
 
   if (!pdfFile && imageFiles.length <= 0) {
     return (
-      <Container onClick={handleUploadButtonClick}>
+      <Container onClick={() => uploadFileUtils.handleUploadButtonClick(inputRef)}>
         <input
           style={{ display: 'none' }}
           type="file"

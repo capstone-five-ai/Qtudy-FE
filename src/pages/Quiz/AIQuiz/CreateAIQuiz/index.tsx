@@ -7,6 +7,7 @@ import TextType from './TextType';
 import { UploadedFileType } from '../../../../types';
 import loadingSelector from '../../../../recoil/selectors/loading';
 import SelectAIType from '../../../../components/SelectAIType';
+import uploadFileUtils from '../../../../utils/uploadFileUtils';
 
 const DEFAULT_INPUT_OPTION = {
   type: '', // 문제 유형
@@ -30,45 +31,6 @@ function CreateAIQuiz() {
     setPdfFile(null);
     setImageFiles([]);
   }, [type]);
-
-  const handleUploadButtonClick = () => {
-    if (!inputRef.current) return;
-    inputRef.current.click();
-  };
-
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { files } = event.target;
-    if (!files) return;
-
-    let pdfFound = false;
-    const newImageFiles: UploadedFileType[] = [];
-
-    for (let i = 0; i < files.length; i += 1) {
-      const file = files[i];
-      const uploadedFile: UploadedFileType = { file, name: file.name };
-
-      if (file.type === 'application/pdf' && !pdfFound) {
-        pdfFound = true;
-        setPdfFile(uploadedFile);
-      } else if (file.type.includes('image')) {
-        newImageFiles.push(uploadedFile);
-      }
-    }
-
-    setImageFiles(newImageFiles);
-  };
-
-  const handleDelete = (deleteIndex: number | null) => {
-    if (pdfFile) {
-      setPdfFile(null);
-    } else if (deleteIndex !== null) {
-      setImageFiles(
-        imageFiles.filter((_, index) => {
-          return deleteIndex !== index;
-        })
-      );
-    }
-  };
 
   const handleSubmit = () => {
     const formData = new FormData();
@@ -95,9 +57,10 @@ function CreateAIQuiz() {
           inputRef={inputRef}
           pdfFile={pdfFile}
           imageFiles={imageFiles}
-          handleFileUpload={handleFileUpload}
-          handleUploadButtonClick={handleUploadButtonClick}
-          handleDelete={handleDelete}
+          handleFileUpload={(event) => uploadFileUtils.handleFileUpload(event, setPdfFile, setImageFiles)}
+          handleDelete={(deleteIndex) =>
+            uploadFileUtils.handleDelete(deleteIndex, pdfFile, imageFiles, setPdfFile, setImageFiles)
+          }
         />
       )}
       {type === 'text' && <TextType inputText={inputText} setInputText={setInputText} />}
