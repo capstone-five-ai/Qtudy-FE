@@ -21,6 +21,7 @@ const Container = styled.div`
   position: absolute;
   top: 5px;
   right: -40px;
+  z-index: 2;
 `;
 
 const TooltipContainer = styled.div`
