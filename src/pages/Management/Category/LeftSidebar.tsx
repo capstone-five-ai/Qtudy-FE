@@ -5,6 +5,7 @@ import Typography from '../../../components/Typography';
 import { ReactComponent as PlusIcon } from '../../../assets/icons/icon-plus.svg';
 import { ReactComponent as EditIcon } from '../../../assets/icons/icon-edit.svg';
 import { ReactComponent as TrashIcon } from '../../../assets/icons/icon-trash.svg';
+import Scrollbar from '../../../components/Scrollbar';
 
 interface LeftSidebarProps {
   categoryList: string[];
@@ -32,19 +33,21 @@ function LeftSidebar({
       <CategoryTabBar activeTabBar={activeTabBar} setActiveTabBar={setActiveTabBar} />
       <CategoryContainer>
         <CategoryTitle />
-        {categoryList.length > 0 ? (
-          <div className="category-list">
-            {categoryList.map((item) => (
-              <CategoryItem itemName={item} active={activeCategory === item} setActiveCategory={setActiveCategory} />
-            ))}
-          </div>
-        ) : (
-          <div className="no-category">
-            <Typography variant="detail" color="grayScale04">
-              카테고리를 추가해주세요
-            </Typography>
-          </div>
-        )}
+        <CategoryListContainer>
+          {categoryList.length > 0 ? (
+            <div className="category-list">
+              {categoryList.map((item) => (
+                <CategoryItem itemName={item} active={activeCategory === item} setActiveCategory={setActiveCategory} />
+              ))}
+            </div>
+          ) : (
+            <div className="no-category">
+              <Typography variant="detail" color="grayScale04">
+                카테고리를 추가해주세요
+              </Typography>
+            </div>
+          )}
+        </CategoryListContainer>
       </CategoryContainer>
     </Container>
   );
@@ -87,10 +90,10 @@ function CategoryItem({ itemName, active, setActiveCategory }: CategoryItemProps
         {itemName}
       </Typography>
       {active && (
-        <IconContainer>
+        <div className="icon-list">
           <EditIcon onClick={handleEditCategory} style={{ cursor: 'pointer' }} />
           <TrashIcon onClick={handleDeleteCategory} style={{ cursor: 'pointer' }} />
-        </IconContainer>
+        </div>
       )}
     </ItemContainer>
   );
@@ -100,7 +103,11 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 32px;
-  width: 324px;
+  width: 340px;
+
+  & > div:nth-child(1) {
+    margin-right: 16px;
+  }
 `;
 
 const CategoryContainer = styled.div`
@@ -126,6 +133,7 @@ const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  padding-right: 16px;
 
   .plus-button {
     display: flex;
@@ -157,9 +165,15 @@ const ItemContainer = styled.button<{ $active: boolean }>`
   & > div:nth-child(1) {
     cursor: pointer;
   }
+
+  .icon-list {
+    display: flex;
+    gap: 16px;
+  }
 `;
 
-const IconContainer = styled.div`
-  display: flex;
-  gap: 16px;
+const CategoryListContainer = styled.div`
+  max-height: calc(100vh - 65px - 190px - 124px);
+  overflow-y: scroll;
+  ${Scrollbar}
 `;
