@@ -31,7 +31,7 @@ const Container = styled.div`
   align-items: center;
   gap: 20px;
 
-  padding: 6px 0px;
+  padding: 6px 22px;
   border-radius: 26px;
   background: ${(props) => props.theme.colors.grayScale09};
   box-shadow: 0px 0px 4px 0px rgba(189, 189, 189, 0.4);
