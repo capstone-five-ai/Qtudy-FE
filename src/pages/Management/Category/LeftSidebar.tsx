@@ -3,6 +3,8 @@ import CategoryTabBar from '../../../components/TapBar/CategoryTabBar';
 import { CategoryType } from '../../../types';
 import Typography from '../../../components/Typography';
 import { ReactComponent as PlusIcon } from '../../../assets/icons/icon-plus.svg';
+import { ReactComponent as EditIcon } from '../../../assets/icons/icon-edit.svg';
+import { ReactComponent as TrashIcon } from '../../../assets/icons/icon-trash.svg';
 
 interface LeftSidebarProps {
   categoryList: string[];
@@ -71,11 +73,25 @@ function CategoryTitle() {
 }
 
 function CategoryItem({ itemName, active, setActiveCategory }: CategoryItemProps) {
+  const handleEditCategory = () => {
+    // TODO: 카테고리 편집 API
+  };
+
+  const handleDeleteCategory = () => {
+    // TODO: 카테고리 삭제 API
+  };
+
   return (
     <ItemContainer type="button" $active={active} onClick={() => setActiveCategory(itemName)}>
       <Typography variant="body2" color={active ? 'mainMintDark' : `grayScale02`}>
         {itemName}
       </Typography>
+      {active && (
+        <IconContainer>
+          <EditIcon onClick={handleEditCategory} style={{ cursor: 'pointer' }} />
+          <TrashIcon onClick={handleDeleteCategory} style={{ cursor: 'pointer' }} />
+        </IconContainer>
+      )}
     </ItemContainer>
   );
 }
@@ -128,11 +144,22 @@ const TitleContainer = styled.div`
 `;
 
 const ItemContainer = styled.button<{ $active: boolean }>`
+  display: flex;
+  justify-content: space-between;
   text-align: left;
-  padding: 8px 20px;
-  cursor: pointer;
+  padding: 8px 0px 8px 20px;
+
   border: none;
   border-left: 2px solid;
   border-color: ${(props) => (props.$active ? props.theme.colors.mainMint : 'transparent')};
   background: transparent;
+
+  & > div:nth-child(1) {
+    cursor: pointer;
+  }
+`;
+
+const IconContainer = styled.div`
+  display: flex;
+  gap: 16px;
 `;
