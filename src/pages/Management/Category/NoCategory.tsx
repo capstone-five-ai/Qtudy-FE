@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ReactComponent as TestIcon } from '../../../assets/icons/icon-upload.svg';
 import Typography from '../../../components/Typography';
-import MediumButton from '../../../components/Button/MediumButton';
+import DefaultButton from '../../../components/Button/DefaultButton';
 
 function NoCategory() {
   const handleAddCategory = () => {
@@ -22,7 +22,7 @@ function NoCategory() {
           퀴즈 및 요약을 생성하고 카테고리에 저장해보세요
         </Typography>
       </div>
-      <MediumButton onClick={handleAddCategory}>카테고리 먼저 만들기</MediumButton>
+      <DefaultButton onClick={handleAddCategory}>카테고리 먼저 만들기</DefaultButton>
     </Container>
   );
 }
