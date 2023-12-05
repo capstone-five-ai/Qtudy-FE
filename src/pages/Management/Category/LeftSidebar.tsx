@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import CategoryTabBar from '../../../components/TapBar/CategoryTabBar';
-import { CategoryType } from '../../../types';
+import { CategoryInfoType, CategoryType } from '../../../types';
 import Typography from '../../../components/Typography';
 import { ReactComponent as PlusIcon } from '../../../assets/icons/icon-plus.svg';
 import { ReactComponent as EditIcon } from '../../../assets/icons/icon-edit.svg';
@@ -8,17 +8,17 @@ import { ReactComponent as TrashIcon } from '../../../assets/icons/icon-trash.sv
 import Scrollbar from '../../../components/Scrollbar';
 
 interface LeftSidebarProps {
-  categoryList: string[];
-  activeCategory: string;
+  categoryList: CategoryInfoType[];
+  activeCategory: CategoryInfoType | null;
   activeTabBar: CategoryType;
-  setActiveCategory: React.Dispatch<React.SetStateAction<string>>;
+  setActiveCategory: React.Dispatch<React.SetStateAction<CategoryInfoType | null>>;
   setActiveTabBar: React.Dispatch<React.SetStateAction<CategoryType>>;
 }
 
 interface CategoryItemProps {
-  itemName: string;
+  category: CategoryInfoType;
   active: boolean;
-  setActiveCategory: React.Dispatch<React.SetStateAction<string>>;
+  setActiveCategory: React.Dispatch<React.SetStateAction<CategoryInfoType | null>>;
 }
 
 function LeftSidebar({
@@ -37,7 +37,11 @@ function LeftSidebar({
           {categoryList.length > 0 ? (
             <div className="category-list">
               {categoryList.map((item) => (
-                <CategoryItem itemName={item} active={activeCategory === item} setActiveCategory={setActiveCategory} />
+                <CategoryItem
+                  category={item}
+                  active={activeCategory !== null && activeCategory.name === item.name}
+                  setActiveCategory={setActiveCategory}
+                />
               ))}
             </div>
           ) : (
@@ -75,7 +79,7 @@ function CategoryTitle() {
   );
 }
 
-function CategoryItem({ itemName, active, setActiveCategory }: CategoryItemProps) {
+function CategoryItem({ category, active, setActiveCategory }: CategoryItemProps) {
   const handleEditCategory = () => {
     // TODO: 카테고리 편집 API
   };
@@ -85,9 +89,9 @@ function CategoryItem({ itemName, active, setActiveCategory }: CategoryItemProps
   };
 
   return (
-    <ItemContainer type="button" $active={active} onClick={() => setActiveCategory(itemName)}>
+    <ItemContainer type="button" $active={active} onClick={() => setActiveCategory(category)}>
       <Typography variant="body2" color={active ? 'mainMintDark' : `grayScale02`}>
-        {itemName}
+        {category.name}
       </Typography>
       {active && (
         <div className="icon-list">

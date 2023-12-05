@@ -14,3 +14,8 @@ export interface UploadedFileType {
 }
 
 export type CategoryType = '퀴즈' | '요약';
+
+export interface CategoryInfoType {
+  id: number;
+  name: string;
+}
