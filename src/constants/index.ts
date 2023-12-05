@@ -4,7 +4,7 @@ import { HeaderContentType, TabType } from '../types';
 export const HEADER_MENU_LIST = [
   { menu: '퀴즈 생성', path: '/create/quiz' },
   { menu: '요약 정리 생성', path: '/2' },
-  { menu: '저장 및 관리', path: '/3' },
+  { menu: '관리 및 복습', path: '/3' },
 ];
 
 export const HEADER_CONTENT: { [key: string]: { header: HeaderContentType; tabs: TabType[] } } = {
