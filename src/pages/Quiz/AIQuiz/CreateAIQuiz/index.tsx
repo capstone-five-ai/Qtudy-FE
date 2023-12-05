@@ -9,7 +9,6 @@ import SelectAIType from '../../../../components/SelectAIType';
 import uploadFileUtils from '../../../../utils/uploadFileUtils';
 import CreateSideBar from '../../../../components/SideBar/CreateSideBar';
 import Loader from '../../../../components/Modal/Loader';
-import loadingState from '../../../../recoil/atoms/loadingState';
 
 const DEFAULT_INPUT_OPTION = {
   type: '', // 문제 유형
@@ -26,7 +25,7 @@ function CreateAIQuiz() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [pdfFile, setPdfFile] = useState<UploadedFileType | null>(null);
   const [imageFiles, setImageFiles] = useState<UploadedFileType[]>([]);
-  const showLoader = useRecoilValue(loadingState);
+  const showLoader = useRecoilValue(loadingSelector);
   const setShowLoader = useSetRecoilState(loadingSelector);
 
   useEffect(() => {
