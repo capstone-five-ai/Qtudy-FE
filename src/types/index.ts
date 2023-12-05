@@ -12,3 +12,5 @@ export interface UploadedFileType {
   file: File;
   name: string;
 }
+
+export type CategoryType = '퀴즈' | '요약';
