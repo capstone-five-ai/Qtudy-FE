@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import React from 'react';
-import ContentWrapper from '../../../components/Wrapper/ContentWrapper';
 import { CategoryQuizItemsType, CategorySummaryItemsType, CategoryType } from '../../../types';
 import CategoryQuizItem from './CategoryQuizItem';
 import DefaultView from './DefaultView';
@@ -38,45 +37,8 @@ function CategoryItemsView({
 
   if (activeTabBar === '퀴즈')
     return (
-      <ContentWrapper>
-        <Container>
-          {activeCategoryQuizItems.length === 0 ? (
-            <DefaultView />
-          ) : (
-            <>
-              <DownloadButtonContainer>
-                <div className="download-button">
-                  <FileIcon />
-                  <Typography variant="caption3" color="grayScale03">
-                    퀴즈 PDF
-                  </Typography>
-                </div>
-                <div className="download-button">
-                  <FileIcon />
-                  <Typography variant="caption3" color="grayScale03">
-                    정답 PDF
-                  </Typography>
-                </div>
-              </DownloadButtonContainer>
-              <CategoryItemContainer>
-                {activeCategoryQuizItems.map((quizItem) => (
-                  <CategoryQuizItem
-                    key={quizItem.categorizedProblemId}
-                    quizItem={quizItem}
-                    handleDeleteQuizItem={handleDeleteQuizItem}
-                  />
-                ))}
-              </CategoryItemContainer>
-            </>
-          )}
-        </Container>
-      </ContentWrapper>
-    );
-
-  return (
-    <ContentWrapper>
       <Container>
-        {activeCategorySummaryItems.length === 0 ? (
+        {activeCategoryQuizItems.length === 0 ? (
           <DefaultView />
         ) : (
           <>
@@ -84,23 +46,56 @@ function CategoryItemsView({
               <div className="download-button">
                 <FileIcon />
                 <Typography variant="caption3" color="grayScale03">
-                  요약 PDF
+                  퀴즈 PDF
+                </Typography>
+              </div>
+              <div className="download-button">
+                <FileIcon />
+                <Typography variant="caption3" color="grayScale03">
+                  정답 PDF
                 </Typography>
               </div>
             </DownloadButtonContainer>
             <CategoryItemContainer>
-              {activeCategorySummaryItems.map((summaryItem) => (
-                <CategorySummaryItem
-                  key={summaryItem.categorizedSummaryId}
-                  summaryItem={summaryItem}
-                  handleDeleteSummaryItem={handleDeleteSummaryItem}
+              {activeCategoryQuizItems.map((quizItem) => (
+                <CategoryQuizItem
+                  key={quizItem.categorizedProblemId}
+                  quizItem={quizItem}
+                  handleDeleteQuizItem={handleDeleteQuizItem}
                 />
               ))}
             </CategoryItemContainer>
           </>
         )}
       </Container>
-    </ContentWrapper>
+    );
+
+  return (
+    <Container>
+      {activeCategorySummaryItems.length === 0 ? (
+        <DefaultView />
+      ) : (
+        <>
+          <DownloadButtonContainer>
+            <div className="download-button">
+              <FileIcon />
+              <Typography variant="caption3" color="grayScale03">
+                요약 PDF
+              </Typography>
+            </div>
+          </DownloadButtonContainer>
+          <CategoryItemContainer>
+            {activeCategorySummaryItems.map((summaryItem) => (
+              <CategorySummaryItem
+                key={summaryItem.categorizedSummaryId}
+                summaryItem={summaryItem}
+                handleDeleteSummaryItem={handleDeleteSummaryItem}
+              />
+            ))}
+          </CategoryItemContainer>
+        </>
+      )}
+    </Container>
   );
 }
 
