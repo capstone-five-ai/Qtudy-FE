@@ -10,9 +10,10 @@ function NoCategory() {
 
   return (
     <Container>
+      <div />
       <div className="text-container">
         <div className="main-text">
-          <TestIcon style={{ marginBottom: '16' }} />
+          <TestIcon />
           <Typography variant="h2" color="grayScale03">
             아직 생성된 카테고리가 없어요
           </Typography>
@@ -34,7 +35,6 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 160px;
-
   max-height: calc(100vh - 65px - 190px);
   min-height: 572px;
 
@@ -42,15 +42,14 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 24px;
 
     .main-text {
       display: flex;
       flex-direction: column;
       align-items: center;
-
+      gap: 16px;
       width: max-content;
-      margin-top: 160px;
-      margin-bottom: 24px;
       position: relative;
 
       & > div:nth-child(1) {
