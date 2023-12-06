@@ -3,11 +3,11 @@ import { ReactComponent as TestIcon } from '../../../assets/icons/icon-upload.sv
 import Typography from '../../../components/Typography';
 import DefaultButton from '../../../components/Button/DefaultButton';
 
-function NoCategory() {
-  const handleAddCategory = () => {
-    // TODO: 카테고리 생성 API 연결
-  };
+interface NoCategoryProps {
+  setShowNoCategoryView: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
+function NoCategory({ setShowNoCategoryView }: NoCategoryProps) {
   return (
     <Container>
       <div />
@@ -23,7 +23,7 @@ function NoCategory() {
           퀴즈 및 요약을 생성하고 카테고리에 저장해보세요
         </Typography>
       </div>
-      <DefaultButton onClick={handleAddCategory}>카테고리 먼저 만들기</DefaultButton>
+      <DefaultButton onClick={() => setShowNoCategoryView(false)}>카테고리 먼저 만들기</DefaultButton>
     </Container>
   );
 }
