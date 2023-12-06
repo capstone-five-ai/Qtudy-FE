@@ -36,3 +36,12 @@ export interface CategoryQuizItemsType {
   createTime: string;
   updateTime: string;
 }
+
+export interface CategorySummaryItemsType {
+  categorizedSummaryId: number;
+  summaryGeneratedBy: string;
+  summaryTitle: string;
+  summaryContent: string;
+  createTime: string;
+  updateTime: string;
+}
