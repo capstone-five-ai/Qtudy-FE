@@ -14,7 +14,7 @@ interface CategoryProps {
 
 function Category({ category, active, setActiveCategory, handleEditCategory, handleDeleteCategory }: CategoryProps) {
   return (
-    <ItemContainer type="button" $active={active} onClick={() => setActiveCategory(category)}>
+    <Container type="button" $active={active} onClick={() => setActiveCategory(category)}>
       <Typography variant="body2" color={active ? 'mainMintDark' : `grayScale02`}>
         {category.categoryName}
       </Typography>
@@ -30,13 +30,13 @@ function Category({ category, active, setActiveCategory, handleEditCategory, han
           />
         </div>
       )}
-    </ItemContainer>
+    </Container>
   );
 }
 
 export default Category;
 
-const ItemContainer = styled.button<{ $active: boolean }>`
+const Container = styled.button<{ $active: boolean }>`
   display: flex;
   justify-content: space-between;
   text-align: left;
@@ -48,7 +48,9 @@ const ItemContainer = styled.button<{ $active: boolean }>`
   background: transparent;
 
   & > div:nth-child(1) {
+    word-break: break-all;
     cursor: pointer;
+    padding-right: ${(props) => (props.$active ? '10px' : '20px')};
   }
 
   .icon-list {
