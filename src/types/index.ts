@@ -13,9 +13,26 @@ export interface UploadedFileType {
   name: string;
 }
 
+export type QuizType = 'SUBJECTIVE' | 'MULTIPLE';
+
+// 카테고리 관련 타입
 export type CategoryType = '퀴즈' | '요약';
 
+export interface CategoryListInfoType {
+  quiz: CategoryInfoType[];
+  summary: CategoryInfoType[];
+}
+
 export interface CategoryInfoType {
-  id: number;
-  name: string;
+  categoryId: number;
+  categoryName: string;
+}
+
+export interface CategoryQuizItemsType {
+  categorizedProblemId: number;
+  problemGeneratedBy: string;
+  problemType: QuizType;
+  problemName: string;
+  createTime: string;
+  updateTime: string;
 }

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { CategoryType } from '../../types';
-import Typography from '../Typography';
+import { CategoryType } from '../../../../types';
+import Typography from '../../../../components/Typography';
 
 const TAB_LIST: CategoryType[] = ['퀴즈', '요약'];
 
@@ -13,7 +13,7 @@ function CategoryTabBar({ activeTabBar, setActiveTabBar }: CategoryTabBarProps) 
   return (
     <Container>
       {TAB_LIST.map((tab) => (
-        <TabBar $active={activeTabBar === tab} onClick={() => setActiveTabBar(tab)}>
+        <TabBar key={tab} $active={activeTabBar === tab} onClick={() => setActiveTabBar(tab)}>
           <Typography variant="button" color={activeTabBar === tab ? 'mainMintDark' : 'grayScale03'}>
             {tab}
           </Typography>
