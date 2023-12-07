@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import TabBar from '../components/TapBar/TabBar';
 import ContentHeader from '../components/Header/ContentHeader';
-import MainWrapper from '../components/Wrapper/MainWrapper';
 import { HEADER_CONTENT } from '../constants';
 
 interface MainLayoutProps {
@@ -14,9 +13,7 @@ function MainLayout({ contentKey, children }: MainLayoutProps) {
     <Container>
       <ContentHeader text={HEADER_CONTENT[contentKey].header} />
       <TabBar tabList={HEADER_CONTENT[contentKey].tabs} />
-      <ChildrenContainer>
-        <MainWrapper>{children}</MainWrapper>
-      </ChildrenContainer>
+      <ChildrenContainer>{children}</ChildrenContainer>
     </Container>
   );
 }

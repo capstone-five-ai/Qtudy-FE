@@ -1,18 +1,18 @@
 import ContentWrapper from '../../components/Wrapper/ContentWrapper';
 import MainWrapper from '../../components/Wrapper/MainWrapper';
 import MainLayout from '../../layouts/MainLayout';
-import CreateAIQuiz from './AIQuiz/CreateAIQuiz';
+import CreateAISummary from './AISummary/CreateAISummary';
 
-function Quiz() {
+function Summary() {
   return (
-    <MainLayout contentKey="createQuiz">
+    <MainLayout contentKey="createSummary">
       <MainWrapper>
         <ContentWrapper>
-          <CreateAIQuiz />
+          <CreateAISummary />
         </ContentWrapper>
       </MainWrapper>
     </MainLayout>
   );
 }
 
-export default Quiz;
+export default Summary;

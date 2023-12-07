@@ -3,7 +3,7 @@ import { HeaderContentType, TabType } from '../types';
 // TODO : 각 메뉴 path 수정
 export const HEADER_MENU_LIST = [
   { menu: '퀴즈 생성', path: '/create/quiz' },
-  { menu: '요약 정리 생성', path: '/2' },
+  { menu: '요약정리 생성', path: '/2' },
   { menu: '저장 및 관리', path: '/3' },
 ];
 
@@ -20,7 +20,7 @@ export const HEADER_CONTENT: { [key: string]: { header: HeaderContentType; tabs:
   },
   createSummary: {
     header: {
-      main: 'AI와 함께 혹은 자체적으로 요약 정리해보세요',
+      main: 'AI와 함께 혹은 자체적으로 요약정리해보세요',
       sub: '생성한 요약은 저장 및 관리 페이지에서 확인하고 편집할 수 있습니다',
     },
     tabs: [
