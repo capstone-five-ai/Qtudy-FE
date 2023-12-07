@@ -119,6 +119,7 @@ const DownloadButtonContainer = styled.div`
   .download-button {
     display: flex;
     gap: 4px;
+    cursor: pointer;
   }
 `;
 
