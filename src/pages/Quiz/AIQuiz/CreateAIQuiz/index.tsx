@@ -1,6 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import styled from 'styled-components';
 import UploadType from '../../../../components/SelectAIType/UploadType';
 import TextType from '../../../../components/SelectAIType/TextType';
 import { UploadedFileType } from '../../../../types';
@@ -9,6 +10,7 @@ import SelectAIType from '../../../../components/SelectAIType';
 import uploadFileUtils from '../../../../utils/uploadFileUtils';
 import CreateSideBar from '../../../../components/SideBar/CreateSideBar';
 import Loader from '../../../../components/Modal/Loader';
+import Scrollbar from '../../../../components/Scrollbar';
 
 const DEFAULT_INPUT_OPTION = {
   type: '', // 문제 유형
@@ -53,20 +55,22 @@ function CreateAIQuiz() {
 
   return (
     <>
-      {!showLoader && <Loader isLoading />}
-      {!type && <SelectAIType service="quiz" />}
-      {type === 'upload' && (
-        <UploadType
-          inputRef={inputRef}
-          pdfFile={pdfFile}
-          imageFiles={imageFiles}
-          handleFileUpload={(event) => uploadFileUtils.handleFileUpload(event, setPdfFile, setImageFiles)}
-          handleDelete={(deleteIndex) =>
-            uploadFileUtils.handleDelete(deleteIndex, pdfFile, imageFiles, setPdfFile, setImageFiles)
-          }
-        />
-      )}
-      {type === 'text' && <TextType service="quiz" inputText={inputText} setInputText={setInputText} />}
+      {showLoader && <Loader isLoading />}
+      <Container>
+        {!type && <SelectAIType service="quiz" />}
+        {type === 'upload' && (
+          <UploadType
+            inputRef={inputRef}
+            pdfFile={pdfFile}
+            imageFiles={imageFiles}
+            handleFileUpload={(event) => uploadFileUtils.handleFileUpload(event, setPdfFile, setImageFiles)}
+            handleDelete={(deleteIndex) =>
+              uploadFileUtils.handleDelete(deleteIndex, pdfFile, imageFiles, setPdfFile, setImageFiles)
+            }
+          />
+        )}
+        {type === 'text' && <TextType service="quiz" inputText={inputText} setInputText={setInputText} />}
+      </Container>
       <CreateSideBar
         service="quiz"
         disabled={!type}
@@ -82,3 +86,11 @@ function CreateAIQuiz() {
 }
 
 export default CreateAIQuiz;
+
+const Container = styled.div`
+  width: 100%;
+  margin: 16px 0px;
+
+  overflow-y: scroll;
+  ${Scrollbar}
+`;
