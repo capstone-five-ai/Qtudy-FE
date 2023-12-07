@@ -86,6 +86,7 @@ export default UploadType;
 
 const Container = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -108,7 +109,8 @@ const PreviewContainer = styled.div`
 
   width: 100%;
   height: max-content;
-  padding: 16px;
+  padding-left: 16px;
+  padding-right: 0px;
   gap: 16px;
 `;
 
@@ -116,7 +118,8 @@ const Preview = styled.div`
   width: 245px;
   height: 138px;
   border-radius: 4px;
-  border: 1px solid ${(props) => props.theme.colors.grayScale06};
+  border: 1px solid;
+  border-color: transparent;
   position: relative;
   overflow: hidden;
   box-shadow: 0px 0px 4px 0px rgba(117, 117, 117, 0.28);
@@ -139,6 +142,7 @@ const Preview = styled.div`
   }
 
   &:hover {
+    border-color: ${(props) => props.theme.colors.grayScale06};
     .icon-container {
       display: flex;
       justify-content: center;

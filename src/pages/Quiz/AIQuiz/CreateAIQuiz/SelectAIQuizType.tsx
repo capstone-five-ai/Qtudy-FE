@@ -38,6 +38,7 @@ export default SelectAIQuizType;
 
 const Container = styled.div`
   flex-grow: 1;
+  height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
