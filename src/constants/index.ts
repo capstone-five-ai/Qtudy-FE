@@ -2,26 +2,26 @@ import { CategoryListInfoType, HeaderContentType, TabType } from '../types';
 
 // TODO : 각 메뉴 path 수정
 export const HEADER_MENU_LIST = [
-  { menu: '퀴즈 생성', path: '/create/quiz' },
-  { menu: '요약 정리 생성', path: '/2' },
-  { menu: '저장 및 관리', path: '/3' },
+  { menu: '퀴즈 생성', path: '/quiz/ai' },
+  { menu: '요약 정리 생성', path: '/summary' },
+  { menu: '관리 및 복습', path: '/category' },
 ];
 
 export const HEADER_CONTENT: { [key: string]: { header: HeaderContentType; tabs: TabType[] } } = {
   createQuiz: {
     header: {
-      main: 'AI와 함께 혹은 자체적으로 퀴즈를 만들어보세요',
-      sub: '생성한 퀴즈는 저장 및 관리 페이지에서 확인하고 편집할 수 있습니다',
+      main: '퀴즈 생성',
+      sub: 'AI와 함께 혹은 자체적으로 퀴즈를 만들어보세요',
     },
     tabs: [
       { tab: 'AI 퀴즈 생성', path: '/create/quiz/ai' },
-      { tab: '자체 퀴즈 생성', path: '/create/quiz/own' },
+      { tab: '자체 퀴즈 생성', path: '/create/quiz/user' },
     ],
   },
   createSummary: {
     header: {
-      main: 'AI와 함께 혹은 자체적으로 요약 정리해보세요',
-      sub: '생성한 요약은 저장 및 관리 페이지에서 확인하고 편집할 수 있습니다',
+      main: '요약정리 생성',
+      sub: 'AI와 함께 혹은 자체적으로 요약해 보세요',
     },
     tabs: [
       { tab: 'AI 요약 생성', path: '/' },
@@ -43,3 +43,17 @@ export const GENERATED_BY: { [key: string]: string } = {
   MEMBER: '자체',
   AI: 'AI',
 };
+
+export const NUMBER_TO_CIRCLE: { [key: string]: string } = {
+  '1': '①',
+  '2': '②',
+  '4': '③',
+  '5': '④',
+  '6': '⑥',
+  '7': '⑦',
+  '8': '⑧',
+  '9': '⑨',
+  '10': '⑩',
+};
+
+export const CREATE_USER_QUIZ_TYPE = ['객관식', '주관식'];

@@ -32,9 +32,9 @@ function SelectService() {
     },
     {
       icon: <GenerateSummary />,
-      title: '요약 정리 생성하기',
+      title: '요약정리 생성하기',
       subTitle: 'Generate a summary',
-      content: `AI와 함께 혹은 자체적으로\n요약 정리를 할 수 있어요`,
+      content: `AI와 함께 혹은 자체적으로\n요약정리를 할 수 있어요`,
       svgType: 'fill',
       path: '/create/summary',
     },

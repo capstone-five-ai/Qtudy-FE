@@ -1,27 +1,51 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+import { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 import { HEADER_MENU_LIST } from '../../constants';
 import Typography from '../Typography';
+import Tooltip from '../Tooltip';
+import tooltipSelector from '../../recoil/selectors/tooltip';
 
 function MenuBar() {
+  const [showTooltip, setShowTooltip] = useRecoilState(tooltipSelector);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    let timer: number;
+
+    if (showTooltip) {
+      timer = setTimeout(() => setShowTooltip(false), 5000);
+    }
+
+    return () => {
+      clearTimeout(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
 
   return (
     <Container>
       {HEADER_MENU_LIST.map((menu) => (
-        <Link key={menu.menu} to={menu.path} style={{ textDecoration: 'none', padding: '0px', margin: '0px' }}>
-          <MenuButton>
-            <Typography
-              variant="subtitle"
-              color={location.pathname === menu.path ? 'grayScale02' : 'grayScale03'}
-              hoverColor="grayScale02"
-            >
-              {menu.menu}
-            </Typography>
-            <ActiveIcon $isActive={location.pathname === menu.path} />
-          </MenuButton>
-        </Link>
+        <MenuButton
+          key={menu.menu}
+          onClick={() => {
+            setShowTooltip(true);
+            navigate(menu.path);
+          }}
+        >
+          <Typography
+            variant="subtitle"
+            color={location.pathname === menu.path ? 'grayScale02' : 'grayScale03'}
+            hoverColor="grayScale02"
+          >
+            {menu.menu}
+          </Typography>
+          <ActiveIcon $isActive={location.pathname === menu.path} />
+        </MenuButton>
       ))}
+      {showTooltip && <Tooltip />}
     </Container>
   );
 }
@@ -50,10 +74,15 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   gap: 44px;
+  position: relative;
+  z-index: 3;
 `;
 
 const MenuButton = styled.div`
   position: relative;
+  width: max-content;
+  cursor: pointer;
+  z-index: 4;
 
   &:hover ${ActiveIcon} {
     background: ${(props) => props.theme.colors.mainMint};

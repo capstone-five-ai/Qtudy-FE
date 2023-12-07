@@ -15,6 +15,11 @@ export interface UploadedFileType {
 
 export type QuizType = 'SUBJECTIVE' | 'MULTIPLE';
 
+export interface CreateUserQuizInput {
+  input: string;
+  check: boolean;
+}
+
 // 카테고리 관련 타입
 export type CategoryType = '퀴즈' | '요약';
 

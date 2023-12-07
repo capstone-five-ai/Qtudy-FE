@@ -1,30 +1,42 @@
 import styled from 'styled-components';
-import RadioButtonFieldList from '../../../../components/Button/RadioButton/RadioButtonFieldList';
-import FileNameInputField from '../../../../components/Input/FileNameInputField';
-import SideBar from '../../../../components/SideBar';
+import SideBar from '.';
+import RadioButtonFieldList from '../Button/RadioButton/RadioButtonFieldList';
+import FileNameInputField from '../Input/FileNameInputField';
 
-const LIST = [
-  { dataKey: 'type', label: '문제 유형', button: ['객관식', '주관식'] },
-  { dataKey: 'amount', label: '문제량', button: ['적게', '적당히', '많이'] },
-  { dataKey: 'difficulty', label: '난이도', button: ['상', '중', '하'] },
-];
+const LIST = {
+  quiz: [
+    { dataKey: 'type', label: '문제 유형', button: ['객관식', '주관식'] },
+    { dataKey: 'amount', label: '문제량', button: ['적게', '적당히', '많이'] },
+    { dataKey: 'difficulty', label: '난이도', button: ['상', '중', '하'] },
+  ],
+  summary: [{ dataKey: 'amount', label: '요약량', button: ['짧게', '적당히', '길게'] }],
+};
 
-interface RightSideBarProps {
+interface CreateSideBarProps {
+  service: 'quiz' | 'summary';
   disabled?: boolean; // 사이드바 활성 여부
+  buttonDisabled?: boolean;
   inputOption: { [key: string]: string }; // 설정 변수
   setInputOption: React.Dispatch<React.SetStateAction<{ [key: string]: string }>>; // 설정 수정 함수
   handleSubmit: () => void;
 }
 
-function RightSideBar({ disabled = false, inputOption, setInputOption, handleSubmit }: RightSideBarProps) {
+function CreateSideBar({
+  service,
+  disabled = false,
+  buttonDisabled = false,
+  inputOption,
+  setInputOption,
+  handleSubmit,
+}: CreateSideBarProps) {
   const handleFileNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputOption({ ...inputOption, [e.target.name]: e.target.value });
   };
 
   return (
-    <SideBar buttonDisabled={Object.values(inputOption).includes('')} handleSubmit={handleSubmit}>
+    <SideBar buttonDisabled={buttonDisabled} handleSubmit={handleSubmit}>
       <Container>
-        {LIST.map((list) => (
+        {LIST[service].map((list) => (
           <RadioButtonFieldList
             key={list.dataKey}
             optionInputKey={list.dataKey}
@@ -41,11 +53,12 @@ function RightSideBar({ disabled = false, inputOption, setInputOption, handleSub
   );
 }
 
-RightSideBar.defaultProps = {
+CreateSideBar.defaultProps = {
   disabled: false,
+  buttonDisabled: false,
 };
 
-export default RightSideBar;
+export default CreateSideBar;
 
 const Container = styled.div`
   display: flex;
