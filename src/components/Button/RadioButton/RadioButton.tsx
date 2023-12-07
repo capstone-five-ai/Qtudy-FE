@@ -11,6 +11,7 @@ export default RadioButton;
 const StyledInput = styled.input.attrs({ type: 'radio' })<{ $disabled: boolean }>`
   -webkit-appearance: none;
   -moz-appearance: none;
+  -ms-appearance: none;
   appearance: none;
   width: 14px;
   height: 14px;

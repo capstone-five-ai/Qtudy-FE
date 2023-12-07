@@ -1,12 +1,16 @@
 import { useSearchParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import { useSetRecoilState } from 'recoil';
-import RightSideBar from './RightSideBar';
-import SelectAIQuizType from './SelectAIQuizType';
-import UploadType from './UploadType';
-import TextType from './TextType';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import styled from 'styled-components';
+import UploadType from '../../../../components/SelectAIType/UploadType';
+import TextType from '../../../../components/SelectAIType/TextType';
 import { UploadedFileType } from '../../../../types';
 import loadingSelector from '../../../../recoil/selectors/loading';
+import SelectAIType from '../../../../components/SelectAIType';
+import uploadFileUtils from '../../../../utils/uploadFileUtils';
+import CreateSideBar from '../../../../components/SideBar/CreateSideBar';
+import Loader from '../../../../components/Modal/Loader';
+import Scrollbar from '../../../../components/Scrollbar';
 
 const DEFAULT_INPUT_OPTION = {
   type: '', // 문제 유형
@@ -23,52 +27,14 @@ function CreateAIQuiz() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [pdfFile, setPdfFile] = useState<UploadedFileType | null>(null);
   const [imageFiles, setImageFiles] = useState<UploadedFileType[]>([]);
-  const setLoading = useSetRecoilState(loadingSelector);
+  const showLoader = useRecoilValue(loadingSelector);
+  const setShowLoader = useSetRecoilState(loadingSelector);
 
   useEffect(() => {
     setInputOption(DEFAULT_INPUT_OPTION);
     setPdfFile(null);
     setImageFiles([]);
   }, [type]);
-
-  const handleUploadButtonClick = () => {
-    if (!inputRef.current) return;
-    inputRef.current.click();
-  };
-
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { files } = event.target;
-    if (!files) return;
-
-    let pdfFound = false;
-    const newImageFiles: UploadedFileType[] = [];
-
-    for (let i = 0; i < files.length; i += 1) {
-      const file = files[i];
-      const uploadedFile: UploadedFileType = { file, name: file.name };
-
-      if (file.type === 'application/pdf' && !pdfFound) {
-        pdfFound = true;
-        setPdfFile(uploadedFile);
-      } else if (file.type.includes('image')) {
-        newImageFiles.push(uploadedFile);
-      }
-    }
-
-    setImageFiles(newImageFiles);
-  };
-
-  const handleDelete = (deleteIndex: number | null) => {
-    if (pdfFile) {
-      setPdfFile(null);
-    } else if (deleteIndex !== null) {
-      setImageFiles(
-        imageFiles.filter((_, index) => {
-          return deleteIndex !== index;
-        })
-      );
-    }
-  };
 
   const handleSubmit = () => {
     const formData = new FormData();
@@ -83,26 +49,34 @@ function CreateAIQuiz() {
       });
     }
 
+    setShowLoader(true);
     // TODO: 서버로 formData 전송
-    setLoading(true);
   };
 
   return (
     <>
-      {!type && <SelectAIQuizType />}
-      {type === 'upload' && (
-        <UploadType
-          inputRef={inputRef}
-          pdfFile={pdfFile}
-          imageFiles={imageFiles}
-          handleFileUpload={handleFileUpload}
-          handleUploadButtonClick={handleUploadButtonClick}
-          handleDelete={handleDelete}
-        />
-      )}
-      {type === 'text' && <TextType inputText={inputText} setInputText={setInputText} />}
-      <RightSideBar
+      {showLoader && <Loader isLoading />}
+      <Container>
+        {!type && <SelectAIType service="quiz" />}
+        {type === 'upload' && (
+          <UploadType
+            inputRef={inputRef}
+            pdfFile={pdfFile}
+            imageFiles={imageFiles}
+            handleFileUpload={(event) => uploadFileUtils.handleFileUpload(event, setPdfFile, setImageFiles)}
+            handleDelete={(deleteIndex) =>
+              uploadFileUtils.handleDelete(deleteIndex, pdfFile, imageFiles, setPdfFile, setImageFiles)
+            }
+          />
+        )}
+        {type === 'text' && <TextType service="quiz" inputText={inputText} setInputText={setInputText} />}
+      </Container>
+      <CreateSideBar
+        service="quiz"
         disabled={!type}
+        buttonDisabled={
+          Object.values(inputOption).includes('') && (!pdfFile || imageFiles.length > 0 || inputText !== '')
+        }
         inputOption={inputOption}
         setInputOption={setInputOption}
         handleSubmit={handleSubmit}
@@ -112,3 +86,11 @@ function CreateAIQuiz() {
 }
 
 export default CreateAIQuiz;
+
+const Container = styled.div`
+  width: 100%;
+  margin: 16px 0px;
+
+  overflow-y: scroll;
+  ${Scrollbar}
+`;
