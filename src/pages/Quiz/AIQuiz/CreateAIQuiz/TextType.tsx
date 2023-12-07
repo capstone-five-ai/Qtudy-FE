@@ -21,7 +21,9 @@ function TextType({ inputText, setInputText }: TextTypeProps) {
 export default TextType;
 
 const Container = styled.div`
-  width: 100%;
-  height: inherit;
-  margin: 24px 36px;
+  display: flex;
+  margin: 8px 20px 8px 36px;
+  padding: 16px;
+  border-radius: 4px;
+  background: ${(props) => props.theme.colors.grayScale09};
 `;
