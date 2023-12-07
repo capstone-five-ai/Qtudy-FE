@@ -1,13 +1,16 @@
 import ContentWrapper from '../../components/Wrapper/ContentWrapper';
+import MainWrapper from '../../components/Wrapper/MainWrapper';
 import MainLayout from '../../layouts/MainLayout';
 import CreateUserSummary from './UserSummary/CreateUserSummary';
 
 function Summary() {
   return (
     <MainLayout contentKey="createSummary">
-      <ContentWrapper>
-        <CreateUserSummary />
-      </ContentWrapper>
+      <MainWrapper>
+        <ContentWrapper>
+          <CreateUserSummary />
+        </ContentWrapper>
+      </MainWrapper>
     </MainLayout>
   );
 }
