@@ -8,6 +8,7 @@ import UploadType from '../../../../components/SelectAIType/UploadType';
 import TextType from '../../../../components/SelectAIType/TextType';
 import uploadFileUtils from '../../../../utils/uploadFileUtils';
 import CreateSideBar from '../../../../components/SideBar/CreateSideBar';
+import CreateContentWrapper from '../../../../components/Wrapper/CreateContentWrapper';
 
 const DEFAULT_INPUT_OPTION = {
   amount: '', // 요약량
@@ -43,19 +44,21 @@ function CreateAISummary() {
 
   return (
     <>
-      {!type && <SelectAIType service="summary" />}
-      {type === 'upload' && (
-        <UploadType
-          inputRef={inputRef}
-          pdfFile={pdfFile}
-          imageFiles={imageFiles}
-          handleFileUpload={(event) => uploadFileUtils.handleFileUpload(event, setPdfFile, setImageFiles)}
-          handleDelete={(deleteIndex) =>
-            uploadFileUtils.handleDelete(deleteIndex, pdfFile, imageFiles, setPdfFile, setImageFiles)
-          }
-        />
-      )}
-      {type === 'text' && <TextType service="summary" inputText={inputText} setInputText={setInputText} />}
+      <CreateContentWrapper>
+        {!type && <SelectAIType service="summary" />}
+        {type === 'upload' && (
+          <UploadType
+            inputRef={inputRef}
+            pdfFile={pdfFile}
+            imageFiles={imageFiles}
+            handleFileUpload={(event) => uploadFileUtils.handleFileUpload(event, setPdfFile, setImageFiles)}
+            handleDelete={(deleteIndex) =>
+              uploadFileUtils.handleDelete(deleteIndex, pdfFile, imageFiles, setPdfFile, setImageFiles)
+            }
+          />
+        )}
+        {type === 'text' && <TextType service="summary" inputText={inputText} setInputText={setInputText} />}
+      </CreateContentWrapper>
       <CreateSideBar
         service="summary"
         disabled={!type}
