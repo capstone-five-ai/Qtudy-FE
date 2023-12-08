@@ -26,20 +26,6 @@ function CategoryItemContentWrapper({
       <div className="button-container">
         {isEdit ? (
           <>
-            <Button type="button" onClick={handleMoveToList}>
-              <Typography variant="button" color="grayScale03">
-                목록으로
-              </Typography>
-            </Button>
-            <Button type="button" onClick={handleEdit}>
-              <EditIcon />
-              <Typography variant="button" color="grayScale03">
-                편집하기
-              </Typography>
-            </Button>
-          </>
-        ) : (
-          <>
             <Button type="button" onClick={handleCancelEdit}>
               <Typography variant="button" color="grayScale03">
                 편집 취소
@@ -49,6 +35,20 @@ function CategoryItemContentWrapper({
               <CheckIcon />
               <Typography variant="button" color="grayScale03">
                 편집 완료
+              </Typography>
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button type="button" onClick={handleMoveToList}>
+              <Typography variant="button" color="grayScale03">
+                목록으로
+              </Typography>
+            </Button>
+            <Button type="button" onClick={handleEdit}>
+              <EditIcon />
+              <Typography variant="button" color="grayScale03">
+                편집하기
               </Typography>
             </Button>
           </>
