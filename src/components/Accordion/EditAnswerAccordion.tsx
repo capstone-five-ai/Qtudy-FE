@@ -40,7 +40,7 @@ function EditAnswerAccordion({ answer, commentaryInput, handleEdit, handleCheck 
             />
             {commentaryInput.check ? (
               <EditIcon
-                className="icon"
+                className="icon edit-icon"
                 onClick={() => {
                   handleEdit('commentary', 0);
                 }}
@@ -80,6 +80,12 @@ const CommentaryContainer = styled.div`
   .icon {
     align-self: flex-end;
     cursor: pointer;
+  }
+
+  .edit-icon {
+    path {
+      fill: ${(props) => props.theme.colors.grayScale04};
+    }
   }
 `;
 
