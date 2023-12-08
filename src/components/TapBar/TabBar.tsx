@@ -14,8 +14,11 @@ function TabBar({ tabList }: TabBarProps) {
     <Container>
       {tabList.map((tabItem) => (
         <Link to={tabItem.path} style={{ textDecoration: 'none' }} key={tabItem.tab}>
-          <TabButton key={tabItem.tab} $active={tabItem.path === location.pathname}>
-            <Typography variant="subtitle" color={tabItem.path === location.pathname ? 'mainMintDark' : 'grayScale03'}>
+          <TabButton key={tabItem.tab} $active={location.pathname.includes(tabItem.path)}>
+            <Typography
+              variant="subtitle"
+              color={location.pathname.includes(tabItem.path) ? 'mainMintDark' : 'grayScale03'}
+            >
               {tabItem.tab}
             </Typography>
           </TabButton>
