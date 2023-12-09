@@ -21,6 +21,9 @@ const colors = {
   /** Kakao Colors */
   kakaoYellow: '#FEE500',
   kakaoBlack: '#000000',
+
+  /** Error Colors */
+  errorRed: '#ee0000',
 };
 
 const fontSize = {
