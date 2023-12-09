@@ -2,7 +2,7 @@ import { CategoryListInfoType, HeaderContentType, TabType } from '../types';
 
 // TODO : 각 메뉴 path 수정
 export const HEADER_MENU_LIST = [
-  { menu: '퀴즈 생성', path: '/quiz/ai' },
+  { menu: '퀴즈 생성', path: '/quiz' },
   { menu: '요약 정리 생성', path: '/summary' },
   { menu: '관리 및 복습', path: '/category' },
 ];
