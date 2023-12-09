@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Scrollbar from '../Scrollbar';
 import Typography from '../Typography';
-import { ReactComponent as EditIcon } from '../../assets/icons/icon-edit.svg';
+import { ReactComponent as EditIcon } from '../../assets/icons/icon-edit-gradation.svg';
 import { ReactComponent as CheckIcon } from '../../assets/icons/icon-check.svg';
 
 interface CategoryItemContentWrapperProps {

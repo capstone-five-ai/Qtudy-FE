@@ -41,7 +41,7 @@ function QuizInputField({ type, input, index, handleEdit, handleCheck, handleDel
       <IconContainer>
         {input.check ? (
           <EditIcon
-            className="icon edit-icon"
+            className="icon"
             onClick={() => {
               handleEdit(type, index);
             }}
@@ -108,11 +108,5 @@ const IconContainer = styled.div`
 
   .icon {
     cursor: pointer;
-  }
-
-  .edit-icon {
-    path {
-      fill: ${(props) => props.theme.colors.grayScale04};
-    }
   }
 `;
