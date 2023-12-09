@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import LinkButton from '../../../../components/Button/LinkButton';
 import TwinkleButton from '../../../../components/Button/TwinkleButton';
 import Question from '../../../../components/Question';
@@ -10,6 +11,8 @@ import CategoryModal from '../../../../components/Modal/CategoryModal';
 function QuizItemDetail() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const link = window.location.href;
+  const navigate = useNavigate();
+  const [params] = useSearchParams();
 
   const question: QuestionType = {
     problemName: '인공지능은 무엇을 모방할 수 있는 기술 및 연구 분야인가요?',
@@ -20,9 +23,20 @@ function QuizItemDetail() {
     problemChoices: ['선지1', '선지2', '선지3', '선지4'],
   };
 
+  const handleMoveToList = () => {
+    // TODO: state로 activeCategory도 넘겨주기
+    navigate('/management/mycategory', { state: { activeTab: '퀴즈' } });
+  };
+
+  const handleEdit = () => {
+    navigate(`/management/mycategory/edit?category=quiz&id=${params.get('id')}`);
+  };
+
+  if (!params.get('id')) return <Navigate to="/management/mycategory" replace />;
+
   return (
     <>
-      <CategoryItemContentWrapper isEdit={false}>
+      <CategoryItemContentWrapper isEdit={false} handleMoveToList={handleMoveToList} handleEdit={handleEdit}>
         <Question question={question} />
       </CategoryItemContentWrapper>
       <SideWrapper>

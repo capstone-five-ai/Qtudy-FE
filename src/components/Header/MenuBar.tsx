@@ -35,8 +35,8 @@ function MenuBar() {
   return (
     <Container>
       {HEADER_MENU_LIST.map((menu) => (
-        <Link to={menu.defaultPath} style={{ textDecoration: 'none' }}>
-          <MenuButton key={menu.menu}>
+        <Link key={menu.menu} to={menu.defaultPath} style={{ textDecoration: 'none' }}>
+          <MenuButton>
             <Typography
               variant="subtitle"
               color={location.pathname.includes(menu.path) ? 'grayScale02' : 'grayScale03'}

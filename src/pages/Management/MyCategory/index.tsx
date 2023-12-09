@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   CategoryInfoType,
   CategoryListInfoType,
@@ -24,6 +25,14 @@ function MyCategory() {
   const [activeCategory, setActiveCategory] = useState<CategoryInfoType | null>(null); // 조회 중인 카테고리 (퀴즈/요약)
   const [activeCategoryQuizItems, setActiveCategoryQuizItems] = useState<CategoryQuizItemsType[]>([]);
   const [activeCategorySummaryItems, setActiveCategorySummaryItems] = useState<CategorySummaryItemsType[]>([]);
+  const location = useLocation();
+
+  useEffect(() => {
+    const { state } = location;
+    if (state && state.activeTab) setActiveTabBar(state.activeTab);
+
+    // TODO: state로 넘어온 activeCategory 세팅
+  }, [location]);
 
   useEffect(() => {
     if (categoryList.quiz.length === 0 && categoryList.summary.length === 0) setShowNoCategoryView(true);
