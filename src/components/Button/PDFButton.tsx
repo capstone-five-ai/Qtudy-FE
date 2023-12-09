@@ -4,23 +4,40 @@ import Typography from '../Typography';
 
 type Props = {
   label: string;
+  variant?: 1 | 2;
 };
 
-function PDFButton({ label }: Props) {
+PDFButton.defaultProps = {
+  variant: 1,
+};
+
+function PDFButton({ label, variant }: Props) {
   const handleClickDownload = () => {
     // TOOD: download pdf
   };
-  return (
-    <Wrapper onClick={handleClickDownload}>
-      <IconWrapper>
+
+  if (variant === 1)
+    return (
+      <Wrapper onClick={handleClickDownload}>
+        <IconWrapper>
+          <PDFIcon />
+          <Label>{label}</Label>
+        </IconWrapper>
+        <Typography variant="caption3" color="grayScale03">
+          PDF 다운
+        </Typography>
+      </Wrapper>
+    );
+
+  if (variant === 2)
+    return (
+      <Wrapper>
         <PDFIcon />
-        <Label>{label}</Label>
-      </IconWrapper>
-      <Typography variant="caption3" color="grayScale03">
-        PDF 다운
-      </Typography>
-    </Wrapper>
-  );
+        <Typography variant="caption3" color="grayScale03">
+          {label} PDF
+        </Typography>
+      </Wrapper>
+    );
 }
 
 const Wrapper = styled.div`

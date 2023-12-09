@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
@@ -11,7 +11,6 @@ function MenuBar() {
   const [currentPath, setCurrentPath] = useState<string | null>(null);
   const [showTooltip, setShowTooltip] = useRecoilState(tooltipSelector);
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     let timeout: number;
@@ -36,22 +35,18 @@ function MenuBar() {
   return (
     <Container>
       {HEADER_MENU_LIST.map((menu) => (
-        <MenuButton
-          key={menu.menu}
-          onClick={() => {
-            // setShowTooltip(true);
-            navigate(menu.path);
-          }}
-        >
-          <Typography
-            variant="subtitle"
-            color={location.pathname.includes(menu.path) ? 'grayScale02' : 'grayScale03'}
-            hoverColor="grayScale02"
-          >
-            {menu.menu}
-          </Typography>
-          <ActiveIcon $isActive={location.pathname.includes(menu.path)} />
-        </MenuButton>
+        <Link to={menu.defaultPath} style={{ textDecoration: 'none' }}>
+          <MenuButton key={menu.menu}>
+            <Typography
+              variant="subtitle"
+              color={location.pathname.includes(menu.path) ? 'grayScale02' : 'grayScale03'}
+              hoverColor="grayScale02"
+            >
+              {menu.menu}
+            </Typography>
+            <ActiveIcon $isActive={location.pathname.includes(menu.path)} />
+          </MenuButton>
+        </Link>
       ))}
       {showTooltip && <Tooltip />}
     </Container>
