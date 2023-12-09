@@ -22,7 +22,7 @@ const routes = [
       },
       { path: 'summary/*', element: <Summary /> },
       {
-        path: 'management',
+        path: 'management/*',
         element: <Management />,
       },
     ],
