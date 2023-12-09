@@ -20,7 +20,7 @@ const routes = [
         path: 'quiz/*',
         element: <Quiz />,
       },
-      { path: 'summary', element: <Summary /> },
+      { path: 'summary/*', element: <Summary /> },
       {
         path: 'management',
         element: <Management />,
