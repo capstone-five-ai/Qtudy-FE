@@ -1,4 +1,4 @@
-import { HeaderContentType, TabType } from '../types';
+import { CategoryListInfoType, HeaderContentType, TabType } from '../types';
 
 // TODO : 각 메뉴 path 수정
 export const HEADER_MENU_LIST = [
@@ -28,16 +28,20 @@ export const HEADER_CONTENT: { [key: string]: { header: HeaderContentType; tabs:
       { tab: '자체 요약 생성', path: '/' },
     ],
   },
-  manage: {
-    header: {
-      main: '관리 및 복습',
-      sub: '히스토리와 카테고리로 관리하고 복습할 수 있어요',
-    },
+  management: {
+    header: { main: '관리 및 복습', sub: '히스토리와 카테고리로 관리하고 복습할 수 있어요' },
     tabs: [
       { tab: '생성 히스토리', path: '/' },
       { tab: '나만의 카테고리', path: '/' },
     ],
   },
+};
+
+export const CATEGORY_TYPE_MAPPING: { [key: string]: keyof CategoryListInfoType } = { 퀴즈: 'quiz', 요약: 'summary' };
+
+export const GENERATED_BY: { [key: string]: string } = {
+  MEMBER: '자체',
+  AI: 'AI',
 };
 
 export const NUMBER_TO_CIRCLE: { [key: string]: string } = {

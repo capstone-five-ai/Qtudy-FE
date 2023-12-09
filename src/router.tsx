@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from './layouts';
+import Management from './pages/Management';
 import Quiz from './pages/Quiz';
 import Summary from './pages/Summary';
 import Home from './pages/home';
@@ -20,6 +21,10 @@ const routes = [
         element: <Quiz />,
       },
       { path: 'summary', element: <Summary /> },
+      {
+        path: 'management',
+        element: <Management />,
+      },
     ],
   },
   {
