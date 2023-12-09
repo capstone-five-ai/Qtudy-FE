@@ -18,17 +18,12 @@ const routes = [
         element: <Layout />,
         children: [
           {
-            path: 'quiz/*',
-            element: <Quiz />,
-          },
-          { path: 'summary/*', element: <Summary /> },
-          {
             path: 'management/*',
             element: <Management />,
           },
-          { path: 'select', element: <SelectService /> },
         ],
       },
+      { path: 'select', element: <SelectService /> },
     ],
   },
   {
