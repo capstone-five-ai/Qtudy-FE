@@ -1,0 +1,18 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="humbleicons:link">
+<g id="Group">
+<path id="Vector" d="M9.9982 14.1701L8.7482 15.4201C8.19562 15.9725 7.44624 16.2829 6.66487 16.2829C5.8835 16.2829 5.13412 15.9725 4.58153 15.4201C4.02909 14.8675 3.71875 14.1181 3.71875 13.3367C3.71875 12.5554 4.02909 11.806 4.58153 11.2534L7.08153 8.75341C7.63412 8.20097 8.3835 7.89062 9.16487 7.89062C9.94624 7.89062 10.6956 8.20097 11.2482 8.75341" stroke-width="1.5" stroke-linecap="round"/>
+<path id="Vector_2" d="M9.99219 5.83544L11.2422 4.58544C11.7948 4.033 12.5442 3.72266 13.3255 3.72266C14.1069 3.72266 14.8563 4.033 15.4089 4.58544C15.9613 5.13803 16.2716 5.8874 16.2716 6.66877C16.2716 7.45014 15.9613 8.19952 15.4089 8.75211L12.9089 11.2521C12.3563 11.8045 11.6069 12.1149 10.8255 12.1149C10.0442 12.1149 9.29477 11.8045 8.74219 11.2521" stroke-width="1.5" stroke-linecap="round"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_1895_2768" x1="7.48348" y1="16.2829" x2="7.48347" y2="7.89063" gradientUnits="userSpaceOnUse">
+<stop stop-color="#36BDB4"/>
+<stop offset="1" stop-color="#36BDB4" stop-opacity="0.6"/>
+</linearGradient>
+<linearGradient id="paint1_linear_1895_2768" x1="12.5069" y1="12.1149" x2="12.5069" y2="3.72266" gradientUnits="userSpaceOnUse">
+<stop stop-color="#36BDB4"/>
+<stop offset="1" stop-color="#36BDB4" stop-opacity="0.6"/>
+</linearGradient>
+</defs>
+</svg>
