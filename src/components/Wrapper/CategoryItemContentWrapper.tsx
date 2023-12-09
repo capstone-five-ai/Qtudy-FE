@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import Scrollbar from '../Scrollbar';
 import Typography from '../Typography';
 import { ReactComponent as EditIcon } from '../../assets/icons/icon-edit.svg';
@@ -8,7 +9,6 @@ interface CategoryItemContentWrapperProps {
   isEdit?: boolean;
   handleMoveToList?: () => void;
   handleEdit?: () => void;
-  handleCancelEdit?: () => void;
   handleFinishEdit?: () => void;
   children: React.ReactNode;
 }
@@ -17,10 +17,15 @@ function CategoryItemContentWrapper({
   isEdit = false,
   handleMoveToList,
   handleEdit,
-  handleCancelEdit,
   handleFinishEdit,
   children,
 }: CategoryItemContentWrapperProps) {
+  const navigate = useNavigate();
+
+  const handleCancelEdit = () => {
+    navigate(-1);
+  };
+
   return (
     <Container>
       <div className="button-container">
@@ -63,7 +68,6 @@ CategoryItemContentWrapper.defaultProps = {
   isEdit: false,
   handleMoveToList: () => {},
   handleEdit: () => {},
-  handleCancelEdit: () => {},
   handleFinishEdit: () => {},
 };
 
@@ -77,12 +81,11 @@ const Container = styled.div`
 
   margin: 24px 0px;
   padding-left: 40px;
-  padding-right: 20px;
 
   .button-container {
     display: flex;
     justify-content: space-between;
-    padding-right: 16px;
+    padding-right: 36px;
   }
 `;
 
@@ -99,6 +102,8 @@ const Button = styled.button`
 `;
 
 const ChildrenContainer = styled.div`
+  padding-right: 20px;
   overflow-y: scroll;
+
   ${Scrollbar}
 `;
