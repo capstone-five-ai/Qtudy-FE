@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { ReactComponent as PDFIcon } from '../../../../assets/icons/pdf.svg';
-import Typography from '../../../../components/Typography';
+import Typography from '../Typography';
 
 type Props = {
   label: string;

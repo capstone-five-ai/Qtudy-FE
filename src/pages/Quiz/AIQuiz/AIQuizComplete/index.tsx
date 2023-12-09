@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import LinkButton from '../../../../components/Button/LinkButton';
+import PDFButton from '../../../../components/Button/PDFButton';
 import TwinkleButton from '../../../../components/Button/TwinkleButton';
 import CategoryModal from '../../../../components/Modal/CategoryModal';
 import Question from '../../../../components/Question';
 import { QuestionType } from '../../../../types/question.type';
 import NumberPannel from './NumberPannel';
-import PDFButton from './PDFButton';
 
 function AIQuizComplete() {
   // AI 퀴즈의 경우 문제 번호에 따라 보여줘야 함
