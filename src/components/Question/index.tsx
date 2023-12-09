@@ -35,7 +35,7 @@ function Question({ question, questionNum }: Props) {
           <Choice>
             {question.problemChoices?.map((choice, idx) => (
               <Typography key={choice} variant="body2">
-                {getCircleNum(idx)} {choice}
+                {getCircleNum(idx + 1)} {choice}
               </Typography>
             ))}
           </Choice>
