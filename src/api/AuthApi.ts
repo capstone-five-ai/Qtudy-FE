@@ -1,9 +1,23 @@
 import apiClient from './client';
 
 const AuthApi = {
-  login: async () => {
-    // 회원(Member)/카카오 로그인(회원가입)
-    const response = await apiClient.post('oauth/login', null);
+  authKakao: async (code: string) => {
+    const response = await apiClient.get(`oauth/kakao/callback?code=${code}`);
+    return response.data;
+  },
+
+  login: async (accessToken: string) => {
+    const response = await apiClient.post(
+      'api/oauth/login',
+      {
+        memberType: 'KAKAO',
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
     return response.data;
   },
 
