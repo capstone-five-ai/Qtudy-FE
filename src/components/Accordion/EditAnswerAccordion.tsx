@@ -66,7 +66,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  min-height: 170px;
 `;
 
 const CommentaryContainer = styled.div`

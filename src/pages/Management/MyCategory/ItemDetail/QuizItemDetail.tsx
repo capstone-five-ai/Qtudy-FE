@@ -36,7 +36,7 @@ function QuizItemDetail() {
 
   return (
     <>
-      <CategoryItemContentWrapper isEdit={false} handleMoveToList={handleMoveToList} handleEdit={handleEdit}>
+      <CategoryItemContentWrapper handleMoveToList={handleMoveToList} handleEdit={handleEdit}>
         <Question question={question} />
       </CategoryItemContentWrapper>
       <SideWrapper>

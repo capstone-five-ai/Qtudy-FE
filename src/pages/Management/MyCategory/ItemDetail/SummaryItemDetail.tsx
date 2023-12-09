@@ -33,7 +33,7 @@ function SummaryItemDetail() {
 
   return (
     <>
-      <CategoryItemContentWrapper isEdit={false} handleMoveToList={handleMoveToList} handleEdit={handleEdit}>
+      <CategoryItemContentWrapper handleMoveToList={handleMoveToList} handleEdit={handleEdit}>
         <TitleWrapper>
           <Typography variant="subtitle" color="mainMintDark">
             제목
