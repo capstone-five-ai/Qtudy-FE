@@ -102,6 +102,10 @@ const Button = styled.button`
 `;
 
 const ChildrenContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
   padding-right: 20px;
   overflow-y: scroll;
 
