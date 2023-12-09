@@ -40,6 +40,8 @@ const Wrapper = styled.div`
   align-items: center;
 
   gap: 44px;
+
+  padding: 44px 0 21px 0;
 `;
 
 const Header = styled.div`
