@@ -1,7 +1,7 @@
 export interface QuestionType {
   problemName: string;
-  problemAnswer: string;
+  problemAnswer: string | null;
   problemCommentary: string;
   problemType: 'MULTIPLE' | 'SUBJECTIVE';
-  problemChoices?: string[];
+  problemChoices: string[];
 }
