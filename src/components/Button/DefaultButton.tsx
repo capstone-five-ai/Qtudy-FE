@@ -21,6 +21,7 @@ interface DefaultButtonProps {
   size?: 'large' | 'medium' | 'small';
   disabled?: boolean;
   onClick?: () => void;
+  theme?: 'mint' | 'gray';
   children: React.ReactNode;
 }
 
@@ -28,13 +29,18 @@ DefaultButton.defaultProps = {
   size: 'medium',
   disabled: false,
   onClick() {},
+  theme: 'mint',
 };
 
-function DefaultButton({ size = 'medium', disabled = false, onClick, children }: DefaultButtonProps) {
+function DefaultButton({ size = 'medium', disabled = false, onClick, theme = 'mint', children }: DefaultButtonProps) {
   return (
-    <Container $disabled={disabled} $style={buttonStyle.find((el) => el.type === size) || buttonStyle[1]}>
+    <Container
+      $disabled={disabled}
+      $theme={theme}
+      $style={buttonStyle.find((el) => el.type === size) || buttonStyle[1]}
+    >
       <button type="button" disabled={disabled} onClick={onClick}>
-        <Typography variant="button" color="grayScale09">
+        <Typography variant="button" color={theme === 'mint' ? 'grayScale09' : 'grayScale03'}>
           {children}
         </Typography>
       </button>
@@ -44,11 +50,13 @@ function DefaultButton({ size = 'medium', disabled = false, onClick, children }:
 
 export default DefaultButton;
 
-const Container = styled.div<{ $disabled: boolean; $style: Style }>`
+const Container = styled.div<{ $disabled: boolean; $style: Style; $theme: 'mint' | 'gray' }>`
   width: ${(props) => props.$style.width}px;
   height: ${(props) => props.$style.height}px;
   border-radius: 8px;
-  box-shadow: ${(props) => !props.$disabled && `8px 4px 20px 0px ${props.theme.colors.mainMintShadow}`};
+  ${(props) =>
+    props.$theme === 'mint' && !props.$disabled && `box-shadow: 8px 4px 20px 0px ${props.theme.colors.mainMintShadow}`};
+  ${({ $theme }) => $theme === 'gray' && 'box-shadow: 4px 2px 16px 0px rgba(189, 189, 189, 0.28);'}
 
   button {
     display: flex;
@@ -58,13 +66,15 @@ const Container = styled.div<{ $disabled: boolean; $style: Style }>`
 
     width: 100%;
     height: 100%;
-    border: none;
+    border: ${({ $theme }) => ($theme === 'gray' ? '0.8px solid #E0E0E0' : 'none')};
     border-radius: 8px;
-    background: ${(props) => props.theme.gradation.mainMintGra};
+    background: ${(props) =>
+      props.$theme === 'mint' ? props.theme.gradation.mainMintGra : props.theme.colors.grayScale08};
     cursor: pointer;
 
     &:hover {
-      background: ${(props) => props.theme.gradation.mainMintDarkGra};
+      background: ${(props) =>
+        props.$theme === 'mint' ? props.theme.colors.mainMintDark : props.theme.colors.grayScale07};
     }
   }
 
