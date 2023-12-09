@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import TabBar from '../components/TapBar/TabBar';
+import MenuTabBar from '../components/TapBar/MenuTabBar';
 import ContentHeader from '../components/Header/ContentHeader';
 import { HEADER_CONTENT } from '../constants';
 
@@ -12,7 +12,7 @@ function MainLayout({ contentKey, children }: MainLayoutProps) {
   return (
     <Container>
       <ContentHeader text={HEADER_CONTENT[contentKey].header} />
-      <TabBar tabList={HEADER_CONTENT[contentKey].tabs} />
+      <MenuTabBar tabList={HEADER_CONTENT[contentKey].tabs} />
       <ChildrenContainer>{children}</ChildrenContainer>
     </Container>
   );

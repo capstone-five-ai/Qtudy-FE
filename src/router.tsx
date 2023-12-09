@@ -4,6 +4,7 @@ import Home from './pages/home';
 import Login from './pages/login';
 import SelectService from './pages/selectService';
 import Quiz from './pages/Quiz';
+import Management from './pages/Management';
 import Summary from './pages/Summary';
 
 const routes = [
@@ -20,6 +21,10 @@ const routes = [
         element: <Quiz />,
       },
       { path: 'summary', element: <Summary /> },
+      {
+        path: 'management',
+        element: <Management />,
+      },
     ],
   },
   {

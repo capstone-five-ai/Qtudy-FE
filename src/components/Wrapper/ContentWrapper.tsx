@@ -16,6 +16,7 @@ const Container = styled.div`
   box-shadow: 0px 0px 4px 0px rgba(189, 189, 189, 0.28);
   max-height: calc(100vh - 65px - 190px);
   min-height: 572px;
+  //height: calc(100vh - 65px - 190px);
 `;
 
 export default ContentWrapper;

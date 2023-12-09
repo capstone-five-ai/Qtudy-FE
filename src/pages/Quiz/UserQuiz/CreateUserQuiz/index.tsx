@@ -102,7 +102,7 @@ function CreateUserQuiz() {
 export default CreateUserQuiz;
 
 const QuizContainer = styled.div`
-  width: 100%;
+  flex-grow: 1;
   margin: 20px;
   margin-right: 0px;
   padding: 20px;
