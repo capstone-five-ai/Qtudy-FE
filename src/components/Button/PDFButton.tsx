@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as PDFIcon } from '../../../../assets/icons/pdf.svg';
+import { ReactComponent as PDFIcon } from '../../assets/icons/pdf.svg';
 import Typography from '../Typography';
 
 type Props = {
