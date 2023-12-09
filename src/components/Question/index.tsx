@@ -4,6 +4,7 @@ import { ReactComponent as AnswerIcon } from '../../assets/icons/answer.svg';
 import { ReactComponent as ArrowDown } from '../../assets/icons/arrow_down.svg';
 import { ReactComponent as ArrowUp } from '../../assets/icons/arrow_up.svg';
 import { QuestionType } from '../../types/question.type';
+import getCircleNum from '../../utils/getCircleNum';
 import Typography from '../Typography';
 
 type Props = {
@@ -22,10 +23,6 @@ function Question({ question, questionNum }: Props) {
   const handleClickAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setShowAnswer(!showAnswer);
-  };
-
-  const getCircleNum = (num: number) => {
-    return String.fromCharCode(0x2460 + num);
   };
 
   return (
@@ -54,7 +51,9 @@ function Question({ question, questionNum }: Props) {
         </AnswerButton>
         {showAnswer && (
           <Commentary>
-            {question.problemAnswer && <Typography variant="subtitle">정답 {question.problemAnswer}</Typography>}
+            {question.problemAnswer && (
+              <Typography variant="subtitle">정답 {getCircleNum(question.problemAnswer)}</Typography>
+            )}
             <Typography variant="body3">{question.problemCommentary}</Typography>
           </Commentary>
         )}
