@@ -9,7 +9,7 @@ type Props = {
   children: ReactNode;
 };
 
-function GradationButton({ disabled, onClick, children }: Props) {
+function TwinkleButton({ disabled, onClick, children }: Props) {
   return (
     <Container $disabled={disabled}>
       <button type="button" disabled={disabled} onClick={onClick}>
@@ -52,4 +52,4 @@ const Container = styled.div<{ $disabled: boolean }>`
   }
 `;
 
-export default GradationButton;
+export default TwinkleButton;

@@ -31,7 +31,6 @@ DefaultButton.defaultProps = {
 };
 
 function DefaultButton({ size = 'medium', disabled = false, onClick, children }: DefaultButtonProps) {
-  console.log(size);
   return (
     <Container $disabled={disabled} $style={buttonStyle.find((el) => el.type === size) || buttonStyle[1]}>
       <button type="button" disabled={disabled} onClick={onClick}>
