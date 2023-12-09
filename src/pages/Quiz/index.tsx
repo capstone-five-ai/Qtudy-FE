@@ -1,9 +1,11 @@
 import { Route, Routes, useSearchParams } from 'react-router-dom';
 import ContentWrapper from '../../components/Wrapper/ContentWrapper';
+import MainWrapper from '../../components/Wrapper/MainWrapper';
 import MainLayout from '../../layouts/MainLayout';
 import AIQuizComplete from './AIQuiz/AIQuizComplete';
 import CreateAIQuiz from './AIQuiz/CreateAIQuiz';
-import UserQuiz from './UserQuiz';
+import CreateUserQuiz from './UserQuiz/CreateUserQuiz';
+import UserQuizComplete from './UserQuiz/UserQuizComplete';
 
 function Quiz() {
   const [qs] = useSearchParams();
@@ -11,12 +13,14 @@ function Quiz() {
 
   return (
     <MainLayout contentKey="createQuiz">
-      <ContentWrapper>
-        <Routes>
-          <Route path="/ai" element={complete ? <AIQuizComplete /> : <CreateAIQuiz />} />
-          <Route path="/user" element={<UserQuiz />} />
-        </Routes>
-      </ContentWrapper>
+      <MainWrapper>
+        <ContentWrapper>
+          <Routes>
+            <Route path="/ai" element={complete ? <AIQuizComplete /> : <CreateAIQuiz />} />
+            <Route path="/user" element={complete ? <UserQuizComplete /> : <CreateUserQuiz />} />
+          </Routes>
+        </ContentWrapper>
+      </MainWrapper>
     </MainLayout>
   );
 }

@@ -1,27 +1,20 @@
 import styled from 'styled-components';
 import { useMemo } from 'react';
-import { ReactComponent as UploadIcon } from '../../../../assets/icons/icon-upload.svg';
-import { ReactComponent as ExitIcon } from '../../../../assets/icons/icon-exit.svg';
-import Typography from '../../../../components/Typography';
-import { UploadedFileType } from '../../../../types';
+import { ReactComponent as UploadIcon } from '../../assets/icons/icon-upload.svg';
+import { ReactComponent as ExitIcon } from '../../assets/icons/icon-exit.svg';
+import Typography from '../Typography';
+import { UploadedFileType } from '../../types';
+import uploadFileUtils from '../../utils/uploadFileUtils';
 
 interface UploadTypeProps {
   inputRef: React.MutableRefObject<HTMLInputElement | null>;
   pdfFile: UploadedFileType | null;
   imageFiles: UploadedFileType[];
   handleFileUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleUploadButtonClick: () => void;
   handleDelete: (index: number | null) => void;
 }
 
-function UploadType({
-  inputRef,
-  pdfFile,
-  imageFiles,
-  handleFileUpload,
-  handleUploadButtonClick,
-  handleDelete,
-}: UploadTypeProps) {
+function UploadType({ inputRef, pdfFile, imageFiles, handleFileUpload, handleDelete }: UploadTypeProps) {
   const pdfObjectURL = useMemo(() => {
     if (pdfFile) {
       return URL.createObjectURL(pdfFile!.file);
@@ -35,7 +28,7 @@ function UploadType({
 
   if (!pdfFile && imageFiles.length <= 0) {
     return (
-      <Container onClick={handleUploadButtonClick}>
+      <Container onClick={() => uploadFileUtils.handleUploadButtonClick(inputRef)}>
         <input
           style={{ display: 'none' }}
           type="file"
@@ -129,12 +122,14 @@ const Preview = styled.div`
     position: absolute;
     top: -70px;
     left: -4px;
+    opacity: 0.6;
   }
 
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    opacity: 0.6;
   }
 
   .icon-container {
@@ -159,6 +154,14 @@ const Preview = styled.div`
       top: 12px;
       right: 12px;
       cursor: pointer;
+    }
+
+    img {
+      opacity: 1;
+    }
+
+    object {
+      opacity: 1;
     }
   }
 `;
