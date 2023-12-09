@@ -116,6 +116,13 @@ const typographies: Style[] = [
     lineHeight: 'auto',
     letterSpacing: 0,
   },
+  {
+    type: 'default',
+    font: '',
+    size: 14.5,
+    lineHeight: 'auto',
+    letterSpacing: 0,
+  },
 ];
 
 const defaultStyle: Style = {
