@@ -1,10 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from './layouts';
+import Management from './pages/Management';
+import Quiz from './pages/Quiz';
+import Summary from './pages/Summary';
 import Home from './pages/home';
 import Login from './pages/login';
 import SelectService from './pages/selectService';
-import Quiz from './pages/Quiz';
-import Summary from './pages/Summary';
 
 const routes = [
   {
@@ -16,10 +17,14 @@ const routes = [
         element: <Home />,
       },
       {
-        path: 'quiz',
+        path: 'quiz/*',
         element: <Quiz />,
       },
-      { path: 'summary', element: <Summary /> },
+      { path: 'summary/*', element: <Summary /> },
+      {
+        path: 'management',
+        element: <Management />,
+      },
     ],
   },
   {

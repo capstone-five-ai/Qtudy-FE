@@ -3,11 +3,11 @@ import { Link, useLocation } from 'react-router-dom';
 import Typography from '../Typography';
 import { TabType } from '../../types';
 
-interface TabBarProps {
+interface MenuTabBarProps {
   tabList: TabType[];
 }
 
-function TabBar({ tabList }: TabBarProps) {
+function MenuTabBar({ tabList }: MenuTabBarProps) {
   const location = useLocation();
 
   return (
@@ -28,7 +28,7 @@ function TabBar({ tabList }: TabBarProps) {
   );
 }
 
-export default TabBar;
+export default MenuTabBar;
 
 const Container = styled.div`
   width: 100%;

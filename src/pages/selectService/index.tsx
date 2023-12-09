@@ -28,7 +28,7 @@ function SelectService() {
       subTitle: 'Generate a quiz',
       content: `AI와 함께 혹은 자체적으로\n퀴즈를 만들 수 있어요`,
       svgType: 'fill',
-      path: '/create/quiz',
+      path: '/quiz/ai',
     },
     {
       icon: <GenerateSummary />,

@@ -1,4 +1,4 @@
-import { HeaderContentType, TabType } from '../types';
+import { CategoryListInfoType, HeaderContentType, TabType } from '../types';
 
 // TODO : 각 메뉴 path 수정
 export const HEADER_MENU_LIST = [
@@ -14,8 +14,8 @@ export const HEADER_CONTENT: { [key: string]: { header: HeaderContentType; tabs:
       sub: 'AI와 함께 혹은 자체적으로 퀴즈를 만들어보세요',
     },
     tabs: [
-      { tab: 'AI 퀴즈 생성', path: '/create/quiz/ai' },
-      { tab: '자체 퀴즈 생성', path: '/create/quiz/user' },
+      { tab: 'AI 퀴즈 생성', path: '/quiz/ai' },
+      { tab: '자체 퀴즈 생성', path: '/quiz/user' },
     ],
   },
   createSummary: {
@@ -24,20 +24,24 @@ export const HEADER_CONTENT: { [key: string]: { header: HeaderContentType; tabs:
       sub: 'AI와 함께 혹은 자체적으로 요약해 보세요',
     },
     tabs: [
-      { tab: 'AI 요약 생성', path: '/' },
-      { tab: '자체 요약 생성', path: '/' },
+      { tab: 'AI 요약 생성', path: '/summary/ai' },
+      { tab: '자체 요약 생성', path: '/summary/user' },
     ],
   },
-  manage: {
-    header: {
-      main: '관리 및 복습',
-      sub: '히스토리와 카테고리로 관리하고 복습할 수 있어요',
-    },
+  management: {
+    header: { main: '관리 및 복습', sub: '히스토리와 카테고리로 관리하고 복습할 수 있어요' },
     tabs: [
       { tab: '생성 히스토리', path: '/' },
       { tab: '나만의 카테고리', path: '/' },
     ],
   },
+};
+
+export const CATEGORY_TYPE_MAPPING: { [key: string]: keyof CategoryListInfoType } = { 퀴즈: 'quiz', 요약: 'summary' };
+
+export const GENERATED_BY: { [key: string]: string } = {
+  MEMBER: '자체',
+  AI: 'AI',
 };
 
 export const NUMBER_TO_CIRCLE: { [key: string]: string } = {

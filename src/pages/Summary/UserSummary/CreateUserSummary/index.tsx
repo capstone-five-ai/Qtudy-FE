@@ -29,9 +29,10 @@ function CreateUserSummary() {
 export default CreateUserSummary;
 
 const Container = styled.div`
-  width: 100%;
+  flex-grow: 1;
   margin: 24px 36px;
   margin-right: 20px;
+  //margin: 16px 0px;
 
   overflow-y: scroll;
   ${Scrollbar}
