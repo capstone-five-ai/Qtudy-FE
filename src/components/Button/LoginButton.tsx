@@ -18,7 +18,7 @@ function LoginButton({ onClick, children }: Props) {
       <Button type="button" onClick={onClick}>
         <KakaoIcon />
         <Text>
-          <Typography variant="button" color="kakaoBlack">
+          <Typography variant="default" color="kakaoBlack">
             {children}
           </Typography>
         </Text>
