@@ -41,25 +41,25 @@ function QuizInputField({ type, input, index, handleEdit, handleCheck, handleDel
       <IconContainer>
         {input.check ? (
           <EditIcon
+            className="icon"
             onClick={() => {
               handleEdit(type, index);
             }}
-            style={{ cursor: 'pointer' }}
           />
         ) : (
           <CheckIcon
+            className="icon"
             onClick={() => {
               handleCheck(type, index, currentInput);
             }}
-            style={{ cursor: 'pointer' }}
           />
         )}
         {type === 'option' && handleDelete && (
           <TrashIcon
+            className="icon"
             onClick={() => {
               handleDelete(index);
             }}
-            style={{ cursor: 'pointer' }}
           />
         )}
       </IconContainer>
@@ -105,4 +105,8 @@ const IconContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 16px;
+
+  .icon {
+    cursor: pointer;
+  }
 `;

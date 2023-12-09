@@ -1,9 +1,9 @@
 import { CategoryListInfoType, HeaderContentType, TabType } from '../types';
 
 export const HEADER_MENU_LIST = [
-  { menu: '퀴즈 생성', path: '/quiz/ai' },
-  { menu: '요약 정리 생성', path: '/summary/ai' },
-  { menu: '관리 및 복습', path: '/management/history' },
+  { menu: '퀴즈 생성', path: '/quiz', defaultPath: '/quiz/ai' },
+  { menu: '요약 정리 생성', path: '/summary', defaultPath: '/summary/ai' },
+  { menu: '관리 및 복습', path: '/management', defaultPath: '/management/history' },
 ];
 
 export const HEADER_CONTENT: { [key: string]: { header: HeaderContentType; tabs: TabType[] } } = {

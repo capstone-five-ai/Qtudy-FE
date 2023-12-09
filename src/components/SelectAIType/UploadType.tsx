@@ -5,6 +5,7 @@ import { ReactComponent as ExitIcon } from '../../assets/icons/icon-exit.svg';
 import Typography from '../Typography';
 import { UploadedFileType } from '../../types';
 import uploadFileUtils from '../../utils/uploadFileUtils';
+import Scrollbar from '../Scrollbar';
 
 interface UploadTypeProps {
   inputRef: React.MutableRefObject<HTMLInputElement | null>;
@@ -99,12 +100,15 @@ const PreviewContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-
-  width: 100%;
-  height: max-content;
-  padding-left: 16px;
-  padding-right: 0px;
   gap: 16px;
+
+  height: calc(100% + 16px);
+  margin-top: -8px;
+  margin-left: -20px;
+  margin-right: calc(-20px);
+
+  overflow-y: scroll;
+  ${Scrollbar}
 `;
 
 const Preview = styled.div`
@@ -154,6 +158,10 @@ const Preview = styled.div`
       top: 12px;
       right: 12px;
       cursor: pointer;
+
+      path {
+        stroke: white;
+      }
     }
 
     img {

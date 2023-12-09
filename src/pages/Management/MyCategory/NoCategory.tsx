@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as TestIcon } from '../../../assets/icons/icon-upload.svg';
+import { ReactComponent as EmptyIcon } from '../../../assets/icons/icon-empty.svg';
 import Typography from '../../../components/Typography';
 import DefaultButton from '../../../components/Button/DefaultButton';
 
@@ -13,7 +13,7 @@ function NoCategory({ setShowNoCategoryView }: NoCategoryProps) {
       <div />
       <div className="text-container">
         <div className="main-text">
-          <TestIcon />
+          <EmptyIcon />
           <Typography variant="h2" color="grayScale03">
             아직 생성된 카테고리가 없어요
           </Typography>
@@ -37,12 +37,14 @@ const Container = styled.div`
   gap: 160px;
   max-height: calc(100vh - 65px - 190px);
   min-height: 572px;
+  position: relative;
 
   .text-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 24px;
+    position: relative;
 
     .main-text {
       display: flex;
@@ -52,7 +54,7 @@ const Container = styled.div`
       width: max-content;
       position: relative;
 
-      & > div:nth-child(1) {
+      & > div:nth-child(2) {
         position: relative;
         z-index: 2;
       }
@@ -65,6 +67,7 @@ const Highlight = styled.div`
   height: 6px;
   background: ${(props) => props.theme.colors.mainMint};
   opacity: 0.2;
+
   position: absolute;
   bottom: 0;
   right: 73px;

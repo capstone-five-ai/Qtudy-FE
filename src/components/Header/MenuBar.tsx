@@ -1,6 +1,6 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { HEADER_MENU_LIST } from '../../constants';
 import Typography from '../Typography';
@@ -8,42 +8,45 @@ import Tooltip from '../Tooltip';
 import tooltipSelector from '../../recoil/selectors/tooltip';
 
 function MenuBar() {
+  const [currentPath, setCurrentPath] = useState<string | null>(null);
   const [showTooltip, setShowTooltip] = useRecoilState(tooltipSelector);
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
-    let timer: number;
-
-    if (showTooltip) {
-      timer = setTimeout(() => setShowTooltip(false), 5000);
+    let timeout: number;
+    if (currentPath === null || !location.pathname.includes(currentPath)) {
+      setShowTooltip(true);
+      timeout = setTimeout(() => {
+        setShowTooltip(false);
+      }, 5000);
+      handleChangeCurrentPath(location.pathname);
     }
 
-    return () => {
-      clearTimeout(timer);
-    };
+    return () => clearTimeout(timeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]);
+  }, [location.pathname]);
+
+  const handleChangeCurrentPath = (pathname: string) => {
+    if (pathname.includes('quiz')) setCurrentPath('quiz');
+    else if (pathname.includes('summary')) setCurrentPath('summary');
+    else if (pathname.includes('management')) setCurrentPath('management');
+  };
 
   return (
     <Container>
       {HEADER_MENU_LIST.map((menu) => (
-        <MenuButton
-          key={menu.menu}
-          onClick={() => {
-            setShowTooltip(true);
-            navigate(menu.path);
-          }}
-        >
-          <Typography
-            variant="subtitle"
-            color={location.pathname === menu.path ? 'grayScale02' : 'grayScale03'}
-            hoverColor="grayScale02"
-          >
-            {menu.menu}
-          </Typography>
-          <ActiveIcon $isActive={location.pathname === menu.path} />
-        </MenuButton>
+        <Link key={menu.menu} to={menu.defaultPath} style={{ textDecoration: 'none' }}>
+          <MenuButton>
+            <Typography
+              variant="subtitle"
+              color={location.pathname.includes(menu.path) ? 'grayScale02' : 'grayScale03'}
+              hoverColor="grayScale02"
+            >
+              {menu.menu}
+            </Typography>
+            <ActiveIcon $isActive={location.pathname.includes(menu.path)} />
+          </MenuButton>
+        </Link>
       ))}
       {showTooltip && <Tooltip />}
     </Container>

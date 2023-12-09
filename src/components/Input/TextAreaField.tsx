@@ -18,6 +18,8 @@ const StyledTextArea = styled(reactTextareaAutosize)`
   font-style: normal;
   line-height: 180%; /* 25.2px */
   letter-spacing: 0.28px;
+
+  white-space: pre-wrap;
   color: ${(props) => props.theme.colors.grayScale02}
 
   &::placeholder {

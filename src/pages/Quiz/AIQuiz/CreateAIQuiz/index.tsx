@@ -1,7 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import styled from 'styled-components';
 import UploadType from '../../../../components/SelectAIType/UploadType';
 import TextType from '../../../../components/SelectAIType/TextType';
 import { UploadedFileType } from '../../../../types';
@@ -10,7 +9,7 @@ import SelectAIType from '../../../../components/SelectAIType';
 import uploadFileUtils from '../../../../utils/uploadFileUtils';
 import CreateSideBar from '../../../../components/SideBar/CreateSideBar';
 import Loader from '../../../../components/Modal/Loader';
-import Scrollbar from '../../../../components/Scrollbar';
+import CreateContentWrapper from '../../../../components/Wrapper/CreateContentWrapper';
 
 const DEFAULT_INPUT_OPTION = {
   type: '', // 문제 유형
@@ -56,7 +55,7 @@ function CreateAIQuiz() {
   return (
     <>
       {showLoader && <Loader isLoading />}
-      <Container>
+      <CreateContentWrapper>
         {!type && <SelectAIType service="quiz" />}
         {type === 'upload' && (
           <UploadType
@@ -70,7 +69,7 @@ function CreateAIQuiz() {
           />
         )}
         {type === 'text' && <TextType service="quiz" inputText={inputText} setInputText={setInputText} />}
-      </Container>
+      </CreateContentWrapper>
       <CreateSideBar
         service="quiz"
         disabled={!type}
@@ -86,11 +85,3 @@ function CreateAIQuiz() {
 }
 
 export default CreateAIQuiz;
-
-const Container = styled.div`
-  flex-grow: 1;
-  margin: 16px 0px;
-
-  overflow-y: scroll;
-  ${Scrollbar}
-`;

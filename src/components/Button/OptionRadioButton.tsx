@@ -51,5 +51,4 @@ const Container = styled.div`
 
 const RadioButtonLabel = styled.label`
   cursor: pointer;
-  padding: 1px;
 `;

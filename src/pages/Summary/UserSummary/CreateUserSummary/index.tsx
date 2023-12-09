@@ -30,7 +30,9 @@ export default CreateUserSummary;
 
 const Container = styled.div`
   flex-grow: 1;
-  margin: 16px 0px;
+  margin: 24px 36px;
+  margin-right: 20px;
+  //margin: 16px 0px;
 
   overflow-y: scroll;
   ${Scrollbar}

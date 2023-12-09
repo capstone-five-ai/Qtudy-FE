@@ -92,6 +92,7 @@ const UrlWrapper = styled.div`
 
   border-radius: 4px;
   background: ${(props) => props.theme.colors.grayScale07};
+  word-break: break-all;
 `;
 
 const Copy = styled.button`
