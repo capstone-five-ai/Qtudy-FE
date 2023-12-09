@@ -14,8 +14,8 @@ export const HEADER_CONTENT: { [key: string]: { header: HeaderContentType; tabs:
       sub: 'AI와 함께 혹은 자체적으로 퀴즈를 만들어보세요',
     },
     tabs: [
-      { tab: 'AI 퀴즈 생성', path: '/create/quiz/ai' },
-      { tab: '자체 퀴즈 생성', path: '/create/quiz/user' },
+      { tab: 'AI 퀴즈 생성', path: '/quiz/ai' },
+      { tab: '자체 퀴즈 생성', path: '/quiz/user' },
     ],
   },
   createSummary: {
@@ -24,8 +24,8 @@ export const HEADER_CONTENT: { [key: string]: { header: HeaderContentType; tabs:
       sub: 'AI와 함께 혹은 자체적으로 요약해 보세요',
     },
     tabs: [
-      { tab: 'AI 요약 생성', path: '/' },
-      { tab: '자체 요약 생성', path: '/' },
+      { tab: 'AI 요약 생성', path: '/summary/ai' },
+      { tab: '자체 요약 생성', path: '/summary/user' },
     ],
   },
   management: {

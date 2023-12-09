@@ -103,6 +103,13 @@ const typographies: Style[] = [
     letterSpacing: 0,
   },
   {
+    type: 'caption4',
+    font: NotoSansRegular,
+    size: 11,
+    lineHeight: 'auto',
+    letterSpacing: 0,
+  },
+  {
     type: 'button',
     font: NanumSquareExtraBold,
     size: 14,
