@@ -158,6 +158,10 @@ const Preview = styled.div`
       top: 12px;
       right: 12px;
       cursor: pointer;
+
+      path {
+        stroke: white;
+      }
     }
 
     img {
