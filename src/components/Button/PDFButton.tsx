@@ -1,9 +1,12 @@
 import styled from 'styled-components';
+import FileApi from '../../api/FileApi';
 import { ReactComponent as PDFIcon } from '../../assets/icons/pdf.svg';
 import Typography from '../Typography';
 
 type Props = {
   label: string;
+  fileId: number;
+  pdfType: 'PROBLEM' | 'ANSWER' | 'SUMMARY';
   variant?: 1 | 2;
 };
 
@@ -11,9 +14,11 @@ PDFButton.defaultProps = {
   variant: 1,
 };
 
-function PDFButton({ label, variant }: Props) {
-  const handleClickDownload = () => {
-    // TOOD: download pdf
+function PDFButton({ label, variant, fileId, pdfType }: Props) {
+  const handleClickDownload = async () => {
+    const data = await FileApi.downloadFile(fileId, pdfType);
+
+    window.location.href = data.fileUrl;
   };
 
   if (variant === 1)
@@ -31,7 +36,7 @@ function PDFButton({ label, variant }: Props) {
 
   if (variant === 2)
     return (
-      <Wrapper>
+      <Wrapper onClick={handleClickDownload}>
         <PDFIcon />
         <Typography variant="caption3" color="grayScale03">
           {label} PDF
