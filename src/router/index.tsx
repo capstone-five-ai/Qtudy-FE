@@ -11,7 +11,7 @@ import ProtectedRoute from './ProtectedRoute';
 const routes = [
   {
     path: '/',
-    element: <ProtectedRoute />,
+    element: <ProtectedRoute auth="AUTH" />,
     children: [
       {
         path: '/',
@@ -27,12 +27,18 @@ const routes = [
     ],
   },
   {
-    path: 'login',
-    element: <Login />,
-  },
-  {
-    path: 'oauth/kakao/callback',
-    element: <Redirection />,
+    path: '/',
+    element: <ProtectedRoute auth="NO_AUTH" />,
+    children: [
+      {
+        path: 'login',
+        element: <Login />,
+      },
+      {
+        path: 'oauth/kakao/callback',
+        element: <Redirection />,
+      },
+    ],
   },
   {
     path: '/',
