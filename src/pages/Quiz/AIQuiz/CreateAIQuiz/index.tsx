@@ -11,7 +11,7 @@ import CreateSideBar from '../../../../components/SideBar/CreateSideBar';
 import Loader from '../../../../components/Modal/Loader';
 import CreateContentWrapper from '../../../../components/Wrapper/CreateContentWrapper';
 import { convertToRequestData } from '../../../../utils/convertToRequestData';
-import { useCreateQuizByPdf, useCreateQuizByText } from '../../../../hooks/useCreateQuiz';
+import { useCreateQuizByImage, useCreateQuizByPdf, useCreateQuizByText } from '../../../../hooks/useCreateQuiz';
 
 const DEFAULT_INPUT_OPTION = {
   type: '', // 문제 유형
@@ -31,6 +31,7 @@ function CreateAIQuiz() {
   const showLoader = useRecoilValue(loadingSelector);
   const setShowLoader = useSetRecoilState(loadingSelector);
 
+  const { mutate: createByImage, isLoading: isImageLoading } = useCreateQuizByImage();
   const { mutate: createByPdf, isLoading: isPdfLoading } = useCreateQuizByPdf();
   const { mutate: createByText, isLoading: isTextLoading } = useCreateQuizByText();
 
@@ -44,12 +45,18 @@ function CreateAIQuiz() {
     setShowLoader(true);
 
     try {
-      if (type === 'text') createByText({ option: convertToRequestData(inputOption), text: inputText });
-      else if (type === 'upload' && pdfFile) {
-        const fileData = new FormData();
+      const fileData = new FormData();
+
+      if (type === 'text') {
+        createByText({ option: convertToRequestData(inputOption), text: inputText });
+      } else if (type === 'upload' && pdfFile) {
         fileData.append('file', pdfFile.file);
-        console.log(fileData.get('file'));
         createByPdf({ option: convertToRequestData(inputOption), file: fileData });
+      } else if (type === 'upload' && imageFiles.length > 0) {
+        imageFiles.forEach((image) => {
+          fileData.append('file', image.file);
+        });
+        createByImage({ option: convertToRequestData(inputOption), file: fileData });
       }
     } catch {
       setShowLoader(false);
@@ -70,7 +77,7 @@ function CreateAIQuiz() {
 
   return (
     <>
-      {showLoader && <Loader isLoading={isPdfLoading || isTextLoading} />}
+      {showLoader && <Loader isLoading={isPdfLoading || isTextLoading || isImageLoading} />}
       <CreateContentWrapper>
         {!type && <SelectAIType service="quiz" />}
         {type === 'upload' && (

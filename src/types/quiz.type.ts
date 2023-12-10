@@ -5,7 +5,7 @@ export interface QuizOptionType {
   fileName: string;
 }
 
-export interface QuizCreationByPdfType {
+export interface QuizCreationByFileType {
   option: QuizOptionType;
   file: FormData;
 }

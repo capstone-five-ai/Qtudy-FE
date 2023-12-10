@@ -1,4 +1,4 @@
-import { QuizCreationByPdfType, QuizCreationByTextType } from '../types/quiz.type';
+import { QuizCreationByFileType, QuizCreationByTextType } from '../types/quiz.type';
 import apiClient from './client';
 
 const QuizApi = {
@@ -8,24 +8,24 @@ const QuizApi = {
     return response.data;
   },
 
-  createByImage: async (amount: string, difficulty: string, fileName: string, type: string, file: FormData) => {
+  createByImage: async ({ option, file }: QuizCreationByFileType) => {
     // 문제파일(problemFile)/이미지 기반 AI 문제 생성
-    const response = await apiClient.post(
-      'api/problemFile/generateProblemFileByImage',
-      {
-        file,
+    const response = await apiClient.post('api/problemFile/generateProblemFileByImage', file, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        params: { amount, difficulty, fileName, type },
-      }
-    );
+      params: {
+        amount: option.amount,
+        difficulty: option.difficulty,
+        fileName: option.fileName,
+        type: option.type,
+      },
+    });
     return response.data;
   },
 
-  createByPdf: async ({ option, file }: QuizCreationByPdfType) => {
+  createByPdf: async ({ option, file }: QuizCreationByFileType) => {
     // 문제파일(problemFile)/PDF 기반 AI 문제 생성
     const response = await apiClient.post('api/problemFile/generateProblemFileByPdf', file, {
       headers: {
