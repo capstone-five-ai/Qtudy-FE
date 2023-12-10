@@ -50,3 +50,8 @@ export interface CategorySummaryItemsType {
   createTime: string;
   updateTime: string;
 }
+
+export interface ErrorType {
+  errorCode: string;
+  errorMessage: string;
+}

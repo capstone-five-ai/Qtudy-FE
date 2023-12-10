@@ -10,6 +10,8 @@ import uploadFileUtils from '../../../../utils/uploadFileUtils';
 import CreateSideBar from '../../../../components/SideBar/CreateSideBar';
 import Loader from '../../../../components/Modal/Loader';
 import CreateContentWrapper from '../../../../components/Wrapper/CreateContentWrapper';
+import { convertToRequestData } from '../../../../utils/convertToRequestData';
+import useCreateQuizByText from '../../../../hooks/useCreateQuiz';
 
 const DEFAULT_INPUT_OPTION = {
   type: '', // 문제 유형
@@ -28,6 +30,7 @@ function CreateAIQuiz() {
   const [imageFiles, setImageFiles] = useState<UploadedFileType[]>([]);
   const showLoader = useRecoilValue(loadingSelector);
   const setShowLoader = useSetRecoilState(loadingSelector);
+  const { mutate: createByText, isLoading } = useCreateQuizByText();
 
   useEffect(() => {
     setInputOption(DEFAULT_INPUT_OPTION);
@@ -35,8 +38,16 @@ function CreateAIQuiz() {
     setImageFiles([]);
   }, [type]);
 
-  const handleSubmit = () => {
-    const formData = new FormData();
+  const handleSubmit = async () => {
+    setShowLoader(true);
+
+    try {
+      if (type === 'text') createByText({ option: convertToRequestData(inputOption), text: inputText });
+    } catch {
+      setShowLoader(false);
+    }
+
+    /* const formData = new FormData();
 
     if (pdfFile) {
       formData.append('pdfFile', pdfFile.file, pdfFile.name);
@@ -46,15 +57,12 @@ function CreateAIQuiz() {
       imageFiles.forEach((image, index) => {
         formData.append(`imageFile_${index}`, image.file, image.name);
       });
-    }
-
-    setShowLoader(true);
-    // TODO: 서버로 formData 전송
+    } */
   };
 
   return (
     <>
-      {showLoader && <Loader isLoading />}
+      {showLoader && <Loader isLoading={isLoading} />}
       <CreateContentWrapper>
         {!type && <SelectAIType service="quiz" />}
         {type === 'upload' && (
