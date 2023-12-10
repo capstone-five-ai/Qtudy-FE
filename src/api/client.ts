@@ -4,8 +4,12 @@ const apiClient = axios.create({
   baseURL: `${import.meta.env.VITE_BASE_URL}`,
 });
 
+const refreshApiClient = axios.create({
+  baseURL: `${import.meta.env.VITE_BASE_URL}`,
+});
+
 const updateToken = async () => {
-  const response = await apiClient.post('api/access-token/issue', null, {
+  const response = await refreshApiClient.post('api/access-token/issue', null, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('refreshToken')}`,
     },
@@ -26,16 +30,16 @@ apiClient.interceptors.response.use(
 
     if (status === 401) {
       const originRequest = config;
-      const response = await updateToken();
+      try {
+        const response = await updateToken();
+        if (response.status === 200) {
+          const newAccessToken = response.data.accessToken;
+          localStorage.setItem('accessToken', newAccessToken);
+          originRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
-      if (response.status === 200) {
-        const newAccessToken = response.data.accessToken;
-        localStorage.setItem('accessToken', newAccessToken);
-        originRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-
-        return axios(originRequest);
-      }
-      if (response.status === 401) {
+          return await axios(originRequest);
+        }
+      } catch (e) {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
 
