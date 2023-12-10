@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import styled from 'styled-components';
+import HistoryApi from '../../../api/HistoryApi';
 import { ReactComponent as NextIcon } from '../../../assets/icons/arrow_next.svg';
 import { ReactComponent as PrevIcon } from '../../../assets/icons/arrow_prev.svg';
 import Chip from '../../../components/Chip';
@@ -15,60 +16,41 @@ function History() {
   const [filter, setFilter] = useState<'PROBLEM' | 'SUMMARY'>(PROBLEM);
   const [histories, setHistories] = useState<HistoryType[]>([]);
   const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+
+  const getQuizes = async (quizPage: number) => {
+    const response = await HistoryApi.getQuizList(quizPage);
+    const newHistories = response.content;
+    setHistories(newHistories);
+    setTotalPage(response.totalPages);
+  };
+
+  const getSummaries = async (summaryPage: number) => {
+    const response = await HistoryApi.getSummaryList(summaryPage);
+    const newHistories = response.content;
+    setHistories(newHistories);
+    setTotalPage(response.totalPages);
+  };
+
+  const updateList = useCallback(
+    (updatePage: number) => {
+      if (filter === 'PROBLEM') getQuizes(updatePage);
+      if (filter === 'SUMMARY') getSummaries(updatePage);
+      setLoading(false);
+    },
+    [filter]
+  );
 
   useEffect(() => {
-    // TODO: call api get history by page & filter
-    setHistories([
-      {
-        fileId: 3,
-        fileName: '문제파일 이름',
-        dtype: 'PROBLEM',
-        createTime: '2023-11-26T15:46:55.899476',
-      },
-      {
-        fileId: 2,
-        fileName: '문제파일 이름2',
-        dtype: 'PROBLEM',
-        createTime: '2023-11-26T15:46:11.143202',
-      },
-      {
-        fileId: 4,
-        fileName: '문제파일 이름2',
-        dtype: 'PROBLEM',
-        createTime: '2023-11-26T15:46:11.143202',
-      },
-      {
-        fileId: 5,
-        fileName: '문제파일 이름2',
-        dtype: 'PROBLEM',
-        createTime: '2023-11-26T15:46:11.143202',
-      },
-      {
-        fileId: 6,
-        fileName: '문제파일 이름2',
-        dtype: 'PROBLEM',
-        createTime: '2023-11-26T15:46:11.143202',
-      },
-      {
-        fileId: 7,
-        fileName: '문제파일 이름2',
-        dtype: 'PROBLEM',
-        createTime: '2023-11-26T15:46:11.143202',
-      },
-      {
-        fileId: 8,
-        fileName: '문제파일 이름2',
-        dtype: 'PROBLEM',
-        createTime: '2023-11-26T15:46:11.143202',
-      },
-      {
-        fileId: 9,
-        fileName: '문제파일 이름2',
-        dtype: 'PROBLEM',
-        createTime: '2023-11-26T15:46:11.143202',
-      },
-    ]);
-  }, []);
+    if (loading) return;
+    updateList(page);
+  }, [loading, page, updateList]);
+
+  useEffect(() => {
+    updateList(1);
+    setPage(1);
+  }, [filter, updateList]);
 
   const handlePageClick = ({ selected }: { selected: number }) => {
     setPage(selected + 1);
@@ -90,12 +72,12 @@ function History() {
         </ChipWrapper>
       </Header>
       <ListWrapper>
-        <HistoryList histories={histories} />
+        <HistoryList histories={histories} updateList={updateList} />
       </ListWrapper>
       <Pagination>
         <ReactPaginate
           forcePage={page - 1}
-          pageCount={3}
+          pageCount={totalPage}
           previousLabel={<PrevIcon />}
           nextLabel={<NextIcon />}
           onPageChange={handlePageClick}
