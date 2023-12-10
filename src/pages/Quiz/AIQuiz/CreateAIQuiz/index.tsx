@@ -11,7 +11,7 @@ import CreateSideBar from '../../../../components/SideBar/CreateSideBar';
 import Loader from '../../../../components/Modal/Loader';
 import CreateContentWrapper from '../../../../components/Wrapper/CreateContentWrapper';
 import { convertToRequestData } from '../../../../utils/convertToRequestData';
-import useCreateQuizByText from '../../../../hooks/useCreateQuiz';
+import { useCreateQuizByPdf, useCreateQuizByText } from '../../../../hooks/useCreateQuiz';
 
 const DEFAULT_INPUT_OPTION = {
   type: '', // 문제 유형
@@ -30,7 +30,9 @@ function CreateAIQuiz() {
   const [imageFiles, setImageFiles] = useState<UploadedFileType[]>([]);
   const showLoader = useRecoilValue(loadingSelector);
   const setShowLoader = useSetRecoilState(loadingSelector);
-  const { mutate: createByText, isLoading } = useCreateQuizByText();
+
+  const { mutate: createByPdf, isLoading: isPdfLoading } = useCreateQuizByPdf();
+  const { mutate: createByText, isLoading: isTextLoading } = useCreateQuizByText();
 
   useEffect(() => {
     setInputOption(DEFAULT_INPUT_OPTION);
@@ -43,6 +45,12 @@ function CreateAIQuiz() {
 
     try {
       if (type === 'text') createByText({ option: convertToRequestData(inputOption), text: inputText });
+      else if (type === 'upload' && pdfFile) {
+        const fileData = new FormData();
+        fileData.append('file', pdfFile.file);
+        console.log(fileData.get('file'));
+        createByPdf({ option: convertToRequestData(inputOption), file: fileData });
+      }
     } catch {
       setShowLoader(false);
     }
@@ -62,7 +70,7 @@ function CreateAIQuiz() {
 
   return (
     <>
-      {showLoader && <Loader isLoading={isLoading} />}
+      {showLoader && <Loader isLoading={isPdfLoading || isTextLoading} />}
       <CreateContentWrapper>
         {!type && <SelectAIType service="quiz" />}
         {type === 'upload' && (
