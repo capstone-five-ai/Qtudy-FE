@@ -6,17 +6,26 @@ import Typography from '../Typography';
 function Toast() {
   const { toast } = useToast();
   const [isClosing, setIsClosing] = useState<boolean>(false);
-  const show = toast.length > 0;
+  const [show, setShow] = useState(toast.length > 0);
 
   useEffect(() => {
     if (toast.length === 0) return;
 
-    const setExistTimeout = setTimeout(() => {
+    const setShowTimeout = setTimeout(() => {
+      setShow(true);
+      clearTimeout(setShowTimeout);
+    }, 100);
+
+    const setClosingTimeout = setTimeout(() => {
       setIsClosing(true);
-      clearTimeout(setExistTimeout);
+      clearTimeout(setClosingTimeout);
     }, 1000);
+
     setIsClosing(false);
+    setShow(false);
   }, [toast]);
+
+  if (toast.length === 0) return <div />;
 
   return (
     <Wrapper>
