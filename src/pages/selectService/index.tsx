@@ -39,9 +39,9 @@ function SelectService() {
     },
     {
       icon: <SaveAndManage />,
-      title: '저장 및 관리하기',
-      subTitle: 'Save and manage',
-      content: `생성한 것들을 편리하게\n저장 및 관리할 수 있어요`,
+      title: '관리 및 복습하기',
+      subTitle: 'Manage and review',
+      content: `퀴즈 및 요약들을 분류하여\n관리하고 복습할 수 있어요`,
       svgType: 'stroke',
       path: '/management/history',
     },
