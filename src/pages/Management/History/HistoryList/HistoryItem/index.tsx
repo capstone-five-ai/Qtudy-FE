@@ -1,5 +1,7 @@
 import { FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
+import FileApi from '../../../../../api/FileApi';
 import { ReactComponent as EditIcon } from '../../../../../assets/icons/icon-edit.svg';
 import { ReactComponent as DeleteIcon } from '../../../../../assets/icons/icon-trash.svg';
 import PDFButton from '../../../../../components/Button/PDFButton';
@@ -10,16 +12,24 @@ import { CreatedTime, Delete, FileName, Filter, PDFDown } from '../../ItemLayout
 
 type Props = {
   history: HistoryType;
+  updateList: (page: number) => void;
 };
 
-function HistoryItem({ history }: Props) {
+function HistoryItem({ history, updateList }: Props) {
+  const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [newFileName, setNewFileName] = useState('');
 
   const getDateFormat = (dateStr: string) => {
-    const date = dateStr.slice(0, -10).replace(/-/g, '.').replace(/T/g, ' ');
+    const date = dateStr.slice(0, 16).replace(/-/g, '.').replace(/T/g, ' ');
 
     return date;
+  };
+
+  const handleClickFile = () => {
+    const typeParam = history.dtype === 'PROBLEM' ? 'quiz' : 'summary';
+    navigate(`/${typeParam}/ai?complete=true&id=${history.fileId}`);
   };
 
   const handleClickEdit = () => {
@@ -30,15 +40,19 @@ function HistoryItem({ history }: Props) {
     setShowDeleteModal(true);
   };
 
-  const editFileName = (e: FormEvent<HTMLFormElement>) => {
+  const editFileName = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: put filename api call
+
+    await FileApi.updateFileName(history.fileId, newFileName);
     setEditMode(false);
+    setNewFileName('');
+    updateList(1);
   };
 
-  const deleteFile = () => {
-    // TODO: delete api call
+  const deleteFile = async () => {
+    await FileApi.deleteFile(history.fileId);
     setShowDeleteModal(false);
+    updateList(1);
   };
 
   const filterName = history.dtype === 'PROBLEM' ? '퀴즈' : '요약';
@@ -50,11 +64,18 @@ function HistoryItem({ history }: Props) {
       <FileName>
         {editMode ? (
           <Form onSubmit={editFileName}>
-            <Input placeholder="지정하실 파일명을 입력해주세요." />
+            <Input
+              value={newFileName}
+              onChange={(e) => setNewFileName(e.target.value)}
+              placeholder="지정하실 파일명을 입력해주세요."
+              onBlur={() => setEditMode(false)}
+            />
           </Form>
         ) : (
           <>
-            <Typography variant="subtitle">{history.fileName}</Typography>
+            <FileNameWrapper type="button" onClick={handleClickFile}>
+              <Typography variant="subtitle">{history.fileName}</Typography>
+            </FileNameWrapper>
             <EditIcon width={20} height={20} onClick={handleClickEdit} cursor="pointer" />
           </>
         )}
@@ -65,8 +86,14 @@ function HistoryItem({ history }: Props) {
         </Typography>
       </CreatedTime>
       <PDFDown>
-        <PDFButton label="퀴즈" variant={2} />
-        <PDFButton label="정답" variant={2} />
+        {history.dtype === 'PROBLEM' ? (
+          <>
+            <PDFButton label="퀴즈" variant={2} fileId={history.fileId} pdfType="PROBLEM" />
+            <PDFButton label="정답" variant={2} fileId={history.fileId} pdfType="ANSWER" />
+          </>
+        ) : (
+          <PDFButton label="요약" variant={2} fileId={history.fileId} pdfType="SUMMARY" />
+        )}
       </PDFDown>
       <Delete>
         <DeleteIcon width={20} height={20} cursor="pointer" onClick={handleClickDelete} />
@@ -92,6 +119,14 @@ const Wrapper = styled.div`
   gap: 20px;
 
   border-bottom: 0.5px solid var(--grayscale06, #e0e0e0);
+`;
+
+const FileNameWrapper = styled.button`
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
 `;
 
 const Form = styled.form`

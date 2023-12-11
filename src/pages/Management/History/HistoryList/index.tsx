@@ -6,9 +6,10 @@ import HistoryItem from './HistoryItem';
 
 type Props = {
   histories: HistoryType[];
+  updateList: (page: number) => void;
 };
 
-function HistoryList({ histories }: Props) {
+function HistoryList({ histories, updateList }: Props) {
   return (
     <Wrapper>
       <Header>
@@ -39,7 +40,7 @@ function HistoryList({ histories }: Props) {
         </Delete>
       </Header>
       {histories.map((v) => (
-        <HistoryItem key={v.fileId} history={v} />
+        <HistoryItem key={v.fileId} history={v} updateList={updateList} />
       ))}
     </Wrapper>
   );

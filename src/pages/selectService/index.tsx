@@ -20,7 +20,6 @@ type MenuType = {
 function SelectService() {
   const [selectedIdx, setSelectedIdx] = useState(-1);
 
-  // TODO: path 수정 필요
   const menus: MenuType[] = [
     {
       icon: <GenerateQuiz />,
@@ -36,15 +35,15 @@ function SelectService() {
       subTitle: 'Generate a summary',
       content: `AI와 함께 혹은 자체적으로\n요약정리를 할 수 있어요`,
       svgType: 'fill',
-      path: '/create/summary',
+      path: '/summary/ai',
     },
     {
       icon: <SaveAndManage />,
-      title: '저장 및 관리하기',
-      subTitle: 'Save and manage',
-      content: `생성한 것들을 편리하게\n저장 및 관리할 수 있어요`,
+      title: '관리 및 복습하기',
+      subTitle: 'Manage and review',
+      content: `퀴즈 및 요약들을 분류하여\n관리하고 복습할 수 있어요`,
       svgType: 'stroke',
-      path: '/',
+      path: '/management/history',
     },
   ];
 

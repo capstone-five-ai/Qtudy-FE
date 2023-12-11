@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 import { CategoryInfoType } from '../../../types';
 import CheckBox from '../../Checkbox';
 import Typography from '../../Typography';
+import Scrollbar from '../../Scrollbar';
 
 type Props = {
   categories: CategoryInfoType[];
@@ -49,6 +50,9 @@ const Main = styled.div`
   border-radius: 4px;
   background: var(--grayscale07, #fafafa);
   box-shadow: 0px 0px 4px 0px rgba(189, 189, 189, 0.28);
+
+  overflow-y: auto;
+  ${Scrollbar}
 `;
 
 const Item = styled.div`

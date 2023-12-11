@@ -1,22 +1,25 @@
-import styled from 'styled-components';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import MenuBar from './MenuBar';
+import { useRecoilState } from 'recoil';
+import styled from 'styled-components';
+import AuthApi from '../../api/AuthApi';
 import { ReactComponent as Logo } from '../../assets/logo/logo_main.svg';
-import Typography from '../Typography';
+import authState from '../../recoil/atoms/authState';
+import navigateToLogin from '../../utils/navigateToLogin';
 import KakaoLoginSmallButton from '../Button/KakaoLoginSmallButton';
+import Typography from '../Typography';
+import MenuBar from './MenuBar';
 
 function Header() {
-  const [login, setLogin] = useState<boolean>(true);
+  const [isAuthenticated, setIsAuthenticated] = useRecoilState(authState);
 
   const handleLogin = () => {
-    // TODO: 로그인 기능 구현
-    setLogin(true);
+    navigateToLogin();
   };
 
-  const handleLogout = () => {
-    // TODO: 로그아웃 기능 구현
-    setLogin(false);
+  const handleLogout = async () => {
+    const response = await AuthApi.logout();
+
+    if (response) setIsAuthenticated(false);
   };
 
   return (
@@ -28,7 +31,7 @@ function Header() {
           </Link>
           <MenuBar />
         </div>
-        {login ? (
+        {isAuthenticated ? (
           <LogoutButton type="button" onClick={handleLogout}>
             <Typography variant="subtitle" color="grayScale04" hoverColor="grayScale02">
               Logout

@@ -22,14 +22,15 @@ const AuthApi = {
   },
 
   logout: async () => {
-    // 회원(Member)/로그아웃
-    const response = await apiClient.post('logout', null);
-    return response.data;
-  },
+    const response = await apiClient.post('api/logout', null, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
 
-  updateToken: async () => {
-    // 회원(Member)/Access 토큰 재발급
-    const response = await apiClient.post('access-token/issue', null);
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+
     return response.data;
   },
 };
