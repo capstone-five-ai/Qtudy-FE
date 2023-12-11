@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import LinkButton from '../../../../components/Button/LinkButton';
 import PDFButton from '../../../../components/Button/PDFButton';
@@ -10,18 +11,35 @@ import NumberPannel from './NumberPannel';
 
 function AIQuizComplete() {
   // AI 퀴즈의 경우 문제 번호에 따라 보여줘야 함
+  const [qs] = useSearchParams();
+  const fileId = Number(qs.get('id'));
+
+  const [questions, setQuestions] = useState<QuestionType[]>([]);
+
   const [questionNum, setQuestionNum] = useState(1);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const link = window.location.href;
 
-  const question: QuestionType = {
+  const [question, setQuestion] = useState<QuestionType>({
     problemName: '인공지능은 무엇을 모방할 수 있는 기술 및 연구 분야인가요?',
     problemAnswer: null,
     problemCommentary:
       '인공지능의 목표는 인간의 인지 능력을 모방할 수 있는 지능적인 기계를 만드는 것입니다. 즉, 사람처럼 생각하고 학습하며 문제를 해결할 수 있는 기계를 개발하는 것이 목표입니다.',
     problemType: 'SUBJECTIVE',
     problemChoices: ['선지1', '선지2', '선지3', '선지4'],
-  };
+  });
+
+  useEffect(() => {
+    // TODO: 회원(작성자) / 회원(작성자 외) / 비회원 구분하여 화면 렌더링 및 api call
+  }, []);
+
+  useEffect(() => {
+    // TODO: questions api call
+  }, [fileId]);
+
+  useEffect(() => {
+    // TODO: quiestionNum에 따라 setQuestion
+  }, [questionNum]);
 
   return (
     <>
@@ -36,8 +54,8 @@ function AIQuizComplete() {
             <ButtonWrapper>
               <LinkButton link={link} />
               <PDFWrapper>
-                <PDFButton label="퀴즈" />
-                <PDFButton label="정답" />
+                <PDFButton label="퀴즈" fileId={fileId} pdfType="PROBLEM" />
+                <PDFButton label="정답" fileId={fileId} pdfType="ANSWER" />
               </PDFWrapper>
             </ButtonWrapper>
           </div>

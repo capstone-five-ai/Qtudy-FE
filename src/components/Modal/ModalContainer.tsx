@@ -36,6 +36,8 @@ const Background = styled.div`
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.6);
+
+  z-index: 3;
 `;
 
 const Wrapper = styled.div`
