@@ -32,8 +32,8 @@ function MyCategory() {
     const quizResponse = await CategoryApi.getCategoryList(CATEGORY_TYPE_MAPPING['퀴즈']);
     const summaryResponse = await CategoryApi.getCategoryList(CATEGORY_TYPE_MAPPING['요약']);
 
-    if (quizResponse.data.length === 0 && summaryResponse.data.length === 0) {
-      setShowNoCategoryView(true);
+    if (quizResponse.data.length > 0 || summaryResponse.data.length > 0) {
+      setShowNoCategoryView(false);
     }
   };
 
