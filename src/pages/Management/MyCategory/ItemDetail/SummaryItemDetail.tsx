@@ -1,14 +1,13 @@
-import styled from 'styled-components';
 import { useState } from 'react';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
-import CategoryItemContentWrapper from '../../../../components/Wrapper/CategoryItemContentWrapper';
-import Typography from '../../../../components/Typography';
+import styled from 'styled-components';
 import LinkButton from '../../../../components/Button/LinkButton';
-import { SummaryType } from '../../../../types/summary.type';
 import TwinkleButton from '../../../../components/Button/TwinkleButton';
 import CategoryModal from '../../../../components/Modal/CategoryModal';
+import Typography from '../../../../components/Typography';
+import CategoryItemContentWrapper from '../../../../components/Wrapper/CategoryItemContentWrapper';
+import { SummaryType } from '../../../../types/summary.type';
 import CopySummaryButton from '../../../Summary/SummaryComplete/CopySummaryButton';
-import PDFButton from '../../../../components/Button/PDFButton';
 
 function SummaryItemDetail() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
@@ -49,7 +48,6 @@ function SummaryItemDetail() {
           <ButtonWrapper>
             <CopySummaryButton text={summary.summaryContent} />
             <LinkButton link={link} />
-            <PDFButton label="요약" />
           </ButtonWrapper>
 
           <TwinkleButton disabled={false} onClick={() => setShowCategoryModal(true)}>
