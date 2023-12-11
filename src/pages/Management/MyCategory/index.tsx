@@ -1,13 +1,7 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import {
-  CategoryInfoType,
-  CategoryListInfoType,
-  CategoryQuizItemsType,
-  CategorySummaryItemsType,
-  CategoryType,
-} from '../../../types';
+import { CategoryInfoType, CategoryQuizItemsType, CategorySummaryItemsType, CategoryType } from '../../../types';
 import NoCategory from './NoCategory';
 import Sidebar from './Sidebar';
 import NoItem from './NoItem';
@@ -15,17 +9,29 @@ import CategoryItemsView from './CategoryItemsView';
 import { CATEGORY_TYPE_MAPPING } from '../../../constants';
 import ContentWrapper from '../../../components/Wrapper/ContentWrapper';
 import DefaultButton from '../../../components/Button/DefaultButton';
+import CategoryApi from '../../../api/CategoryApi';
 
 const BUTTON = { 퀴즈: '카테고리에 퀴즈 추가', 요약: '카테고리에 요약 추가' };
 
 function MyCategory() {
   const [activeTabBar, setActiveTabBar] = useState<CategoryType>('퀴즈'); // 탭바 (퀴즈/요약)
   const [showNoCategoryView, setShowNoCategoryView] = useState(false); // NoCategory 출력 여부
-  const [categoryList, setCategoryList] = useState<CategoryListInfoType>({ quiz: [], summary: [] }); // 카테고리 전체 목록 (퀴즈/요약)
+  const [quizCategoryList, setQuizCategoryList] = useState<CategoryInfoType[]>([]); // 퀴즈 카테고리 목록
+  const [summaryCategoryList, setSummaryCategoryList] = useState<CategoryInfoType[]>([]); // 요약 카테고리 목록
   const [activeCategory, setActiveCategory] = useState<CategoryInfoType | null>(null); // 조회 중인 카테고리 (퀴즈/요약)
   const [activeCategoryQuizItems, setActiveCategoryQuizItems] = useState<CategoryQuizItemsType[]>([]);
   const [activeCategorySummaryItems, setActiveCategorySummaryItems] = useState<CategorySummaryItemsType[]>([]);
+  const [hasExecutedOnce, setHasExecutedOnce] = useState(false);
   const location = useLocation();
+
+  const getCategorys = async () => {
+    const response = await CategoryApi.getCategoryList(CATEGORY_TYPE_MAPPING[activeTabBar]);
+    if (activeTabBar === '퀴즈') {
+      setQuizCategoryList(response.data);
+    } else {
+      setSummaryCategoryList(response.data);
+    }
+  };
 
   useEffect(() => {
     const { state } = location;
@@ -35,11 +41,16 @@ function MyCategory() {
   }, [location]);
 
   useEffect(() => {
-    if (categoryList.quiz.length === 0 && categoryList.summary.length === 0) setShowNoCategoryView(true);
-  }, [categoryList]);
+    if (!hasExecutedOnce && quizCategoryList.length === 0 && summaryCategoryList.length === 0) {
+      setShowNoCategoryView(true);
+      setHasExecutedOnce(true);
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quizCategoryList, summaryCategoryList]);
 
   useEffect(() => {
+    getCategorys();
     setActiveCategory(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTabBar]);
 
   const handleAddItem = () => {
@@ -52,24 +63,37 @@ function MyCategory() {
     <Container>
       <Sidebar
         activeTabBar={activeTabBar}
-        categoryList={activeTabBar === '퀴즈' ? categoryList.quiz : categoryList.summary}
+        categoryList={activeTabBar === '퀴즈' ? quizCategoryList : summaryCategoryList}
         activeCategory={activeCategory}
         setActiveTabBar={setActiveTabBar}
-        setCategoryList={setCategoryList}
+        setCategoryList={activeTabBar === '퀴즈' ? setQuizCategoryList : setSummaryCategoryList}
         setActiveCategory={setActiveCategory}
       />
       <ContentWrapper>
-        {categoryList[CATEGORY_TYPE_MAPPING[activeTabBar]].length === 0 ? (
-          <NoItem categoryType={activeTabBar} />
-        ) : (
-          <CategoryItemsView
-            activeTabBar={activeTabBar}
-            activeCategoryQuizItems={activeCategoryQuizItems}
-            activeCategorySummaryItems={activeCategorySummaryItems}
-            setActiveCategoryQuizItems={setActiveCategoryQuizItems}
-            setActiveCategorySummaryItems={setActiveCategorySummaryItems}
-          />
-        )}
+        {activeTabBar === '퀴즈' &&
+          (quizCategoryList.length === 0 ? (
+            <NoItem categoryType={activeTabBar} />
+          ) : (
+            <CategoryItemsView
+              activeTabBar={activeTabBar}
+              activeCategoryQuizItems={activeCategoryQuizItems}
+              activeCategorySummaryItems={activeCategorySummaryItems}
+              setActiveCategoryQuizItems={setActiveCategoryQuizItems}
+              setActiveCategorySummaryItems={setActiveCategorySummaryItems}
+            />
+          ))}
+        {activeTabBar === '요약' &&
+          (summaryCategoryList.length === 0 ? (
+            <NoItem categoryType={activeTabBar} />
+          ) : (
+            <CategoryItemsView
+              activeTabBar={activeTabBar}
+              activeCategoryQuizItems={activeCategoryQuizItems}
+              activeCategorySummaryItems={activeCategorySummaryItems}
+              setActiveCategoryQuizItems={setActiveCategoryQuizItems}
+              setActiveCategorySummaryItems={setActiveCategorySummaryItems}
+            />
+          ))}
         <div className="button-container">
           <DefaultButton size="large" onClick={handleAddItem}>
             {BUTTON[activeTabBar]}

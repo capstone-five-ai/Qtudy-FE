@@ -4,9 +4,12 @@ const PAGE = 1;
 const SIZE = 100;
 
 const CategoryApi = {
-  getCategorys: async (categoryType: string) => {
+  getCategoryList: async (categoryType: string) => {
     // 카테고리(Category)/카테고리 목록 조회
-    const response = await apiClient.get('category/list', {
+    const response = await apiClient.get('api/category/list', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
       params: {
         page: PAGE,
         size: SIZE,

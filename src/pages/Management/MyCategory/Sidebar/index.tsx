@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Typography from '../../../../components/Typography';
-import { CategoryInfoType, CategoryListInfoType, CategoryType } from '../../../../types';
+import { CategoryInfoType, CategoryType } from '../../../../types';
 import CategoryTabBar from './CategoryTabBar';
 import CategoryContainerTitle from './CategoryContainerTitle';
 import Scrollbar from '../../../../components/Scrollbar';
@@ -11,7 +11,7 @@ interface SidebarProps {
   categoryList: CategoryInfoType[];
   activeCategory: CategoryInfoType | null;
   setActiveTabBar: React.Dispatch<React.SetStateAction<CategoryType>>;
-  setCategoryList: React.Dispatch<React.SetStateAction<CategoryListInfoType>>;
+  setCategoryList: React.Dispatch<React.SetStateAction<CategoryInfoType[]>>;
   setActiveCategory: React.Dispatch<React.SetStateAction<CategoryInfoType | null>>;
 }
 
@@ -25,7 +25,7 @@ function Sidebar({
 }: SidebarProps) {
   const handleAddCategory = () => {
     // TODO: 카테고리 추가 API
-    setCategoryList({ quiz: [], summary: [] });
+    setCategoryList([]);
   };
 
   const handleEditCategory = (id: number, name: string) => {

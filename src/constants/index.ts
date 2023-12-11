@@ -1,4 +1,4 @@
-import { CategoryListInfoType, HeaderContentType, TabType } from '../types';
+import { HeaderContentType, TabType } from '../types';
 
 export const HEADER_MENU_LIST = [
   { menu: '퀴즈 생성', path: '/quiz', defaultPath: '/quiz/ai' },
@@ -36,7 +36,10 @@ export const HEADER_CONTENT: { [key: string]: { header: HeaderContentType; tabs:
   },
 };
 
-export const CATEGORY_TYPE_MAPPING: { [key: string]: keyof CategoryListInfoType } = { 퀴즈: 'quiz', 요약: 'summary' };
+export const CATEGORY_TYPE_MAPPING: { [key: string]: string } = {
+  퀴즈: 'PROBLEM',
+  요약: 'SUMMARY',
+};
 
 export const GENERATED_BY: { [key: string]: string } = {
   MEMBER: '자체',
