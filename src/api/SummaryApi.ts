@@ -2,21 +2,18 @@ import { SummaryCreationByFileType, SummaryCreationByTextType } from '../types/s
 import apiClient from './client';
 
 const SummaryApi = {
-  createByImage: async (amount: string, fileName: string, file: FormData) => {
+  createByImage: async ({ option, file }: SummaryCreationByFileType) => {
     // 요점정리파일(summaryFile)/이미지 기반 요점정리 생성
-    const response = await apiClient.post(
-      'summaryFile/generateSummaryFileByImage',
-      {
-        file,
+    const response = await apiClient.post('api/summaryFile/generateSummaryFileByImage', file, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-        params: { amount, fileName },
-      }
-    );
+      params: {
+        amount: option.amount,
+        fileName: option.fileName,
+      },
+    });
     return response.data;
   },
 

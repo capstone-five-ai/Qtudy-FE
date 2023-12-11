@@ -11,7 +11,11 @@ import CreateSideBar from '../../../../components/SideBar/CreateSideBar';
 import CreateContentWrapper from '../../../../components/Wrapper/CreateContentWrapper';
 import Loader from '../../../../components/Modal/Loader';
 import { convertToSummaryData } from '../../../../utils/convertToRequestData';
-import { useCreateSummaryByPdf, useCreateSummaryByText } from '../../../../hooks/useCreateSummary';
+import {
+  useCreateSummaryByImage,
+  useCreateSummaryByPdf,
+  useCreateSummaryByText,
+} from '../../../../hooks/useCreateSummary';
 
 const DEFAULT_INPUT_OPTION = {
   amount: '', // 요약량
@@ -29,6 +33,7 @@ function CreateAISummary() {
   const showLoader = useRecoilValue(loadingSelector);
   const setShowLoader = useSetRecoilState(loadingSelector);
 
+  const { mutate: createByImage, isLoading: isImageLoading } = useCreateSummaryByImage();
   const { mutate: createByPdf, isLoading: isPdfLoading } = useCreateSummaryByPdf();
   const { mutate: createByText, isLoading: isTextLoading } = useCreateSummaryByText();
 
@@ -43,6 +48,11 @@ function CreateAISummary() {
       } else if (type === 'upload' && pdfFile) {
         fileData.append('file', pdfFile.file);
         createByPdf({ option: convertToSummaryData(inputOption), file: fileData });
+      } else if (type === 'upload' && imageFiles.length > 0) {
+        imageFiles.forEach((image) => {
+          fileData.append('file', image.file);
+        });
+        createByImage({ option: convertToSummaryData(inputOption), file: fileData });
       }
     } catch {
       setShowLoader(false);
@@ -51,7 +61,7 @@ function CreateAISummary() {
 
   return (
     <>
-      {showLoader && <Loader isLoading={isTextLoading || isPdfLoading} />}
+      {showLoader && <Loader isLoading={isTextLoading || isPdfLoading || isImageLoading} />}
       <CreateContentWrapper>
         {!type && <SelectAIType service="summary" />}
         {type === 'upload' && (
