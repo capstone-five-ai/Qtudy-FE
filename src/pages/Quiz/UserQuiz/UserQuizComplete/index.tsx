@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
+import QuizApi from '../../../../api/QuizApi';
 import LinkButton from '../../../../components/Button/LinkButton';
 import TwinkleButton from '../../../../components/Button/TwinkleButton';
 import CategoryModal from '../../../../components/Modal/CategoryModal';
@@ -9,15 +11,27 @@ import { QuestionType } from '../../../../types/question.type';
 function UserQuizComplete() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const link = window.location.href;
-
-  const question: QuestionType = {
+  const [question, setQuestion] = useState<QuestionType>({
     problemName: '인공지능은 무엇을 모방할 수 있는 기술 및 연구 분야인가요?',
     problemAnswer: '2',
     problemCommentary:
       '인공지능의 목표는 인간의 인지 능력을 모방할 수 있는 지능적인 기계를 만드는 것입니다. 즉, 사람처럼 생각하고 학습하며 문제를 해결할 수 있는 기계를 개발하는 것이 목표입니다.',
     problemType: 'MULTIPLE',
     problemChoices: ['선지1', '선지2', '선지3', '선지4'],
+  });
+  const [qs] = useSearchParams();
+  const memberSavedProblemId = Number(qs.get('id'));
+
+  const getQuiz = async (id: number) => {
+    const data = await QuizApi.getUserQuiz(id);
+    setQuestion(data.response);
   };
+
+  useEffect(() => {
+    // TODO: get question api call by memberSavedProblemId
+    if (memberSavedProblemId === undefined) return;
+    getQuiz(memberSavedProblemId);
+  }, [memberSavedProblemId]);
 
   return (
     <>

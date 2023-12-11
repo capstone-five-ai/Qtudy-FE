@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
+import QuizApi from '../../../../api/QuizApi';
 import LinkButton from '../../../../components/Button/LinkButton';
 import PDFButton from '../../../../components/Button/PDFButton';
 import TwinkleButton from '../../../../components/Button/TwinkleButton';
@@ -15,8 +16,9 @@ function AIQuizComplete() {
   const fileId = Number(qs.get('id'));
 
   const [questions, setQuestions] = useState<QuestionType[]>([]);
-
   const [questionNum, setQuestionNum] = useState(1);
+  const [isWriter, setIsWriter] = useState(false);
+
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const link = window.location.href;
 
@@ -29,17 +31,28 @@ function AIQuizComplete() {
     problemChoices: ['선지1', '선지2', '선지3', '선지4'],
   });
 
-  useEffect(() => {
-    // TODO: 회원(작성자) / 회원(작성자 외) / 비회원 구분하여 화면 렌더링 및 api call
-  }, []);
+  const getQuizList = async (id: number) => {
+    const data = await QuizApi.getAllAIQuiz(id);
+    console.log(data.problems);
+
+    setQuestions(data.problems);
+    setQuestion(data.problems[0]);
+
+    if (data.isWriter) setIsWriter(true);
+  };
 
   useEffect(() => {
     // TODO: questions api call
+    // TODO: 회원(작성자) / 회원(작성자 외) / 비회원 구분하여 화면 렌더링
+    //
+    getQuizList(fileId);
   }, [fileId]);
 
   useEffect(() => {
     // TODO: quiestionNum에 따라 setQuestion
-  }, [questionNum]);
+    //
+    setQuestion(questions[questionNum - 1]); //
+  }, [questionNum, questions]);
 
   return (
     <>
@@ -53,14 +66,16 @@ function AIQuizComplete() {
             <NumberPannel numOfQuiz={28} questionNum={questionNum} setQuestionNum={setQuestionNum} />
             <ButtonWrapper>
               <LinkButton link={link} />
-              <PDFWrapper>
-                <PDFButton label="퀴즈" fileId={fileId} pdfType="PROBLEM" />
-                <PDFButton label="정답" fileId={fileId} pdfType="ANSWER" />
-              </PDFWrapper>
+              {isWriter && (
+                <PDFWrapper>
+                  <PDFButton label="퀴즈" fileId={fileId} pdfType="PROBLEM" type="ai" />
+                  <PDFButton label="정답" fileId={fileId} pdfType="ANSWER" type="ai" />
+                </PDFWrapper>
+              )}
             </ButtonWrapper>
           </div>
 
-          <TwinkleButton disabled={false} onClick={() => setShowCategoryModal(true)}>
+          <TwinkleButton disabled={!isWriter} onClick={() => setShowCategoryModal(true)}>
             Save to Category
           </TwinkleButton>
         </SideBar>
