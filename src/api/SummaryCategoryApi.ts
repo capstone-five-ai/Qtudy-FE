@@ -1,6 +1,6 @@
 import apiClient from './client';
 
-const QuizCategoryApi = {
+const SummaryCategoryApi = {
   get: async (categorizedSummaryId: number) => {
     // 카테고리별 요약(Categorized Summary)/카테고리별 요약 조회
     const response = await apiClient.get(`categorized-summary/${categorizedSummaryId}`);
@@ -31,6 +31,11 @@ const QuizCategoryApi = {
     const response = await apiClient.delete(`categorized-summary/delete/${categorizedSummaryId}`);
     return response.data;
   },
+
+  downloadSummary: async (categoryId: number) => {
+    // 카테고리별 요약(Categorized Summary)/카테고리별 요약 정리 PDF 다운
+    await apiClient.post(`api/categorized-summary/download-pdf/${categoryId}`);
+  },
 };
 
-export default QuizCategoryApi;
+export default SummaryCategoryApi;

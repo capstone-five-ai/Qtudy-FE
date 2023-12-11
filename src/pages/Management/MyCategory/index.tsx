@@ -118,6 +118,7 @@ function MyCategory() {
             ) : (
               <CategoryItemsView
                 activeTabBar={activeTabBar}
+                activeCategory={activeCategory}
                 activeCategoryQuizItems={activeCategoryQuizItems}
                 activeCategorySummaryItems={activeCategorySummaryItems}
                 setActiveCategoryQuizItems={setActiveCategoryQuizItems}
@@ -130,6 +131,7 @@ function MyCategory() {
             ) : (
               <CategoryItemsView
                 activeTabBar={activeTabBar}
+                activeCategory={activeCategory}
                 activeCategoryQuizItems={activeCategoryQuizItems}
                 activeCategorySummaryItems={activeCategorySummaryItems}
                 setActiveCategoryQuizItems={setActiveCategoryQuizItems}

@@ -6,12 +6,15 @@ import Scrollbar from '../../../components/Scrollbar';
 import { ReactComponent as FileIcon } from '../../../assets/icons/icon-file.svg';
 import Typography from '../../../components/Typography';
 import CategorySummaryItem from './CategorySummaryItem';
-import { CategoryType } from '../../../types';
+import { CategoryInfoType, CategoryType } from '../../../types';
 import { CategoryQuizItemsType } from '../../../types/quiz.type';
 import { CategorySummaryItemsType } from '../../../types/summary.type';
+import QuizCategoryApi from '../../../api/QuizCategoryApi';
+import SummaryCategoryApi from '../../../api/SummaryCategoryApi';
 
 interface CategoryItemsViewProps {
   activeTabBar: CategoryType;
+  activeCategory: CategoryInfoType | null;
   activeCategoryQuizItems: CategoryQuizItemsType[];
   activeCategorySummaryItems: CategorySummaryItemsType[];
   setActiveCategoryQuizItems: React.Dispatch<React.SetStateAction<CategoryQuizItemsType[]>>;
@@ -20,6 +23,7 @@ interface CategoryItemsViewProps {
 
 function CategoryItemsView({
   activeTabBar,
+  activeCategory,
   activeCategoryQuizItems,
   activeCategorySummaryItems,
   setActiveCategoryQuizItems,
@@ -37,6 +41,24 @@ function CategoryItemsView({
     setActiveCategorySummaryItems([]);
   };
 
+  const downloadQuiz = async () => {
+    if (activeCategory) {
+      await QuizCategoryApi.downloadQuiz(activeCategory.categoryId);
+    }
+  };
+
+  const downloadAnswer = async () => {
+    if (activeCategory) {
+      await QuizCategoryApi.downloadAnswer(activeCategory.categoryId);
+    }
+  };
+
+  const downloadSummary = async () => {
+    if (activeCategory) {
+      await SummaryCategoryApi.downloadSummary(activeCategory.categoryId);
+    }
+  };
+
   if (activeTabBar === '퀴즈')
     return (
       <Container>
@@ -45,18 +67,18 @@ function CategoryItemsView({
         ) : (
           <>
             <DownloadButtonContainer>
-              <div className="download-button">
+              <button type="button" className="download-button" onClick={downloadQuiz}>
                 <FileIcon />
                 <Typography variant="caption3" color="grayScale03">
                   퀴즈 PDF
                 </Typography>
-              </div>
-              <div className="download-button">
+              </button>
+              <button type="button" className="download-button" onClick={downloadAnswer}>
                 <FileIcon />
                 <Typography variant="caption3" color="grayScale03">
                   정답 PDF
                 </Typography>
-              </div>
+              </button>
             </DownloadButtonContainer>
             <CategoryItemContainer>
               {activeCategoryQuizItems.map((quizItem) => (
@@ -79,12 +101,12 @@ function CategoryItemsView({
       ) : (
         <>
           <DownloadButtonContainer>
-            <div className="download-button">
+            <button type="button" className="download-button" onClick={downloadSummary}>
               <FileIcon />
               <Typography variant="caption3" color="grayScale03">
                 요약 PDF
               </Typography>
-            </div>
+            </button>
           </DownloadButtonContainer>
           <CategoryItemContainer>
             {activeCategorySummaryItems.map((summaryItem) => (
@@ -122,6 +144,10 @@ const DownloadButtonContainer = styled.div`
     display: flex;
     gap: 4px;
     cursor: pointer;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent;
   }
 `;
 
