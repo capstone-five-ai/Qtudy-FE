@@ -6,5 +6,15 @@ export interface SummaryType {
 
 export interface SummaryOptionType {
   amount: string;
-  file: string;
+  fileName: string;
+}
+
+export interface SummaryCreationByFileType {
+  option: SummaryOptionType;
+  file: FormData;
+}
+
+export interface SummaryCreationByTextType {
+  option: SummaryOptionType;
+  text: string;
 }

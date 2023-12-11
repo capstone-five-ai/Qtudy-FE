@@ -9,6 +9,8 @@ const AMOUNT: ConvertType = {
   적게: 'FEW',
   적당히: 'MEDIUM',
   많이: 'MANY',
+  짧게: 'FEW',
+  길게: 'MANY',
 };
 
 const DIFFICULTY: ConvertType = {
@@ -33,10 +35,10 @@ export const convertToRequestData = (inputOption: ConvertType) => {
   return convert;
 };
 
-export const convertToSummaryData = (inputOption: SummaryOptionType) => {
+export const convertToSummaryData = (inputOption: ConvertType) => {
   const convert: SummaryOptionType = {
     amount: AMOUNT[inputOption.amount],
-    file: inputOption.file,
+    fileName: inputOption.file,
   };
 
   return convert;

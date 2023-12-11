@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 import { useRef, useState } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import SelectAIType from '../../../../components/SelectAIType';
 import { UploadedFileType } from '../../../../types';
 import loadingSelector from '../../../../recoil/selectors/loading';
@@ -9,6 +9,9 @@ import TextType from '../../../../components/SelectAIType/TextType';
 import uploadFileUtils from '../../../../utils/uploadFileUtils';
 import CreateSideBar from '../../../../components/SideBar/CreateSideBar';
 import CreateContentWrapper from '../../../../components/Wrapper/CreateContentWrapper';
+import Loader from '../../../../components/Modal/Loader';
+import { convertToSummaryData } from '../../../../utils/convertToRequestData';
+import useCreateSummaryByText from '../../../../hooks/useCreateSummary';
 
 const DEFAULT_INPUT_OPTION = {
   amount: '', // 요약량
@@ -23,27 +26,28 @@ function CreateAISummary() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [pdfFile, setPdfFile] = useState<UploadedFileType | null>(null);
   const [imageFiles, setImageFiles] = useState<UploadedFileType[]>([]);
-  const setLoading = useSetRecoilState(loadingSelector);
+  const showLoader = useRecoilValue(loadingSelector);
+  const setShowLoader = useSetRecoilState(loadingSelector);
+
+  const { mutate: createByText, isLoading: isTextLoading } = useCreateSummaryByText();
 
   const handleSubmit = () => {
-    const formData = new FormData();
+    setShowLoader(true);
 
-    if (pdfFile) {
-      formData.append('pdfFile', pdfFile.file, pdfFile.name);
+    try {
+      // const fileData = new FormData();
+
+      if (type === 'text') {
+        createByText({ option: convertToSummaryData(inputOption), text: inputText });
+      }
+    } catch {
+      setShowLoader(false);
     }
-
-    if (imageFiles.length > 0) {
-      imageFiles.forEach((image, index) => {
-        formData.append(`imageFile_${index}`, image.file, image.name);
-      });
-    }
-
-    // TODO: 서버로 formData 전송
-    setLoading(true);
   };
 
   return (
     <>
+      {showLoader && <Loader isLoading={isTextLoading} />}
       <CreateContentWrapper>
         {!type && <SelectAIType service="summary" />}
         {type === 'upload' && (

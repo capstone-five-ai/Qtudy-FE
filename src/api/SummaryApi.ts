@@ -1,3 +1,4 @@
+import { SummaryCreationByTextType } from '../types/summary.type';
 import apiClient from './client';
 
 const SummaryApi = {
@@ -11,6 +12,7 @@ const SummaryApi = {
       {
         headers: {
           'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
         params: { amount, fileName },
       }
@@ -35,13 +37,21 @@ const SummaryApi = {
     return response.data;
   },
 
-  createByText: async (amount: string, fileName: string, text: string) => {
+  createByText: async ({ option, text }: SummaryCreationByTextType) => {
     // 요점정리파일(summaryFile)/Text 기반 요점정리 생성
-    const response = await apiClient.post('summaryFile/generateSummaryFileByText', {
-      amount,
-      fileName,
-      text,
-    });
+    const response = await apiClient.post(
+      'api/summaryFile/generateSummaryFileByText',
+      {
+        amount: option.amount,
+        fileName: option.fileName,
+        text,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      }
+    );
     return response.data;
   },
 
