@@ -1,9 +1,13 @@
 import apiClient from './client';
 
 const QuizCategoryApi = {
-  get: async (categorizedProblemId: number) => {
+  get: async (categorizedProblemId: string) => {
     // 카테고리별 문제(Categorized Problem)/카테고리별 문제 조회
-    const response = await apiClient.get(`categorized-problem/${categorizedProblemId}`);
+    const response = await apiClient.get(`api/categorized-problem/${categorizedProblemId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
     return response.data;
   },
 
