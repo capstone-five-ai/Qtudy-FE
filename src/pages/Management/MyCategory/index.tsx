@@ -10,6 +10,7 @@ import { CATEGORY_TYPE_MAPPING } from '../../../constants';
 import ContentWrapper from '../../../components/Wrapper/ContentWrapper';
 import DefaultButton from '../../../components/Button/DefaultButton';
 import CategoryApi from '../../../api/CategoryApi';
+import CategoryModal from '../../../components/Modal/CategoryModal';
 
 const BUTTON = { 퀴즈: '카테고리에 퀴즈 추가', 요약: '카테고리에 요약 추가' };
 
@@ -22,6 +23,7 @@ function MyCategory() {
   const [activeCategoryQuizItems, setActiveCategoryQuizItems] = useState<CategoryQuizItemsType[]>([]);
   const [activeCategorySummaryItems, setActiveCategorySummaryItems] = useState<CategorySummaryItemsType[]>([]);
   const [hasExecutedOnce, setHasExecutedOnce] = useState(false);
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
   const location = useLocation();
 
   const getCategorys = async () => {
@@ -53,6 +55,11 @@ function MyCategory() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTabBar]);
 
+  useEffect(() => {
+    if (!showCategoryModal) getCategorys();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showCategoryModal]);
+
   const handleAddItem = () => {
     // TODO: 퀴즈 추가 API, 요약 추가 API
   };
@@ -60,47 +67,52 @@ function MyCategory() {
   if (showNoCategoryView) return <NoCategory setShowNoCategoryView={setShowNoCategoryView} />;
 
   return (
-    <Container>
-      <Sidebar
-        activeTabBar={activeTabBar}
-        categoryList={activeTabBar === '퀴즈' ? quizCategoryList : summaryCategoryList}
-        activeCategory={activeCategory}
-        setActiveTabBar={setActiveTabBar}
-        setCategoryList={activeTabBar === '퀴즈' ? setQuizCategoryList : setSummaryCategoryList}
-        setActiveCategory={setActiveCategory}
-      />
-      <ContentWrapper>
-        {activeTabBar === '퀴즈' &&
-          (quizCategoryList.length === 0 ? (
-            <NoItem categoryType={activeTabBar} />
-          ) : (
-            <CategoryItemsView
-              activeTabBar={activeTabBar}
-              activeCategoryQuizItems={activeCategoryQuizItems}
-              activeCategorySummaryItems={activeCategorySummaryItems}
-              setActiveCategoryQuizItems={setActiveCategoryQuizItems}
-              setActiveCategorySummaryItems={setActiveCategorySummaryItems}
-            />
-          ))}
-        {activeTabBar === '요약' &&
-          (summaryCategoryList.length === 0 ? (
-            <NoItem categoryType={activeTabBar} />
-          ) : (
-            <CategoryItemsView
-              activeTabBar={activeTabBar}
-              activeCategoryQuizItems={activeCategoryQuizItems}
-              activeCategorySummaryItems={activeCategorySummaryItems}
-              setActiveCategoryQuizItems={setActiveCategoryQuizItems}
-              setActiveCategorySummaryItems={setActiveCategorySummaryItems}
-            />
-          ))}
-        <div className="button-container">
-          <DefaultButton size="large" onClick={handleAddItem}>
-            {BUTTON[activeTabBar]}
-          </DefaultButton>
-        </div>
-      </ContentWrapper>
-    </Container>
+    <>
+      {showCategoryModal && (
+        <CategoryModal onClose={() => setShowCategoryModal(false)} categoryType={CATEGORY_TYPE_MAPPING[activeTabBar]} />
+      )}
+      <Container>
+        <Sidebar
+          activeTabBar={activeTabBar}
+          categoryList={activeTabBar === '퀴즈' ? quizCategoryList : summaryCategoryList}
+          activeCategory={activeCategory}
+          setActiveTabBar={setActiveTabBar}
+          setActiveCategory={setActiveCategory}
+          setShowCategoryModal={setShowCategoryModal}
+        />
+        <ContentWrapper>
+          {activeTabBar === '퀴즈' &&
+            (quizCategoryList.length === 0 ? (
+              <NoItem categoryType={activeTabBar} />
+            ) : (
+              <CategoryItemsView
+                activeTabBar={activeTabBar}
+                activeCategoryQuizItems={activeCategoryQuizItems}
+                activeCategorySummaryItems={activeCategorySummaryItems}
+                setActiveCategoryQuizItems={setActiveCategoryQuizItems}
+                setActiveCategorySummaryItems={setActiveCategorySummaryItems}
+              />
+            ))}
+          {activeTabBar === '요약' &&
+            (summaryCategoryList.length === 0 ? (
+              <NoItem categoryType={activeTabBar} />
+            ) : (
+              <CategoryItemsView
+                activeTabBar={activeTabBar}
+                activeCategoryQuizItems={activeCategoryQuizItems}
+                activeCategorySummaryItems={activeCategorySummaryItems}
+                setActiveCategoryQuizItems={setActiveCategoryQuizItems}
+                setActiveCategorySummaryItems={setActiveCategorySummaryItems}
+              />
+            ))}
+          <div className="button-container">
+            <DefaultButton size="large" onClick={handleAddItem}>
+              {BUTTON[activeTabBar]}
+            </DefaultButton>
+          </div>
+        </ContentWrapper>
+      </Container>
+    </>
   );
 }
 

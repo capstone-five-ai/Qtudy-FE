@@ -36,7 +36,7 @@ export const HEADER_CONTENT: { [key: string]: { header: HeaderContentType; tabs:
   },
 };
 
-export const CATEGORY_TYPE_MAPPING: { [key: string]: string } = {
+export const CATEGORY_TYPE_MAPPING: { [key: string]: 'PROBLEM' | 'SUMMARY' } = {
   퀴즈: 'PROBLEM',
   요약: 'SUMMARY',
 };

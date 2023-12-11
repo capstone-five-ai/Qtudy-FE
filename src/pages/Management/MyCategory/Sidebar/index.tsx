@@ -11,8 +11,8 @@ interface SidebarProps {
   categoryList: CategoryInfoType[];
   activeCategory: CategoryInfoType | null;
   setActiveTabBar: React.Dispatch<React.SetStateAction<CategoryType>>;
-  setCategoryList: React.Dispatch<React.SetStateAction<CategoryInfoType[]>>;
   setActiveCategory: React.Dispatch<React.SetStateAction<CategoryInfoType | null>>;
+  setShowCategoryModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function Sidebar({
@@ -20,12 +20,12 @@ function Sidebar({
   categoryList,
   activeCategory,
   setActiveTabBar,
-  setCategoryList,
   setActiveCategory,
+  setShowCategoryModal,
 }: SidebarProps) {
   const handleAddCategory = () => {
     // TODO: 카테고리 추가 API
-    setCategoryList([]);
+    setShowCategoryModal(true);
   };
 
   const handleEditCategory = (id: number, name: string) => {
