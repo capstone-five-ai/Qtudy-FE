@@ -19,6 +19,11 @@ export interface SummaryCreationByTextType {
   text: string;
 }
 
+export interface SummaryCreationByUserType {
+  summaryTitle: string;
+  summaryContent: string;
+}
+
 export interface CategorySummaryItemsType {
   categorizedSummaryId: number;
   summaryGeneratedBy: string;

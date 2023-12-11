@@ -1,4 +1,4 @@
-import { SummaryCreationByFileType, SummaryCreationByTextType } from '../types/summary.type';
+import { SummaryCreationByFileType, SummaryCreationByTextType, SummaryCreationByUserType } from '../types/summary.type';
 import apiClient from './client';
 
 const SummaryApi = {
@@ -50,9 +50,9 @@ const SummaryApi = {
     return response.data;
   },
 
-  createByUser: async (summaryTitle: string, summaryContent: string) => {
+  createByUser: async ({ summaryTitle, summaryContent }: SummaryCreationByUserType) => {
     // 요약정리(Summary)/요약 정리 생성
-    const response = await apiClient.post('member-saved-summary/new', {
+    const response = await apiClient.post('api/member-saved-summary/new', {
       summaryTitle,
       summaryContent,
     });

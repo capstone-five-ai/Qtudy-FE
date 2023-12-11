@@ -1,18 +1,33 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import RightSideBar from './RightSideBar';
 import TextType from '../../../../components/SelectAIType/TextType';
 import Scrollbar from '../../../../components/Scrollbar';
+import { useCreateSummaryByUser } from '../../../../hooks/useCreateSummary';
+import loadingSelector from '../../../../recoil/selectors/loading';
+import Loader from '../../../../components/Modal/Loader';
 
 function CreateUserSummary() {
   const [inputText, setInputText] = useState('');
   const [fileName, setFileName] = useState('');
+  const showLoader = useRecoilValue(loadingSelector);
+  const setShowLoader = useSetRecoilState(loadingSelector);
+
+  const { mutate, isLoading } = useCreateSummaryByUser();
 
   const handleSubmit = () => {
-    // TODO: 서버로 전송
+    setShowLoader(true);
+
+    try {
+      mutate({ summaryTitle: fileName, summaryContent: inputText });
+    } catch {
+      setShowLoader(false);
+    }
   };
   return (
     <>
+      {showLoader && <Loader isLoading={isLoading} />}
       <Container>
         <TextType service="summary" inputText={inputText} setInputText={setInputText} />
       </Container>

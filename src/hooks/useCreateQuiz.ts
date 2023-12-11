@@ -16,7 +16,7 @@ export const useCreateQuizByText = () => {
       setTimeout(() => {
         // TODO: fileId 받아서 이동시키기.
         navigate('/select');
-      }, 1100);
+      }, 1000);
     },
     onError: (error: unknown) => {
       const axiosError = error as AxiosError;
@@ -39,7 +39,7 @@ export const useCreateQuizByPdf = () => {
       setTimeout(() => {
         // TODO: fileId 받아서 이동시키기.
         navigate('/select');
-      }, 1100);
+      }, 1000);
     },
     onError: (error: unknown) => {
       const axiosError = error as AxiosError;
@@ -62,7 +62,7 @@ export const useCreateQuizByImage = () => {
       setTimeout(() => {
         // TODO: fileId 받아서 이동시키기.
         navigate('/select');
-      }, 1100);
+      }, 1000);
     },
     onError: (error: unknown) => {
       const axiosError = error as AxiosError;
@@ -85,7 +85,7 @@ export const useCreateQuizByUser = () => {
       setTimeout(() => {
         // TODO: fileId 받아서 이동시키기.
         navigate('/select');
-      }, 1100);
+      }, 1000);
     },
     onError: (error: unknown) => {
       const axiosError = error as AxiosError;
