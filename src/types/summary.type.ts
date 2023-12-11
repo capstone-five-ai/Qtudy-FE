@@ -18,3 +18,12 @@ export interface SummaryCreationByTextType {
   option: SummaryOptionType;
   text: string;
 }
+
+export interface CategorySummaryItemsType {
+  categorizedSummaryId: number;
+  summaryGeneratedBy: string;
+  summaryTitle: string;
+  summaryContent: string;
+  createTime: string;
+  updateTime: string;
+}

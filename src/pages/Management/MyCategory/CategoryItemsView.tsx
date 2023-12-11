@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 import React from 'react';
-import { CategoryQuizItemsType, CategorySummaryItemsType, CategoryType } from '../../../types';
 import CategoryQuizItem from './CategoryQuizItem';
 import DefaultView from './DefaultView';
 import Scrollbar from '../../../components/Scrollbar';
 import { ReactComponent as FileIcon } from '../../../assets/icons/icon-file.svg';
 import Typography from '../../../components/Typography';
 import CategorySummaryItem from './CategorySummaryItem';
+import { CategoryType } from '../../../types';
+import { CategoryQuizItemsType } from '../../../types/quiz.type';
+import { CategorySummaryItemsType } from '../../../types/summary.type';
 
 interface CategoryItemsViewProps {
   activeTabBar: CategoryType;

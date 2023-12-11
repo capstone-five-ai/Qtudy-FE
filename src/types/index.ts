@@ -29,24 +29,6 @@ export interface CategoryInfoType {
   categoryType: string;
 }
 
-export interface CategoryQuizItemsType {
-  categorizedProblemId: number;
-  problemGeneratedBy: string;
-  problemType: QuizType;
-  problemName: string;
-  createTime: string;
-  updateTime: string;
-}
-
-export interface CategorySummaryItemsType {
-  categorizedSummaryId: number;
-  summaryGeneratedBy: string;
-  summaryTitle: string;
-  summaryContent: string;
-  createTime: string;
-  updateTime: string;
-}
-
 export interface ErrorType {
   errorCode: string;
   errorMessage: string;

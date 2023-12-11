@@ -1,5 +1,5 @@
 import { GENERATED_BY } from '../../../constants';
-import { CategoryQuizItemsType } from '../../../types';
+import { CategoryQuizItemsType } from '../../../types/quiz.type';
 import CategoryItemContainer from './CategoryItemContainer';
 import CategoryItemInfo from './CategoryItemInfo';
 
