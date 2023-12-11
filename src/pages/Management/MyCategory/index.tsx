@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import NoCategory from './NoCategory';
 import Sidebar from './Sidebar';
-import NoItem from './NoItem';
 import CategoryItemsView from './CategoryItemsView';
 import { CATEGORY_TYPE_MAPPING } from '../../../constants';
 import ContentWrapper from '../../../components/Wrapper/ContentWrapper';
@@ -13,12 +12,13 @@ import NewCategoryModal from '../../../components/Modal/CategoryModal/NewCategor
 import { CategoryInfoType, CategoryType } from '../../../types';
 import { CategoryQuizItemsType } from '../../../types/quiz.type';
 import { CategorySummaryItemsType } from '../../../types/summary.type';
+import DefaultView from './DefaultView';
 
 const BUTTON = { 퀴즈: '카테고리에 퀴즈 추가', 요약: '카테고리에 요약 추가' };
 
 function MyCategory() {
   const [activeTabBar, setActiveTabBar] = useState<CategoryType>('퀴즈'); // 탭바 (퀴즈/요약)
-  const [showNoCategoryView, setShowNoCategoryView] = useState(false); // NoCategory 출력 여부
+  const [showNoCategoryView, setShowNoCategoryView] = useState(true); // NoCategory 출력 여부
   const [quizCategoryList, setQuizCategoryList] = useState<CategoryInfoType[]>([]); // 퀴즈 카테고리 목록
   const [summaryCategoryList, setSummaryCategoryList] = useState<CategoryInfoType[]>([]); // 요약 카테고리 목록
   const [activeCategory, setActiveCategory] = useState<CategoryInfoType | null>(null); // 조회 중인 카테고리 (퀴즈/요약)
@@ -113,9 +113,7 @@ function MyCategory() {
         />
         <ContentWrapper>
           {activeTabBar === '퀴즈' &&
-            (quizCategoryList.length === 0 ? (
-              <NoItem categoryType={activeTabBar} />
-            ) : (
+            (activeCategory ? (
               <CategoryItemsView
                 activeTabBar={activeTabBar}
                 activeCategory={activeCategory}
@@ -124,11 +122,11 @@ function MyCategory() {
                 setActiveCategoryQuizItems={setActiveCategoryQuizItems}
                 setActiveCategorySummaryItems={setActiveCategorySummaryItems}
               />
+            ) : (
+              <DefaultView />
             ))}
           {activeTabBar === '요약' &&
-            (summaryCategoryList.length === 0 ? (
-              <NoItem categoryType={activeTabBar} />
-            ) : (
+            (activeCategory ? (
               <CategoryItemsView
                 activeTabBar={activeTabBar}
                 activeCategory={activeCategory}
@@ -137,6 +135,8 @@ function MyCategory() {
                 setActiveCategoryQuizItems={setActiveCategoryQuizItems}
                 setActiveCategorySummaryItems={setActiveCategorySummaryItems}
               />
+            ) : (
+              <DefaultView />
             ))}
           <div className="button-container">
             <DefaultButton size="large" onClick={handleAddItem}>

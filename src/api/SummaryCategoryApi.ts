@@ -28,7 +28,11 @@ const SummaryCategoryApi = {
 
   delete: async (categorizedSummaryId: number) => {
     // 카테고리별 요약(Categorized Summary)/카테고리에 저장된 요약 삭제
-    const response = await apiClient.delete(`categorized-summary/delete/${categorizedSummaryId}`);
+    const response = await apiClient.delete(`categorized-summary/delete/${categorizedSummaryId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
     return response.data;
   },
 };

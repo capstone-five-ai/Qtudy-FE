@@ -36,7 +36,11 @@ const QuizCategoryApi = {
 
   delete: async (categorizedProblemId: number) => {
     // 카테고리별 문제(Categorized Problem)/카테고리에 저장된 문제 삭제
-    const response = await apiClient.delete(`categorized-problem/delete/${categorizedProblemId}`);
+    const response = await apiClient.delete(`api/categorized-problem/delete/${categorizedProblemId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
     return response.data;
   },
 };

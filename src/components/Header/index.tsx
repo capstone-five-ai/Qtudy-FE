@@ -26,7 +26,7 @@ function Header() {
     <Container>
       <InnerContainer>
         <div className="menu-list">
-          <Link to="/">
+          <Link to="/select">
             <Logo width="113px" height="60px" style={{ marginRight: '60px' }} />
           </Link>
           <MenuBar />
