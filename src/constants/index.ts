@@ -58,4 +58,7 @@ export const NUMBER_TO_CIRCLE: { [key: string]: string } = {
   '10': '⑩',
 };
 
-export const CREATE_USER_QUIZ_TYPE = ['객관식', '주관식'];
+export const CREATE_USER_QUIZ_TYPE = [
+  { label: '객관식', value: 'MULTIPLE' },
+  { label: '주관식', value: 'SUBJECTIVE' },
+];

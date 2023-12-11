@@ -15,7 +15,7 @@ export interface UploadedFileType {
 
 export type QuizType = 'SUBJECTIVE' | 'MULTIPLE';
 
-export interface CreateUserQuizInput {
+export interface UserQuizInputType {
   input: string;
   check: boolean;
 }

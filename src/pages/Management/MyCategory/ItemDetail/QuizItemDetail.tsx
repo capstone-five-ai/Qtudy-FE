@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import LinkButton from '../../../../components/Button/LinkButton';
@@ -10,9 +10,9 @@ import CategoryModal from '../../../../components/Modal/CategoryModal';
 
 function QuizItemDetail() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
-  const link = window.location.href;
   const navigate = useNavigate();
   const [params] = useSearchParams();
+  const [questionNum, setQuestionNum] = useState(1);
 
   const question: QuestionType = {
     problemName: '인공지능은 무엇을 모방할 수 있는 기술 및 연구 분야인가요?',
@@ -22,6 +22,12 @@ function QuizItemDetail() {
     problemType: 'MULTIPLE',
     problemChoices: ['선지1', '선지2', '선지3', '선지4'],
   };
+
+  useEffect(() => {
+    // TODO: quiestionNum에 따라 setQuestion
+    setQuestionNum(parseInt(question.problemAnswer || '1', 10));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [questionNum]);
 
   const handleMoveToList = () => {
     // TODO: state로 activeCategory도 넘겨주기
@@ -37,12 +43,12 @@ function QuizItemDetail() {
   return (
     <>
       <CategoryItemContentWrapper handleMoveToList={handleMoveToList} handleEdit={handleEdit}>
-        <Question question={question} />
+        <Question question={question} questionNum={questionNum} />
       </CategoryItemContentWrapper>
       <SideWrapper>
         <SideBar>
           <ButtonWrapper>
-            <LinkButton link={link} />
+            <LinkButton link={`management/mycategory/share?category=quiz&id=${params.get('id')}`} />
           </ButtonWrapper>
 
           <TwinkleButton disabled={false} onClick={() => setShowCategoryModal(true)}>

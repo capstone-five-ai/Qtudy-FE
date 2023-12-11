@@ -7,6 +7,7 @@ import Login from '../pages/login';
 import Redirection from '../pages/login/Redirection';
 import SelectService from '../pages/selectService';
 import ProtectedRoute from './ProtectedRoute';
+import Share from '../pages/Share';
 
 const routes = [
   {
@@ -49,6 +50,10 @@ const routes = [
         element: <Quiz />,
       },
       { path: 'summary/*', element: <Summary /> },
+      {
+        path: 'management/mycategory/share',
+        element: <Share />,
+      },
     ],
   },
 ];

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Exit } from '../../assets/icons/exit_nostroke.svg';
 
@@ -12,11 +12,29 @@ ModalContainer.defaultProps = {
 };
 
 function ModalContainer({ onClose, children }: Props) {
+  const [isClosing, setIsClosing] = useState<boolean>(false);
+  const [show, setShow] = useState(false);
+
+  const handleClickClose = () => {
+    setIsClosing(true);
+
+    const setShowTimeout = setTimeout(() => {
+      clearTimeout(setShowTimeout);
+      if (onClose) onClose();
+    }, 300);
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShow(true);
+    }, 100);
+  }, []);
+
   return (
-    <Background>
+    <Background className={isClosing ? 'closing show' : `${show && 'show'}`}>
       <Wrapper>
         {onClose && (
-          <Close onClick={onClose}>
+          <Close onClick={handleClickClose}>
             <Exit stroke="#424242" />
           </Close>
         )}
@@ -36,6 +54,16 @@ const Background = styled.div`
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.6);
+
+  opacity: 0;
+  &.show {
+    opacity: 1;
+  }
+  &.closing {
+    opacity: 0;
+  }
+
+  transition: opacity 300ms ease-out;
 
   z-index: 3;
 `;

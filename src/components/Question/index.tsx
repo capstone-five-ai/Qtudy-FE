@@ -34,7 +34,11 @@ function Question({ question, questionNum }: Props) {
         {question.problemType === 'MULTIPLE' && (
           <Choice>
             {question.problemChoices?.map((choice, idx) => (
-              <Typography key={choice} variant="body2">
+              <Typography
+                key={choice}
+                variant="body2"
+                color={showAnswer && questionNum === idx + 1 ? 'mainMintDark' : 'grayScale02'}
+              >
                 {getCircleNum(idx + 1)} {choice}
               </Typography>
             ))}

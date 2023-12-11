@@ -1,12 +1,15 @@
 import { Navigate, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
-import NoButtonSideBar from '../../../../components/SideBar/NoButtonSideBar';
-import CategoryItemContentWrapper from '../../../../components/Wrapper/CategoryItemContentWrapper';
-import MultipleQuiz from '../../../Quiz/UserQuiz/CreateUserQuiz/MultipleQuiz';
+import styled from 'styled-components';
 import { QuestionType } from '../../../../types/question.type';
-import SubjectiveQuiz from '../../../Quiz/UserQuiz/CreateUserQuiz/SubjectiveQuiz';
+import CategoryItemContentWrapper from '../../../../components/Wrapper/CategoryItemContentWrapper';
+import NoButtonSideBar from '../../../../components/SideBar/NoButtonSideBar';
+import Scrollbar from '../../../../components/Scrollbar';
+import QuizView from '../../../Quiz/UserQuiz/CreateUserQuiz/QuizView';
+import EditAnswerAccordion from '../../../../components/Accordion/EditAnswerAccordion';
+import { CREATE_USER_QUIZ_TYPE } from '../../../../constants';
 
-const DEFAULT_INPUT = { input: '', check: false };
+// const DEFAULT_INPUT = { input: '', check: false };
 
 function QuizItemEdit() {
   const [params] = useSearchParams();
@@ -31,42 +34,6 @@ function QuizItemEdit() {
   const [answer, setAnswer] = useState(!Number.isNaN(answerNum) ? answerNum : -1);
   const [commentary, setCommentary] = useState({ input: questionData.problemCommentary, check: true });
 
-  const handleEdit = (type: string, index: number) => {
-    if (type === 'question') {
-      setQuestion({ ...question, check: false });
-    } else if (type === 'option') {
-      const updatedOption = [...options];
-      updatedOption[index] = { ...updatedOption[index], check: false };
-      setOptions(updatedOption);
-    } else if (type === 'commentary') {
-      setCommentary({ ...commentary, check: false });
-    }
-  };
-
-  const handleCheck = (type: string, index: number, input: string) => {
-    if (type === 'question') {
-      setQuestion({ input, check: true });
-    } else if (type === 'option') {
-      const updatedOption = [...options];
-      updatedOption[index] = { input, check: true };
-      setOptions(updatedOption);
-    } else if (type === 'commentary') {
-      setCommentary({ input, check: true });
-    }
-  };
-
-  const handleDelete = (indexToDelete: number) => {
-    setOptions((prevOptions) => {
-      return prevOptions.filter((_, index) => index !== indexToDelete);
-    });
-
-    if (indexToDelete === answer - 1) setAnswer(-1);
-  };
-
-  const handleAddOption = () => {
-    setOptions([...options, DEFAULT_INPUT]);
-  };
-
   const handleFinishEdit = () => {
     // TODO: 문제 수정 API 연결
   };
@@ -76,27 +43,22 @@ function QuizItemEdit() {
   return (
     <>
       <CategoryItemContentWrapper isEdit handleFinishEdit={handleFinishEdit}>
-        {questionData.problemType === 'MULTIPLE' ? (
-          <MultipleQuiz
+        <QuizContainer>
+          <QuizView
+            quizType={questionData.problemType}
             question={question}
             options={options}
             answer={answer}
-            commentary={commentary}
-            handleEdit={handleEdit}
-            handleCheck={handleCheck}
-            handleDelete={handleDelete}
-            handleAddOption={handleAddOption}
-            handleSetAnswer={setAnswer}
+            setQuestion={setQuestion}
+            setOptions={setOptions}
+            setAnswer={setAnswer}
           />
-        ) : (
-          <SubjectiveQuiz
-            question={question}
-            answer={answer}
+          <EditAnswerAccordion
+            answer={questionData.problemType === CREATE_USER_QUIZ_TYPE[0].value ? answer.toString() : null}
             commentary={commentary}
-            handleEdit={handleEdit}
-            handleCheck={handleCheck}
+            setCommentary={setCommentary}
           />
-        )}
+        </QuizContainer>
       </CategoryItemContentWrapper>
       <NoButtonSideBar />
     </>
@@ -104,3 +66,16 @@ function QuizItemEdit() {
 }
 
 export default QuizItemEdit;
+
+const QuizContainer = styled.div`
+  flex-grow: 1;
+  margin: 40px 0px 40px 20px;
+  padding: 0px 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+
+  overflow-y: scroll;
+  ${Scrollbar}
+`;

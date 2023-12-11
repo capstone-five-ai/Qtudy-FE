@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 import { ReactComponent as CheckIcon } from '../../assets/icons/icon-check.svg';
 import { ReactComponent as EditIcon } from '../../assets/icons/icon-edit.svg';
 import { ReactComponent as TrashIcon } from '../../assets/icons/icon-trash.svg';
-import { CreateUserQuizInput } from '../../types';
+import { UserQuizInputType } from '../../types';
 
 const PLACEHOLDER = {
   question: '퀴즈 질문을 작성해주세요.',
@@ -12,10 +11,11 @@ const PLACEHOLDER = {
 
 export interface QuizInputFieldProps {
   type: 'question' | 'option';
-  input: CreateUserQuizInput;
+  input: UserQuizInputType;
   index: number;
-  handleEdit: (type: string, index: number) => void;
-  handleCheck: (type: string, index: number, input: string) => void;
+  handleEdit: (index: number) => void;
+  handleCheck: (index: number) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void;
   handleDelete?: (index: number) => void;
 }
 
@@ -23,19 +23,21 @@ QuizInputField.defaultProps = {
   handleDelete: undefined,
 };
 
-function QuizInputField({ type, input, index, handleEdit, handleCheck, handleDelete }: QuizInputFieldProps) {
-  const [currentInput, setCurrentInput] = useState(input.input);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentInput(e.target.value);
-  };
-
+function QuizInputField({
+  type,
+  input,
+  index,
+  handleEdit,
+  handleCheck,
+  handleChange,
+  handleDelete,
+}: QuizInputFieldProps) {
   return (
     <Container>
       <StyledInput
         placeholder={PLACEHOLDER[type]}
-        value={currentInput}
-        onChange={handleInputChange}
+        value={input.input}
+        onChange={(e) => handleChange(e, index)}
         disabled={input.check}
       />
       <IconContainer>
@@ -43,14 +45,14 @@ function QuizInputField({ type, input, index, handleEdit, handleCheck, handleDel
           <EditIcon
             className="icon"
             onClick={() => {
-              handleEdit(type, index);
+              handleEdit(index);
             }}
           />
         ) : (
           <CheckIcon
             className="icon"
             onClick={() => {
-              handleCheck(type, index, currentInput);
+              handleCheck(index);
             }}
           />
         )}
