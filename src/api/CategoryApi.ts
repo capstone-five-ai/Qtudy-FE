@@ -22,6 +22,9 @@ const CategoryApi = {
   getCategoryItems: async (categoryId: number) => {
     // 카테고리(Category)/카테고리 단건 조회
     const response = await apiClient.get(`api/category/${categoryId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
       params: {
         page: PAGE,
         size: SIZE,
@@ -32,10 +35,18 @@ const CategoryApi = {
 
   createCategory: async (categoryName: string, categoryType: string) => {
     // 카테고리(Category)/카테고리 생성
-    const response = await apiClient.post('api/category/new', {
-      categoryName,
-      categoryType,
-    });
+    const response = await apiClient.post(
+      'api/category/new',
+      {
+        categoryName,
+        categoryType,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      }
+    );
     return response.data;
   },
 
