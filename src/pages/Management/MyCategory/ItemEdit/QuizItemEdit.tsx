@@ -1,5 +1,5 @@
-import { Navigate, useSearchParams } from 'react-router-dom';
-import { useState } from 'react';
+import { Navigate, useLocation, useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { QuestionType } from '../../../../types/question.type';
@@ -9,29 +9,34 @@ import Scrollbar from '../../../../components/Scrollbar';
 import EditAnswerAccordion from '../../../../components/Accordion/EditAnswerAccordion';
 import { CREATE_USER_QUIZ_TYPE } from '../../../../constants';
 import QuizView from '../../../Quiz/UserQuiz/CreateUserQuiz/QuizView';
+import { UserQuizInputType } from '../../../../types';
 
 function QuizItemEdit() {
   const [params] = useSearchParams();
+  const location = useLocation();
+  const [type, setType] = useState('MULTIPLE');
+  const [question, setQuestion] = useState({ id: uuidv4(), input: '', check: true });
+  const [answer, setAnswer] = useState(-1);
+  const [commentary, setCommentary] = useState({ id: uuidv4(), input: '', check: true });
+  const [options, setOptions] = useState<UserQuizInputType[]>([]);
 
-  const questionData: QuestionType = {
-    problemName: '인공지능은 무엇을 모방할 수 있는 기술 및 연구 분야인가요?',
-    problemAnswer: '2',
-    problemCommentary:
-      '인공지능의 목표는 인간의 인지 능력을 모방할 수 있는 지능적인 기계를 만드는 것입니다. 즉, 사람처럼 생각하고 학습하며 문제를 해결할 수 있는 기계를 개발하는 것이 목표입니다.',
-    problemType: 'MULTIPLE',
-    problemChoices: ['선지111', '선지222', '선지333', '선지444'],
-  };
+  useEffect(() => {
+    const { state } = location;
+    if (state.quizData) {
+      const quiz = state.quizData as QuestionType;
+      const quizAnswer = Number(quiz.problemAnswer);
+      setType(quiz.problemType);
+      setQuestion({ ...question, input: quiz.problemName });
+      setAnswer(!Number.isNaN(quizAnswer) ? quizAnswer : -1);
+      setCommentary({ ...commentary, input: quiz.problemCommentary });
 
-  const answerNum = parseInt(questionData.problemAnswer || '', 10);
-
-  const [question, setQuestion] = useState({ id: uuidv4(), input: questionData.problemName, check: true });
-  const [options, setOptions] = useState(
-    questionData.problemChoices.map((item) => {
-      return { id: uuidv4(), input: item, check: true };
-    })
-  );
-  const [answer, setAnswer] = useState(!Number.isNaN(answerNum) ? answerNum : -1);
-  const [commentary, setCommentary] = useState({ id: uuidv4(), input: questionData.problemCommentary, check: true });
+      const choices = quiz.problemChoices.map((choice) => {
+        return { id: uuidv4(), input: choice, check: true };
+      });
+      setOptions(choices);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleFinishEdit = () => {
     // TODO: 문제 수정 API 연결
@@ -44,7 +49,7 @@ function QuizItemEdit() {
       <CategoryItemContentWrapper isEdit handleFinishEdit={handleFinishEdit}>
         <QuizContainer>
           <QuizView
-            quizType={questionData.problemType}
+            quizType={type}
             question={question}
             options={options}
             answer={answer}
@@ -53,7 +58,7 @@ function QuizItemEdit() {
             setAnswer={setAnswer}
           />
           <EditAnswerAccordion
-            answer={questionData.problemType === CREATE_USER_QUIZ_TYPE[0].value ? answer.toString() : null}
+            answer={type === CREATE_USER_QUIZ_TYPE[0].value ? answer.toString() : null}
             commentary={commentary}
             setCommentary={setCommentary}
           />

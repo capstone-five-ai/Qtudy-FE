@@ -41,7 +41,7 @@ function QuizItemDetail() {
   };
 
   const handleEdit = () => {
-    navigate(`/management/mycategory/edit?category=quiz&id=${params.get('id')}`);
+    navigate(`/management/mycategory/edit?category=quiz&id=${params.get('id')}`, { state: { quizData: currentQuiz } });
   };
 
   if (!params.get('id')) return <Navigate to="/management/mycategory" replace />;

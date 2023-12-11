@@ -39,7 +39,9 @@ function SummaryItemDetail() {
   };
 
   const handleEdit = () => {
-    navigate(`/management/mycategory/edit?category=summary&id=${params.get('id')}`);
+    navigate(`/management/mycategory/edit?category=summary&id=${params.get('id')}`, {
+      state: { summaryData: currentSummary },
+    });
   };
 
   if (!params.get('id')) return <Navigate to="/management/mycategory" replace />;
