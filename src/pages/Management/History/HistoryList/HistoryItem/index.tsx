@@ -88,11 +88,11 @@ function HistoryItem({ history, updateList }: Props) {
       <PDFDown>
         {history.dtype === 'PROBLEM' ? (
           <>
-            <PDFButton label="퀴즈" variant={2} fileId={history.fileId} pdfType="PROBLEM" />
-            <PDFButton label="정답" variant={2} fileId={history.fileId} pdfType="ANSWER" />
+            <PDFButton label="퀴즈" variant={2} fileId={history.fileId} pdfType="PROBLEM" type="ai" />
+            <PDFButton label="정답" variant={2} fileId={history.fileId} pdfType="ANSWER" type="ai" />
           </>
         ) : (
-          <PDFButton label="요약" variant={2} fileId={history.fileId} pdfType="SUMMARY" />
+          <PDFButton label="요약" variant={2} fileId={history.fileId} pdfType="SUMMARY" type="ai" />
         )}
       </PDFDown>
       <Delete>
