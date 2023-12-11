@@ -1,6 +1,16 @@
 import apiClient from './client';
 
 const SummaryApi = {
+  getAISummary: async (fileId: number) => {
+    const response = await apiClient.get(`api/summary/getSummary/${fileId}`);
+    return response.data;
+  },
+
+  getUserSummary: async (memberSavedSummaryId: number) => {
+    const response = await apiClient.get(`api/member-saved-summary/${memberSavedSummaryId}`);
+    return response.data;
+  },
+
   createByImage: async (amount: string, fileName: string, file: FormData) => {
     // 요점정리파일(summaryFile)/이미지 기반 요점정리 생성
     const response = await apiClient.post(
