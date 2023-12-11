@@ -8,15 +8,21 @@ type Props = {
   fileId: number;
   pdfType: 'PROBLEM' | 'ANSWER' | 'SUMMARY';
   variant?: 1 | 2;
+  type: 'ai' | 'user' | 'category';
 };
 
 PDFButton.defaultProps = {
   variant: 1,
 };
 
-function PDFButton({ label, variant, fileId, pdfType }: Props) {
+function PDFButton({ label, variant, fileId, pdfType, type }: Props) {
   const handleClickDownload = async () => {
-    const data = await FileApi.downloadFile(fileId, pdfType);
+    let data;
+    if (type === 'ai') data = await FileApi.downloadAIFile(fileId, pdfType);
+    if (type === 'user' && pdfType === 'SUMMARY') data = await FileApi.downloadUserSummaryFile(fileId);
+    if (type === 'category' && pdfType === 'PROBLEM') data = await FileApi.downloadCategoryProblemFile(fileId);
+    if (type === 'category' && pdfType === 'ANSWER') data = await FileApi.downloadCategoryAnswerFile(fileId);
+    if (type === 'category' && pdfType === 'SUMMARY') data = await FileApi.downloadCategorySummaryFile(fileId);
 
     window.location.href = data.fileUrl;
   };
