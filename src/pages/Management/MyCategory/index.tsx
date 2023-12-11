@@ -22,7 +22,6 @@ function MyCategory() {
   const [activeCategory, setActiveCategory] = useState<CategoryInfoType | null>(null); // 조회 중인 카테고리 (퀴즈/요약)
   const [activeCategoryQuizItems, setActiveCategoryQuizItems] = useState<CategoryQuizItemsType[]>([]);
   const [activeCategorySummaryItems, setActiveCategorySummaryItems] = useState<CategorySummaryItemsType[]>([]);
-  const [hasExecutedOnce, setHasExecutedOnce] = useState(false);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const location = useLocation();
 
@@ -36,18 +35,24 @@ function MyCategory() {
   };
 
   useEffect(() => {
+    const getAllCategorys = async () => {
+      const quizResponse = await CategoryApi.getCategoryList(CATEGORY_TYPE_MAPPING['퀴즈']);
+      const summaryResponse = await CategoryApi.getCategoryList(CATEGORY_TYPE_MAPPING['요약']);
+
+      if (quizResponse.data.length === 0 && summaryResponse.data.length === 0) {
+        setShowNoCategoryView(true);
+      }
+    };
+    getAllCategorys();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     const { state } = location;
     if (state && state.activeTab) setActiveTabBar(state.activeTab);
 
     // TODO: state로 넘어온 activeCategory 세팅
   }, [location]);
-
-  useEffect(() => {
-    if (!hasExecutedOnce && quizCategoryList.length === 0 && summaryCategoryList.length === 0) {
-      setShowNoCategoryView(true);
-      setHasExecutedOnce(true);
-    } // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [quizCategoryList, summaryCategoryList]);
 
   useEffect(() => {
     getCategorys();
