@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CategoryInfoType, CategoryQuizItemsType, CategorySummaryItemsType, CategoryType } from '../../../types';
 import NoCategory from './NoCategory';
 import Sidebar from './Sidebar';
@@ -10,7 +10,7 @@ import { CATEGORY_TYPE_MAPPING } from '../../../constants';
 import ContentWrapper from '../../../components/Wrapper/ContentWrapper';
 import DefaultButton from '../../../components/Button/DefaultButton';
 import CategoryApi from '../../../api/CategoryApi';
-import CategoryModal from '../../../components/Modal/CategoryModal';
+import NewCategoryModal from '../../../components/Modal/CategoryModal/NewCategoryModal';
 
 const BUTTON = { 퀴즈: '카테고리에 퀴즈 추가', 요약: '카테고리에 요약 추가' };
 
@@ -24,6 +24,7 @@ function MyCategory() {
   const [activeCategorySummaryItems, setActiveCategorySummaryItems] = useState<CategorySummaryItemsType[]>([]);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const getCategorys = async () => {
     const response = await CategoryApi.getCategoryList(CATEGORY_TYPE_MAPPING[activeTabBar]);
@@ -66,7 +67,8 @@ function MyCategory() {
   }, [showCategoryModal]);
 
   const handleAddItem = () => {
-    // TODO: 퀴즈 추가 API, 요약 추가 API
+    if (activeTabBar === '퀴즈') navigate('/quiz/ai');
+    else navigate('/summary/ai');
   };
 
   if (showNoCategoryView) return <NoCategory setShowNoCategoryView={setShowNoCategoryView} />;
@@ -74,7 +76,12 @@ function MyCategory() {
   return (
     <>
       {showCategoryModal && (
-        <CategoryModal onClose={() => setShowCategoryModal(false)} categoryType={CATEGORY_TYPE_MAPPING[activeTabBar]} />
+        <NewCategoryModal
+          onClose={() => setShowCategoryModal(false)}
+          categoryType={CATEGORY_TYPE_MAPPING[activeTabBar]}
+          categoryList={activeTabBar === '퀴즈' ? quizCategoryList : summaryCategoryList}
+          setCategoryList={activeTabBar === '퀴즈' ? setQuizCategoryList : setSummaryCategoryList}
+        />
       )}
       <Container>
         <Sidebar

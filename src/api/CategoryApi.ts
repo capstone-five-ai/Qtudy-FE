@@ -32,7 +32,7 @@ const CategoryApi = {
 
   createCategory: async (categoryName: string, categoryType: string) => {
     // 카테고리(Category)/카테고리 생성
-    const response = await apiClient.post('category/new', {
+    const response = await apiClient.post('api/category/new', {
       categoryName,
       categoryType,
     });
