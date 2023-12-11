@@ -41,9 +41,17 @@ const CategoryApi = {
 
   editCategory: async (categoryId: number, categoryName: string) => {
     // 카테고리(Category)/카테고리 수정
-    const response = await apiClient.patch(`category/edit/${categoryId}`, {
-      categoryName,
-    });
+    const response = await apiClient.patch(
+      `api/category/edit/${categoryId}`,
+      {
+        categoryName,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      }
+    );
     return response.data;
   },
 

@@ -27,19 +27,24 @@ function Sidebar({
   setShowCategoryModal,
 }: SidebarProps) {
   const handleAddCategory = () => {
-    // TODO: 카테고리 추가 API
     setShowCategoryModal(true);
   };
 
-  const handleEditCategory = (id: number, name: string) => {
-    // TODO: 카테고리 편집 API
-    console.log(id);
-    console.log(name);
+  const handleEditCategory = async (id: number, name: string) => {
+    await CategoryApi.editCategory(id, name).then((data) => {
+      const updatedCategoryList = categoryList.map((category) => {
+        if (category.categoryId === data.categoryId) {
+          return data;
+        }
+        return category;
+      });
+      setCategoryList(updatedCategoryList);
+    });
   };
 
   const handleDeleteCategory = async (id: number) => {
     await CategoryApi.deleteCategory(id).then(() => {
-      const updatedCategoryList = categoryList.filter((category) => category.categoryId !== id); // 해당 요소를 제외한 새로운 배열 생성
+      const updatedCategoryList = categoryList.filter((category) => category.categoryId !== id);
       setCategoryList(updatedCategoryList);
     });
   };
@@ -56,7 +61,7 @@ function Sidebar({
                 <Category
                   key={category.categoryId}
                   category={category}
-                  active={activeCategory !== null && activeCategory.categoryName === category.categoryName}
+                  active={activeCategory !== null && activeCategory.categoryId === category.categoryId}
                   setActiveCategory={setActiveCategory}
                   handleEditCategory={handleEditCategory}
                   handleDeleteCategory={handleDeleteCategory}
