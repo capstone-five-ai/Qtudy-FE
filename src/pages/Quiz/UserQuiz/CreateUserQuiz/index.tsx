@@ -27,7 +27,7 @@ function CreateUserQuiz() {
     <>
       <QuizContainer>
         <QuizView
-          quizType={quizType.label}
+          quizType={quizType.value}
           question={question}
           options={options}
           answer={answer}
@@ -36,7 +36,7 @@ function CreateUserQuiz() {
           setAnswer={setAnswer}
         />
         <EditAnswerAccordion
-          answer={quizType.label === CREATE_USER_QUIZ_TYPE[0].label ? answer.toString() : null}
+          answer={quizType.value === CREATE_USER_QUIZ_TYPE[0].value ? answer.toString() : null}
           commentary={commentary}
           setCommentary={setCommentary}
         />
@@ -44,7 +44,7 @@ function CreateUserQuiz() {
       <RightSideBar
         quizType={quizType}
         disabled={
-          quizType.label === CREATE_USER_QUIZ_TYPE[0].label
+          quizType.value === CREATE_USER_QUIZ_TYPE[0].value
             ? !(question.check && answer > 0 && commentary.check && options.every((option) => option.check === true))
             : !(question.check && commentary.check)
         }
@@ -68,6 +68,4 @@ const QuizContainer = styled.div`
 
   overflow-y: scroll;
   ${Scrollbar}
-
-  background: red;
 `;

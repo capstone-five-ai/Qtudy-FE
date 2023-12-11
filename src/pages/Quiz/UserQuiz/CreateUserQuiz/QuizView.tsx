@@ -25,7 +25,7 @@ function QuizView({ quizType, question, options, answer, setQuestion, setOptions
 
   return (
     <div>
-      {quizType === CREATE_USER_QUIZ_TYPE[0].label ? (
+      {quizType === CREATE_USER_QUIZ_TYPE[0].value ? (
         <QuizInputFieldContainer>
           <QuestionField question={question} setQuestion={setQuestion} />
           <OptionField options={options} answer={answer} setOptions={setOptions} setAnswer={setAnswer} />
