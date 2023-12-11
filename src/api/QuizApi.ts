@@ -3,7 +3,13 @@ import apiClient from './client';
 const QuizApi = {
   getAllAIQuiz: async (fileId: number) => {
     // AI생성문제(problem)/파일 전체문제 조회
-    const response = await apiClient.get(`problem/getFileProblems/${fileId}`);
+    const response = await apiClient.get(`api/problem/getFileProblems/${fileId}`);
+    return response.data;
+  },
+
+  getUserQuiz: async (memberSavedProblemId: number) => {
+    // User생성문제(problem) 조회
+    const response = await apiClient.get(`api/member-saved-problem/${memberSavedProblemId}`);
     return response.data;
   },
 
