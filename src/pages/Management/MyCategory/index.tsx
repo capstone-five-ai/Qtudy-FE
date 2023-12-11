@@ -88,6 +88,7 @@ function MyCategory() {
           activeTabBar={activeTabBar}
           categoryList={activeTabBar === '퀴즈' ? quizCategoryList : summaryCategoryList}
           activeCategory={activeCategory}
+          setCategoryList={activeTabBar === '퀴즈' ? setQuizCategoryList : setSummaryCategoryList}
           setActiveTabBar={setActiveTabBar}
           setActiveCategory={setActiveCategory}
           setShowCategoryModal={setShowCategoryModal}

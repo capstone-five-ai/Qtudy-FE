@@ -9,7 +9,7 @@ interface CategoryProps {
   active: boolean;
   setActiveCategory: React.Dispatch<React.SetStateAction<CategoryInfoType | null>>;
   handleEditCategory: (id: number, name: string) => void;
-  handleDeleteCategory: (id: number, name: string) => void;
+  handleDeleteCategory: (id: number) => void;
 }
 
 function Category({ category, active, setActiveCategory, handleEditCategory, handleDeleteCategory }: CategoryProps) {
@@ -24,10 +24,7 @@ function Category({ category, active, setActiveCategory, handleEditCategory, han
             onClick={() => handleEditCategory(category.categoryId, category.categoryName)}
             style={{ cursor: 'pointer' }}
           />
-          <TrashIcon
-            onClick={() => handleDeleteCategory(category.categoryId, category.categoryName)}
-            style={{ cursor: 'pointer' }}
-          />
+          <TrashIcon onClick={() => handleDeleteCategory(category.categoryId)} style={{ cursor: 'pointer' }} />
         </div>
       )}
     </Container>

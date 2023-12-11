@@ -49,7 +49,11 @@ const CategoryApi = {
 
   deleteCategory: async (categoryId: number) => {
     // 카테고리(Category)/카테고리 삭제
-    const response = await apiClient.delete(`category/edit/${categoryId}`);
+    const response = await apiClient.delete(`api/category/delete/${categoryId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
     return response.data;
   },
 };

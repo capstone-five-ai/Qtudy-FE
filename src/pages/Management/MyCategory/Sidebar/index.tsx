@@ -5,11 +5,13 @@ import CategoryTabBar from './CategoryTabBar';
 import CategoryContainerTitle from './CategoryContainerTitle';
 import Scrollbar from '../../../../components/Scrollbar';
 import Category from './Category';
+import CategoryApi from '../../../../api/CategoryApi';
 
 interface SidebarProps {
   activeTabBar: CategoryType;
   categoryList: CategoryInfoType[];
   activeCategory: CategoryInfoType | null;
+  setCategoryList: React.Dispatch<React.SetStateAction<CategoryInfoType[]>>;
   setActiveTabBar: React.Dispatch<React.SetStateAction<CategoryType>>;
   setActiveCategory: React.Dispatch<React.SetStateAction<CategoryInfoType | null>>;
   setShowCategoryModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,6 +21,7 @@ function Sidebar({
   activeTabBar,
   categoryList,
   activeCategory,
+  setCategoryList,
   setActiveTabBar,
   setActiveCategory,
   setShowCategoryModal,
@@ -34,10 +37,11 @@ function Sidebar({
     console.log(name);
   };
 
-  const handleDeleteCategory = (id: number, name: string) => {
-    // TODO: 카테고리 삭제 API
-    console.log(id);
-    console.log(name);
+  const handleDeleteCategory = async (id: number) => {
+    await CategoryApi.deleteCategory(id).then(() => {
+      const updatedCategoryList = categoryList.filter((category) => category.categoryId !== id); // 해당 요소를 제외한 새로운 배열 생성
+      setCategoryList(updatedCategoryList);
+    });
   };
 
   return (
