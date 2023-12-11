@@ -1,27 +1,52 @@
-import RadioButtonFieldList from '../../../../components/Button/RadioButton/RadioButtonFieldList';
+import styled from 'styled-components';
 import SideBar from '../../../../components/SideBar';
+import Typography from '../../../../components/Typography';
 import { CREATE_USER_QUIZ_TYPE } from '../../../../constants';
+import RadioButtonField from '../../../../components/Button/RadioButton/RadioButtonField';
 
 interface RightSideBarProps {
   quizType: { [key: string]: string };
   disabled: boolean;
-  setQuizType: React.Dispatch<React.SetStateAction<{ [key: string]: string }>>;
+  setQuizType: React.Dispatch<React.SetStateAction<{ label: string; value: string }>>;
   handleSubmit: () => void;
 }
 
 function RightSideBar({ quizType, disabled, setQuizType, handleSubmit }: RightSideBarProps) {
   return (
     <SideBar buttonDisabled={disabled} handleSubmit={handleSubmit}>
-      <RadioButtonFieldList
-        optionInputKey="type"
-        buttonLabel="문제 유형"
-        buttonList={CREATE_USER_QUIZ_TYPE}
-        inputOption={quizType}
-        setInputOption={setQuizType}
-        disabled={false}
-      />
+      <Container>
+        <Typography variant="subtitle" color="grayScale02">
+          문제 유형
+        </Typography>
+        <ButtonContainer>
+          {CREATE_USER_QUIZ_TYPE.map((button) => (
+            <RadioButtonField
+              key={button.label}
+              value={button.label}
+              name="문제 유형"
+              checked={button.label === quizType.label}
+              onChange={() => {
+                setQuizType(button);
+              }}
+              disabled={false}
+            />
+          ))}
+        </ButtonContainer>
+      </Container>
     </SideBar>
   );
 }
 
 export default RightSideBar;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+`;

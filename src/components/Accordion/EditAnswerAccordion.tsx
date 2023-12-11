@@ -6,20 +6,19 @@ import { ReactComponent as CheckIcon } from '../../assets/icons/icon-check.svg';
 import { ReactComponent as EditIcon } from '../../assets/icons/icon-edit.svg';
 import { NUMBER_TO_CIRCLE } from '../../constants';
 import AnswerAccordionTitle from './AnswerAccordionTitle';
+import { UserQuizInputType } from '../../types';
 
 interface EditAnswerAccordionProps {
-  answer: string;
-  commentaryInput: { input: string; check: boolean };
-  handleEdit: (type: string, index: number) => void;
-  handleCheck: (type: string, index: number, input: string) => void;
+  answer: string | null;
+  commentary: UserQuizInputType;
+  setCommentary: React.Dispatch<React.SetStateAction<UserQuizInputType>>;
 }
 
-function EditAnswerAccordion({ answer, commentaryInput, handleEdit, handleCheck }: EditAnswerAccordionProps) {
+function EditAnswerAccordion({ answer, commentary, setCommentary }: EditAnswerAccordionProps) {
   const [show, setShow] = useState(false);
-  const [currentInput, setCurrentInput] = useState(commentaryInput.input);
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setCurrentInput(e.target.value);
+    setCommentary({ ...commentary, input: e.target.value });
   };
 
   return (
@@ -27,31 +26,23 @@ function EditAnswerAccordion({ answer, commentaryInput, handleEdit, handleCheck 
       <AnswerAccordionTitle show={show} setShow={setShow} />
       {show && (
         <>
-          <Typography variant="subtitle" color="grayScale02">
-            {`정답 ${NUMBER_TO_CIRCLE[answer] ? NUMBER_TO_CIRCLE[answer] : ''}`}
-          </Typography>
+          {answer ? (
+            <Typography variant="subtitle" color="grayScale02">
+              {`정답 ${NUMBER_TO_CIRCLE[answer] ? NUMBER_TO_CIRCLE[answer] : ''}`}
+            </Typography>
+          ) : null}
           <CommentaryContainer>
             <StyledTextarea
               minRows={2}
               placeholder="생성하고 싶은 해설을 입력해주세요."
-              value={currentInput}
+              value={commentary.input}
               onChange={handleTextareaChange}
-              disabled={commentaryInput.check}
+              disabled={commentary.check}
             />
-            {commentaryInput.check ? (
-              <EditIcon
-                className="icon"
-                onClick={() => {
-                  handleEdit('commentary', 0);
-                }}
-              />
+            {commentary.check ? (
+              <EditIcon className="icon" onClick={() => setCommentary({ ...commentary, check: false })} />
             ) : (
-              <CheckIcon
-                className="icon"
-                onClick={() => {
-                  handleCheck('commentary', 0, currentInput);
-                }}
-              />
+              <CheckIcon className="icon" onClick={() => setCommentary({ ...commentary, check: true })} />
             )}
           </CommentaryContainer>
         </>
