@@ -3,11 +3,12 @@ import SideBar from '../../../../components/SideBar';
 import Typography from '../../../../components/Typography';
 import { CREATE_USER_QUIZ_TYPE } from '../../../../constants';
 import RadioButtonField from '../../../../components/Button/RadioButton/RadioButtonField';
+import { ProblemType } from '../../../../types/question.type';
 
 interface RightSideBarProps {
   quizType: { [key: string]: string };
   disabled: boolean;
-  setQuizType: React.Dispatch<React.SetStateAction<{ label: string; value: string }>>;
+  setQuizType: React.Dispatch<React.SetStateAction<{ label: string; value: ProblemType }>>;
   handleSubmit: () => void;
 }
 

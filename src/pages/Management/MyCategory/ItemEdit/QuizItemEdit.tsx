@@ -1,15 +1,14 @@
 import { Navigate, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 import { QuestionType } from '../../../../types/question.type';
 import CategoryItemContentWrapper from '../../../../components/Wrapper/CategoryItemContentWrapper';
 import NoButtonSideBar from '../../../../components/SideBar/NoButtonSideBar';
 import Scrollbar from '../../../../components/Scrollbar';
-import QuizView from '../../../Quiz/UserQuiz/CreateUserQuiz/QuizView';
 import EditAnswerAccordion from '../../../../components/Accordion/EditAnswerAccordion';
 import { CREATE_USER_QUIZ_TYPE } from '../../../../constants';
-
-// const DEFAULT_INPUT = { input: '', check: false };
+import QuizView from '../../../Quiz/UserQuiz/CreateUserQuiz/QuizView';
 
 function QuizItemEdit() {
   const [params] = useSearchParams();
@@ -25,14 +24,14 @@ function QuizItemEdit() {
 
   const answerNum = parseInt(questionData.problemAnswer || '', 10);
 
-  const [question, setQuestion] = useState({ input: questionData.problemName, check: true });
+  const [question, setQuestion] = useState({ id: uuidv4(), input: questionData.problemName, check: true });
   const [options, setOptions] = useState(
     questionData.problemChoices.map((item) => {
-      return { input: item, check: true };
+      return { id: uuidv4(), input: item, check: true };
     })
   );
   const [answer, setAnswer] = useState(!Number.isNaN(answerNum) ? answerNum : -1);
-  const [commentary, setCommentary] = useState({ input: questionData.problemCommentary, check: true });
+  const [commentary, setCommentary] = useState({ id: uuidv4(), input: questionData.problemCommentary, check: true });
 
   const handleFinishEdit = () => {
     // TODO: 문제 수정 API 연결
