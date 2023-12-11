@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
+import SummaryApi from '../../../api/SummaryApi';
 import LinkButton from '../../../components/Button/LinkButton';
 import PDFButton from '../../../components/Button/PDFButton';
 import TwinkleButton from '../../../components/Button/TwinkleButton';
@@ -8,16 +10,37 @@ import Typography from '../../../components/Typography';
 import { SummaryType } from '../../../types/summary.type';
 import CopySummaryButton from './CopySummaryButton';
 
-function UserQuizComplete() {
+type Props = {
+  type: 'ai' | 'user';
+};
+
+function SummaryComplete({ type }: Props) {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const link = window.location.href;
-
-  // TODO: api call
-  const summary: SummaryType = {
+  const [summary, setSummary] = useState<SummaryType>({
     summaryTitle: 'Sum no.1',
     summaryContent: `
     인공지능(AI)은 인간의 인지 능력을 모방할 수 있는 지능적인 기계를 만드는 기술과 연구 분야입니다. 이는 음성 인식, 문제 해결, 학습, 의사 결정 및 패턴 인식과 같이 일반적으로 인간의 지능이 필요한 작업을 수행할 수 있는 컴퓨터 시스템 및 알고리즘을 개발하는 것을 포함합니다. AI는 기계 학습, 자연어 처리, 컴퓨터 비전 및 로봇 공학을 비롯한 다양한 하위 분야를 포함합니다. AI는 의료, 금융, 교통, 제조 및 엔터테인먼트 등 다양한 분야에서 응용되고 있습니다.`,
-  };
+  });
+
+  const [qs] = useSearchParams();
+  const summaryId = Number(qs.get('id'));
+
+  const getSummary = useCallback(
+    async (id: number) => {
+      let data;
+      if (type === 'ai') data = await SummaryApi.getAISummary(id);
+      if (type === 'user') data = await SummaryApi.getAISummary(id);
+
+      setSummary(data.response);
+    },
+    [type]
+  );
+
+  useEffect(() => {
+    // TODO: api call
+    getSummary(summaryId);
+  }, [getSummary, summaryId]);
 
   return (
     <>
@@ -36,7 +59,7 @@ function UserQuizComplete() {
           <ButtonWrapper>
             <CopySummaryButton text={summary.summaryContent} />
             <LinkButton link={link} />
-            <PDFButton label="요약" />
+            <PDFButton label="요약" fileId={summaryId} type={type} pdfType="SUMMARY" />
           </ButtonWrapper>
 
           <TwinkleButton disabled={false} onClick={() => setShowCategoryModal(true)}>
@@ -91,4 +114,4 @@ const ButtonWrapper = styled.div`
   height: 100%;
 `;
 
-export default UserQuizComplete;
+export default SummaryComplete;
