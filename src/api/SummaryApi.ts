@@ -1,4 +1,4 @@
-import { SummaryCreationByTextType } from '../types/summary.type';
+import { SummaryCreationByFileType, SummaryCreationByTextType } from '../types/summary.type';
 import apiClient from './client';
 
 const SummaryApi = {
@@ -20,20 +20,18 @@ const SummaryApi = {
     return response.data;
   },
 
-  createByPdf: async (amount: string, fileName: string, file: FormData) => {
+  createByPdf: async ({ option, file }: SummaryCreationByFileType) => {
     // 요점정리파일(summaryFile)/PDF 기반 요점정리 생성
-    const response = await apiClient.post(
-      'summaryFile/generateSummaryFileByPdf',
-      {
-        file,
+    const response = await apiClient.post('api/summaryFile/generateSummaryFileByPdf', file, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        params: { amount, fileName },
-      }
-    );
+      params: {
+        amount: option.amount,
+        fileName: option.fileName,
+      },
+    });
     return response.data;
   },
 

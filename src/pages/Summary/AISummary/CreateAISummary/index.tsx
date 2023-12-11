@@ -11,7 +11,7 @@ import CreateSideBar from '../../../../components/SideBar/CreateSideBar';
 import CreateContentWrapper from '../../../../components/Wrapper/CreateContentWrapper';
 import Loader from '../../../../components/Modal/Loader';
 import { convertToSummaryData } from '../../../../utils/convertToRequestData';
-import useCreateSummaryByText from '../../../../hooks/useCreateSummary';
+import { useCreateSummaryByPdf, useCreateSummaryByText } from '../../../../hooks/useCreateSummary';
 
 const DEFAULT_INPUT_OPTION = {
   amount: '', // 요약량
@@ -29,16 +29,20 @@ function CreateAISummary() {
   const showLoader = useRecoilValue(loadingSelector);
   const setShowLoader = useSetRecoilState(loadingSelector);
 
+  const { mutate: createByPdf, isLoading: isPdfLoading } = useCreateSummaryByPdf();
   const { mutate: createByText, isLoading: isTextLoading } = useCreateSummaryByText();
 
   const handleSubmit = () => {
     setShowLoader(true);
 
     try {
-      // const fileData = new FormData();
+      const fileData = new FormData();
 
       if (type === 'text') {
         createByText({ option: convertToSummaryData(inputOption), text: inputText });
+      } else if (type === 'upload' && pdfFile) {
+        fileData.append('file', pdfFile.file);
+        createByPdf({ option: convertToSummaryData(inputOption), file: fileData });
       }
     } catch {
       setShowLoader(false);
@@ -47,7 +51,7 @@ function CreateAISummary() {
 
   return (
     <>
-      {showLoader && <Loader isLoading={isTextLoading} />}
+      {showLoader && <Loader isLoading={isTextLoading || isPdfLoading} />}
       <CreateContentWrapper>
         {!type && <SelectAIType service="summary" />}
         {type === 'upload' && (
