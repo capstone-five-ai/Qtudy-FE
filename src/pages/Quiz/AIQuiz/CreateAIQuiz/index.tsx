@@ -61,18 +61,6 @@ function CreateAIQuiz() {
     } catch {
       setShowLoader(false);
     }
-
-    /* const formData = new FormData();
-
-    if (pdfFile) {
-      formData.append('pdfFile', pdfFile.file, pdfFile.name);
-    }
-
-    if (imageFiles.length > 0) {
-      imageFiles.forEach((image, index) => {
-        formData.append(`imageFile_${index}`, image.file, image.name);
-      });
-    } */
   };
 
   return (

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { CategoryInfoType, CategoryQuizItemsType, CategorySummaryItemsType, CategoryType } from '../../../types';
 import NoCategory from './NoCategory';
 import Sidebar from './Sidebar';
 import NoItem from './NoItem';
@@ -11,6 +10,9 @@ import ContentWrapper from '../../../components/Wrapper/ContentWrapper';
 import DefaultButton from '../../../components/Button/DefaultButton';
 import CategoryApi from '../../../api/CategoryApi';
 import NewCategoryModal from '../../../components/Modal/CategoryModal/NewCategoryModal';
+import { CategoryInfoType, CategoryType } from '../../../types';
+import { CategoryQuizItemsType } from '../../../types/quiz.type';
+import { CategorySummaryItemsType } from '../../../types/summary.type';
 
 const BUTTON = { 퀴즈: '카테고리에 퀴즈 추가', 요약: '카테고리에 요약 추가' };
 
@@ -26,24 +28,36 @@ function MyCategory() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const getCategorys = async () => {
-    const response = await CategoryApi.getCategoryList(CATEGORY_TYPE_MAPPING[activeTabBar]);
-    if (activeTabBar === '퀴즈') {
-      setQuizCategoryList(response.data);
-    } else {
-      setSummaryCategoryList(response.data);
+  const getAllCategorys = async () => {
+    const quizResponse = await CategoryApi.getCategoryList(CATEGORY_TYPE_MAPPING['퀴즈']);
+    const summaryResponse = await CategoryApi.getCategoryList(CATEGORY_TYPE_MAPPING['요약']);
+
+    if (quizResponse.data.length === 0 && summaryResponse.data.length === 0) {
+      setShowNoCategoryView(true);
     }
   };
 
-  useEffect(() => {
-    const getAllCategorys = async () => {
-      const quizResponse = await CategoryApi.getCategoryList(CATEGORY_TYPE_MAPPING['퀴즈']);
-      const summaryResponse = await CategoryApi.getCategoryList(CATEGORY_TYPE_MAPPING['요약']);
-
-      if (quizResponse.data.length === 0 && summaryResponse.data.length === 0) {
-        setShowNoCategoryView(true);
+  const getCategorys = async () => {
+    await CategoryApi.getCategoryList(CATEGORY_TYPE_MAPPING[activeTabBar]).then((data) => {
+      if (activeTabBar === '퀴즈') {
+        setQuizCategoryList(data.data);
+      } else {
+        setSummaryCategoryList(data.data);
       }
-    };
+    });
+  };
+
+  const getCategoryItems = async (id: number, type: string) => {
+    await CategoryApi.getCategoryItems(id).then((data) => {
+      if (type === 'PROBLEM') {
+        setActiveCategoryQuizItems(data.categorizedProblemResponses.data);
+      } else {
+        setActiveCategorySummaryItems(data.categorizedProblemResponses.data);
+      }
+    });
+  };
+
+  useEffect(() => {
     getAllCategorys();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -60,6 +74,10 @@ function MyCategory() {
     setActiveCategory(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTabBar]);
+
+  useEffect(() => {
+    if (activeCategory) getCategoryItems(activeCategory.categoryId, activeCategory.categoryType);
+  }, [activeCategory]);
 
   useEffect(() => {
     if (!showCategoryModal) getCategorys();

@@ -1,3 +1,4 @@
+import { QuestionType } from '../types/question.type';
 import { QuizCreationByFileType, QuizCreationByTextType } from '../types/quiz.type';
 import apiClient from './client';
 
@@ -62,20 +63,12 @@ const QuizApi = {
     return response.data;
   },
 
-  createByUser: async (
-    problemName: string,
-    problemAnswer: string,
-    problemCommentary: string,
-    problemType: string,
-    problemChoices: string[]
-  ) => {
+  createByUser: async (newQuiz: QuestionType) => {
     // 사용자 생성 문제(MemberSavedProblem)/문제 생성
-    const response = await apiClient.post('api/member-saved-problem/new', {
-      problemName,
-      problemAnswer,
-      problemCommentary,
-      problemType,
-      problemChoices,
+    const response = await apiClient.post('api/member-saved-problem/new', newQuiz, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
     });
     return response.data;
   },

@@ -21,7 +21,7 @@ const CategoryApi = {
 
   getCategoryItems: async (categoryId: number) => {
     // 카테고리(Category)/카테고리 단건 조회
-    const response = await apiClient.get(`category/${categoryId}`, {
+    const response = await apiClient.get(`api/category/${categoryId}`, {
       params: {
         page: PAGE,
         size: SIZE,
