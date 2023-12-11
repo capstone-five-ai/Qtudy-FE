@@ -10,7 +10,6 @@ import CategoryModal from '../../../../components/Modal/CategoryModal';
 
 function QuizItemDetail() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
-  const link = window.location.href;
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const [questionNum, setQuestionNum] = useState(1);
@@ -49,7 +48,7 @@ function QuizItemDetail() {
       <SideWrapper>
         <SideBar>
           <ButtonWrapper>
-            <LinkButton link={link} />
+            <LinkButton link={`management/mycategory/share?category=quiz&id=${params.get('id')}`} />
           </ButtonWrapper>
 
           <TwinkleButton disabled={false} onClick={() => setShowCategoryModal(true)}>
