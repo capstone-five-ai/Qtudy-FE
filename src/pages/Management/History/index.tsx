@@ -90,8 +90,8 @@ function History() {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding: 16px 60px;
+  gap: 12px;
+  padding: 8px 60px 23px 60px;
   width: 100%;
 `;
 
@@ -102,7 +102,9 @@ const Header = styled.div`
 `;
 
 const Title = styled.div`
+  display: flex;
   padding: 0 32px;
+  align-items: center;
 `;
 
 const ChipWrapper = styled.div`
