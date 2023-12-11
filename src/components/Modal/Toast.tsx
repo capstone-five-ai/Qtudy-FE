@@ -29,7 +29,7 @@ function Toast() {
 
   return (
     <Wrapper>
-      <ToastWrapper $isClosing={isClosing} className={isClosing ? 'closing show' : `${show && 'show'}`}>
+      <ToastWrapper className={isClosing ? 'closing show' : `${show && 'show'}`}>
         <Typography variant="caption3" color="grayScale09">
           {toast}
         </Typography>
@@ -46,7 +46,7 @@ const Wrapper = styled.div`
   bottom: 30px;
 `;
 
-const ToastWrapper = styled.div<{ $isClosing: boolean }>`
+const ToastWrapper = styled.div`
   border-radius: 12px;
   background: rgba(0, 0, 0, 0.52);
   box-shadow: 0px 0px 16px 0px rgba(117, 117, 117, 0.16);

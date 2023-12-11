@@ -2,7 +2,9 @@ import apiClient from './client';
 
 const AuthApi = {
   authKakao: async (code: string) => {
-    const response = await apiClient.get(`oauth/kakao/callback?code=${code}`);
+    const response = await apiClient.get(
+      `oauth/kakao/callback?code=${code}&redirectUri=${import.meta.env.VITE_REDIRECT_URI}`
+    );
     return response.data;
   },
 
