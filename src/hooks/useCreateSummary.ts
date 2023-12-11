@@ -12,10 +12,8 @@ export const useCreateSummaryByImage = () => {
 
   return useMutation(SummaryApi.createByImage, {
     onSuccess: (data) => {
-      console.log(data);
       setTimeout(() => {
-        // TODO: fileId 받아서 이동시키기.
-        navigate('/select');
+        navigate(`/summary/ai?complete=true&id=${data.fileId}`);
       }, 1000);
     },
     onError: (error: unknown) => {
@@ -35,10 +33,8 @@ export const useCreateSummaryByPdf = () => {
 
   return useMutation(SummaryApi.createByPdf, {
     onSuccess: (data) => {
-      console.log(data);
       setTimeout(() => {
-        // TODO: fileId 받아서 이동시키기.
-        navigate('/select');
+        navigate(`/summary/ai?complete=true&id=${data.fileId}`);
       }, 1000);
     },
     onError: (error: unknown) => {
@@ -58,10 +54,8 @@ export const useCreateSummaryByText = () => {
 
   return useMutation(SummaryApi.createByText, {
     onSuccess: (data) => {
-      console.log(data);
       setTimeout(() => {
-        // TODO: fileId 받아서 이동시키기.
-        navigate('/select');
+        navigate(`/summary/ai?complete=true&id=${data.fileId}`);
       }, 1000);
     },
     onError: (error: unknown) => {
@@ -81,10 +75,8 @@ export const useCreateSummaryByUser = () => {
 
   return useMutation(SummaryApi.createByUser, {
     onSuccess: (data) => {
-      console.log(data);
       setTimeout(() => {
-        // TODO: fileId 받아서 이동시키기.
-        navigate('/select');
+        navigate(`/summary/ai?complete=true&id=${data.memberSavedSummaryId}`);
       }, 1000);
     },
     onError: (error: unknown) => {

@@ -12,10 +12,8 @@ export const useCreateQuizByText = () => {
 
   return useMutation(QuizApi.createByText, {
     onSuccess: (data) => {
-      console.log(data);
       setTimeout(() => {
-        // TODO: fileId 받아서 이동시키기.
-        navigate('/select');
+        navigate(`/quiz/ai?complete=true&id=${data.fileId}`);
       }, 1000);
     },
     onError: (error: unknown) => {
@@ -35,10 +33,8 @@ export const useCreateQuizByPdf = () => {
 
   return useMutation(QuizApi.createByPdf, {
     onSuccess: (data) => {
-      console.log(data);
       setTimeout(() => {
-        // TODO: fileId 받아서 이동시키기.
-        navigate('/select');
+        navigate(`/quiz/ai?complete=true&id=${data.fileId}`);
       }, 1000);
     },
     onError: (error: unknown) => {
@@ -58,10 +54,8 @@ export const useCreateQuizByImage = () => {
 
   return useMutation(QuizApi.createByImage, {
     onSuccess: (data) => {
-      console.log(data);
       setTimeout(() => {
-        // TODO: fileId 받아서 이동시키기.
-        navigate('/select');
+        navigate(`/quiz/ai?complete=true&id=${data.fileId}`);
       }, 1000);
     },
     onError: (error: unknown) => {
@@ -81,10 +75,8 @@ export const useCreateQuizByUser = () => {
 
   return useMutation(QuizApi.createByUser, {
     onSuccess: (data) => {
-      console.log(data);
       setTimeout(() => {
-        // TODO: fileId 받아서 이동시키기.
-        navigate('/select');
+        navigate(`/quiz/user?complete=true&id=${data.memberSavedProblemId}`);
       }, 1000);
     },
     onError: (error: unknown) => {
