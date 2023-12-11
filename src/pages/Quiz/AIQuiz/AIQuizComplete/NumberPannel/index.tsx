@@ -29,7 +29,9 @@ const Wrapper = styled.div`
   grid-template-columns: repeat(7, 1fr);
   padding: 21px 25px;
 
-  gap: 22px;
+  width: 288px;
+  height: 160px;
+  gap: 14px 22px;
 
   border-radius: 8px;
   border: 1px solid ${(props) => props.theme.colors.grayScale06};
