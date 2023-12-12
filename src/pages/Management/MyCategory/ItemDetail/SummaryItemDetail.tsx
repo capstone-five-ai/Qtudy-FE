@@ -67,9 +67,9 @@ function SummaryItemDetail() {
               <PDFButton
                 label="요약"
                 type="category"
-                fileId={currentSummary.aiGeneratedSummaryId || currentSummary.memberSavedSummaryId || -1}
+                fileId={currentCategoaryId || -1}
                 pdfType="SUMMARY"
-                fileName="요약"
+                fileName={currentSummary.summaryTitle}
               />
             </ButtonWrapper>
 

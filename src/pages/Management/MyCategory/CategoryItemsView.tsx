@@ -88,29 +88,15 @@ function CategoryItemsView({
       {activeCategorySummaryItems.length === 0 ? (
         <NoItem categoryType={activeTabBar} />
       ) : (
-        <>
-          {activeCategory && (
-            <DownloadButtonContainer>
-              <PDFButton
-                label="요약"
-                variant={2}
-                fileId={activeCategory.categoryId}
-                pdfType="SUMMARY"
-                type="category"
-                fileName={`${activeCategory.categoryName}_SUMMARY`}
-              />
-            </DownloadButtonContainer>
-          )}
-          <CategoryItemContainer>
-            {activeCategorySummaryItems.map((summaryItem) => (
-              <CategorySummaryItem
-                key={summaryItem.categorizedSummaryId}
-                summaryItem={summaryItem}
-                handleDeleteSummaryItem={handleDeleteSummaryItem}
-              />
-            ))}
-          </CategoryItemContainer>
-        </>
+        <CategoryItemContainer>
+          {activeCategorySummaryItems.map((summaryItem) => (
+            <CategorySummaryItem
+              key={summaryItem.categorizedSummaryId}
+              summaryItem={summaryItem}
+              handleDeleteSummaryItem={handleDeleteSummaryItem}
+            />
+          ))}
+        </CategoryItemContainer>
       )}
     </Container>
   );
