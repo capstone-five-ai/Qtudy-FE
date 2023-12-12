@@ -32,7 +32,7 @@ function PDFButton({ label, variant, fileId, pdfType, type, fileName }: Props) {
     if (type === 'category' && pdfType === 'ANSWER') pdfBlob = await FileApi.downloadCategoryAnswerFile(fileId);
     if (type === 'category' && pdfType === 'SUMMARY') pdfBlob = await FileApi.downloadCategorySummaryFile(fileId);
 
-    fileDownload(pdfBlob, fileName);
+    fileDownload(pdfBlob, `${fileName}.pdf`);
   };
 
   if (variant === 1)
