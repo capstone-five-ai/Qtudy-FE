@@ -41,7 +41,7 @@ const StyledTextArea = styled(reactTextareaAutosize)`
   letter-spacing: 0.28px;
 
   white-space: pre-wrap;
-  color: ${(props) => props.theme.colors.grayScale02}
+  color: ${(props) => props.theme.colors.grayScale02};
 
   &::placeholder {
     color: ${(props) => props.theme.colors.grayScale05};
