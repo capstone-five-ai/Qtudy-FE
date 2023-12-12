@@ -33,10 +33,16 @@ const CategoryApi = {
         memberSavedSummaryId: summaryId,
       };
     // 카테고리(Category)/요약 카테고리에 저장
-    const response = await apiClient.post(`api/categorized-summary/new`, {
-      categoryIdList,
-      ...id,
-    });
+    const response = await apiClient.post(
+      `api/categorized-summary/new`,
+      {
+        categoryIdList,
+        ...id,
+      },
+      {
+        headers,
+      }
+    );
     return response.data;
   },
 
@@ -51,19 +57,23 @@ const CategoryApi = {
         memberSavedProblemId: problemId,
       };
     // 카테고리(Category)/문제 카테고리에 저장
-    const response = await apiClient.post(`api/categorized-problem/new`, {
-      categoryIdList,
-      ...id,
-    });
+    const response = await apiClient.post(
+      `api/categorized-problem/new`,
+      {
+        categoryIdList,
+        ...id,
+      },
+      {
+        headers,
+      }
+    );
     return response.data;
   },
 
   getCategoryItems: async (categoryId: number) => {
     // 카테고리(Category)/카테고리 단건 조회
     const response = await apiClient.get(`api/category/${categoryId}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
+      headers,
       params: {
         page: PAGE,
         size: SIZE,
@@ -95,9 +105,7 @@ const CategoryApi = {
         categoryName,
       },
       {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
+        headers,
       }
     );
     return response.data;
@@ -106,9 +114,7 @@ const CategoryApi = {
   deleteCategory: async (categoryId: number) => {
     // 카테고리(Category)/카테고리 삭제
     const response = await apiClient.delete(`api/category/delete/${categoryId}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
+      headers,
     });
     return response.data;
   },
