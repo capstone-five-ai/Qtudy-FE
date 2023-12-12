@@ -77,7 +77,7 @@ const Wrapper = styled.div`
   position: relative;
   background-color: ${(props) => props.theme.colors.grayScale09};
   width: 480px;
-  min-height: 192px;
+  min-height: 160px;
 
   border-radius: 12px;
   border: 1px solid rgba(62, 215, 205, 0.4);

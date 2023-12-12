@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 import { CREATE_USER_QUIZ_TYPE } from '../../../../constants';
 import { UserQuizInputType } from '../../../../types';
 import QuestionField from './QuestionField';
@@ -15,12 +16,11 @@ interface QuizViewProps {
   setAnswer: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const DEFAULT_INPUT = { input: '', check: false };
 const MAX_OPTION_COUNT = 10;
 
 function QuizView({ quizType, question, options, answer, setQuestion, setOptions, setAnswer }: QuizViewProps) {
   const handleAddOption = () => {
-    setOptions([...options, DEFAULT_INPUT]);
+    setOptions([...options, { id: uuidv4(), input: '', check: false }]);
   };
 
   return (

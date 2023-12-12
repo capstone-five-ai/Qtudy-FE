@@ -1,9 +1,13 @@
 import apiClient from './client';
 
-const QuizCategoryApi = {
-  get: async (categorizedSummaryId: number) => {
+const SummaryCategoryApi = {
+  get: async (categorizedSummaryId: string) => {
     // 카테고리별 요약(Categorized Summary)/카테고리별 요약 조회
-    const response = await apiClient.get(`categorized-summary/${categorizedSummaryId}`);
+    const response = await apiClient.get(`api/categorized-summary/${categorizedSummaryId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
     return response.data;
   },
 
@@ -17,7 +21,7 @@ const QuizCategoryApi = {
     return response.data;
   },
 
-  edit: async (categorizedSummaryId: number, summaryTitle: string, summaryContent: string) => {
+  edit: async (categorizedSummaryId: string, summaryTitle: string, summaryContent: string) => {
     // 카테고리별 요약(Categorized Summary)/카테고리별 요약 수정
     const response = await apiClient.patch(`categorized-summary/edit/${categorizedSummaryId}`, {
       summaryTitle,
@@ -28,9 +32,13 @@ const QuizCategoryApi = {
 
   delete: async (categorizedSummaryId: number) => {
     // 카테고리별 요약(Categorized Summary)/카테고리에 저장된 요약 삭제
-    const response = await apiClient.delete(`categorized-summary/delete/${categorizedSummaryId}`);
+    const response = await apiClient.delete(`categorized-summary/delete/${categorizedSummaryId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
     return response.data;
   },
 };
 
-export default QuizCategoryApi;
+export default SummaryCategoryApi;
