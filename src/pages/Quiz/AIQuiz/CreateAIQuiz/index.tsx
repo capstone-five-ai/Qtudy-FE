@@ -10,6 +10,8 @@ import uploadFileUtils from '../../../../utils/uploadFileUtils';
 import CreateSideBar from '../../../../components/SideBar/CreateSideBar';
 import Loader from '../../../../components/Modal/Loader';
 import CreateContentWrapper from '../../../../components/Wrapper/CreateContentWrapper';
+import { convertToRequestData } from '../../../../utils/convertToRequestData';
+import { useCreateQuizByImage, useCreateQuizByPdf, useCreateQuizByText } from '../../../../hooks/useCreateQuiz';
 
 const DEFAULT_INPUT_OPTION = {
   type: '', // 문제 유형
@@ -29,32 +31,42 @@ function CreateAIQuiz() {
   const showLoader = useRecoilValue(loadingSelector);
   const setShowLoader = useSetRecoilState(loadingSelector);
 
+  const { mutate: createByImage, isLoading: isImageLoading } = useCreateQuizByImage();
+  const { mutate: createByPdf, isLoading: isPdfLoading } = useCreateQuizByPdf();
+  const { mutate: createByText, isLoading: isTextLoading } = useCreateQuizByText();
+
   useEffect(() => {
     setInputOption(DEFAULT_INPUT_OPTION);
     setPdfFile(null);
     setImageFiles([]);
   }, [type]);
 
-  const handleSubmit = () => {
-    const formData = new FormData();
-
-    if (pdfFile) {
-      formData.append('pdfFile', pdfFile.file, pdfFile.name);
-    }
-
-    if (imageFiles.length > 0) {
-      imageFiles.forEach((image, index) => {
-        formData.append(`imageFile_${index}`, image.file, image.name);
-      });
-    }
-
+  const handleSubmit = async () => {
     setShowLoader(true);
-    // TODO: 서버로 formData 전송
+
+    try {
+      const fileData = new FormData();
+      const option = convertToRequestData(inputOption);
+
+      if (type === 'text') {
+        createByText({ fileName: option.fileName, quizData: { option, text: inputText } });
+      } else if (type === 'upload' && pdfFile) {
+        fileData.append('file', pdfFile.file);
+        createByPdf({ fileName: option.fileName, quizData: { option, file: fileData } });
+      } else if (type === 'upload' && imageFiles.length > 0) {
+        imageFiles.forEach((image) => {
+          fileData.append('file', image.file);
+        });
+        createByImage({ fileName: option.fileName, quizData: { option, file: fileData } });
+      }
+    } catch {
+      setShowLoader(false);
+    }
   };
 
   return (
     <>
-      {showLoader && <Loader isLoading />}
+      {showLoader && <Loader isLoading={isPdfLoading || isTextLoading || isImageLoading} />}
       <CreateContentWrapper>
         {!type && <SelectAIType service="quiz" />}
         {type === 'upload' && (

@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 import Typography from '../../../../components/Typography';
 import { UserQuizInputType } from '../../../../types';
@@ -6,7 +5,7 @@ import QuizInputField from '../../../../components/Input/QuizInputField';
 import RadioButton from '../../../../components/Button/RadioButton/RadioButton';
 
 interface OptionFieldProps {
-  options: { input: string; check: boolean }[];
+  options: UserQuizInputType[];
   answer: number;
   setOptions: React.Dispatch<React.SetStateAction<UserQuizInputType[]>>;
   setAnswer: React.Dispatch<React.SetStateAction<number>>;
@@ -26,7 +25,7 @@ function OptionField({ options, answer, setOptions, setAnswer }: OptionFieldProp
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const updatedOption = [...options];
-    updatedOption[index] = { input: e.target.value, check: false };
+    updatedOption[index].input = e.target.value;
     setOptions(updatedOption);
   };
 
@@ -44,7 +43,7 @@ function OptionField({ options, answer, setOptions, setAnswer }: OptionFieldProp
         정답
       </Typography>
       {options.map((option, index) => (
-        <Container key={uuidv4()}>
+        <Container key={option.id}>
           <RadioButtonLabel>
             <RadioButton
               value={index}

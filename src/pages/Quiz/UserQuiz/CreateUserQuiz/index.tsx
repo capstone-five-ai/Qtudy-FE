@@ -1,30 +1,49 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { v4 as uuidv4 } from 'uuid';
 import RightSideBar from './RightSideBar';
 import { CREATE_USER_QUIZ_TYPE } from '../../../../constants';
 import Scrollbar from '../../../../components/Scrollbar';
 import EditAnswerAccordion from '../../../../components/Accordion/EditAnswerAccordion';
 import QuizView from './QuizView';
+import { useCreateQuizByUser } from '../../../../hooks/useCreateQuiz';
+import loadingSelector from '../../../../recoil/selectors/loading';
+import Loader from '../../../../components/Modal/Loader';
 
 const DEFAULT_INPUT = { input: '', check: false };
-const DEFAULT_INPUT_COMMENTARY = {
-  input: '',
-  check: true,
-};
+const DEFAULT_INPUT_COMMENTARY = { input: '', check: true };
 
 function CreateUserQuiz() {
   const [quizType, setQuizType] = useState(CREATE_USER_QUIZ_TYPE[0]);
-  const [question, setQuestion] = useState({ input: '', check: false });
-  const [options, setOptions] = useState([DEFAULT_INPUT, DEFAULT_INPUT, DEFAULT_INPUT, DEFAULT_INPUT]);
+  const [question, setQuestion] = useState({ ...DEFAULT_INPUT, id: uuidv4() });
+  const [options, setOptions] = useState([{ ...DEFAULT_INPUT, id: uuidv4() }]);
   const [answer, setAnswer] = useState(-1);
-  const [commentary, setCommentary] = useState(DEFAULT_INPUT_COMMENTARY);
+  const [commentary, setCommentary] = useState({ ...DEFAULT_INPUT_COMMENTARY, id: uuidv4() });
+  const showLoader = useRecoilValue(loadingSelector);
+  const setShowLoader = useSetRecoilState(loadingSelector);
+
+  const { mutate, isLoading } = useCreateQuizByUser();
 
   const handleSubmit = () => {
-    // TODO: API 연결
+    setShowLoader(true);
+
+    try {
+      mutate({
+        problemName: question.input,
+        problemAnswer: answer.toString(),
+        problemCommentary: commentary.input,
+        problemType: quizType.value,
+        problemChoices: options.map((option) => option.input),
+      });
+    } catch {
+      setShowLoader(false);
+    }
   };
 
   return (
     <>
+      {showLoader && <Loader isLoading={isLoading} />}
       <QuizContainer>
         <QuizView
           quizType={quizType.value}

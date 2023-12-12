@@ -1,5 +1,5 @@
 import { GENERATED_BY } from '../../../constants';
-import { CategoryQuizItemsType } from '../../../types';
+import { CategoryQuizItemsType } from '../../../types/quiz.type';
 import CategoryItemContainer from './CategoryItemContainer';
 import CategoryItemInfo from './CategoryItemInfo';
 
@@ -14,6 +14,8 @@ interface CategoryQuizItemProps {
 function CategoryQuizItem({ quizItem, handleDeleteQuizItem }: CategoryQuizItemProps) {
   return (
     <CategoryItemContainer
+      itemId={quizItem.categorizedProblemId}
+      itemType="quiz"
       createDate={quizItem.createTime}
       updateDate={quizItem.updateTime}
       handleDeleteItem={() => handleDeleteQuizItem(quizItem.categorizedProblemId)}

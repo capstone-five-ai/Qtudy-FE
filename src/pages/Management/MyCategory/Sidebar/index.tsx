@@ -1,43 +1,52 @@
 import styled from 'styled-components';
 import Typography from '../../../../components/Typography';
-import { CategoryInfoType, CategoryListInfoType, CategoryType } from '../../../../types';
+import { CategoryInfoType, CategoryType } from '../../../../types';
 import CategoryTabBar from './CategoryTabBar';
 import CategoryContainerTitle from './CategoryContainerTitle';
 import Scrollbar from '../../../../components/Scrollbar';
 import Category from './Category';
+import CategoryApi from '../../../../api/CategoryApi';
 
 interface SidebarProps {
   activeTabBar: CategoryType;
   categoryList: CategoryInfoType[];
   activeCategory: CategoryInfoType | null;
+  setCategoryList: React.Dispatch<React.SetStateAction<CategoryInfoType[]>>;
   setActiveTabBar: React.Dispatch<React.SetStateAction<CategoryType>>;
-  setCategoryList: React.Dispatch<React.SetStateAction<CategoryListInfoType>>;
   setActiveCategory: React.Dispatch<React.SetStateAction<CategoryInfoType | null>>;
+  setShowCategoryModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function Sidebar({
   activeTabBar,
   categoryList,
   activeCategory,
-  setActiveTabBar,
   setCategoryList,
+  setActiveTabBar,
   setActiveCategory,
+  setShowCategoryModal,
 }: SidebarProps) {
   const handleAddCategory = () => {
-    // TODO: 카테고리 추가 API
-    setCategoryList({ quiz: [], summary: [] });
+    setShowCategoryModal(true);
   };
 
-  const handleEditCategory = (id: number, name: string) => {
-    // TODO: 카테고리 편집 API
-    console.log(id);
-    console.log(name);
+  const handleEditCategory = async (id: number, name: string) => {
+    await CategoryApi.editCategory(id, name).then((data) => {
+      const updatedCategoryList = categoryList.map((category) => {
+        if (category.categoryId === data.categoryId) {
+          return data;
+        }
+        return category;
+      });
+      setCategoryList(updatedCategoryList);
+    });
   };
 
-  const handleDeleteCategory = (id: number, name: string) => {
-    // TODO: 카테고리 삭제 API
-    console.log(id);
-    console.log(name);
+  const handleDeleteCategory = async (id: number) => {
+    await CategoryApi.deleteCategory(id).then(() => {
+      const updatedCategoryList = categoryList.filter((category) => category.categoryId !== id);
+      setCategoryList(updatedCategoryList);
+    });
   };
 
   return (
@@ -52,7 +61,7 @@ function Sidebar({
                 <Category
                   key={category.categoryId}
                   category={category}
-                  active={activeCategory !== null && activeCategory.categoryName === category.categoryName}
+                  active={activeCategory !== null && activeCategory.categoryId === category.categoryId}
                   setActiveCategory={setActiveCategory}
                   handleEditCategory={handleEditCategory}
                   handleDeleteCategory={handleDeleteCategory}

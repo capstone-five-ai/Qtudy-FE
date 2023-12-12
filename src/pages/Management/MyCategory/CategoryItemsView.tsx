@@ -1,15 +1,21 @@
 import styled from 'styled-components';
 import React from 'react';
-import { CategoryQuizItemsType, CategorySummaryItemsType, CategoryType } from '../../../types';
 import CategoryQuizItem from './CategoryQuizItem';
-import DefaultView from './DefaultView';
 import Scrollbar from '../../../components/Scrollbar';
 import { ReactComponent as FileIcon } from '../../../assets/icons/icon-file.svg';
 import Typography from '../../../components/Typography';
 import CategorySummaryItem from './CategorySummaryItem';
+import { CategoryInfoType, CategoryType } from '../../../types';
+import { CategoryQuizItemsType } from '../../../types/quiz.type';
+import { CategorySummaryItemsType } from '../../../types/summary.type';
+import NoItem from './NoItem';
+import FileApi from '../../../api/FileApi';
+import QuizCategoryApi from '../../../api/QuizCategoryApi';
+import SummaryCategoryApi from '../../../api/SummaryCategoryApi';
 
 interface CategoryItemsViewProps {
   activeTabBar: CategoryType;
+  activeCategory: CategoryInfoType | null;
   activeCategoryQuizItems: CategoryQuizItemsType[];
   activeCategorySummaryItems: CategorySummaryItemsType[];
   setActiveCategoryQuizItems: React.Dispatch<React.SetStateAction<CategoryQuizItemsType[]>>;
@@ -18,43 +24,64 @@ interface CategoryItemsViewProps {
 
 function CategoryItemsView({
   activeTabBar,
+  activeCategory,
   activeCategoryQuizItems,
   activeCategorySummaryItems,
   setActiveCategoryQuizItems,
   setActiveCategorySummaryItems,
 }: CategoryItemsViewProps) {
-  const handleDeleteQuizItem = (quizId: number) => {
-    // TODO: 카테고리에 저장된 퀴즈 삭제 API
-    console.log(quizId);
-    setActiveCategoryQuizItems([]);
+  const handleDeleteQuizItem = async (quizId: number) => {
+    await QuizCategoryApi.delete(quizId).then(() => {
+      const newQuizItems = activeCategoryQuizItems.filter((item) => item.categorizedProblemId !== quizId);
+      setActiveCategoryQuizItems(newQuizItems);
+    });
   };
 
-  const handleDeleteSummaryItem = (summaryId: number) => {
-    // TODO: 카테고리에 저장된 요약 삭제 API
-    console.log(summaryId);
-    setActiveCategorySummaryItems([]);
+  const handleDeleteSummaryItem = async (summaryId: number) => {
+    await SummaryCategoryApi.delete(summaryId).then(() => {
+      const newSummaryItems = activeCategorySummaryItems.filter((item) => item.categorizedSummaryId !== summaryId);
+      setActiveCategorySummaryItems(newSummaryItems);
+    });
+  };
+
+  const downloadQuiz = async () => {
+    if (activeCategory) {
+      await FileApi.downloadQuiz(activeCategory.categoryId);
+    }
+  };
+
+  const downloadAnswer = async () => {
+    if (activeCategory) {
+      await FileApi.downloadAnswer(activeCategory.categoryId);
+    }
+  };
+
+  const downloadSummary = async () => {
+    if (activeCategory) {
+      await FileApi.downloadSummary(activeCategory.categoryId);
+    }
   };
 
   if (activeTabBar === '퀴즈')
     return (
       <Container>
         {activeCategoryQuizItems.length === 0 ? (
-          <DefaultView />
+          <NoItem categoryType={activeTabBar} />
         ) : (
           <>
             <DownloadButtonContainer>
-              <div className="download-button">
+              <button type="button" className="download-button" onClick={downloadQuiz}>
                 <FileIcon />
                 <Typography variant="caption3" color="grayScale03">
                   퀴즈 PDF
                 </Typography>
-              </div>
-              <div className="download-button">
+              </button>
+              <button type="button" className="download-button" onClick={downloadAnswer}>
                 <FileIcon />
                 <Typography variant="caption3" color="grayScale03">
                   정답 PDF
                 </Typography>
-              </div>
+              </button>
             </DownloadButtonContainer>
             <CategoryItemContainer>
               {activeCategoryQuizItems.map((quizItem) => (
@@ -73,16 +100,16 @@ function CategoryItemsView({
   return (
     <Container>
       {activeCategorySummaryItems.length === 0 ? (
-        <DefaultView />
+        <NoItem categoryType={activeTabBar} />
       ) : (
         <>
           <DownloadButtonContainer>
-            <div className="download-button">
+            <button type="button" className="download-button" onClick={downloadSummary}>
               <FileIcon />
               <Typography variant="caption3" color="grayScale03">
                 요약 PDF
               </Typography>
-            </div>
+            </button>
           </DownloadButtonContainer>
           <CategoryItemContainer>
             {activeCategorySummaryItems.map((summaryItem) => (
@@ -120,6 +147,10 @@ const DownloadButtonContainer = styled.div`
     display: flex;
     gap: 4px;
     cursor: pointer;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent;
   }
 `;
 

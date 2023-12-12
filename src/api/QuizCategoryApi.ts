@@ -1,9 +1,14 @@
+import { CategoryQuizType } from '../types/quiz.type';
 import apiClient from './client';
 
 const QuizCategoryApi = {
-  get: async (categorizedProblemId: number) => {
+  get: async (categorizedProblemId: string) => {
     // 카테고리별 문제(Categorized Problem)/카테고리별 문제 조회
-    const response = await apiClient.get(`categorized-problem/${categorizedProblemId}`);
+    const response = await apiClient.get(`api/categorized-problem/${categorizedProblemId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
     return response.data;
   },
 
@@ -18,11 +23,8 @@ const QuizCategoryApi = {
   },
 
   edit: async (
-    categorizedProblemId: number,
-    problemName: string,
-    problemAnswer: string,
-    problemCommentary: string,
-    problemChoices: string[]
+    categorizedProblemId: string,
+    { problemName, problemAnswer, problemCommentary, problemChoices }: CategoryQuizType
   ) => {
     // 카테고리별 문제(Categorized Problem)/카테고리별 문제 수정
     const response = await apiClient.patch(`categorized-problem/edit/${categorizedProblemId}`, {
@@ -36,7 +38,11 @@ const QuizCategoryApi = {
 
   delete: async (categorizedProblemId: number) => {
     // 카테고리별 문제(Categorized Problem)/카테고리에 저장된 문제 삭제
-    const response = await apiClient.delete(`categorized-problem/delete/${categorizedProblemId}`);
+    const response = await apiClient.delete(`api/categorized-problem/delete/${categorizedProblemId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
     return response.data;
   },
 };

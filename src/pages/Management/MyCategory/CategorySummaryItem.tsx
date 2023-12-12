@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { CategorySummaryItemsType } from '../../../types';
 import Typography from '../../../components/Typography';
 import CategoryItemContainer from './CategoryItemContainer';
 import CategoryItemInfo from './CategoryItemInfo';
 import { GENERATED_BY } from '../../../constants';
+import { CategorySummaryItemsType } from '../../../types/summary.type';
 
 interface CategorySummaryItemProps {
   summaryItem: CategorySummaryItemsType;
@@ -13,6 +13,8 @@ interface CategorySummaryItemProps {
 function CategorySummaryItem({ summaryItem, handleDeleteSummaryItem }: CategorySummaryItemProps) {
   return (
     <CategoryItemContainer
+      itemId={summaryItem.categorizedSummaryId}
+      itemType="summary"
       createDate={summaryItem.createTime}
       updateDate={summaryItem.updateTime}
       handleDeleteItem={() => handleDeleteSummaryItem(summaryItem.categorizedSummaryId)}
