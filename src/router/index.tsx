@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { Navigate, createBrowserRouter } from 'react-router-dom';
 import Layout from '../layouts';
 import Management from '../pages/Management';
 import Quiz from '../pages/Quiz';
@@ -10,6 +10,8 @@ import ProtectedRoute from './ProtectedRoute';
 import Share from '../pages/Share';
 
 const routes = [
+  { path: '/', element: <Navigate to="select" /> },
+  { path: '*', element: <Navigate to="select" /> },
   {
     path: '/',
     element: <ProtectedRoute auth="AUTH" />,

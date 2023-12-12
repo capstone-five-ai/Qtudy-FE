@@ -6,9 +6,45 @@ const headers = {
 };
 
 const FileApi = {
-  downloadFile: async (fileId: number, pdfType: string) => {
-    // 파일(file)/PDF 다운로드
+  downloadAIFile: async (fileId: number, pdfType: string) => {
+    // 파일(file)/AI 문제, 정답 PDF 다운로드
     const response = await apiClient.post(`api/file/downloadPdf/${fileId}`, { pdfType }, { headers });
+    return response.data;
+  },
+
+  downloadUserSummaryFile: async (memberSavedSummaryId: number) => {
+    // 사용자 요약정리 파일(file)/PDF 다운로드
+    const response = await apiClient.post(`api/member-saved-summary/download-pdf/${memberSavedSummaryId}`, null, {
+      headers,
+      responseType: 'blob',
+    });
+    return response.data;
+  },
+
+  downloadCategoryProblemFile: async (categoryId: number) => {
+    // 카테고리 문제 파일(file)/PDF 다운로드
+    const response = await apiClient.post(`api/categorized-problem/download-problem-pdf/${categoryId}`, null, {
+      headers,
+      responseType: 'blob',
+    });
+    return response.data;
+  },
+
+  downloadCategoryAnswerFile: async (categoryId: number) => {
+    // 카테고리 정답 파일(file)/PDF 다운로드
+    const response = await apiClient.post(`api/categorized-problem/download-answer-pdf/${categoryId}`, null, {
+      headers,
+      responseType: 'blob',
+    });
+    return response.data;
+  },
+
+  downloadCategorySummaryFile: async (categorizedSummaryId: number) => {
+    // 카테고리 요약정리 파일(file)/PDF 다운로드
+    const response = await apiClient.post(`api/member-saved-summary/download-pdf/${categorizedSummaryId}`, null, {
+      headers,
+      responseType: 'blob',
+    });
     return response.data;
   },
 

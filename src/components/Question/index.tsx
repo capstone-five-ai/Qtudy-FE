@@ -31,13 +31,13 @@ function Question({ question, questionNum }: Props) {
         <Typography variant="subtitle">
           {questionHead}. {question.problemName}
         </Typography>
-        {question.problemType === 'MULTIPLE' && (
+        {question.problemChoices.length > 0 && (
           <Choice>
             {question.problemChoices?.map((choice, idx) => (
               <Typography
                 key={choice}
                 variant="body2"
-                color={showAnswer && questionNum === idx + 1 ? 'mainMintDark' : 'grayScale02'}
+                color={showAnswer && Number(question.problemAnswer) === idx + 1 ? 'mainMintDark' : 'grayScale02'}
               >
                 {getCircleNum(idx + 1)} {choice}
               </Typography>
