@@ -15,7 +15,6 @@ function QuizItemDetail() {
   const [params] = useSearchParams();
   const [currentCategoaryId, setCurrentCategoaryId] = useState(-1);
   const [currentQuiz, setCurrentQuiz] = useState<QuestionType | null>(null);
-  const [questionNum, setQuestionNum] = useState(1);
   const mainUrl = window.location.origin;
 
   const getQuizItem = async (id: string) => {
@@ -28,7 +27,6 @@ function QuizItemDetail() {
         problemType: quizData.problemType,
         problemChoices: quizData.problemChoices,
       });
-      setQuestionNum(parseInt(quizData.problemAnswer || '0', 10));
       setCurrentCategoaryId(quizData.categoryId);
     });
   };
@@ -51,7 +49,7 @@ function QuizItemDetail() {
   return (
     <>
       <CategoryItemContentWrapper handleMoveToList={handleMoveToList} handleEdit={handleEdit}>
-        {currentQuiz && <Question question={currentQuiz} questionNum={questionNum} />}
+        {currentQuiz && <Question question={currentQuiz} />}
       </CategoryItemContentWrapper>
       <SideWrapper>
         <SideBar>

@@ -9,7 +9,6 @@ import QuizCategoryApi from '../../api/QuizCategoryApi';
 function ShareQuiz({ currentId }: { currentId: string | null }) {
   const link = window.location.href;
   const [currentQuiz, setCurrentQuiz] = useState<QuestionType | null>(null);
-  const [questionNum, setQuestionNum] = useState(1);
 
   const getQuizItem = async (id: string) => {
     await QuizCategoryApi.get(id).then((data) => {
@@ -21,7 +20,6 @@ function ShareQuiz({ currentId }: { currentId: string | null }) {
         problemType: quizData.problemType,
         problemChoices: quizData.problemChoices,
       });
-      setQuestionNum(parseInt(quizData.problemAnswer || '0', 10));
     });
   };
 
@@ -32,9 +30,7 @@ function ShareQuiz({ currentId }: { currentId: string | null }) {
 
   return (
     <>
-      <QuestionContainer>
-        {currentQuiz && <Question question={currentQuiz} questionNum={questionNum} />}
-      </QuestionContainer>
+      <QuestionContainer>{currentQuiz && <Question question={currentQuiz} />}</QuestionContainer>
       <SideWrapper>
         <SideBar>
           <ButtonWrapper>
