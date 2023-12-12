@@ -5,8 +5,12 @@ import Typography from '../Typography';
 
 type Props = {
   disabled: boolean;
-  onClick: () => void;
+  onClick?: () => void;
   children: ReactNode;
+};
+
+TwinkleButton.defaultProps = {
+  onClick: null,
 };
 
 function TwinkleButton({ disabled, onClick, children }: Props) {

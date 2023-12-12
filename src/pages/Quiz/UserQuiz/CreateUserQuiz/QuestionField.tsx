@@ -1,15 +1,34 @@
 import styled from 'styled-components';
 import QuizInputField from '../../../../components/Input/QuizInputField';
+import { UserQuizInputType } from '../../../../types';
 
 interface QuestionFieldProps {
-  input: { input: string; check: boolean };
-  handleEdit: (type: string, index: number) => void;
-  handleCheck: (type: string, index: number, input: string) => void;
+  question: UserQuizInputType;
+  setQuestion: React.Dispatch<React.SetStateAction<UserQuizInputType>>;
 }
-function QuestionField({ input, handleEdit, handleCheck }: QuestionFieldProps) {
+function QuestionField({ question, setQuestion }: QuestionFieldProps) {
+  const handleEdit = () => {
+    setQuestion({ ...question, check: false });
+  };
+
+  const handleCheck = () => {
+    setQuestion({ ...question, check: true });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuestion({ input: e.target.value, check: false });
+  };
+
   return (
     <Container>
-      <QuizInputField type="question" input={input} index={0} handleEdit={handleEdit} handleCheck={handleCheck} />
+      <QuizInputField
+        type="question"
+        input={question}
+        index={0}
+        handleEdit={handleEdit}
+        handleCheck={handleCheck}
+        handleChange={handleChange}
+      />
     </Container>
   );
 }
