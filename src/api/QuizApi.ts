@@ -1,15 +1,23 @@
+import getAccessToken from '../utils/getAccessToken';
 import apiClient from './client';
 
+const headers = {
+  Authorization: `Bearer ${getAccessToken()}`,
+};
+
 const QuizApi = {
-  getAllAIQuiz: async (fileId: number) => {
+  getAllAIQuiz: async (fileId: number, isAuthenticated: boolean) => {
     // AI생성문제(problem)/파일 전체문제 조회
-    const response = await apiClient.get(`api/problem/getFileProblems/${fileId}`);
+    const response = await apiClient.get(`api/problem/getFileProblems/${fileId}`, isAuthenticated ? { headers } : {});
     return response.data;
   },
 
-  getUserQuiz: async (memberSavedProblemId: number) => {
+  getUserQuiz: async (memberSavedProblemId: number, isAuthenticated: boolean) => {
     // User생성문제(problem) 조회
-    const response = await apiClient.get(`api/member-saved-problem/${memberSavedProblemId}`);
+    const response = await apiClient.get(
+      `api/member-saved-problem/${memberSavedProblemId}`,
+      isAuthenticated ? { headers } : {}
+    );
     return response.data;
   },
 
