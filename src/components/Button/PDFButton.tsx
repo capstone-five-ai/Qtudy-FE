@@ -6,7 +6,7 @@ import Typography from '../Typography';
 
 type Props = {
   label: string;
-  fileId: number;
+  fileId: number; // 카테고리에서는 카테고리 id값
   pdfType: 'PROBLEM' | 'ANSWER' | 'SUMMARY';
   variant?: 1 | 2;
   type: 'ai' | 'user' | 'category';
@@ -32,7 +32,7 @@ function PDFButton({ label, variant, fileId, pdfType, type, fileName }: Props) {
     if (type === 'category' && pdfType === 'ANSWER') pdfBlob = await FileApi.downloadCategoryAnswerFile(fileId);
     if (type === 'category' && pdfType === 'SUMMARY') pdfBlob = await FileApi.downloadCategorySummaryFile(fileId);
 
-    fileDownload(pdfBlob, fileName);
+    fileDownload(pdfBlob, `${fileName}.pdf`);
   };
 
   if (variant === 1)

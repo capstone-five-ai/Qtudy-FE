@@ -75,6 +75,7 @@ const Container = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 12px;
+  width: 724px;
 `;
 
 const RadioButtonLabel = styled.label`
