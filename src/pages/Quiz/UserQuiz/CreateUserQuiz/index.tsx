@@ -29,13 +29,21 @@ function CreateUserQuiz() {
     setShowLoader(true);
 
     try {
-      mutate({
-        problemName: question.input,
-        problemAnswer: answer.toString(),
-        problemCommentary: commentary.input,
-        problemType: quizType.value,
-        problemChoices: options.map((option) => option.input),
-      });
+      if (quizType === CREATE_USER_QUIZ_TYPE[0]) {
+        mutate({
+          problemName: question.input,
+          problemAnswer: answer.toString(),
+          problemCommentary: commentary.input,
+          problemType: quizType.value,
+          problemChoices: options.map((option) => option.input),
+        });
+      } else {
+        mutate({
+          problemName: question.input,
+          problemCommentary: commentary.input,
+          problemType: quizType.value,
+        });
+      }
     } catch {
       setShowLoader(false);
     }
