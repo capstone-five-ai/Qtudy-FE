@@ -3,8 +3,8 @@ import { TextCard, UploadedCard } from '../Card';
 import Typography from '../Typography';
 
 const SERVICE: { [key: string]: string } = {
-  quiz: `파일 업로드 또는 텍스트 입력 시\nAI가 퀴즈를 자동으로 생성해드려요!`,
-  summary: '파일 업로드 또는 텍스트 입력 시\nAI가 요약을 자동으로 생성해드려요!',
+  quiz: `파일 업로드 혹은 텍스트 입력 시\nAI가 퀴즈를 자동으로 생성해드려요!`,
+  summary: '파일 업로드 혹은 텍스트 입력 시\nAI가 자동으로 요약해 드려요!',
 };
 
 function SelectAIType({ service }: { service: string }) {
