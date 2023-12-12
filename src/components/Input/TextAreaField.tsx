@@ -6,7 +6,7 @@ function TextAreaField({ ...props }) {
   return (
     <Container>
       <TextFieldContainer>
-        <StyledTextArea minRows={20} {...props} />
+        <StyledTextArea minRows={19} {...props} />
       </TextFieldContainer>
     </Container>
   );
