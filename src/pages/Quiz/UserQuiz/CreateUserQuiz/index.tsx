@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
@@ -24,6 +24,13 @@ function CreateUserQuiz() {
   const setShowLoader = useSetRecoilState(loadingSelector);
 
   const { mutate, isLoading } = useCreateQuizByUser();
+
+  useEffect(() => {
+    setQuestion({ ...DEFAULT_INPUT, id: uuidv4() });
+    setOptions([{ ...DEFAULT_INPUT, id: uuidv4() }]);
+    setAnswer(-1);
+    setCommentary({ ...DEFAULT_INPUT_COMMENTARY, id: uuidv4() });
+  }, [quizType]);
 
   const handleSubmit = () => {
     setShowLoader(true);
