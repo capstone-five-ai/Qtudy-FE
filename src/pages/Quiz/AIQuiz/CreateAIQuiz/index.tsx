@@ -62,7 +62,7 @@ function CreateAIQuiz() {
             inputRef={inputRef}
             pdfFile={pdfFile}
             imageFiles={imageFiles}
-            handleFileUpload={(event) => uploadFileUtils.handleFileUpload(event, setPdfFile, setImageFiles)}
+            handleFileUpload={(event) => uploadFileUtils.handleFileUpload(event, imageFiles, setPdfFile, setImageFiles)}
             handleDelete={(deleteIndex) =>
               uploadFileUtils.handleDelete(deleteIndex, pdfFile, imageFiles, setPdfFile, setImageFiles)
             }

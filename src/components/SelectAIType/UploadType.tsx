@@ -64,6 +64,22 @@ function UploadType({ inputRef, pdfFile, imageFiles, handleFileUpload, handleDel
             </object>
           </Preview>
         )}
+        {imageFiles.length > 0 && (
+          <AddButton onClick={() => uploadFileUtils.handleUploadButtonClick(inputRef)}>
+            <input
+              style={{ display: 'none' }}
+              type="file"
+              accept="image/*, .pdf"
+              multiple
+              ref={inputRef}
+              onChange={handleFileUpload}
+            />
+            <UploadIcon className="add-icon" />
+            <Typography variant="subtitle" color="grayScale03">
+              파일 추가
+            </Typography>
+          </AddButton>
+        )}
         {imageFiles.length > 0 &&
           imageFiles.map((image, index) => (
             <Preview key={image.name}>
@@ -171,5 +187,20 @@ const Preview = styled.div`
     object {
       opacity: 1;
     }
+  }
+`;
+
+const AddButton = styled(Preview)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background: ${(props) => props.theme.colors.grayScale06};
+  opacity: 1;
+  cursor: pointer;
+
+  .add-icon {
+    height: 50px;
   }
 `;

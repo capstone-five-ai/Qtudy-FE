@@ -8,6 +8,7 @@ const uploadFileUtils = {
 
   handleFileUpload(
     event: React.ChangeEvent<HTMLInputElement>,
+    imageFiles: UploadedFileType[],
     setPdfFile: React.Dispatch<React.SetStateAction<UploadedFileType | null>>,
     setImageFiles: React.Dispatch<React.SetStateAction<UploadedFileType[]>>
   ) {
@@ -15,7 +16,7 @@ const uploadFileUtils = {
     if (!files) return;
 
     let pdfFound = false;
-    const newImageFiles: UploadedFileType[] = [];
+    const newImageFiles: UploadedFileType[] = [...imageFiles];
 
     for (let i = 0; i < files.length; i += 1) {
       const file = files[i];
