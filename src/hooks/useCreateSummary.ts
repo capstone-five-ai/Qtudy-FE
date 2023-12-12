@@ -107,7 +107,7 @@ export const useCreateSummaryByUser = () => {
   return useMutation(SummaryApi.createByUser, {
     onSuccess: (data) => {
       setTimeout(() => {
-        navigate(`/summary/ai?complete=true&id=${data.memberSavedSummaryId}`);
+        navigate(`/summary/user?complete=true&id=${data.memberSavedSummaryId}`);
       }, 1000);
     },
     onError: (error: unknown) => {
