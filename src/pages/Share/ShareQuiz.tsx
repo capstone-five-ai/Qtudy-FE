@@ -4,29 +4,35 @@ import Question from '../../components/Question';
 import LinkButton from '../../components/Button/LinkButton';
 import { QuestionType } from '../../types/question.type';
 import TwinkleButton from '../../components/Button/TwinkleButton';
+import QuizCategoryApi from '../../api/QuizCategoryApi';
 
-function ShareQuiz() {
+function ShareQuiz({ currentId }: { currentId: string | null }) {
   const link = window.location.href;
+  const [currentQuiz, setCurrentQuiz] = useState<QuestionType | null>(null);
   const [questionNum, setQuestionNum] = useState(1);
-  const question: QuestionType = {
-    problemName: '인공지능은 무엇을 모방할 수 있는 기술 및 연구 분야인가요?',
-    problemAnswer: '2',
-    problemCommentary:
-      '인공지능의 목표는 인간의 인지 능력을 모방할 수 있는 지능적인 기계를 만드는 것입니다. 즉, 사람처럼 생각하고 학습하며 문제를 해결할 수 있는 기계를 개발하는 것이 목표입니다.',
-    problemType: 'MULTIPLE',
-    problemChoices: ['선지1', '선지2', '선지3', '선지4'],
+
+  const getQuizItem = async (id: string) => {
+    await QuizCategoryApi.get(id).then((data) => {
+      setCurrentQuiz({
+        problemName: data.problemName,
+        problemAnswer: data.probelAnswer,
+        problemCommentary: data.problemCommentary,
+        problemType: data.problemType,
+        problemChoices: data.problemChoices,
+      });
+      setQuestionNum(parseInt(data.problemAnswer || '1', 10));
+    });
   };
 
   useEffect(() => {
-    // TODO: quiestionNum에 따라 setQuestion
-    setQuestionNum(parseInt(question.problemAnswer || '1', 10));
+    if (currentId) getQuizItem(currentId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [questionNum]);
+  }, []);
 
   return (
     <>
       <QuestionContainer>
-        <Question question={question} questionNum={questionNum} />
+        {currentQuiz && <Question question={currentQuiz} questionNum={questionNum} />}
       </QuestionContainer>
       <SideWrapper>
         <SideBar>
