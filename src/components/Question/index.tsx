@@ -31,7 +31,7 @@ function Question({ question, questionNum }: Props) {
         <Typography variant="subtitle">
           {questionHead}. {question.problemName}
         </Typography>
-        {question.problemChoices.length > 0 && (
+        {question.problemChoices && question.problemChoices.length > 0 && (
           <Choice>
             {question.problemChoices?.map((choice, idx) => (
               <Typography
