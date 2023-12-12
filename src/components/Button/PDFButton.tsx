@@ -6,7 +6,7 @@ import Typography from '../Typography';
 
 type Props = {
   label: string;
-  fileId: number;
+  fileId: number; // 카테고리에서는 카테고리 id값
   pdfType: 'PROBLEM' | 'ANSWER' | 'SUMMARY';
   variant?: 1 | 2;
   type: 'ai' | 'user' | 'category';
