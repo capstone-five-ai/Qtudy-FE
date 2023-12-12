@@ -36,23 +36,38 @@ function QuizItemEdit() {
       setAnswer(!Number.isNaN(quizAnswer) ? quizAnswer : -1);
       setCommentary({ ...commentary, input: quiz.problemCommentary });
 
-      const choices = quiz.problemChoices.map((choice) => {
-        return { id: uuidv4(), input: choice, check: true };
-      });
-      setOptions(choices);
+      if (quiz.problemType === 'MULTIPLE' && quiz.problemChoices) {
+        const choices = quiz.problemChoices.map((choice) => {
+          return { id: uuidv4(), input: choice, check: true };
+        });
+
+        setOptions(choices);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleFinishEdit = async () => {
-    await QuizCategoryApi.edit(quizId, {
-      problemName: question.input,
-      problemAnswer: answer.toString(),
-      problemCommentary: commentary.input,
-      problemChoices: options.map((option) => option.input),
-    }).then(() => {
-      navigate(`/management/mycategory/detail?category=quiz&id=${quizId}`);
-    });
+    if (type === 'MULTIPLE') {
+      const editQuizData = {
+        problemName: question.input,
+        problemAnswer: answer.toString(),
+        problemCommentary: commentary.input,
+        problemChoices: options.map((option) => option.input),
+      };
+      await QuizCategoryApi.edit(quizId, editQuizData).then(() => {
+        navigate(`/management/mycategory/detail?category=quiz&id=${quizId}`);
+      });
+    } else {
+      const editQuizData = {
+        problemName: question.input,
+        problemCommentary: commentary.input,
+      };
+
+      await QuizCategoryApi.edit(quizId, editQuizData).then(() => {
+        navigate(`/management/mycategory/detail?category=quiz&id=${quizId}`);
+      });
+    }
   };
 
   if (!params.get('id')) return <Navigate to="/management/mycategory" replace />;

@@ -14,7 +14,7 @@ const QuizCategoryApi = {
 
   save: async (categoryIdList: number[], memberSavedProblemId: number | null, aiGeneratedProblemId: number | null) => {
     // 카테고리별 문제(Categorized Problem)/카테고리에 문제 저장
-    const response = await apiClient.post('categorized-problem/new', {
+    const response = await apiClient.post('api/categorized-problem/new', {
       categoryIdList,
       memberSavedProblemId,
       aiGeneratedProblemId,
@@ -22,25 +22,13 @@ const QuizCategoryApi = {
     return response.data;
   },
 
-  edit: async (
-    categorizedProblemId: string,
-    { problemName, problemAnswer, problemCommentary, problemChoices }: CategoryQuizType
-  ) => {
+  edit: async (categorizedProblemId: string, quizData: CategoryQuizType) => {
     // 카테고리별 문제(Categorized Problem)/카테고리별 문제 수정
-    const response = await apiClient.patch(
-      `categorized-problem/edit/${categorizedProblemId}`,
-      {
-        problemName,
-        problemAnswer,
-        problemCommentary,
-        problemChoices,
+    const response = await apiClient.patch(`api/categorized-problem/edit/${categorizedProblemId}`, quizData, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      }
-    );
+    });
     return response.data;
   },
 
