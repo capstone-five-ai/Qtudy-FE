@@ -1,4 +1,4 @@
-import { Navigate, useLocation, useSearchParams } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
@@ -10,18 +10,24 @@ import EditAnswerAccordion from '../../../../components/Accordion/EditAnswerAcco
 import { CREATE_USER_QUIZ_TYPE } from '../../../../constants';
 import QuizView from '../../../Quiz/UserQuiz/CreateUserQuiz/QuizView';
 import { UserQuizInputType } from '../../../../types';
+import QuizCategoryApi from '../../../../api/QuizCategoryApi';
 
 function QuizItemEdit() {
   const [params] = useSearchParams();
   const location = useLocation();
+  const [quizId, setQuizId] = useState('');
   const [type, setType] = useState('MULTIPLE');
   const [question, setQuestion] = useState({ id: uuidv4(), input: '', check: true });
   const [answer, setAnswer] = useState(-1);
   const [commentary, setCommentary] = useState({ id: uuidv4(), input: '', check: true });
   const [options, setOptions] = useState<UserQuizInputType[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const { state } = location;
+    const id = params.get('id');
+    if (id) setQuizId(id);
+
     if (state.quizData) {
       const quiz = state.quizData as QuestionType;
       const quizAnswer = Number(quiz.problemAnswer);
@@ -38,8 +44,15 @@ function QuizItemEdit() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleFinishEdit = () => {
-    // TODO: 문제 수정 API 연결
+  const handleFinishEdit = async () => {
+    await QuizCategoryApi.edit(quizId, {
+      problemName: question.input,
+      problemAnswer: answer.toString(),
+      problemCommentary: commentary.input,
+      problemChoices: options.map((option) => option.input),
+    }).then(() => {
+      navigate(`/management/mycategory/detail?category=quiz&id=${quizId}`);
+    });
   };
 
   if (!params.get('id')) return <Navigate to="/management/mycategory" replace />;

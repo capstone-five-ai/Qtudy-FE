@@ -1,19 +1,25 @@
 import { useEffect, useState } from 'react';
-import { Navigate, useLocation, useSearchParams } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import CategoryItemContentWrapper from '../../../../components/Wrapper/CategoryItemContentWrapper';
 import NoButtonSideBar from '../../../../components/SideBar/NoButtonSideBar';
 import FileNameInputField from '../../../../components/Input/FileNameInputField';
 import TextType from '../../../../components/SelectAIType/TextType';
 import { SummaryType } from '../../../../types/summary.type';
+import SummaryCategoryApi from '../../../../api/SummaryCategoryApi';
 
 function SummaryItemEdit() {
   const [params] = useSearchParams();
   const location = useLocation();
+  const [summaryId, setSummaryId] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const { state } = location;
+    const id = params.get('id');
+    if (id) setSummaryId(id);
+
     if (state.summaryData) {
       const summary = state.summaryData as SummaryType;
       setTitle(summary.summaryTitle);
@@ -26,8 +32,10 @@ function SummaryItemEdit() {
     setTitle(e.target.value);
   };
 
-  const handleFinishEdit = () => {
-    // TODO: 요약 수정 API 연결
+  const handleFinishEdit = async () => {
+    await SummaryCategoryApi.edit(summaryId, title, content).then(() => {
+      navigate(`/management/mycategory/detail?category=summary&id=${summaryId}`);
+    });
   };
 
   if (!params.get('id')) return <Navigate to="/management/mycategory" replace />;

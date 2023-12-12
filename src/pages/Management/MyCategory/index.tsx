@@ -65,8 +65,6 @@ function MyCategory() {
   useEffect(() => {
     const { state } = location;
     if (state && state.activeTab) setActiveTabBar(state.activeTab);
-
-    // TODO: state로 넘어온 activeCategory 세팅
   }, [location]);
 
   useEffect(() => {

@@ -25,3 +25,10 @@ export interface CategoryQuizItemsType {
   createTime: string;
   updateTime: string;
 }
+
+export interface CategoryQuizType {
+  problemName: string;
+  problemAnswer: string;
+  problemCommentary: string;
+  problemChoices: string[];
+}

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import AuthApi from '../../api/AuthApi';
@@ -11,6 +11,7 @@ import MenuBar from './MenuBar';
 
 function Header() {
   const [isAuthenticated, setIsAuthenticated] = useRecoilState(authState);
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     navigateToLogin();
@@ -19,7 +20,10 @@ function Header() {
   const handleLogout = async () => {
     const response = await AuthApi.logout();
 
-    if (response) setIsAuthenticated(false);
+    if (response) {
+      setIsAuthenticated(false);
+      navigate('/');
+    }
   };
 
   return (

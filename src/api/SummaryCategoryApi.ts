@@ -21,7 +21,7 @@ const SummaryCategoryApi = {
     return response.data;
   },
 
-  edit: async (categorizedSummaryId: number, summaryTitle: string, summaryContent: string) => {
+  edit: async (categorizedSummaryId: string, summaryTitle: string, summaryContent: string) => {
     // 카테고리별 요약(Categorized Summary)/카테고리별 요약 수정
     const response = await apiClient.patch(`categorized-summary/edit/${categorizedSummaryId}`, {
       summaryTitle,

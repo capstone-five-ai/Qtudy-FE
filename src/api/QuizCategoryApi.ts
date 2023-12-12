@@ -1,3 +1,4 @@
+import { CategoryQuizType } from '../types/quiz.type';
 import apiClient from './client';
 
 const QuizCategoryApi = {
@@ -22,11 +23,8 @@ const QuizCategoryApi = {
   },
 
   edit: async (
-    categorizedProblemId: number,
-    problemName: string,
-    problemAnswer: string,
-    problemCommentary: string,
-    problemChoices: string[]
+    categorizedProblemId: string,
+    { problemName, problemAnswer, problemCommentary, problemChoices }: CategoryQuizType
   ) => {
     // 카테고리별 문제(Categorized Problem)/카테고리별 문제 수정
     const response = await apiClient.patch(`categorized-problem/edit/${categorizedProblemId}`, {
