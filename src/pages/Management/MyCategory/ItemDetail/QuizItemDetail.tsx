@@ -62,7 +62,14 @@ function QuizItemDetail() {
           </TwinkleButton>
         </SideBar>
       </SideWrapper>
-      {showCategoryModal && <CategoryModal onClose={() => setShowCategoryModal(false)} categoryType="PROBLEM" />}
+      {showCategoryModal && (
+        <CategoryModal
+          onClose={() => setShowCategoryModal(false)}
+          categoryType="PROBLEM"
+          contentId={Number(params.get('id') || -1)}
+          generateType={currentQuiz?.aiGeneratedProblemId ? 'ai' : 'user'}
+        />
+      )}
     </>
   );
 }
