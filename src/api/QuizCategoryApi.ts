@@ -27,12 +27,20 @@ const QuizCategoryApi = {
     { problemName, problemAnswer, problemCommentary, problemChoices }: CategoryQuizType
   ) => {
     // 카테고리별 문제(Categorized Problem)/카테고리별 문제 수정
-    const response = await apiClient.patch(`categorized-problem/edit/${categorizedProblemId}`, {
-      problemName,
-      problemAnswer,
-      problemCommentary,
-      problemChoices,
-    });
+    const response = await apiClient.patch(
+      `categorized-problem/edit/${categorizedProblemId}`,
+      {
+        problemName,
+        problemAnswer,
+        problemCommentary,
+        problemChoices,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      }
+    );
     return response.data;
   },
 
