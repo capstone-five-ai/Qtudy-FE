@@ -23,8 +23,10 @@ function CategoryItemContainer({ createDate, updateDate, children, handleDeleteI
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
 
+  width: 728px;
+  height: 196px;
   padding: 20px;
   border-radius: 8px;
   border: 1px solid transparent;

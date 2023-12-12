@@ -30,6 +30,8 @@ function CategorySummaryItem({ summaryItem, handleDeleteSummaryItem }: CategoryS
 export default CategorySummaryItem;
 
 const ContentContainer = styled.div`
+  height: 38px;
+
   & > div {
     display: -webkit-box;
     -webkit-box-orient: vertical;
