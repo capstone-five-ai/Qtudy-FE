@@ -38,4 +38,5 @@ export default QuestionField;
 const Container = styled.div`
   display: flex;
   padding-left: 28px;
+  width: 724px;
 `;
