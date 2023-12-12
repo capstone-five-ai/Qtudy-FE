@@ -57,8 +57,7 @@ const InnerContainer = styled.div`
   justify-content: space-between;
 
   margin: 0 auto;
-  padding: 0px 20px;
-  max-width: 1200px;
+  padding: 0px 40px;
   height: 64px;
 
   .menu-list {
