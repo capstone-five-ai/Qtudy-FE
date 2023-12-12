@@ -46,17 +46,18 @@ function CreateAIQuiz() {
 
     try {
       const fileData = new FormData();
+      const option = convertToRequestData(inputOption);
 
       if (type === 'text') {
-        createByText({ option: convertToRequestData(inputOption), text: inputText });
+        createByText({ fileName: option.fileName, quizData: { option, text: inputText } });
       } else if (type === 'upload' && pdfFile) {
         fileData.append('file', pdfFile.file);
-        createByPdf({ option: convertToRequestData(inputOption), file: fileData });
+        createByPdf({ fileName: option.fileName, quizData: { option, file: fileData } });
       } else if (type === 'upload' && imageFiles.length > 0) {
         imageFiles.forEach((image) => {
           fileData.append('file', image.file);
         });
-        createByImage({ option: convertToRequestData(inputOption), file: fileData });
+        createByImage({ fileName: option.fileName, quizData: { option, file: fileData } });
       }
     } catch {
       setShowLoader(false);

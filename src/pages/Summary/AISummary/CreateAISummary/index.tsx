@@ -42,17 +42,18 @@ function CreateAISummary() {
 
     try {
       const fileData = new FormData();
+      const option = convertToSummaryData(inputOption);
 
       if (type === 'text') {
-        createByText({ option: convertToSummaryData(inputOption), text: inputText });
+        createByText({ fileName: option.fileName, summaryData: { option, text: inputText } });
       } else if (type === 'upload' && pdfFile) {
         fileData.append('file', pdfFile.file);
-        createByPdf({ option: convertToSummaryData(inputOption), file: fileData });
+        createByPdf({ fileName: option.fileName, summaryData: { option, file: fileData } });
       } else if (type === 'upload' && imageFiles.length > 0) {
         imageFiles.forEach((image) => {
           fileData.append('file', image.file);
         });
-        createByImage({ option: convertToSummaryData(inputOption), file: fileData });
+        createByImage({ fileName: option.fileName, summaryData: { option, file: fileData } });
       }
     } catch {
       setShowLoader(false);
