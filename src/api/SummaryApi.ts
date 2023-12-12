@@ -1,13 +1,21 @@
+import getAccessToken from '../utils/getAccessToken';
 import apiClient from './client';
 
+const headers = {
+  Authorization: `Bearer ${getAccessToken()}`,
+};
+
 const SummaryApi = {
-  getAISummary: async (fileId: number) => {
-    const response = await apiClient.get(`api/summary/getSummary/${fileId}`);
+  getAISummary: async (fileId: number, isAuthenticated: boolean) => {
+    const response = await apiClient.get(`api/summary/getSummary/${fileId}`, isAuthenticated ? { headers } : {});
     return response.data;
   },
 
-  getUserSummary: async (memberSavedSummaryId: number) => {
-    const response = await apiClient.get(`api/member-saved-summary/${memberSavedSummaryId}`);
+  getUserSummary: async (memberSavedSummaryId: number, isAuthenticated: boolean) => {
+    const response = await apiClient.get(
+      `api/member-saved-summary/${memberSavedSummaryId}`,
+      isAuthenticated ? { headers } : {}
+    );
     return response.data;
   },
 
