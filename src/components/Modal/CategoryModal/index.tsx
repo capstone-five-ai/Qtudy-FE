@@ -25,7 +25,7 @@ function CategoryModal({ onClose, categoryType, contentId, generateType }: Props
   const [showWarn] = useState(false);
 
   const getCategories = useCallback(async () => {
-    const data = await CategoryApi.getCategorys(categoryType);
+    const data = await CategoryApi.getCategoryList(categoryType);
     setCategories(data.data);
   }, [categoryType]);
 
