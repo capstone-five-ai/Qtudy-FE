@@ -41,7 +41,7 @@ const FileApi = {
 
   downloadCategorySummaryFile: async (categorizedSummaryId: number) => {
     // 카테고리 요약정리 파일(file)/PDF 다운로드
-    const response = await apiClient.post(`api/member-saved-summary/download-pdf/${categorizedSummaryId}`, null, {
+    const response = await apiClient.post(`api/categorized-summary/download-pdf/${categorizedSummaryId}`, null, {
       headers,
       responseType: 'blob',
     });

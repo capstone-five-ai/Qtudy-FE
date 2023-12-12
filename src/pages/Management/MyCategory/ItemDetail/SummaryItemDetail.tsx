@@ -16,6 +16,7 @@ function SummaryItemDetail() {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const [currentCategoaryId, setCurrentCategoaryId] = useState(-1);
+  const [currentSummaryId, setCurrentSummaryId] = useState(-1);
   const [currentSummary, setCurrentSummary] = useState<SummaryType | null>(null);
   const mainUrl = window.location.origin;
 
@@ -27,6 +28,7 @@ function SummaryItemDetail() {
         summaryContent: summaryData.summaryContent,
       });
       setCurrentCategoaryId(summaryData.categoryId);
+      setCurrentSummaryId(summaryData.categorizedSummaryId);
     });
   };
 
@@ -67,7 +69,7 @@ function SummaryItemDetail() {
               <PDFButton
                 label="요약"
                 type="category"
-                fileId={currentCategoaryId || -1}
+                fileId={currentSummaryId || -1}
                 pdfType="SUMMARY"
                 fileName={currentSummary.summaryTitle}
               />
