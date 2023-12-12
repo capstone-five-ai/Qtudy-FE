@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import FileApi from '../../../../../api/FileApi';
@@ -16,10 +16,18 @@ type Props = {
 };
 
 function HistoryItem({ history, updateList }: Props) {
+  const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [newFileName, setNewFileName] = useState('');
+  const [fileName, setFileName] = useState(history.fileName);
+  const [newFileName, setNewFileName] = useState(fileName);
+
+  useEffect(() => {
+    if (inputRef.current === null) return;
+    inputRef.current.disabled = false;
+    inputRef.current.focus();
+  }, [editMode]);
 
   const getDateFormat = (dateStr: string) => {
     const date = dateStr.slice(0, 16).replace(/-/g, '.').replace(/T/g, ' ');
@@ -40,13 +48,16 @@ function HistoryItem({ history, updateList }: Props) {
     setShowDeleteModal(true);
   };
 
-  const editFileName = async (e: FormEvent<HTMLFormElement>) => {
+  const submitFileName = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    await editFileName();
+  };
+
+  const editFileName = async () => {
     await FileApi.updateFileName(history.fileId, newFileName);
     setEditMode(false);
-    setNewFileName('');
-    updateList(1);
+    setFileName(newFileName);
   };
 
   const deleteFile = async () => {
@@ -63,18 +74,19 @@ function HistoryItem({ history, updateList }: Props) {
       </Filter>
       <FileName>
         {editMode ? (
-          <Form onSubmit={editFileName}>
+          <Form onSubmit={submitFileName}>
             <Input
+              ref={inputRef}
               value={newFileName}
               onChange={(e) => setNewFileName(e.target.value)}
               placeholder="지정하실 파일명을 입력해주세요."
-              onBlur={() => setEditMode(false)}
+              onBlur={editFileName}
             />
           </Form>
         ) : (
           <>
             <FileNameWrapper type="button" onClick={handleClickFile}>
-              <Typography variant="subtitle">{history.fileName}</Typography>
+              <Typography variant="subtitle">{fileName}</Typography>
             </FileNameWrapper>
             <EditIcon width={20} height={20} onClick={handleClickEdit} cursor="pointer" />
           </>
@@ -88,11 +100,32 @@ function HistoryItem({ history, updateList }: Props) {
       <PDFDown>
         {history.dtype === 'PROBLEM' ? (
           <>
-            <PDFButton label="퀴즈" variant={2} fileId={history.fileId} pdfType="PROBLEM" />
-            <PDFButton label="정답" variant={2} fileId={history.fileId} pdfType="ANSWER" />
+            <PDFButton
+              label="퀴즈"
+              variant={2}
+              fileId={history.fileId}
+              pdfType="PROBLEM"
+              type="ai"
+              fileName={history.fileName}
+            />
+            <PDFButton
+              label="정답"
+              variant={2}
+              fileId={history.fileId}
+              pdfType="ANSWER"
+              type="ai"
+              fileName={history.fileName}
+            />
           </>
         ) : (
-          <PDFButton label="요약" variant={2} fileId={history.fileId} pdfType="SUMMARY" />
+          <PDFButton
+            label="요약"
+            variant={2}
+            fileId={history.fileId}
+            pdfType="SUMMARY"
+            type="ai"
+            fileName={history.fileName}
+          />
         )}
       </PDFDown>
       <Delete>

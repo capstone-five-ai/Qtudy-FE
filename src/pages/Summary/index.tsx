@@ -15,8 +15,8 @@ function Summary() {
       <MainWrapper>
         <ContentWrapper>
           <Routes>
-            <Route path="/ai" element={complete ? <SummaryComplete /> : <CreateAISummary />} />
-            <Route path="/user" element={complete ? <SummaryComplete /> : <CreateUserSummary />} />
+            <Route path="/ai" element={complete ? <SummaryComplete type="ai" /> : <CreateAISummary />} />
+            <Route path="/user" element={complete ? <SummaryComplete type="user" /> : <CreateUserSummary />} />
           </Routes>
         </ContentWrapper>
       </MainWrapper>
