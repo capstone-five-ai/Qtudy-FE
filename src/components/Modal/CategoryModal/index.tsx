@@ -44,7 +44,8 @@ function CategoryModal({ onClose, categoryType, contentId, generateType }: Props
   };
 
   const handleClickSave = async () => {
-    await CategoryApi.saveSummaryToCategory(saveCategoryIds, contentId, generateType);
+    if (categoryType === 'SUMMARY') await CategoryApi.saveSummaryToCategory(saveCategoryIds, contentId, generateType);
+    if (categoryType === 'PROBLEM') await CategoryApi.saveProblemToCategory(saveCategoryIds, contentId, generateType);
 
     onClose();
   };
