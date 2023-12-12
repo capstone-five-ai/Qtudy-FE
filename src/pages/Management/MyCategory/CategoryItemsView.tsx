@@ -2,16 +2,14 @@ import styled from 'styled-components';
 import React from 'react';
 import CategoryQuizItem from './CategoryQuizItem';
 import Scrollbar from '../../../components/Scrollbar';
-import { ReactComponent as FileIcon } from '../../../assets/icons/icon-file.svg';
-import Typography from '../../../components/Typography';
 import CategorySummaryItem from './CategorySummaryItem';
 import { CategoryInfoType, CategoryType } from '../../../types';
 import { CategoryQuizItemsType } from '../../../types/quiz.type';
 import { CategorySummaryItemsType } from '../../../types/summary.type';
 import NoItem from './NoItem';
-import FileApi from '../../../api/FileApi';
 import QuizCategoryApi from '../../../api/QuizCategoryApi';
 import SummaryCategoryApi from '../../../api/SummaryCategoryApi';
+import PDFButton from '../../../components/Button/PDFButton';
 
 interface CategoryItemsViewProps {
   activeTabBar: CategoryType;
@@ -44,24 +42,6 @@ function CategoryItemsView({
     });
   };
 
-  const downloadQuiz = async () => {
-    if (activeCategory) {
-      await FileApi.downloadQuiz(activeCategory.categoryId);
-    }
-  };
-
-  const downloadAnswer = async () => {
-    if (activeCategory) {
-      await FileApi.downloadAnswer(activeCategory.categoryId);
-    }
-  };
-
-  const downloadSummary = async () => {
-    if (activeCategory) {
-      await FileApi.downloadSummary(activeCategory.categoryId);
-    }
-  };
-
   if (activeTabBar === '퀴즈')
     return (
       <Container>
@@ -69,20 +49,26 @@ function CategoryItemsView({
           <NoItem categoryType={activeTabBar} />
         ) : (
           <>
-            <DownloadButtonContainer>
-              <button type="button" className="download-button" onClick={downloadQuiz}>
-                <FileIcon />
-                <Typography variant="caption3" color="grayScale03">
-                  퀴즈 PDF
-                </Typography>
-              </button>
-              <button type="button" className="download-button" onClick={downloadAnswer}>
-                <FileIcon />
-                <Typography variant="caption3" color="grayScale03">
-                  정답 PDF
-                </Typography>
-              </button>
-            </DownloadButtonContainer>
+            {activeCategory && (
+              <DownloadButtonContainer>
+                <PDFButton
+                  label="퀴즈"
+                  variant={2}
+                  fileId={activeCategory.categoryId}
+                  pdfType="PROBLEM"
+                  type="category"
+                  fileName={`${activeCategory.categoryName}_QUIZ`}
+                />
+                <PDFButton
+                  label="정답"
+                  variant={2}
+                  fileId={activeCategory.categoryId}
+                  pdfType="ANSWER"
+                  type="category"
+                  fileName={`${activeCategory.categoryName}_ANSWER`}
+                />
+              </DownloadButtonContainer>
+            )}
             <CategoryItemContainer>
               {activeCategoryQuizItems.map((quizItem) => (
                 <CategoryQuizItem
@@ -102,25 +88,15 @@ function CategoryItemsView({
       {activeCategorySummaryItems.length === 0 ? (
         <NoItem categoryType={activeTabBar} />
       ) : (
-        <>
-          <DownloadButtonContainer>
-            <button type="button" className="download-button" onClick={downloadSummary}>
-              <FileIcon />
-              <Typography variant="caption3" color="grayScale03">
-                요약 PDF
-              </Typography>
-            </button>
-          </DownloadButtonContainer>
-          <CategoryItemContainer>
-            {activeCategorySummaryItems.map((summaryItem) => (
-              <CategorySummaryItem
-                key={summaryItem.categorizedSummaryId}
-                summaryItem={summaryItem}
-                handleDeleteSummaryItem={handleDeleteSummaryItem}
-              />
-            ))}
-          </CategoryItemContainer>
-        </>
+        <CategoryItemContainer>
+          {activeCategorySummaryItems.map((summaryItem) => (
+            <CategorySummaryItem
+              key={summaryItem.categorizedSummaryId}
+              summaryItem={summaryItem}
+              handleDeleteSummaryItem={handleDeleteSummaryItem}
+            />
+          ))}
+        </CategoryItemContainer>
       )}
     </Container>
   );

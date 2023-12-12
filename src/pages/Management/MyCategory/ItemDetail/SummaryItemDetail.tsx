@@ -13,19 +13,22 @@ import SummaryCategoryApi from '../../../../api/SummaryCategoryApi';
 
 function SummaryItemDetail() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
-  const link = window.location.href;
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const [currentCategoaryId, setCurrentCategoaryId] = useState(-1);
+  const [currentSummaryId, setCurrentSummaryId] = useState(-1);
   const [currentSummary, setCurrentSummary] = useState<SummaryType | null>(null);
+  const mainUrl = window.location.origin;
 
   const getSummaryItem = async (id: string) => {
     await SummaryCategoryApi.get(id).then((data) => {
+      const summaryData = data.response;
       setCurrentSummary({
-        summaryTitle: data.summaryTitle,
-        summaryContent: data.summaryContent,
+        summaryTitle: summaryData.summaryTitle,
+        summaryContent: summaryData.summaryContent,
       });
-      setCurrentCategoaryId(data.categoryId);
+      setCurrentCategoaryId(summaryData.categoryId);
+      setCurrentSummaryId(summaryData.categorizedSummaryId);
     });
   };
 
@@ -62,13 +65,13 @@ function SummaryItemDetail() {
           <SideBar>
             <ButtonWrapper>
               <CopySummaryButton text={currentSummary.summaryContent} />
-              <LinkButton link={link} />
+              <LinkButton link={`${mainUrl}/management/mycategory/share?category=summary&id=${params.get('id')}`} />
               <PDFButton
                 label="요약"
                 type="category"
-                fileId={currentSummary.aiGeneratedSummaryId || currentSummary.memberSavedSummaryId || -1}
+                fileId={currentSummaryId || -1}
                 pdfType="SUMMARY"
-                fileName="요약"
+                fileName={currentSummary.summaryTitle}
               />
             </ButtonWrapper>
 
