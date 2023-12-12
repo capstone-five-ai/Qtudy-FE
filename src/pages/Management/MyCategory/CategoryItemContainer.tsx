@@ -1,19 +1,41 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { ReactComponent as TrashIcon } from '../../../assets/icons/icon-trash.svg';
 import CategoryItemDate from './CategoryItemDate';
 
 interface CategoryItemContainerProps {
+  itemId: number;
+  itemType: string;
   createDate: string;
   updateDate: string;
   children: React.ReactNode;
   handleDeleteItem: () => void;
 }
-function CategoryItemContainer({ createDate, updateDate, children, handleDeleteItem }: CategoryItemContainerProps) {
+function CategoryItemContainer({
+  itemId,
+  itemType,
+  createDate,
+  updateDate,
+  children,
+  handleDeleteItem,
+}: CategoryItemContainerProps) {
+  const navigate = useNavigate();
+
   return (
-    <Container>
+    <Container
+      onClick={() => {
+        navigate(`/management/mycategory/detail?category=${itemType}&id=${itemId}`);
+      }}
+    >
       <ItemContainer>
         <ChildrenContainer>{children}</ChildrenContainer>
-        <TrashIcon className="icon" onClick={handleDeleteItem} />
+        <TrashIcon
+          className="icon"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleDeleteItem();
+          }}
+        />
       </ItemContainer>
       <CategoryItemDate createDate={createDate} updateDate={updateDate} />
     </Container>

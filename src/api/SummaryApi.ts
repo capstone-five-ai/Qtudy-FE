@@ -1,56 +1,69 @@
+import { SummaryCreationByFileType, SummaryCreationByTextType, SummaryCreationByUserType } from '../types/summary.type';
 import apiClient from './client';
 
 const SummaryApi = {
-  createByImage: async (amount: string, fileName: string, file: FormData) => {
+  createByImage: async ({ option, file }: SummaryCreationByFileType) => {
     // 요점정리파일(summaryFile)/이미지 기반 요점정리 생성
-    const response = await apiClient.post(
-      'summaryFile/generateSummaryFileByImage',
-      {
-        file,
+    const response = await apiClient.post('api/summaryFile/generateSummaryFileByImage', file, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        params: { amount, fileName },
-      }
-    );
+      params: {
+        amount: option.amount,
+        fileName: option.fileName,
+      },
+    });
     return response.data;
   },
 
-  createByPdf: async (amount: string, fileName: string, file: FormData) => {
+  createByPdf: async ({ option, file }: SummaryCreationByFileType) => {
     // 요점정리파일(summaryFile)/PDF 기반 요점정리 생성
+    const response = await apiClient.post('api/summaryFile/generateSummaryFileByPdf', file, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+      params: {
+        amount: option.amount,
+        fileName: option.fileName,
+      },
+    });
+    return response.data;
+  },
+
+  createByText: async ({ option, text }: SummaryCreationByTextType) => {
+    // 요점정리파일(summaryFile)/Text 기반 요점정리 생성
     const response = await apiClient.post(
-      'summaryFile/generateSummaryFileByPdf',
+      'api/summaryFile/generateSummaryFileByText',
       {
-        file,
+        amount: option.amount,
+        fileName: option.fileName,
+        text,
       },
       {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
-        params: { amount, fileName },
       }
     );
     return response.data;
   },
 
-  createByText: async (amount: string, fileName: string, text: string) => {
-    // 요점정리파일(summaryFile)/Text 기반 요점정리 생성
-    const response = await apiClient.post('summaryFile/generateSummaryFileByText', {
-      amount,
-      fileName,
-      text,
-    });
-    return response.data;
-  },
-
-  createByUser: async (summaryTitle: string, summaryContent: string) => {
+  createByUser: async ({ summaryTitle, summaryContent }: SummaryCreationByUserType) => {
     // 요약정리(Summary)/요약 정리 생성
-    const response = await apiClient.post('member-saved-summary/new', {
-      summaryTitle,
-      summaryContent,
-    });
+    const response = await apiClient.post(
+      'api/member-saved-summary/new',
+      {
+        summaryTitle,
+        summaryContent,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      }
+    );
     return response.data;
   },
 };

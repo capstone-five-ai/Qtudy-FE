@@ -16,7 +16,7 @@ function QuestionField({ question, setQuestion }: QuestionFieldProps) {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuestion({ input: e.target.value, check: false });
+    setQuestion({ ...question, input: e.target.value });
   };
 
   return (

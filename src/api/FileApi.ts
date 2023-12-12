@@ -31,6 +31,33 @@ const FileApi = {
     const response = await apiClient.delete(`api/file/deleteFile/${fileId}`, { headers });
     return response.data;
   },
+
+  downloadQuiz: async (categoryId: number) => {
+    // 카테고리별 문제(Categorized Problem)/카테고리별 문제 PDF(문제) 다운
+    apiClient.post(`api/categorized-problem/download-problem-pdf/${categoryId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
+  },
+
+  downloadAnswer: async (categoryId: number) => {
+    // 카테고리별 문제(Categorized Problem)/카테고리별 정답 PDF(정답) 다운
+    await apiClient.post(`api/categorized-problem/download-answer-pdf/${categoryId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
+  },
+
+  downloadSummary: async (categoryId: number) => {
+    // 카테고리별 요약(Categorized Summary)/카테고리별 요약 정리 PDF 다운
+    await apiClient.post(`api/categorized-summary/download-pdf/${categoryId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
+  },
 };
 
 export default FileApi;
