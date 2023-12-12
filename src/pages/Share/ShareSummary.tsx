@@ -13,9 +13,10 @@ function ShareSummary({ currentId }: { currentId: string | null }) {
 
   const getSummaryItem = async (id: string) => {
     await SummaryCategoryApi.get(id).then((data) => {
+      const summaryData = data.response;
       setCurrentSummary({
-        summaryTitle: data.summaryTitle,
-        summaryContent: data.summaryContent,
+        summaryTitle: summaryData.summaryTitle,
+        summaryContent: summaryData.summaryContent,
       });
     });
   };

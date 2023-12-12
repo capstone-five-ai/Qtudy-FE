@@ -42,7 +42,7 @@ function SummaryItemEdit() {
 
   return (
     <>
-      <CategoryItemContentWrapper isEdit={false} handleFinishEdit={handleFinishEdit}>
+      <CategoryItemContentWrapper isEdit handleFinishEdit={handleFinishEdit}>
         <TextType service="summary" inputText={content} setInputText={setContent} />
       </CategoryItemContentWrapper>
       <NoButtonSideBar>
