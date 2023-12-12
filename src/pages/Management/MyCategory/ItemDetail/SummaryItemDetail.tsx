@@ -81,8 +81,8 @@ function SummaryItemDetail() {
           <CategoryModal
             onClose={() => setShowCategoryModal(false)}
             categoryType="PROBLEM"
-            contentId={id}
-            generateType=""
+            contentId={Number(params.get('id') || -1)}
+            generateType={currentSummary.aiGeneratedSummaryId ? 'ai' : 'user'}
           />
         )}
       </>
