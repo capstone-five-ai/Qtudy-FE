@@ -10,15 +10,17 @@ const SERVICE: { [key: string]: string } = {
 function SelectAIType({ service }: { service: string }) {
   return (
     <Container>
-      <TextContainer>
-        <Typography variant="caption2" color="grayScale03">
-          {SERVICE[service]}
-        </Typography>
-      </TextContainer>
-      <CardContainer>
-        <UploadedCard />
-        <TextCard />
-      </CardContainer>
+      <InnerContainer>
+        <TextContainer>
+          <Typography variant="caption2" color="grayScale03">
+            {SERVICE[service]}
+          </Typography>
+        </TextContainer>
+        <CardContainer>
+          <UploadedCard />
+          <TextCard />
+        </CardContainer>
+      </InnerContainer>
     </Container>
   );
 }
@@ -34,6 +36,10 @@ const Container = styled.div`
   position: relative;
 `;
 
+const InnerContainer = styled.div`
+  position: relative;
+`;
+
 const CardContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -43,7 +49,7 @@ const CardContainer = styled.div`
 const TextContainer = styled.div`
   > div {
     position: absolute;
-    top: 85px;
+    top: -90px;
     left: 50%;
     transform: translate(-50%, 0);
     text-align: center;
