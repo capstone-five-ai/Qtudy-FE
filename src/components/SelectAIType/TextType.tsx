@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import TextAreaField from '../Input/TextAreaField';
-import Scrollbar from '../Scrollbar';
 
 const PLACEHOLDER = {
   quiz: '퀴즈를 생성하고 싶은 관련 텍스트를 입력해주세요.',
@@ -27,14 +26,7 @@ function TextType({ service, inputText, setInputText }: TextTypeProps) {
 export default TextType;
 
 const Container = styled.div`
-  display: flex;
-  padding: 16px;
-  padding-right: 0px;
-  border-radius: 4px;
-  background: ${(props) => props.theme.colors.grayScale09};
-
+  padding: 14px 26px;
+  padding-right: 24px;
   height: 100%;
-  padding-right: 0;
-  overflow-y: scroll;
-  ${Scrollbar}
 `;

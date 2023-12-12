@@ -12,7 +12,6 @@ export default CreateContentWrapper;
 
 const Container = styled.div`
   flex-grow: 1;
-  padding: 24px 0px;
-  padding-left: 36px;
-  padding-right: 20px;
+  padding: 10px;
+  padding-right: 0px;
 `;

@@ -1,11 +1,32 @@
 import reactTextareaAutosize from 'react-textarea-autosize';
 import styled from 'styled-components';
+import Scrollbar from '../Scrollbar';
 
 function TextAreaField({ ...props }) {
-  return <StyledTextArea minRows={20} {...props} />;
+  return (
+    <Container>
+      <TextFieldContainer>
+        <StyledTextArea minRows={20} {...props} />
+      </TextFieldContainer>
+    </Container>
+  );
 }
 
 export default TextAreaField;
+
+const Container = styled.div`
+  padding: 16px;
+  padding-right: 0px;
+  border-radius: 4px;
+  height: 100%;
+  background: ${(props) => props.theme.colors.grayScale09};
+`;
+
+const TextFieldContainer = styled.div`
+  overflow-y: scroll;
+  height: 100%;
+  ${Scrollbar}
+`;
 
 const StyledTextArea = styled(reactTextareaAutosize)`
   width: 100%;
