@@ -13,14 +13,15 @@ function ShareQuiz({ currentId }: { currentId: string | null }) {
 
   const getQuizItem = async (id: string) => {
     await QuizCategoryApi.get(id).then((data) => {
+      const quizData = data.response;
       setCurrentQuiz({
-        problemName: data.problemName,
-        problemAnswer: data.probelAnswer,
-        problemCommentary: data.problemCommentary,
-        problemType: data.problemType,
-        problemChoices: data.problemChoices,
+        problemName: quizData.problemName,
+        problemAnswer: quizData.problemAnswer,
+        problemCommentary: quizData.problemCommentary,
+        problemType: quizData.problemType,
+        problemChoices: quizData.problemChoices,
       });
-      setQuestionNum(parseInt(data.problemAnswer || '1', 10));
+      setQuestionNum(parseInt(quizData.problemAnswer || '0', 10));
     });
   };
 

@@ -16,18 +16,20 @@ function QuizItemDetail() {
   const [currentCategoaryId, setCurrentCategoaryId] = useState(-1);
   const [currentQuiz, setCurrentQuiz] = useState<QuestionType | null>(null);
   const [questionNum, setQuestionNum] = useState(1);
+  const mainUrl = window.location.origin;
 
   const getQuizItem = async (id: string) => {
     await QuizCategoryApi.get(id).then((data) => {
+      const quizData = data.response;
       setCurrentQuiz({
-        problemName: data.problemName,
-        problemAnswer: data.probelAnswer,
-        problemCommentary: data.problemCommentary,
-        problemType: data.problemType,
-        problemChoices: data.problemChoices,
+        problemName: quizData.problemName,
+        problemAnswer: quizData.problemAnswer,
+        problemCommentary: quizData.problemCommentary,
+        problemType: quizData.problemType,
+        problemChoices: quizData.problemChoices,
       });
-      setQuestionNum(parseInt(data.problemAnswer || '1', 10));
-      setCurrentCategoaryId(data.categoryId);
+      setQuestionNum(parseInt(quizData.problemAnswer || '0', 10));
+      setCurrentCategoaryId(quizData.categoryId);
     });
   };
 
@@ -54,7 +56,7 @@ function QuizItemDetail() {
       <SideWrapper>
         <SideBar>
           <ButtonWrapper>
-            <LinkButton link={`management/mycategory/share?category=quiz&id=${params.get('id')}`} />
+            <LinkButton link={`${mainUrl}/management/mycategory/share?category=quiz&id=${params.get('id')}`} />
           </ButtonWrapper>
 
           <TwinkleButton disabled={false} onClick={() => setShowCategoryModal(true)}>
