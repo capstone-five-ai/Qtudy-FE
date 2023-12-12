@@ -42,7 +42,7 @@ function SummaryItemEdit() {
 
   return (
     <>
-      <CategoryItemContentWrapper isEdit={false} handleFinishEdit={handleFinishEdit}>
+      <CategoryItemContentWrapper isEdit handleFinishEdit={handleFinishEdit}>
         <TextAreaField
           placeholder="요약을 생성하고 싶은 관련 텍스트를 입력해주세요."
           value={content}

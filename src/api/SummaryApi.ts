@@ -1,7 +1,25 @@
+import getAccessToken from '../utils/getAccessToken';
 import { SummaryCreationByFileType, SummaryCreationByTextType, SummaryCreationByUserType } from '../types/summary.type';
 import apiClient from './client';
 
+const headers = {
+  Authorization: `Bearer ${getAccessToken()}`,
+};
+
 const SummaryApi = {
+  getAISummary: async (fileId: number, isAuthenticated: boolean) => {
+    const response = await apiClient.get(`api/summary/getSummary/${fileId}`, isAuthenticated ? { headers } : {});
+    return response.data;
+  },
+
+  getUserSummary: async (memberSavedSummaryId: number, isAuthenticated: boolean) => {
+    const response = await apiClient.get(
+      `api/member-saved-summary/${memberSavedSummaryId}`,
+      isAuthenticated ? { headers } : {}
+    );
+    return response.data;
+  },
+
   createByImage: async ({ option, file }: SummaryCreationByFileType) => {
     // 요점정리파일(summaryFile)/이미지 기반 요점정리 생성
     const response = await apiClient.post('api/summaryFile/generateSummaryFileByImage', file, {

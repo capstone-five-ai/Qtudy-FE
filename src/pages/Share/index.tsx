@@ -14,8 +14,8 @@ function Share() {
     <MainLayout contentKey="management">
       <MainWrapper>
         <ContentWrapper>
-          {params.get('category') === 'quiz' && <ShareQuiz />}
-          {params.get('category') === 'summary' && <ShareSummary />}
+          {params.get('category') === 'quiz' && <ShareQuiz currentId={params.get('id')} />}
+          {params.get('category') === 'summary' && <ShareSummary currentId={params.get('id')} />}
         </ContentWrapper>
       </MainWrapper>
     </MainLayout>

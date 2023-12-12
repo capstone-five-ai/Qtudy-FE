@@ -34,7 +34,9 @@ function QuizView({ quizType, question, options, answer, setQuestion, setOptions
           <AddOptionButton handleClick={handleAddOption} disabled={options.length >= MAX_OPTION_COUNT} />
         </QuizInputFieldContainer>
       ) : (
-        <QuestionField question={question} setQuestion={setQuestion} />
+        <QuizInputFieldContainer>
+          <QuestionField question={question} setQuestion={setQuestion} />
+        </QuizInputFieldContainer>
       )}
     </div>
   );
