@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as AddCategory } from '../../../assets/icons/add_category.svg';
 import { CategoryInfoType } from '../../../types';
@@ -8,51 +8,44 @@ import InputField from '../../Input/InputField';
 import Typography from '../../Typography';
 import ModalContainer from '../ModalContainer';
 import CategoryList from './CategoryList';
+import CategoryApi from '../../../api/CategoryApi';
 
 type Props = {
   onClose: () => void;
   categoryType: 'PROBLEM' | 'SUMMARY';
+  contentId: number;
+  generateType: 'ai' | 'user';
 };
 
-function CategoryModal({ onClose, categoryType }: Props) {
+function CategoryModal({ onClose, categoryType, contentId, generateType }: Props) {
   const [showCategoryInput, setShowCategoryInput] = useState(false);
-  const [categories, setCategories] = useState<CategoryInfoType[]>([
-    {
-      categoryId: 0,
-      categoryName: 'category 0',
-    },
-    {
-      categoryId: 1,
-      categoryName: 'category 1',
-    },
-  ]);
+  const [categories, setCategories] = useState<CategoryInfoType[]>([]);
   const [newCategory, setNewCategory] = useState('');
   const [saveCategoryIds, setSaveCategoryIds] = useState<number[]>([]);
   const [showWarn] = useState(false);
 
-  useEffect(() => {
-    // TODO: category get call
-    console.log(categoryType);
+  const getCategories = useCallback(async () => {
+    const data = await CategoryApi.getCategorys(categoryType);
+    setCategories(data.data);
   }, [categoryType]);
+
+  useEffect(() => {
+    getCategories();
+  }, [categoryType, getCategories]);
 
   const handleChangeCategory = (e: ChangeEvent<HTMLInputElement>) => {
     setNewCategory(e.target.value);
   };
 
-  const handlePostCategory = () => {
-    // TODO: category post call
-    setCategories([
-      ...categories,
-      {
-        categoryId: 1000,
-        categoryName: newCategory,
-      },
-    ]);
+  const handlePostCategory = async () => {
+    const data = await CategoryApi.createCategory(newCategory, categoryType);
+
+    setCategories([...categories, data]);
   };
 
-  const handleClickSave = () => {
-    // TODO: save category call
-    console.log(saveCategoryIds);
+  const handleClickSave = async () => {
+    await CategoryApi.saveSummaryToCategory(saveCategoryIds, contentId, generateType);
+
     onClose();
   };
 
