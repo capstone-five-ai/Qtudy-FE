@@ -37,7 +37,7 @@ function Question({ question, questionNum }: Props) {
               <Typography
                 key={choice}
                 variant="body2"
-                color={showAnswer && questionNum === idx + 1 ? 'mainMintDark' : 'grayScale02'}
+                color={showAnswer && Number(question.problemAnswer) === idx + 1 ? 'mainMintDark' : 'grayScale02'}
               >
                 {getCircleNum(idx + 1)} {choice}
               </Typography>
