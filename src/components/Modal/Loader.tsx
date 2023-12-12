@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { ReactComponent as LoaderIcon } from '../../assets/icons/icon-loader.svg';
+import { ReactComponent as LogoIcon } from '../../assets/logo/logo_main.svg';
+import { ReactComponent as SpinnerImage } from '../../assets/images/spinner.svg';
 import { ReactComponent as TwinkleIcon } from '../../assets/icons/icon-twinkle.svg';
 import Typography from '../Typography';
 import loadingSelector from '../../recoil/selectors/loading';
@@ -28,7 +29,10 @@ function Loader({ isLoading }: { isLoading: boolean }) {
   return (
     <Container>
       <LoadingContainer>
-        <LoaderIcon />
+        <ImageContainer>
+          <LogoIcon className="logo" />
+          <SpinnerImage className="spinner" />
+        </ImageContainer>
         {isLoading ? <Generating /> : <Complete />}
       </LoadingContainer>
     </Container>
@@ -41,9 +45,9 @@ function Generating() {
   return (
     <GenerateContainer>
       <Typography variant="h3" color="grayScale09">
-        Generating
+        Generating ...
       </Typography>
-      <Loading />
+      {/* <Loading /> */}
     </GenerateContainer>
   );
 }
@@ -77,6 +81,36 @@ const LoadingContainer = styled.div`
 
   width: 100%;
   height: 100%;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+const ImageContainer = styled.div`
+  width: 160px;
+  height: 160px;
+  position: relative;
+
+  .spinner {
+    animation: spin 1s linear infinite;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .logo {
+    height: 53px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 `;
 
 const GenerateContainer = styled.div`
@@ -96,7 +130,7 @@ const CompleteContainer = styled.div`
   }
 `;
 
-const Loading = styled.span`
+/* const Loading = styled.span`
   width: 3px;
   height: 3px;
 
@@ -143,4 +177,4 @@ const Loading = styled.span`
       box-shadow: 0 7px 0 0;
     }
   }
-`;
+`; */

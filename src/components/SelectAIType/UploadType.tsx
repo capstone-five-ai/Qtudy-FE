@@ -53,25 +53,43 @@ function UploadType({ inputRef, pdfFile, imageFiles, handleFileUpload, handleDel
 
   return (
     <PreviewContainer>
-      {pdfFile !== null && (
-        <Preview>
-          <button type="button" className="icon-container" onClick={() => handleDelete(null)}>
-            <ExitIcon />
-          </button>
-          <object data={pdfObjectURL} type="application/pdf" width="400" height="300">
-            PDF 미리보기를 지원하지 않는 브라우저입니다.
-          </object>
-        </Preview>
-      )}
-      {imageFiles.length > 0 &&
-        imageFiles.map((image, index) => (
-          <Preview key={image.name}>
-            <button type="button" className="icon-container" onClick={() => handleDelete(index)}>
+      <PreviewInnerContainer>
+        {pdfFile !== null && (
+          <Preview>
+            <button type="button" className="icon-container" onClick={() => handleDelete(null)}>
               <ExitIcon />
             </button>
-            <img src={imageObjectURLs[index]} alt="이미지 미리보기" />
+            <object data={pdfObjectURL} type="application/pdf" width="400" height="300">
+              PDF 미리보기를 지원하지 않는 브라우저입니다.
+            </object>
           </Preview>
-        ))}
+        )}
+        {imageFiles.length > 0 && (
+          <AddButton onClick={() => uploadFileUtils.handleUploadButtonClick(inputRef)}>
+            <input
+              style={{ display: 'none' }}
+              type="file"
+              accept="image/*, .pdf"
+              multiple
+              ref={inputRef}
+              onChange={handleFileUpload}
+            />
+            <UploadIcon className="add-icon" />
+            <Typography variant="subtitle" color="grayScale03">
+              파일 추가
+            </Typography>
+          </AddButton>
+        )}
+        {imageFiles.length > 0 &&
+          imageFiles.map((image, index) => (
+            <Preview key={image.name}>
+              <button type="button" className="icon-container" onClick={() => handleDelete(index)}>
+                <ExitIcon />
+              </button>
+              <img src={imageObjectURLs[index]} alt="이미지 미리보기" />
+            </Preview>
+          ))}
+      </PreviewInnerContainer>
     </PreviewContainer>
   );
 }
@@ -97,28 +115,26 @@ const Text = styled.div`
 `;
 
 const PreviewContainer = styled.div`
+  height: 100%;
+  overflow-y: scroll;
+  ${Scrollbar}
+`;
+
+const PreviewInnerContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 16px;
-
-  height: calc(100% + 16px);
-  margin-top: -8px;
-  margin-left: -20px;
-  margin-right: calc(-20px);
-
-  overflow-y: scroll;
-  ${Scrollbar}
+  gap: 10px;
 `;
 
 const Preview = styled.div`
   width: 245px;
   height: 138px;
+  margin: 3px;
   border-radius: 4px;
   border: 1px solid;
   border-color: transparent;
   position: relative;
-  overflow: hidden;
   box-shadow: 0px 0px 4px 0px rgba(117, 117, 117, 0.28);
 
   object {
@@ -133,7 +149,7 @@ const Preview = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.6;
+    opacity: 0.8;
   }
 
   .icon-container {
@@ -171,5 +187,20 @@ const Preview = styled.div`
     object {
       opacity: 1;
     }
+  }
+`;
+
+const AddButton = styled(Preview)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background: ${(props) => props.theme.colors.grayScale06};
+  opacity: 1;
+  cursor: pointer;
+
+  .add-icon {
+    height: 50px;
   }
 `;

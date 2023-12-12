@@ -18,7 +18,7 @@ function MenuBar() {
       setShowTooltip(true);
       timeout = setTimeout(() => {
         setShowTooltip(false);
-      }, 5000);
+      }, 2000);
       handleChangeCurrentPath(location.pathname);
     }
 

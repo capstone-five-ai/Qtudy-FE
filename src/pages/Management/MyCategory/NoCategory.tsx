@@ -34,7 +34,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 160px;
+  gap: 156px;
   max-height: calc(100vh - 65px - 190px);
   min-height: 572px;
   position: relative;

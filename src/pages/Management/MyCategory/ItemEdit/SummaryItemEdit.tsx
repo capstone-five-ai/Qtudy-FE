@@ -3,8 +3,8 @@ import { Navigate, useLocation, useNavigate, useSearchParams } from 'react-route
 import CategoryItemContentWrapper from '../../../../components/Wrapper/CategoryItemContentWrapper';
 import NoButtonSideBar from '../../../../components/SideBar/NoButtonSideBar';
 import FileNameInputField from '../../../../components/Input/FileNameInputField';
-import TextType from '../../../../components/SelectAIType/TextType';
 import { SummaryType } from '../../../../types/summary.type';
+import TextAreaField from '../../../../components/Input/TextAreaField';
 import SummaryCategoryApi from '../../../../api/SummaryCategoryApi';
 
 function SummaryItemEdit() {
@@ -43,7 +43,11 @@ function SummaryItemEdit() {
   return (
     <>
       <CategoryItemContentWrapper isEdit handleFinishEdit={handleFinishEdit}>
-        <TextType service="summary" inputText={content} setInputText={setContent} />
+        <TextAreaField
+          placeholder="요약을 생성하고 싶은 관련 텍스트를 입력해주세요."
+          value={content}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)}
+        />
       </CategoryItemContentWrapper>
       <NoButtonSideBar>
         <FileNameInputField name="file" value={title} onChange={handleFileNameChange} />
