@@ -34,7 +34,7 @@ function SummaryComplete({ type }: Props) {
       if (type === 'user') data = await SummaryApi.getUserSummary(id, isAuthenticated);
 
       if (data.isWriter) setIsWriter(true);
-      setSummary(data);
+      setSummary(data.response);
     },
     [type, isAuthenticated]
   );

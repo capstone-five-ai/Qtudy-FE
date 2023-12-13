@@ -28,7 +28,7 @@ export interface CategoryQuizItemsType {
 
 export interface CategoryQuizType {
   problemName: string;
-  problemAnswer: string;
+  problemAnswer?: string;
   problemCommentary: string;
-  problemChoices: string[];
+  problemChoices?: string[];
 }

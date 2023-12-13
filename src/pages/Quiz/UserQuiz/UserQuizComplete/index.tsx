@@ -59,7 +59,7 @@ function UserQuizComplete() {
         <CategoryModal
           onClose={() => setShowCategoryModal(false)}
           categoryType="PROBLEM"
-          contentId={question.meberSavedProblemId || -1}
+          contentId={memberSavedProblemId || -1}
           generateType="user"
         />
       )}

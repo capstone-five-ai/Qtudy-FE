@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
@@ -25,17 +25,32 @@ function CreateUserQuiz() {
 
   const { mutate, isLoading } = useCreateQuizByUser();
 
+  useEffect(() => {
+    setQuestion({ ...DEFAULT_INPUT, id: uuidv4() });
+    setOptions([{ ...DEFAULT_INPUT, id: uuidv4() }]);
+    setAnswer(-1);
+    setCommentary({ ...DEFAULT_INPUT_COMMENTARY, id: uuidv4() });
+  }, [quizType]);
+
   const handleSubmit = () => {
     setShowLoader(true);
 
     try {
-      mutate({
-        problemName: question.input,
-        problemAnswer: answer.toString(),
-        problemCommentary: commentary.input,
-        problemType: quizType.value,
-        problemChoices: options.map((option) => option.input),
-      });
+      if (quizType === CREATE_USER_QUIZ_TYPE[0]) {
+        mutate({
+          problemName: question.input,
+          problemAnswer: answer.toString(),
+          problemCommentary: commentary.input,
+          problemType: quizType.value,
+          problemChoices: options.map((option) => option.input),
+        });
+      } else {
+        mutate({
+          problemName: question.input,
+          problemCommentary: commentary.input,
+          problemType: quizType.value,
+        });
+      }
     } catch {
       setShowLoader(false);
     }

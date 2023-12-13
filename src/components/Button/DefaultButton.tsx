@@ -40,7 +40,7 @@ function DefaultButton({ size = 'medium', disabled = false, onClick, theme = 'mi
       $style={buttonStyle.find((el) => el.type === size) || buttonStyle[1]}
     >
       <button type="button" disabled={disabled} onClick={onClick}>
-        <Typography variant="button" color={theme === 'mint' ? 'grayScale09' : 'grayScale03'}>
+        <Typography variant="button" color={theme === 'mint' ? 'grayScale09' : 'grayScale02'}>
           {children}
         </Typography>
       </button>
@@ -74,7 +74,7 @@ const Container = styled.div<{ $disabled: boolean; $style: Style; $theme: 'mint'
 
     &:hover {
       background: ${(props) =>
-        props.$theme === 'mint' ? props.theme.colors.mainMintDark : props.theme.colors.grayScale07};
+        props.$theme === 'mint' ? props.theme.gradation.mainMintDarkGra : props.theme.colors.grayScale07};
     }
   }
 
