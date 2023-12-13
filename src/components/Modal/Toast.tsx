@@ -44,6 +44,7 @@ const Wrapper = styled.div`
   width: 100%;
   position: fixed;
   bottom: 30px;
+  z-index: 10;
 `;
 
 const ToastWrapper = styled.div`
