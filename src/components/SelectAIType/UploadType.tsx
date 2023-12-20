@@ -135,6 +135,7 @@ const Preview = styled.div`
   border: 1px solid;
   border-color: transparent;
   position: relative;
+  overflow: hidden;
   box-shadow: 0px 0px 4px 0px rgba(117, 117, 117, 0.28);
 
   object {
