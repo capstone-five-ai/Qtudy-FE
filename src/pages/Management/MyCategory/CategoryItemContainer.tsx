@@ -26,6 +26,7 @@ function CategoryItemContainer({
       onClick={() => {
         navigate(`/management/mycategory/detail?category=${itemType}&id=${itemId}`);
       }}
+      $itemType={itemType}
     >
       <ItemContainer>
         <ChildrenContainer>{children}</ChildrenContainer>
@@ -42,14 +43,13 @@ function CategoryItemContainer({
   );
 }
 
-const Container = styled.div`
+const Container = styled.div<{ $itemType: string }>`
   display: flex;
   flex-direction: column;
   gap: 14px;
 
   width: 728px;
-  height: 196px;
-  padding: 20px;
+  padding: ${(props) => (props.$itemType === 'quiz' ? '18.5px' : '19.5px 19px')};
   border-radius: 8px;
   border: 1px solid transparent;
   box-shadow: 0px 0px 12px 0px rgba(189, 189, 189, 0.2);
@@ -76,7 +76,6 @@ const Container = styled.div`
 
 const ItemContainer = styled.div`
   display: flex;
-  gap: 20px;
   width: 100%;
 `;
 
