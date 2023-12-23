@@ -37,4 +37,5 @@ export default QuestionField;
 
 const Container = styled.div`
   display: flex;
+  width: 724px;
 `;
