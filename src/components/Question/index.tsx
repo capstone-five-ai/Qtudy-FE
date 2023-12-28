@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { styled } from 'styled-components';
-import { ReactComponent as AnswerIcon } from '../../assets/icons/answer.svg';
+import { ReactComponent as ExplanationIcon } from '../../assets/icons/explanation.svg';
 import { ReactComponent as ArrowIcon } from '../../assets/icons/arrow.svg';
 import { QuestionType } from '../../types/question.type';
 import getCircleNum from '../../utils/getCircleNum';
@@ -46,7 +46,7 @@ function Question({ question, questionNum }: Props) {
       </Quiz>
       <AnswerWrapper>
         <AnswerButton type="button" onClick={handleClickAnswer}>
-          <AnswerIcon />
+          <ExplanationIcon />
           <Typography variant="button" color="mainMintDark">
             정답 및 해설
           </Typography>
