@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as ChatIcon } from '../../assets/icons/icon-chat.svg';
+import { ReactComponent as ExplanationIcon } from '../../assets/icons/explanation.svg';
 import { ReactComponent as ArrowIcon } from '../../assets/icons/arrow.svg';
 import Typography from '../Typography';
 
@@ -11,7 +11,7 @@ interface AnswerAccordionTitleProps {
 function AnswerAccordionTitle({ show, setShow }: AnswerAccordionTitleProps) {
   return (
     <Container onClick={() => setShow(!show)}>
-      <ChatIcon />
+      <ExplanationIcon />
       <Typography variant="button" color="mainMintDark">
         정답 및 해설
       </Typography>
