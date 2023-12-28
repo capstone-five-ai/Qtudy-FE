@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { ReactComponent as ChatIcon } from '../../assets/icons/icon-chat.svg';
-import { ReactComponent as ArrowIcon } from '../../assets/icons/icon-arrow.svg';
+import { ReactComponent as ArrowIcon } from '../../assets/icons/arrow.svg';
 import Typography from '../Typography';
 
 interface AnswerAccordionTitleProps {
