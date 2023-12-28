@@ -2,7 +2,7 @@ import { ReactNode, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as GenerateQuiz } from '../../assets/icons/generate_quiz.svg';
 import { ReactComponent as GenerateSummary } from '../../assets/icons/generate_summary.svg';
-import { ReactComponent as SaveAndManage } from '../../assets/icons/save_and_manage.svg';
+import { ReactComponent as SaveAndManage } from '../../assets/icons/manage_review.svg';
 
 import { ReactComponent as Gradation } from '../../assets/icons/gradation_ellipse.svg';
 import Typography from '../../components/Typography';
