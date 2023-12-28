@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { ReactComponent as TextIcon } from '../../assets/icons/icon-text.svg';
+import { ReactComponent as TextIcon } from '../../assets/icons/inputText.svg';
 import { ReactComponent as UploadIcon } from '../../assets/icons/uploadFile.svg';
 import Typography from '../Typography';
 
@@ -8,7 +8,7 @@ export function UploadedCard() {
   return (
     <Link to="?type=upload" style={{ textDecoration: 'none' }}>
       <TypeContainer>
-        <UploadIcon />
+        <UploadIcon className="upload-icon" />
         <TextContainer>
           <Typography variant="subtitle" color="grayScale02">
             파일 업로드
@@ -26,7 +26,7 @@ export function TextCard() {
   return (
     <Link to="?type=text" style={{ textDecoration: 'none' }}>
       <TypeContainer>
-        <TextIcon />
+        <TextIcon className="text-icon" />
         <TextContainer>
           <Typography variant="subtitle" color="grayScale02">
             텍스트 직접 입력
@@ -52,13 +52,24 @@ const TypeContainer = styled.div`
   &:hover {
     box-shadow: 0px 0px 8px 0px rgba(54, 189, 180, 0.24);
 
-    path:first-of-type {
-      fill: ${(props) => props.theme.colors.mainMint};
+    .upload-icon {
+      path {
+        stroke: ${(props) => props.theme.colors.mainMint};
+      }
+      path:first-of-type {
+        stroke: none;
+        fill: ${(props) => props.theme.colors.mainMint};
+      }
     }
 
-    path:nth-of-type(2),
-    path:nth-of-type(3) {
-      stroke: ${(props) => props.theme.colors.mainMint};
+    .text-icon {
+      path {
+        stroke: ${(props) => props.theme.colors.mainMint};
+      }
+      path:last-of-type {
+        stroke: none;
+        fill: ${(props) => props.theme.colors.mainMint};
+      }
     }
   }
 `;
