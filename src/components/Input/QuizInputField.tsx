@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as CheckIcon } from '../../assets/icons/icon-check.svg';
+import { ReactComponent as CheckIcon } from '../../assets/icons/complete.svg';
 import { ReactComponent as EditIcon } from '../../assets/icons/icon-edit.svg';
 import { ReactComponent as TrashIcon } from '../../assets/icons/icon-trash.svg';
 import { UserQuizInputType } from '../../types';

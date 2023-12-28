@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { useState } from 'react';
 import reactTextareaAutosize from 'react-textarea-autosize';
 import Typography from '../Typography';
-import { ReactComponent as CheckIcon } from '../../assets/icons/icon-check.svg';
+import { ReactComponent as CheckIcon } from '../../assets/icons/complete.svg';
 import { ReactComponent as EditIcon } from '../../assets/icons/icon-edit.svg';
 import { NUMBER_TO_CIRCLE } from '../../constants';
 import AnswerAccordionTitle from './AnswerAccordionTitle';
