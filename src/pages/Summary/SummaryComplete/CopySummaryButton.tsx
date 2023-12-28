@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { ReactComponent as CopyIcon } from '../../../assets/icons/copy_gradation.svg';
+import { ReactComponent as CopyIcon } from '../../../assets/icons/copy_text.svg';
 import Typography from '../../../components/Typography';
 import useToast from '../../../hooks/useToast';
 
