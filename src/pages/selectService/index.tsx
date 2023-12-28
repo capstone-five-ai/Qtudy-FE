@@ -4,7 +4,7 @@ import { ReactComponent as GenerateQuiz } from '../../assets/icons/generate_quiz
 import { ReactComponent as GenerateSummary } from '../../assets/icons/generate_summary.svg';
 import { ReactComponent as SaveAndManage } from '../../assets/icons/manage_review.svg';
 
-import { ReactComponent as Gradation } from '../../assets/icons/gradation_ellipse.svg';
+import { ReactComponent as Gradation } from '../../assets/images/gradation_ellipse.svg';
 import Typography from '../../components/Typography';
 import Card from './Card';
 
@@ -95,8 +95,9 @@ const Title = styled.div`
 
 const GradationContainer = styled.div`
   position: absolute;
-  top: -62px;
-  right: -72px;
+  bottom: -35px;
+  right: -62px;
+  z-index: -1;
 `;
 
 const CardContainer = styled.div`
