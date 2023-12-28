@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import React from 'react';
 import Typography from '../Typography';
 
 interface Style {
@@ -22,6 +23,7 @@ interface DefaultButtonProps {
   disabled?: boolean;
   onClick?: () => void;
   theme?: 'mint' | 'gray';
+  icon?: React.ReactNode | null;
   children: React.ReactNode;
 }
 
@@ -30,9 +32,17 @@ DefaultButton.defaultProps = {
   disabled: false,
   onClick() {},
   theme: 'mint',
+  icon: null,
 };
 
-function DefaultButton({ size = 'medium', disabled = false, onClick, theme = 'mint', children }: DefaultButtonProps) {
+function DefaultButton({
+  size = 'medium',
+  disabled = false,
+  onClick,
+  theme = 'mint',
+  icon,
+  children,
+}: DefaultButtonProps) {
   return (
     <Container
       $disabled={disabled}
@@ -40,6 +50,7 @@ function DefaultButton({ size = 'medium', disabled = false, onClick, theme = 'mi
       $style={buttonStyle.find((el) => el.type === size) || buttonStyle[1]}
     >
       <button type="button" disabled={disabled} onClick={onClick}>
+        {icon}
         <Typography variant="button" color={theme === 'mint' ? 'grayScale09' : 'grayScale02'}>
           {children}
         </Typography>

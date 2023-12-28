@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import QuizApi from '../../../../api/QuizApi';
 import LinkButton from '../../../../components/Button/LinkButton';
-import TwinkleButton from '../../../../components/Button/TwinkleButton';
 import CategoryModal from '../../../../components/Modal/CategoryModal';
 import Question from '../../../../components/Question';
 import { QuestionType } from '../../../../types/question.type';
 import authState from '../../../../recoil/atoms/authState';
+import SaveButton from '../../../../components/Button/SaveButton';
 
 function UserQuizComplete() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
@@ -48,11 +48,7 @@ function UserQuizComplete() {
             <LinkButton link={link} />
           </ButtonWrapper>
 
-          {isWriter !== undefined && (
-            <TwinkleButton disabled={!isWriter} onClick={() => setShowCategoryModal(true)}>
-              Save to Category
-            </TwinkleButton>
-          )}
+          {isWriter !== undefined && <SaveButton disabled={!isWriter} onClick={() => setShowCategoryModal(true)} />}
         </SideBar>
       </SideWrapper>
       {showCategoryModal && (

@@ -5,12 +5,12 @@ import { useRecoilValue } from 'recoil';
 import QuizApi from '../../../../api/QuizApi';
 import LinkButton from '../../../../components/Button/LinkButton';
 import PDFButton from '../../../../components/Button/PDFButton';
-import TwinkleButton from '../../../../components/Button/TwinkleButton';
 import CategoryModal from '../../../../components/Modal/CategoryModal';
 import Question from '../../../../components/Question';
 import { QuestionType } from '../../../../types/question.type';
 import NumberPannel from './NumberPannel';
 import authState from '../../../../recoil/atoms/authState';
+import SaveButton from '../../../../components/Button/SaveButton';
 
 function AIQuizComplete() {
   const [qs] = useSearchParams();
@@ -78,9 +78,7 @@ function AIQuizComplete() {
             </ButtonWrapper>
           </div>
 
-          <TwinkleButton disabled={!isWriter} onClick={() => setShowCategoryModal(true)}>
-            Save to Category
-          </TwinkleButton>
+          <SaveButton disabled={!isWriter} onClick={() => setShowCategoryModal(true)} />
         </SideBar>
       </SideWrapper>
       {showCategoryModal && (

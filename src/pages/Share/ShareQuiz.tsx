@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import Question from '../../components/Question';
 import LinkButton from '../../components/Button/LinkButton';
 import { QuestionType } from '../../types/question.type';
-import TwinkleButton from '../../components/Button/TwinkleButton';
 import QuizCategoryApi from '../../api/QuizCategoryApi';
+import SaveButton from '../../components/Button/SaveButton';
 
 function ShareQuiz({ currentId }: { currentId: string | null }) {
   const link = window.location.href;
@@ -37,7 +37,7 @@ function ShareQuiz({ currentId }: { currentId: string | null }) {
             <LinkButton link={link} />
           </ButtonWrapper>
 
-          <TwinkleButton disabled>Save to Category</TwinkleButton>
+          <SaveButton disabled />
         </SideBar>
       </SideWrapper>
     </>
