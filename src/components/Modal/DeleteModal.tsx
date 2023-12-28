@@ -16,7 +16,7 @@ function DeleteModal({ title, onCancel, onConfirm }: Props) {
       <Wrapper>
         <Header>
           <DeleteCircle>
-            <DeleteIcon />
+            <DeleteIcon width={24} height={24} />
           </DeleteCircle>
           <Typography variant="button">{title}</Typography>
         </Header>
