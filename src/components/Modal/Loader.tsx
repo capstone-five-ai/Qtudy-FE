@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { ReactComponent as LogoIcon } from '../../assets/logo/logo_main.svg';
 import { ReactComponent as SpinnerImage } from '../../assets/images/spinner.svg';
-import { ReactComponent as TwinkleIcon } from '../../assets/icons/icon-twinkle.svg';
+import { ReactComponent as SparkleIcon } from '../../assets/icons/sparkle.svg';
 import Typography from '../Typography';
 import loadingSelector from '../../recoil/selectors/loading';
 
@@ -55,7 +55,7 @@ function Generating() {
 function Complete() {
   return (
     <CompleteContainer>
-      <TwinkleIcon />
+      <SparkleIcon />
       <Typography variant="h3" color="mainMint">
         Complete!
       </Typography>
