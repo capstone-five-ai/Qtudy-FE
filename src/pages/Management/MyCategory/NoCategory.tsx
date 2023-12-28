@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as EmptyIcon } from '../../../assets/icons/icon-empty.svg';
+import { ReactComponent as EmptyIcon } from '../../../assets/icons/empty.svg';
 import Typography from '../../../components/Typography';
 import DefaultButton from '../../../components/Button/DefaultButton';
 
