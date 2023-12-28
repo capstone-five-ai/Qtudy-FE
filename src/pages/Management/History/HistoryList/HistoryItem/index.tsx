@@ -2,7 +2,7 @@ import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import FileApi from '../../../../../api/FileApi';
-import { ReactComponent as EditIcon } from '../../../../../assets/icons/icon-edit.svg';
+import { ReactComponent as EditIcon } from '../../../../../assets/icons/edit_gray.svg';
 import { ReactComponent as DeleteIcon } from '../../../../../assets/icons/icon-trash.svg';
 import PDFButton from '../../../../../components/Button/PDFButton';
 import DeleteModal from '../../../../../components/Modal/DeleteModal';

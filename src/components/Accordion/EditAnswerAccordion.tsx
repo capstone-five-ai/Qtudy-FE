@@ -3,7 +3,7 @@ import { useState } from 'react';
 import reactTextareaAutosize from 'react-textarea-autosize';
 import Typography from '../Typography';
 import { ReactComponent as CheckIcon } from '../../assets/icons/complete.svg';
-import { ReactComponent as EditIcon } from '../../assets/icons/icon-edit.svg';
+import { ReactComponent as EditIcon } from '../../assets/icons/edit_gray.svg';
 import { NUMBER_TO_CIRCLE } from '../../constants';
 import AnswerAccordionTitle from './AnswerAccordionTitle';
 import { UserQuizInputType } from '../../types';
