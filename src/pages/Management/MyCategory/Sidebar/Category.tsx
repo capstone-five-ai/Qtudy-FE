@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { useEffect, useRef, useState } from 'react';
 import Typography from '../../../../components/Typography';
-import { ReactComponent as EditIcon } from '../../../../assets/icons/icon-edit.svg';
+import { ReactComponent as EditIcon } from '../../../../assets/icons/edit_gray.svg';
 import { ReactComponent as TrashIcon } from '../../../../assets/icons/icon-trash.svg';
 import { CategoryInfoType } from '../../../../types';
 
