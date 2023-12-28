@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Typography from '../../../components/Typography';
 import { CategoryType } from '../../../types';
-import { ReactComponent as NoneIcon } from '../../../assets/icons/icon-none.svg';
+import { ReactComponent as NoneIcon } from '../../../assets/icons/none.svg';
 
 const TEXT = { 퀴즈: '아직 생성된 퀴즈가 없어요', 요약: '아직 생성된 요약이 없어요' };
 
