@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import fileDownload from 'js-file-download';
 import FileApi from '../../api/FileApi';
-import { ReactComponent as PDFIcon } from '../../assets/icons/pdf.svg';
+import { ReactComponent as PDFIcon } from '../../assets/icons/download_pdf.svg';
 import Typography from '../Typography';
 
 type Props = {
