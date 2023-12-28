@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Typography from '../Typography';
 import { ReactComponent as EditIcon } from '../../assets/icons/icon-edit-gradation.svg';
-import { ReactComponent as CheckIcon } from '../../assets/icons/icon-check.svg';
+import { ReactComponent as CheckIcon } from '../../assets/icons/complete.svg';
 
 interface CategoryItemContentWrapperProps {
   isEdit?: boolean;
