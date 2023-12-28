@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { ReactComponent as PlusIcon } from '../../assets/icons/icon-plus.svg';
+import { ReactComponent as PlusIcon } from '../../assets/icons/plus.svg';
 import Typography from '../Typography';
 
 interface AddOptionButtonProps {
@@ -49,14 +49,14 @@ const StyledButton = styled.button<{ $disabled: boolean }>`
   ${(props) =>
     !props.$disabled
       ? css`
-          path {
-            fill: ${props.theme.colors.mainMintDark};
-          }
-
           border: dashed 1px ${props.theme.colors.mainMintDark};
           cursor: pointer;
         `
       : css`
+          path {
+            fill: ${props.theme.colors.grayScale06};
+          }
+
           border: dashed 1px ${props.theme.colors.grayScale05};
         `}
 `;
