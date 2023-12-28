@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ReactComponent as TextIcon } from '../../assets/icons/icon-text.svg';
-import { ReactComponent as UploadIcon } from '../../assets/icons/icon-upload.svg';
+import { ReactComponent as UploadIcon } from '../../assets/icons/uploadFile.svg';
 import Typography from '../Typography';
 
 export function UploadedCard() {
@@ -51,8 +51,14 @@ const TypeContainer = styled.div`
 
   &:hover {
     box-shadow: 0px 0px 8px 0px rgba(54, 189, 180, 0.24);
-    path {
+
+    path:first-of-type {
       fill: ${(props) => props.theme.colors.mainMint};
+    }
+
+    path:nth-of-type(2),
+    path:nth-of-type(3) {
+      stroke: ${(props) => props.theme.colors.mainMint};
     }
   }
 `;
