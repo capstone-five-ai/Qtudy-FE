@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { styled } from 'styled-components';
 import { ReactComponent as AnswerIcon } from '../../assets/icons/answer.svg';
-import { ReactComponent as ArrowDown } from '../../assets/icons/arrow_down.svg';
-import { ReactComponent as ArrowUp } from '../../assets/icons/arrow_up.svg';
+import { ReactComponent as ArrowIcon } from '../../assets/icons/arrow.svg';
 import { QuestionType } from '../../types/question.type';
 import getCircleNum from '../../utils/getCircleNum';
 import Typography from '../Typography';
@@ -51,7 +50,7 @@ function Question({ question, questionNum }: Props) {
           <Typography variant="button" color="mainMintDark">
             정답 및 해설
           </Typography>
-          {showAnswer ? <ArrowUp fill="#36BDB4" /> : <ArrowDown fill="#36BDB4" />}
+          <ArrowIcon className={showAnswer ? 'arrow-close' : 'arrow-open'} />
         </AnswerButton>
         {showAnswer && (
           <Commentary>
@@ -100,6 +99,14 @@ const AnswerButton = styled.button`
   background-color: transparent;
   padding: 0;
   cursor: pointer;
+
+  .arrow-open {
+    transform: rotate(-180deg);
+  }
+
+  .arrow-close {
+    transform: rotate(0deg);
+  }
 `;
 
 const Commentary = styled.div`
