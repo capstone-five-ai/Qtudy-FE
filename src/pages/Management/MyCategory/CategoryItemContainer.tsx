@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as TrashIcon } from '../../../assets/icons/icon-trash.svg';
+import { ReactComponent as DeleteIcon } from '../../../assets/icons/delete.svg';
 import CategoryItemDate from './CategoryItemDate';
 
 interface CategoryItemContainerProps {
@@ -30,7 +30,7 @@ function CategoryItemContainer({
     >
       <ItemContainer>
         <ChildrenContainer>{children}</ChildrenContainer>
-        <TrashIcon
+        <DeleteIcon
           className="icon"
           onClick={(e) => {
             e.stopPropagation();

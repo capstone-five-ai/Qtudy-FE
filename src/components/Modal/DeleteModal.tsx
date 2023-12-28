@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as DeleteIcon } from '../../assets/icons/icon-trash.svg';
+import { ReactComponent as DeleteIcon } from '../../assets/icons/delete.svg';
 import DefaultButton from '../Button/DefaultButton';
 import Typography from '../Typography';
 import ModalContainer from './ModalContainer';

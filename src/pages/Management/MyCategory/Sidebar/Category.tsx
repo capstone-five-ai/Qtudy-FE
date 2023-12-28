@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React, { useEffect, useRef, useState } from 'react';
 import Typography from '../../../../components/Typography';
 import { ReactComponent as EditIcon } from '../../../../assets/icons/edit_gray.svg';
-import { ReactComponent as TrashIcon } from '../../../../assets/icons/icon-trash.svg';
+import { ReactComponent as DeleteIcon } from '../../../../assets/icons/delete.svg';
 import { CategoryInfoType } from '../../../../types';
 
 interface CategoryProps {
@@ -57,7 +57,7 @@ function Category({ category, active, setActiveCategory, handleEditCategory, han
                 }}
                 style={{ cursor: 'pointer' }}
               />
-              <TrashIcon onClick={() => handleDeleteCategory(category.categoryId)} style={{ cursor: 'pointer' }} />
+              <DeleteIcon onClick={() => handleDeleteCategory(category.categoryId)} style={{ cursor: 'pointer' }} />
             </div>
           )}
         </>
