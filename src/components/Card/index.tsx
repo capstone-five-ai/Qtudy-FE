@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { ReactComponent as TextIcon } from '../../assets/icons/inputText.svg';
-import { ReactComponent as UploadIcon } from '../../assets/icons/uploadFile.svg';
+import { ReactComponent as TextIcon } from '../../assets/icons/input_text.svg';
+import { ReactComponent as UploadIcon } from '../../assets/icons/upload_file.svg';
 import Typography from '../Typography';
 
 export function UploadedCard() {
