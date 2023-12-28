@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { ReactComponent as CopyIcon } from '../../assets/icons/copy_text.svg';
-import { ReactComponent as LinkIcon } from '../../assets/icons/link.svg';
+import { ReactComponent as LinkIcon } from '../../assets/icons/link_white.svg';
 
 import useToast from '../../hooks/useToast';
 import Typography from '../Typography';
@@ -23,7 +23,7 @@ function ShareLinkModal({ onClose, link }: Props) {
       <Wrapper>
         <Header>
           <LinkCircle>
-            <LinkIcon stroke="#ffffff" />
+            <LinkIcon />
           </LinkCircle>
           <Typography variant="button">링크를 공유하고 함께 풀어보세요</Typography>
         </Header>
@@ -68,7 +68,6 @@ const LinkCircle = styled.div`
   display: flex;
   width: 36px;
   height: 36px;
-  padding: 6px;
   justify-content: center;
   align-items: center;
   border-radius: 18px;

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { styled } from 'styled-components';
-import { ReactComponent as LinkIcon } from '../../assets/icons/link_gradation.svg';
+import { ReactComponent as LinkIcon } from '../../assets/icons/link.svg';
 import ShareLinkModal from '../Modal/ShareLinkModal';
 import Typography from '../Typography';
 
