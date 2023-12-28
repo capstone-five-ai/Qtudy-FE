@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import LinkButton from '../../../../components/Button/LinkButton';
-import TwinkleButton from '../../../../components/Button/TwinkleButton';
 import Question from '../../../../components/Question';
 import CategoryItemContentWrapper from '../../../../components/Wrapper/CategoryItemContentWrapper';
 import { QuestionType } from '../../../../types/question.type';
 import CategoryModal from '../../../../components/Modal/CategoryModal';
 import QuizCategoryApi from '../../../../api/QuizCategoryApi';
+import SaveButton from '../../../../components/Button/SaveButton';
 
 function QuizItemDetail() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
@@ -57,9 +57,7 @@ function QuizItemDetail() {
             <LinkButton link={`${mainUrl}/management/mycategory/share?category=quiz&id=${params.get('id')}`} />
           </ButtonWrapper>
 
-          <TwinkleButton disabled={false} onClick={() => setShowCategoryModal(true)}>
-            Save to Category
-          </TwinkleButton>
+          <SaveButton disabled={false} onClick={() => setShowCategoryModal(true)} />
         </SideBar>
       </SideWrapper>
       {showCategoryModal && (

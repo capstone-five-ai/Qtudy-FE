@@ -5,13 +5,13 @@ import { useRecoilValue } from 'recoil';
 import SummaryApi from '../../../api/SummaryApi';
 import LinkButton from '../../../components/Button/LinkButton';
 import PDFButton from '../../../components/Button/PDFButton';
-import TwinkleButton from '../../../components/Button/TwinkleButton';
 import CategoryModal from '../../../components/Modal/CategoryModal';
 import Typography from '../../../components/Typography';
 import { SummaryType } from '../../../types/summary.type';
 import CopySummaryButton from './CopySummaryButton';
 import authState from '../../../recoil/atoms/authState';
 import Scrollbar from '../../../components/Scrollbar';
+import SaveButton from '../../../components/Button/SaveButton';
 
 type Props = {
   type: 'ai' | 'user';
@@ -65,9 +65,7 @@ function SummaryComplete({ type }: Props) {
             <PDFButton label="요약" fileId={summaryId} type={type} pdfType="SUMMARY" fileName={summary.summaryTitle} />
           </ButtonWrapper>
 
-          <TwinkleButton disabled={!isWriter} onClick={() => setShowCategoryModal(true)}>
-            Save to Category
-          </TwinkleButton>
+          <SaveButton disabled={!isWriter} onClick={() => setShowCategoryModal(true)} />
         </SideBar>
       </SideWrapper>
       {showCategoryModal && (
