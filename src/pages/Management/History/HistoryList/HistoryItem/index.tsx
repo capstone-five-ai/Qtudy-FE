@@ -86,7 +86,9 @@ function HistoryItem({ history, updateList }: Props) {
         ) : (
           <>
             <FileNameWrapper type="button" onClick={handleClickFile}>
-              <Typography variant="subtitle">{fileName}</Typography>
+              <Typography variant="subtitle" hoverVariant="subtitle2">
+                {fileName}
+              </Typography>
             </FileNameWrapper>
             <EditIcon width={20} height={20} onClick={handleClickEdit} cursor="pointer" />
           </>

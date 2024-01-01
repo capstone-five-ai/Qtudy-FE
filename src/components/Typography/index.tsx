@@ -54,6 +54,13 @@ const typographies: Style[] = [
     letterSpacing: 0,
   },
   {
+    type: 'subtitle2',
+    font: NotoSansBold,
+    size: 14,
+    lineHeight: 'auto',
+    letterSpacing: 0,
+  },
+  {
     type: 'body1',
     font: NotoSansMedium,
     size: 14,
