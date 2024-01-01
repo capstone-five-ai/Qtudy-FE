@@ -4,6 +4,7 @@ const colors = {
   /** Brand Colors */
   mainMint: '#3ED7CD',
   mainMintDark: '#36BDB4',
+  mainMintDark72: 'rgba(54, 189, 180, 0.72)',
   mainMintLight: '#FBFFFF',
   mainMintShadow: 'rgba(54, 189, 180, 0.32)',
 
