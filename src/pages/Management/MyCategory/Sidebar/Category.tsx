@@ -71,6 +71,7 @@ export default Category;
 const Container = styled.button<{ $active: boolean }>`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   text-align: left;
   padding: 8px 0px 8px 20px;
 

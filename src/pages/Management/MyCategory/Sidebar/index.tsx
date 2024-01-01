@@ -104,6 +104,7 @@ const CategoryContainer = styled.div`
     flex-direction: column;
     gap: 8px;
 
+    max-height: 355px;
     border-left: 1px solid ${(props) => props.theme.colors.grayScale06};
   }
 
