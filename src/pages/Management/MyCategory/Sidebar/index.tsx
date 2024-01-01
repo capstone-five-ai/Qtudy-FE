@@ -46,6 +46,7 @@ function Sidebar({
     await CategoryApi.deleteCategory(id).then(() => {
       const updatedCategoryList = categoryList.filter((category) => category.categoryId !== id);
       setCategoryList(updatedCategoryList);
+      setActiveCategory(null);
     });
   };
 
@@ -104,8 +105,8 @@ const CategoryContainer = styled.div`
     flex-direction: column;
     gap: 8px;
 
-    max-height: 355px;
-    border-left: 1px solid ${(props) => props.theme.colors.grayScale06};
+    box-shadow: -1px 0 0 ${(props) => props.theme.colors.grayScale06};
+    margin-left: 1px;
   }
 
   .no-category {
@@ -115,7 +116,7 @@ const CategoryContainer = styled.div`
 `;
 
 const CategoryListContainer = styled.div`
-  max-height: calc(100vh - 65px - 190px - 124px);
+  max-height: 355px;
   overflow-y: scroll;
   ${Scrollbar}
 `;
