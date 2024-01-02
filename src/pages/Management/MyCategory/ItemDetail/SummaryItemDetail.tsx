@@ -10,6 +10,7 @@ import CopySummaryButton from '../../../Summary/SummaryComplete/CopySummaryButto
 import PDFButton from '../../../../components/Button/PDFButton';
 import SummaryCategoryApi from '../../../../api/SummaryCategoryApi';
 import SaveButton from '../../../../components/Button/SaveButton';
+import { ReactComponent as DeleteIcon } from '../../../../assets/icons/delete.svg';
 
 function SummaryItemDetail() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
@@ -23,6 +24,7 @@ function SummaryItemDetail() {
   const getSummaryItem = async (id: string) => {
     await SummaryCategoryApi.get(id).then((data) => {
       const summaryData = data.response;
+      // TODO : 다음 요약 항목 저장하기
       setCurrentSummary({
         summaryTitle: summaryData.summaryTitle,
         summaryContent: summaryData.summaryContent,
@@ -47,6 +49,12 @@ function SummaryItemDetail() {
     });
   };
 
+  const handleDelete = () => {
+    SummaryCategoryApi.delete(Number(params.get('id'))).then(() => {
+      navigate(-1);
+    });
+  };
+
   if (!params.get('id')) return <Navigate to="/management/mycategory" replace />;
 
   if (currentSummary)
@@ -63,19 +71,54 @@ function SummaryItemDetail() {
         </CategoryItemContentWrapper>
         <SideWrapper>
           <SideBar>
+            <NavWrapper>
+              <Nav>
+                <div className="nav-title">
+                  <Typography variant="caption2" color="mainMintDark72">
+                    Pre
+                  </Typography>
+                </div>
+                <div className="nav-problem-name no-current">
+                  <Typography variant="caption3" color="grayScale03">
+                    이전 요약 제목 들어갈 예정
+                  </Typography>
+                </div>
+              </Nav>
+              <Nav>
+                <div className="nav-problem-name current">
+                  <Typography variant="caption2" color="grayScale02">
+                    {currentSummary.summaryTitle}
+                  </Typography>
+                  <DeleteIcon className="icon" onClick={handleDelete} />
+                </div>
+              </Nav>
+              <Nav>
+                <div className="nav-title">
+                  <Typography variant="caption2" color="mainMintDark72">
+                    Next
+                  </Typography>
+                </div>
+                <div className="nav-problem-name no-current">
+                  <Typography variant="caption3" color="grayScale03">
+                    다음 요약 제목 들어갈 예정
+                  </Typography>
+                </div>
+              </Nav>
+            </NavWrapper>
             <ButtonWrapper>
-              <CopySummaryButton text={currentSummary.summaryContent} />
-              <LinkButton link={`${mainUrl}/management/mycategory/share?category=summary&id=${params.get('id')}`} />
-              <PDFButton
-                label="요약"
-                type="category"
-                fileId={currentSummaryId || -1}
-                pdfType="SUMMARY"
-                fileName={currentSummary.summaryTitle}
-              />
+              <ButtonList>
+                <CopySummaryButton text={currentSummary.summaryContent} />
+                <LinkButton link={`${mainUrl}/management/mycategory/share?category=summary&id=${params.get('id')}`} />
+                <PDFButton
+                  label="요약"
+                  type="category"
+                  fileId={currentSummaryId || -1}
+                  pdfType="SUMMARY"
+                  fileName={currentSummary.summaryTitle}
+                />
+              </ButtonList>
+              <SaveButton disabled={false} onClick={() => setShowCategoryModal(true)} />
             </ButtonWrapper>
-
-            <SaveButton disabled={false} onClick={() => setShowCategoryModal(true)} />
           </SideBar>
         </SideWrapper>
         {showCategoryModal && (
@@ -102,6 +145,7 @@ const SideWrapper = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  width: 360px;
 `;
 
 const SideBar = styled.div`
@@ -110,17 +154,62 @@ const SideBar = styled.div`
   justify-content: space-between;
   border-left: 1px solid ${(props) => props.theme.colors.grayScale06};
   margin: 24px 0;
-  padding: 0 36px;
+  padding-right: 36px;
   flex: 1;
+`;
+
+const NavWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 0px;
+`;
+
+const Nav = styled.div`
+  .nav-title {
+    margin-left: 28px;
+  }
+
+  .nav-problem-name {
+    padding: 6px 0px;
+
+    border-left: 2px solid;
+    border-color: transparent;
+  }
+
+  .current {
+    padding-left: 26px;
+    border-color: ${(props) => props.theme.colors.mainMint};
+
+    display: flex;
+    justify-content: space-between;
+
+    & > div {
+      width: 248px;
+      word-break: break-all;
+    }
+
+    .icon {
+      cursor: pointer;
+    }
+  }
+
+  .no-current {
+    margin-left: 26px;
+    cursor: pointer;
+  }
 `;
 
 const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding-bottom: 30px;
-  gap: 16px;
-  justify-content: end;
+  gap: 30px;
   align-items: end;
+  margin-left: 36px;
+`;
 
-  height: 100%;
+const ButtonList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 `;

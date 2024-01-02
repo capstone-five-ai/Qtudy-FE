@@ -145,18 +145,18 @@ const NavWrapper = styled.div`
 
 const Nav = styled.div`
   .nav-title {
-    margin-left: 27px;
+    margin-left: 28px;
   }
 
   .nav-problem-name {
     padding: 6px 0px;
 
-    border-left: 1px solid;
+    border-left: 2px solid;
     border-color: transparent;
   }
 
   .current {
-    padding-left: 27px;
+    padding-left: 26px;
     border-color: ${(props) => props.theme.colors.mainMint};
 
     display: flex;
@@ -173,7 +173,7 @@ const Nav = styled.div`
   }
 
   .no-current {
-    margin-left: 27px;
+    margin-left: 26px;
     cursor: pointer;
   }
 `;
