@@ -24,7 +24,6 @@ function QuizItemDetail() {
   const getQuizItem = async (id: string) => {
     await QuizCategoryApi.get(id).then((data) => {
       const quizData = data.response;
-      console.log(quizData);
       setOtherQuizList(quizData.categorizedProblems);
       setCurrentQuiz({
         problemName: quizData.problemName,
@@ -73,10 +72,12 @@ function QuizItemDetail() {
                 </Typography>
               </div>
               <div className="nav-problem-name no-current">
-                <Typography
-                  variant="caption3"
-                  color="grayScale03"
-                >{`Q. ${otherQuizList[0].categorizedProblemName}`}</Typography>
+                {otherQuizList[0] && (
+                  <Typography
+                    variant="caption3"
+                    color="grayScale03"
+                  >{`Q. ${otherQuizList[0].categorizedProblemName}`}</Typography>
+                )}
               </div>
             </Nav>
             <Nav>
@@ -92,10 +93,12 @@ function QuizItemDetail() {
                 </Typography>
               </div>
               <div className="nav-problem-name no-current">
-                <Typography
-                  variant="caption3"
-                  color="grayScale03"
-                >{`Q. ${otherQuizList[1].categorizedProblemName}`}</Typography>
+                {otherQuizList[1] && (
+                  <Typography
+                    variant="caption3"
+                    color="grayScale03"
+                  >{`Q. ${otherQuizList[1].categorizedProblemName}`}</Typography>
+                )}
               </div>
             </Nav>
           </NavWrapper>

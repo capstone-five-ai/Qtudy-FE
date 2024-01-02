@@ -86,9 +86,11 @@ function SummaryItemDetail() {
               </Nav>
               <Nav>
                 <div className="nav-problem-name current">
-                  <Typography variant="caption2" color="grayScale02">
-                    {currentSummary.summaryTitle}
-                  </Typography>
+                  {currentSummary && (
+                    <Typography variant="caption2" color="grayScale02">
+                      {currentSummary.summaryTitle}
+                    </Typography>
+                  )}
                   <DeleteIcon className="icon" onClick={handleDelete} />
                 </div>
               </Nav>
