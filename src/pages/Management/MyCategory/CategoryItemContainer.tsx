@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { ReactComponent as DeleteIcon } from '../../../assets/icons/delete.svg';
 import CategoryItemDate from './CategoryItemDate';
+import DeleteModal from '../../../components/Modal/DeleteModal';
 
 interface CategoryItemContainerProps {
   itemId: number;
@@ -19,6 +21,7 @@ function CategoryItemContainer({
   children,
   handleDeleteItem,
 }: CategoryItemContainerProps) {
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const navigate = useNavigate();
 
   return (
@@ -34,11 +37,22 @@ function CategoryItemContainer({
           className="icon"
           onClick={(e) => {
             e.stopPropagation();
-            handleDeleteItem();
+            setShowDeleteModal(true);
           }}
         />
       </ItemContainer>
       <CategoryItemDate createDate={createDate} updateDate={updateDate} />
+      {showDeleteModal && (
+        <DeleteModal
+          onCancel={() => {
+            setShowDeleteModal(false);
+          }}
+          onConfirm={() => {
+            handleDeleteItem();
+          }}
+          title={itemType === 'quiz' ? '퀴즈를 삭제하시겠습니까?' : '요약을 삭제하시겠습니까?'}
+        />
+      )}
     </Container>
   );
 }
