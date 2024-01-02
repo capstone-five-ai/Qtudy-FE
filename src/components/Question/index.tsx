@@ -34,7 +34,7 @@ function Question({ question, questionNum }: Props) {
           <Choice>
             {question.problemChoices?.map((choice, idx) => (
               <Typography
-                key={choice}
+                key={`${choice}-${idx + 1}`}
                 variant="body2"
                 color={showAnswer && Number(question.problemAnswer) === idx + 1 ? 'mainMintDark' : 'grayScale02'}
               >
