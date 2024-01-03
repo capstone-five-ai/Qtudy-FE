@@ -4,6 +4,7 @@ import Typography from '../../../../components/Typography';
 import { ReactComponent as EditIcon } from '../../../../assets/icons/edit_gray.svg';
 import { ReactComponent as DeleteIcon } from '../../../../assets/icons/delete.svg';
 import { CategoryInfoType } from '../../../../types';
+import DeleteModal from '../../../../components/Modal/DeleteModal';
 
 interface CategoryProps {
   category: CategoryInfoType;
@@ -17,6 +18,7 @@ function Category({ category, active, setActiveCategory, handleEditCategory, han
   const [editMode, setEditMode] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -45,6 +47,13 @@ function Category({ category, active, setActiveCategory, handleEditCategory, han
         />
       ) : (
         <>
+          {showDeleteModal && (
+            <DeleteModal
+              onCancel={() => setShowDeleteModal(false)}
+              onConfirm={() => handleDeleteCategory(category.categoryId)}
+              title="카테고리를 삭제하시겠습니까?"
+            />
+          )}
           <Typography variant="body2" color={active ? 'mainMintDark' : `grayScale02`}>
             {category.categoryName}
           </Typography>
@@ -57,7 +66,7 @@ function Category({ category, active, setActiveCategory, handleEditCategory, han
                 }}
                 style={{ cursor: 'pointer' }}
               />
-              <DeleteIcon onClick={() => handleDeleteCategory(category.categoryId)} style={{ cursor: 'pointer' }} />
+              <DeleteIcon onClick={() => setShowDeleteModal(true)} style={{ cursor: 'pointer' }} />
             </div>
           )}
         </>

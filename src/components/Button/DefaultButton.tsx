@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import Typography from '../Typography';
 
 interface Style {
@@ -21,7 +21,7 @@ const buttonStyle: Style[] = [
 interface DefaultButtonProps {
   size?: 'large' | 'medium' | 'small';
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   theme?: 'mint' | 'gray';
   icon?: React.ReactNode | null;
   children: React.ReactNode;
@@ -49,7 +49,7 @@ function DefaultButton({
       $theme={theme}
       $style={buttonStyle.find((el) => el.type === size) || buttonStyle[1]}
     >
-      <button type="button" disabled={disabled} onClick={onClick}>
+      <button type="button" disabled={disabled} onClick={onClick as MouseEventHandler<HTMLButtonElement>}>
         {icon}
         <Typography variant="button" color={theme === 'mint' ? 'grayScale09' : 'grayScale02'}>
           {children}

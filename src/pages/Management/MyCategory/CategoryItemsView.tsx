@@ -69,7 +69,7 @@ function CategoryItemsView({
                 />
               </DownloadButtonContainer>
             )}
-            <CategoryItemContainer>
+            <CategoryItemWrapper>
               {activeCategoryQuizItems.map((quizItem) => (
                 <CategoryQuizItem
                   key={quizItem.categorizedProblemId}
@@ -77,7 +77,7 @@ function CategoryItemsView({
                   handleDeleteQuizItem={handleDeleteQuizItem}
                 />
               ))}
-            </CategoryItemContainer>
+            </CategoryItemWrapper>
           </>
         )}
       </Container>
@@ -88,7 +88,7 @@ function CategoryItemsView({
       {activeCategorySummaryItems.length === 0 ? (
         <NoItem categoryType={activeTabBar} />
       ) : (
-        <CategoryItemContainer>
+        <CategoryItemWrapper>
           {activeCategorySummaryItems.map((summaryItem) => (
             <CategorySummaryItem
               key={summaryItem.categorizedSummaryId}
@@ -96,7 +96,7 @@ function CategoryItemsView({
               handleDeleteSummaryItem={handleDeleteSummaryItem}
             />
           ))}
-        </CategoryItemContainer>
+        </CategoryItemWrapper>
       )}
     </Container>
   );
@@ -130,7 +130,7 @@ const DownloadButtonContainer = styled.div`
   }
 `;
 
-const CategoryItemContainer = styled.div`
+const CategoryItemWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;

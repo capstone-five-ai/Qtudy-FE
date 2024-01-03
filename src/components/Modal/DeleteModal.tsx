@@ -22,10 +22,23 @@ function DeleteModal({ title, onCancel, onConfirm }: Props) {
         </Header>
 
         <ButtonWrapper>
-          <DefaultButton size="small" onClick={onCancel} theme="gray">
+          <DefaultButton
+            size="small"
+            onClick={(e) => {
+              e.stopPropagation();
+              onCancel();
+            }}
+            theme="gray"
+          >
             취소
           </DefaultButton>
-          <DefaultButton size="small" onClick={onConfirm}>
+          <DefaultButton
+            size="small"
+            onClick={(e) => {
+              e.stopPropagation();
+              onConfirm();
+            }}
+          >
             삭제
           </DefaultButton>
         </ButtonWrapper>
