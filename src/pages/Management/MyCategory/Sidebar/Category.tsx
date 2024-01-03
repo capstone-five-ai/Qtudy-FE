@@ -79,6 +79,7 @@ const Container = styled.button<{ $active: boolean }>`
   border-left: 2px solid;
   border-color: ${(props) => (props.$active ? props.theme.colors.mainMint : 'transparent')};
   background: transparent;
+  margin-left: -1px;
 
   & > div:nth-child(1) {
     word-break: break-all;
