@@ -1,12 +1,30 @@
 import { DefaultTheme } from 'styled-components';
 
-// 예시. 디자인에 따라 변경 필요
 const colors = {
-  header: '#1565C0',
-  primary: '#2196F3',
-  white: '#ffffff',
-  black: '#000000',
-  border: '#E5E5E5',
+  /** Brand Colors */
+  mainMint: '#3ED7CD',
+  mainMintDark: '#36BDB4',
+  mainMintDark72: 'rgba(54, 189, 180, 0.72)',
+  mainMintLight: '#FBFFFF',
+  mainMintShadow: 'rgba(54, 189, 180, 0.32)',
+
+  /** Grayscale Colors */
+  grayScale01: '#000000',
+  grayScale02: '#424242',
+  grayScale03: '#757575',
+  grayScale04: '#9e9e9e',
+  grayScale05: '#bdbdbd',
+  grayScale06: '#e0e0e0',
+  grayScale07: '#fafafa',
+  grayScale08: '#fcfcfc',
+  grayScale09: '#ffffff',
+
+  /** Kakao Colors */
+  kakaoYellow: '#FEE500',
+  kakaoBlack: '#000000',
+
+  /** Error Colors */
+  errorRed: '#ee0000',
 };
 
 const fontSize = {
@@ -15,12 +33,19 @@ const fontSize = {
   text: 14,
 };
 
+const gradation = {
+  mainMintGra: 'linear-gradient(rgba(62, 215, 205, 0.6), rgba(62, 215, 205, 1))',
+  mainMintDarkGra: 'linear-gradient(rgba(54, 189, 180, 0.6), rgba(54, 189, 180, 1))',
+};
+
 export type ColorsTypes = typeof colors;
 export type FontSizeTypes = typeof fontSize;
+export type GradationTypes = typeof gradation;
 
 const theme: DefaultTheme = {
   colors,
   fontSize,
+  gradation,
 };
 
 export default theme;
