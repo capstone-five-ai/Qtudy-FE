@@ -11,11 +11,13 @@ import SaveButton from '../../../../components/Button/SaveButton';
 import Typography from '../../../../components/Typography';
 import { CateogorizedOtherQuiz } from '../../../../types/quiz.type';
 import { ReactComponent as DeleteIcon } from '../../../../assets/icons/delete.svg';
+import DeleteModal from '../../../../components/Modal/DeleteModal';
 
 function QuizItemDetail() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const navigate = useNavigate();
   const [params] = useSearchParams();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [currentCategoaryId, setCurrentCategoaryId] = useState(-1);
   const [currentQuiz, setCurrentQuiz] = useState<QuestionType | null>(null);
   const [otherQuizList, setOtherQuizList] = useState<{
@@ -62,6 +64,17 @@ function QuizItemDetail() {
 
   return (
     <>
+      {showDeleteModal && (
+        <DeleteModal
+          onCancel={() => {
+            setShowDeleteModal(false);
+          }}
+          onConfirm={() => {
+            handleDelete();
+          }}
+          title="퀴즈를 삭제하시겠습니까?"
+        />
+      )}
       <CategoryItemContentWrapper handleMoveToList={handleMoveToList} handleEdit={handleEdit}>
         {currentQuiz && <Question question={currentQuiz} />}
       </CategoryItemContentWrapper>
@@ -75,19 +88,33 @@ function QuizItemDetail() {
                     Pre
                   </Typography>
                 </div>
-                <div className="nav-problem-name no-current">
+                <button
+                  type="button"
+                  className="nav-problem-name no-current"
+                  onClick={() => {
+                    navigate(
+                      `/management/mycategory/detail?category=quiz&id=${otherQuizList.pre?.categorizedProblemId}`
+                    );
+                  }}
+                >
                   <Typography
                     variant="caption3"
                     color="grayScale03"
                   >{`Q. ${otherQuizList.pre.categorizedProblemName}`}</Typography>
-                </div>
+                </button>
               </Nav>
             )}
             {(otherQuizList.pre || otherQuizList.next) && (
               <Nav>
                 <div className="nav-problem-name current">
                   <Typography variant="caption2" color="grayScale02">{`Q. ${currentQuiz?.problemName}`}</Typography>
-                  <DeleteIcon className="icon" onClick={handleDelete} />
+                  <DeleteIcon
+                    className="icon"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowDeleteModal(true);
+                    }}
+                  />
                 </div>
               </Nav>
             )}
@@ -98,12 +125,20 @@ function QuizItemDetail() {
                     Next
                   </Typography>
                 </div>
-                <div className="nav-problem-name no-current">
+                <button
+                  type="button"
+                  className="nav-problem-name no-current"
+                  onClick={() => {
+                    navigate(
+                      `/management/mycategory/detail?category=quiz&id=${otherQuizList.next?.categorizedProblemId}`
+                    );
+                  }}
+                >
                   <Typography
                     variant="caption3"
                     color="grayScale03"
                   >{`Q. ${otherQuizList.next.categorizedProblemName}`}</Typography>
-                </div>
+                </button>
               </Nav>
             )}
           </NavWrapper>

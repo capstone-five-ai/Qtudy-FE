@@ -21,6 +21,14 @@ const GlobalStyles = createGlobalStyle`
     line-height: normal;
   }
 
+  button {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    text-align: start;
+  }
+
   @font-face {
     font-family: NotoSansRegular;
     src: url(${NotoSansRegular}) format('woff');

@@ -11,11 +11,13 @@ import PDFButton from '../../../../components/Button/PDFButton';
 import SummaryCategoryApi from '../../../../api/SummaryCategoryApi';
 import SaveButton from '../../../../components/Button/SaveButton';
 import { ReactComponent as DeleteIcon } from '../../../../assets/icons/delete.svg';
+import DeleteModal from '../../../../components/Modal/DeleteModal';
 
 function SummaryItemDetail() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const navigate = useNavigate();
   const [params] = useSearchParams();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [currentCategoaryId, setCurrentCategoaryId] = useState(-1);
   const [currentSummaryId, setCurrentSummaryId] = useState(-1);
   const [currentSummary, setCurrentSummary] = useState<SummaryType | null>(null);
@@ -65,6 +67,17 @@ function SummaryItemDetail() {
   if (currentSummary)
     return (
       <>
+        {showDeleteModal && (
+          <DeleteModal
+            onCancel={() => {
+              setShowDeleteModal(false);
+            }}
+            onConfirm={() => {
+              handleDelete();
+            }}
+            title="요약을 삭제하시겠습니까?"
+          />
+        )}
         <CategoryItemContentWrapper handleMoveToList={handleMoveToList} handleEdit={handleEdit}>
           <TitleWrapper>
             <Typography variant="subtitle" color="mainMintDark">
@@ -84,11 +97,19 @@ function SummaryItemDetail() {
                       Pre
                     </Typography>
                   </div>
-                  <div className="nav-problem-name no-current">
+                  <button
+                    type="button"
+                    className="nav-problem-name no-current"
+                    onClick={() => {
+                      navigate(
+                        `/management/mycategory/detail?category=summary&id=${otherSummaryList.pre?.categorizedSummaryId}`
+                      );
+                    }}
+                  >
                     <Typography variant="caption3" color="grayScale03">
                       이전 요약 제목 들어갈 예정
                     </Typography>
-                  </div>
+                  </button>
                 </Nav>
               )}
               {(otherSummaryList.pre || otherSummaryList.next) && (
@@ -99,7 +120,13 @@ function SummaryItemDetail() {
                         {currentSummary.summaryTitle}
                       </Typography>
                     )}
-                    <DeleteIcon className="icon" onClick={handleDelete} />
+                    <DeleteIcon
+                      className="icon"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowDeleteModal(true);
+                      }}
+                    />
                   </div>
                 </Nav>
               )}
@@ -110,11 +137,19 @@ function SummaryItemDetail() {
                       Next
                     </Typography>
                   </div>
-                  <div className="nav-problem-name no-current">
+                  <button
+                    type="button"
+                    className="nav-problem-name no-current"
+                    onClick={() => {
+                      navigate(
+                        `/management/mycategory/detail?category=summary&id=${otherSummaryList.next?.categorizedSummaryId}`
+                      );
+                    }}
+                  >
                     <Typography variant="caption3" color="grayScale03">
                       다음 요약 제목 들어갈 예정
                     </Typography>
-                  </div>
+                  </button>
                 </Nav>
               )}
             </NavWrapper>

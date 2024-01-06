@@ -18,7 +18,7 @@ const BUTTON = { 퀴즈: '카테고리에 퀴즈 추가', 요약: '카테고리�
 
 function MyCategory() {
   const [activeTabBar, setActiveTabBar] = useState<CategoryType>('퀴즈'); // 탭바 (퀴즈/요약)
-  const [showNoCategoryView, setShowNoCategoryView] = useState(true); // NoCategory 출력 여부
+  const [showNoCategoryView, setShowNoCategoryView] = useState(!true); // NoCategory 출력 여부
   const [quizCategoryList, setQuizCategoryList] = useState<CategoryInfoType[]>([]); // 퀴즈 카테고리 목록
   const [summaryCategoryList, setSummaryCategoryList] = useState<CategoryInfoType[]>([]); // 요약 카테고리 목록
   const [activeCategory, setActiveCategory] = useState<CategoryInfoType | null>(null); // 조회 중인 카테고리 (퀴즈/요약)
@@ -34,6 +34,8 @@ function MyCategory() {
 
     if (quizResponse.data.length > 0 || summaryResponse.data.length > 0) {
       setShowNoCategoryView(false);
+    } else {
+      setShowNoCategoryView(true);
     }
   };
 
@@ -147,6 +149,8 @@ function MyCategory() {
       </Container>
     </>
   );
+
+  return <NoCategory setShowNoCategoryView={setShowNoCategoryView} />;
 }
 
 export default MyCategory;
