@@ -137,9 +137,11 @@ function MyCategory() {
               <DefaultView />
             ))}
           <div className="button-container">
-            <DefaultButton size="large" onClick={handleAddItem}>
-              {BUTTON[activeTabBar]}
-            </DefaultButton>
+            {activeCategory && (
+              <DefaultButton size="large" onClick={handleAddItem}>
+                {BUTTON[activeTabBar]}
+              </DefaultButton>
+            )}
           </div>
         </ContentWrapper>
       </Container>
