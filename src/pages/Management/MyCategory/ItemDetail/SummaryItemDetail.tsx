@@ -5,7 +5,7 @@ import LinkButton from '../../../../components/Button/LinkButton';
 import CategoryModal from '../../../../components/Modal/CategoryModal';
 import Typography from '../../../../components/Typography';
 import CategoryItemContentWrapper from '../../../../components/Wrapper/CategoryItemContentWrapper';
-import { SummaryType } from '../../../../types/summary.type';
+import { CateogorizedOtherSummary, SummaryType } from '../../../../types/summary.type';
 import CopySummaryButton from '../../../Summary/SummaryComplete/CopySummaryButton';
 import PDFButton from '../../../../components/Button/PDFButton';
 import SummaryCategoryApi from '../../../../api/SummaryCategoryApi';
@@ -19,12 +19,17 @@ function SummaryItemDetail() {
   const [currentCategoaryId, setCurrentCategoaryId] = useState(-1);
   const [currentSummaryId, setCurrentSummaryId] = useState(-1);
   const [currentSummary, setCurrentSummary] = useState<SummaryType | null>(null);
+  const [otherSummaryList, setOtherSummaryList] = useState<{
+    pre: CateogorizedOtherSummary | null;
+    next: CateogorizedOtherSummary | null;
+  }>({ pre: null, next: null });
   const mainUrl = window.location.origin;
 
   const getSummaryItem = async (id: string) => {
     await SummaryCategoryApi.get(id).then((data) => {
       const summaryData = data.response;
       // TODO : 다음 요약 항목 저장하기
+      // setOtherSummaryList({ pre: summaryData.categorizedSummary[0], next: summaryData.categorizedSummary[1] });
       setCurrentSummary({
         summaryTitle: summaryData.summaryTitle,
         summaryContent: summaryData.summaryContent,
@@ -72,40 +77,46 @@ function SummaryItemDetail() {
         <SideWrapper>
           <SideBar>
             <NavWrapper>
-              <Nav>
-                <div className="nav-title">
-                  <Typography variant="caption2" color="mainMintDark72">
-                    Pre
-                  </Typography>
-                </div>
-                <div className="nav-problem-name no-current">
-                  <Typography variant="caption3" color="grayScale03">
-                    이전 요약 제목 들어갈 예정
-                  </Typography>
-                </div>
-              </Nav>
-              <Nav>
-                <div className="nav-problem-name current">
-                  {currentSummary && (
-                    <Typography variant="caption2" color="grayScale02">
-                      {currentSummary.summaryTitle}
+              {otherSummaryList.pre && (
+                <Nav>
+                  <div className="nav-title">
+                    <Typography variant="caption2" color="mainMintDark72">
+                      Pre
                     </Typography>
-                  )}
-                  <DeleteIcon className="icon" onClick={handleDelete} />
-                </div>
-              </Nav>
-              <Nav>
-                <div className="nav-title">
-                  <Typography variant="caption2" color="mainMintDark72">
-                    Next
-                  </Typography>
-                </div>
-                <div className="nav-problem-name no-current">
-                  <Typography variant="caption3" color="grayScale03">
-                    다음 요약 제목 들어갈 예정
-                  </Typography>
-                </div>
-              </Nav>
+                  </div>
+                  <div className="nav-problem-name no-current">
+                    <Typography variant="caption3" color="grayScale03">
+                      이전 요약 제목 들어갈 예정
+                    </Typography>
+                  </div>
+                </Nav>
+              )}
+              {(otherSummaryList.pre || otherSummaryList.next) && (
+                <Nav>
+                  <div className="nav-problem-name current">
+                    {currentSummary && (
+                      <Typography variant="caption2" color="grayScale02">
+                        {currentSummary.summaryTitle}
+                      </Typography>
+                    )}
+                    <DeleteIcon className="icon" onClick={handleDelete} />
+                  </div>
+                </Nav>
+              )}
+              {otherSummaryList.next && (
+                <Nav>
+                  <div className="nav-title">
+                    <Typography variant="caption2" color="mainMintDark72">
+                      Next
+                    </Typography>
+                  </div>
+                  <div className="nav-problem-name no-current">
+                    <Typography variant="caption3" color="grayScale03">
+                      다음 요약 제목 들어갈 예정
+                    </Typography>
+                  </div>
+                </Nav>
+              )}
             </NavWrapper>
             <ButtonWrapper>
               <ButtonList>
@@ -185,6 +196,7 @@ const Nav = styled.div`
 
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
     & > div {
       width: 248px;

@@ -33,3 +33,8 @@ export interface CategorySummaryItemsType {
   createTime: string;
   updateTime: string;
 }
+
+export interface CateogorizedOtherSummary {
+  categorizedSummaryId: number;
+  categorizedSummaryName: string;
+}

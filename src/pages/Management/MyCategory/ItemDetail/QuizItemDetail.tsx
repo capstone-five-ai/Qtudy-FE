@@ -18,13 +18,16 @@ function QuizItemDetail() {
   const [params] = useSearchParams();
   const [currentCategoaryId, setCurrentCategoaryId] = useState(-1);
   const [currentQuiz, setCurrentQuiz] = useState<QuestionType | null>(null);
-  const [otherQuizList, setOtherQuizList] = useState<CateogorizedOtherQuiz[]>([]);
+  const [otherQuizList, setOtherQuizList] = useState<{
+    pre: CateogorizedOtherQuiz | null;
+    next: CateogorizedOtherQuiz | null;
+  }>({ pre: null, next: null });
   const mainUrl = window.location.origin;
 
   const getQuizItem = async (id: string) => {
     await QuizCategoryApi.get(id).then((data) => {
       const quizData = data.response;
-      setOtherQuizList(quizData.categorizedProblems);
+      setOtherQuizList({ pre: quizData.categorizedProblems[0], next: quizData.categorizedProblems[1] });
       setCurrentQuiz({
         problemName: quizData.problemName,
         problemAnswer: quizData.problemAnswer,
@@ -65,42 +68,44 @@ function QuizItemDetail() {
       <SideWrapper>
         <SideBar>
           <NavWrapper>
-            <Nav>
-              <div className="nav-title">
-                <Typography variant="caption2" color="mainMintDark72">
-                  Pre
-                </Typography>
-              </div>
-              <div className="nav-problem-name no-current">
-                {otherQuizList[0] && (
+            {otherQuizList.pre && (
+              <Nav>
+                <div className="nav-title">
+                  <Typography variant="caption2" color="mainMintDark72">
+                    Pre
+                  </Typography>
+                </div>
+                <div className="nav-problem-name no-current">
                   <Typography
                     variant="caption3"
                     color="grayScale03"
-                  >{`Q. ${otherQuizList[0].categorizedProblemName}`}</Typography>
-                )}
-              </div>
-            </Nav>
-            <Nav>
-              <div className="nav-problem-name current">
-                <Typography variant="caption2" color="grayScale02">{`Q. ${currentQuiz?.problemName}`}</Typography>
-                <DeleteIcon className="icon" onClick={handleDelete} />
-              </div>
-            </Nav>
-            <Nav>
-              <div className="nav-title">
-                <Typography variant="caption2" color="mainMintDark72">
-                  Next
-                </Typography>
-              </div>
-              <div className="nav-problem-name no-current">
-                {otherQuizList[1] && (
+                  >{`Q. ${otherQuizList.pre.categorizedProblemName}`}</Typography>
+                </div>
+              </Nav>
+            )}
+            {(otherQuizList.pre || otherQuizList.next) && (
+              <Nav>
+                <div className="nav-problem-name current">
+                  <Typography variant="caption2" color="grayScale02">{`Q. ${currentQuiz?.problemName}`}</Typography>
+                  <DeleteIcon className="icon" onClick={handleDelete} />
+                </div>
+              </Nav>
+            )}
+            {otherQuizList.next && (
+              <Nav>
+                <div className="nav-title">
+                  <Typography variant="caption2" color="mainMintDark72">
+                    Next
+                  </Typography>
+                </div>
+                <div className="nav-problem-name no-current">
                   <Typography
                     variant="caption3"
                     color="grayScale03"
-                  >{`Q. ${otherQuizList[1].categorizedProblemName}`}</Typography>
-                )}
-              </div>
-            </Nav>
+                  >{`Q. ${otherQuizList.next.categorizedProblemName}`}</Typography>
+                </div>
+              </Nav>
+            )}
           </NavWrapper>
           <ButtonWrapper>
             <LinkButton link={`${mainUrl}/management/mycategory/share?category=quiz&id=${params.get('id')}`} />
@@ -164,6 +169,7 @@ const Nav = styled.div`
 
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
     & > div {
       width: 248px;
