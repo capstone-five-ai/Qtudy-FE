@@ -5,6 +5,7 @@ import { ReactComponent as ArrowIcon } from '../../assets/icons/arrow.svg';
 import { QuestionType } from '../../types/question.type';
 import getCircleNum from '../../utils/getCircleNum';
 import Typography from '../Typography';
+import Scrollbar from '../Scrollbar';
 
 type Props = {
   question: QuestionType;
@@ -70,6 +71,9 @@ const Wrapper = styled.div`
   flex-direction: column;
 
   gap: 68px;
+
+  overflow-y: scroll;
+  ${Scrollbar}
 `;
 
 const Quiz = styled.div`

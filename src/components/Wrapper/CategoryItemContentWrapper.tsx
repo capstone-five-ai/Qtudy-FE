@@ -76,13 +76,7 @@ export default CategoryItemContentWrapper;
 
 const Container = styled.div`
   flex-grow: 1;
-  heigth: 100%;
-  padding: 24px 40px;
-
-  .button-container {
-    display: flex;
-    justify-content: space-between;
-  }
+  padding: 24px 20px 24px 40px;
 `;
 
 const InnerContainer = styled.div`
@@ -90,6 +84,12 @@ const InnerContainer = styled.div`
   flex-direction: column;
   gap: 24px;
   height: 100%;
+
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 724px;
+  }
 `;
 
 const Button = styled.button`

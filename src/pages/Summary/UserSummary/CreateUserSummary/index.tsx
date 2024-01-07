@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import RightSideBar from './RightSideBar';
 import TextType from '../../../../components/SelectAIType/TextType';
-import Scrollbar from '../../../../components/Scrollbar';
 import { useCreateSummaryByUser } from '../../../../hooks/useCreateSummary';
 import loadingSelector from '../../../../recoil/selectors/loading';
 import Loader from '../../../../components/Modal/Loader';
@@ -45,10 +44,6 @@ export default CreateUserSummary;
 
 const Container = styled.div`
   flex-grow: 1;
-  margin: 24px 36px;
-  margin-right: 20px;
-  //margin: 16px 0px;
-
-  overflow-y: scroll;
-  ${Scrollbar}
+  padding: 10px;
+  padding-right: 0px;
 `;

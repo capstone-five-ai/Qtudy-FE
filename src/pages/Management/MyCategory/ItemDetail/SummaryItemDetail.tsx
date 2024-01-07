@@ -12,6 +12,7 @@ import SummaryCategoryApi from '../../../../api/SummaryCategoryApi';
 import SaveButton from '../../../../components/Button/SaveButton';
 import { ReactComponent as DeleteIcon } from '../../../../assets/icons/delete.svg';
 import DeleteModal from '../../../../components/Modal/DeleteModal';
+import Scrollbar from '../../../../components/Scrollbar';
 
 function SummaryItemDetail() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
@@ -85,7 +86,9 @@ function SummaryItemDetail() {
             </Typography>
             <Typography variant="subtitle">{currentSummary.summaryTitle}</Typography>
           </TitleWrapper>
-          <Typography variant="body3">{currentSummary.summaryContent}</Typography>
+          <BodyWrapper>
+            <Typography variant="body3">{currentSummary.summaryContent}</Typography>
+          </BodyWrapper>
         </CategoryItemContentWrapper>
         <SideWrapper>
           <SideBar>
@@ -187,6 +190,11 @@ const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
+`;
+
+const BodyWrapper = styled.div`
+  overflow-y: scroll;
+  ${Scrollbar}
 `;
 
 const SideWrapper = styled.div`

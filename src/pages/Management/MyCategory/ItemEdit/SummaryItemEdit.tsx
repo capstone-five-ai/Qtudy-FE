@@ -43,11 +43,13 @@ function SummaryItemEdit() {
   return (
     <>
       <CategoryItemContentWrapper isEdit handleFinishEdit={handleFinishEdit}>
-        <TextAreaField
-          placeholder="요약을 생성하고 싶은 관련 텍스트를 입력해주세요."
-          value={content}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)}
-        />
+        <div style={{ width: '724px', height: '100%' }}>
+          <TextAreaField
+            placeholder="요약을 생성하고 싶은 관련 텍스트를 입력해주세요."
+            value={content}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)}
+          />
+        </div>
       </CategoryItemContentWrapper>
       <NoButtonSideBar>
         <FileNameInputField name="file" value={title} onChange={handleFileNameChange} />

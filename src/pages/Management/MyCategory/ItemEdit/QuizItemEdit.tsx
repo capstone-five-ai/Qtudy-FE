@@ -100,10 +100,6 @@ function QuizItemEdit() {
 export default QuizItemEdit;
 
 const QuizContainer = styled.div`
-  flex-grow: 1;
-  margin: 40px 0px 40px 20px;
-  padding: 0px 20px;
-
   display: flex;
   flex-direction: column;
   gap: 48px;
