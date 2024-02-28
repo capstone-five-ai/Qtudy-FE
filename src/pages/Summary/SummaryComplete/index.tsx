@@ -92,6 +92,10 @@ const MainWrapper = styled.div`
 
   overflow-y: scroll;
   ${Scrollbar}
+
+  & > div:nth-child(2) {
+    white-space: pre-wrap;
+  }
 `;
 
 const TitleWrapper = styled.div`
