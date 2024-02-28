@@ -109,4 +109,8 @@ const ChildrenContainer = styled.div`
   flex-direction: column;
   gap: 20px;
   height: calc(100% - 44px);
+
+  & > div:nth-child(2) {
+    white-space: pre-wrap;
+  }
 `;
