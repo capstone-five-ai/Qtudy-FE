@@ -1,6 +1,10 @@
-import axios from 'axios';
+import axios, { InternalAxiosRequestConfig } from 'axios';
 
 const apiClient = axios.create({
+  baseURL: `${import.meta.env.VITE_BASE_URL}`,
+});
+
+export const noAuthClient = axios.create({
   baseURL: `${import.meta.env.VITE_BASE_URL}`,
 });
 
@@ -17,6 +21,11 @@ const updateToken = async () => {
 
   return response;
 };
+
+apiClient.interceptors.request.use((request: InternalAxiosRequestConfig) => {
+  request.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`;
+  return request;
+});
 
 apiClient.interceptors.response.use(
   (response) => {
