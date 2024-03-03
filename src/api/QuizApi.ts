@@ -1,25 +1,27 @@
-import getAccessToken from '../utils/getAccessToken';
 import { QuestionType } from '../types/question.type';
 import { QuizCreationByFileType, QuizCreationByTextType } from '../types/quiz.type';
-import apiClient from './client';
-
-const headers = {
-  Authorization: `Bearer ${getAccessToken()}`,
-};
+import apiClient, { noAuthClient } from './client';
 
 const QuizApi = {
   getAllAIQuiz: async (fileId: number, isAuthenticated: boolean) => {
     // AI생성문제(problem)/파일 전체문제 조회
-    const response = await apiClient.get(`api/problem/getFileProblems/${fileId}`, isAuthenticated ? { headers } : {});
+    const path = `api/problem/getFileProblems/${fileId}`;
+    if (isAuthenticated) {
+      const response = await apiClient.get(path);
+      return response.data;
+    }
+    const response = await noAuthClient.get(path);
     return response.data;
   },
 
   getUserQuiz: async (memberSavedProblemId: number, isAuthenticated: boolean) => {
     // User생성문제(problem) 조회
-    const response = await apiClient.get(
-      `api/member-saved-problem/${memberSavedProblemId}`,
-      isAuthenticated ? { headers } : {}
-    );
+    const path = `api/member-saved-problem/${memberSavedProblemId}`;
+    if (isAuthenticated) {
+      const response = await apiClient.get(path);
+      return response.data;
+    }
+    const response = await noAuthClient.get(path);
     return response.data;
   },
 
@@ -28,7 +30,6 @@ const QuizApi = {
     const response = await apiClient.post('api/problemFile/generateProblemFileByImage', file, {
       headers: {
         'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
       params: {
         amount: option.amount,
@@ -45,7 +46,6 @@ const QuizApi = {
     const response = await apiClient.post('api/problemFile/generateProblemFileByPdf', file, {
       headers: {
         'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
       params: {
         amount: option.amount,
@@ -59,31 +59,19 @@ const QuizApi = {
 
   createByText: async ({ option, text }: QuizCreationByTextType) => {
     // 문제파일(problemFile)/Text 기반 AI 문제 생성
-    const response = await apiClient.post(
-      'api/problemFile/generateProblemFileByText',
-      {
-        amount: option.amount,
-        difficulty: option.difficulty,
-        fileName: option.fileName,
-        type: option.type,
-        text,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      }
-    );
+    const response = await apiClient.post('api/problemFile/generateProblemFileByText', {
+      amount: option.amount,
+      difficulty: option.difficulty,
+      fileName: option.fileName,
+      type: option.type,
+      text,
+    });
     return response.data;
   },
 
   createByUser: async (newQuiz: QuestionType) => {
     // 사용자 생성 문제(MemberSavedProblem)/문제 생성
-    const response = await apiClient.post('api/member-saved-problem/new', newQuiz, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-    });
+    const response = await apiClient.post('api/member-saved-problem/new', newQuiz);
     return response.data;
   },
 };

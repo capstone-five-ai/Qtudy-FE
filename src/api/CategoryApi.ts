@@ -1,12 +1,7 @@
-import getAccessToken from '../utils/getAccessToken';
 import apiClient from './client';
 
 const PAGE = 1;
 const SIZE = 20;
-
-const headers = {
-  Authorization: `Bearer ${getAccessToken()}`,
-};
 
 const CategoryApi = {
   getCategoryList: async (categoryType: string) => {
@@ -17,7 +12,6 @@ const CategoryApi = {
         size: SIZE,
         categoryType,
       },
-      headers,
     });
     return response.data;
   },
@@ -33,16 +27,10 @@ const CategoryApi = {
         memberSavedSummaryId: summaryId,
       };
     // 카테고리(Category)/요약 카테고리에 저장
-    const response = await apiClient.post(
-      `api/categorized-summary/new`,
-      {
-        categoryIdList,
-        ...id,
-      },
-      {
-        headers,
-      }
-    );
+    const response = await apiClient.post(`api/categorized-summary/new`, {
+      categoryIdList,
+      ...id,
+    });
     return response.data;
   },
 
@@ -57,23 +45,16 @@ const CategoryApi = {
         memberSavedProblemId: problemId,
       };
     // 카테고리(Category)/문제 카테고리에 저장
-    const response = await apiClient.post(
-      `api/categorized-problem/new`,
-      {
-        categoryIdList,
-        ...id,
-      },
-      {
-        headers,
-      }
-    );
+    const response = await apiClient.post(`api/categorized-problem/new`, {
+      categoryIdList,
+      ...id,
+    });
     return response.data;
   },
 
   getCategoryItems: async (categoryId: number) => {
     // 카테고리(Category)/카테고리 단건 조회
     const response = await apiClient.get(`api/category/${categoryId}`, {
-      headers,
       params: {
         page: PAGE,
         size: SIZE,
@@ -84,38 +65,24 @@ const CategoryApi = {
 
   createCategory: async (categoryName: string, categoryType: string) => {
     // 카테고리(Category)/카테고리 생성
-    const response = await apiClient.post(
-      'api/category/new',
-      {
-        categoryName,
-        categoryType,
-      },
-      {
-        headers,
-      }
-    );
+    const response = await apiClient.post('api/category/new', {
+      categoryName,
+      categoryType,
+    });
     return response.data;
   },
 
   editCategory: async (categoryId: number, categoryName: string) => {
     // 카테고리(Category)/카테고리 수정
-    const response = await apiClient.patch(
-      `api/category/edit/${categoryId}`,
-      {
-        categoryName,
-      },
-      {
-        headers,
-      }
-    );
+    const response = await apiClient.patch(`api/category/edit/${categoryId}`, {
+      categoryName,
+    });
     return response.data;
   },
 
   deleteCategory: async (categoryId: number) => {
     // 카테고리(Category)/카테고리 삭제
-    const response = await apiClient.delete(`api/category/delete/${categoryId}`, {
-      headers,
-    });
+    const response = await apiClient.delete(`api/category/delete/${categoryId}`);
     return response.data;
   },
 };
