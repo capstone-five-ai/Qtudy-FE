@@ -65,6 +65,10 @@ const MainWrapper = styled.div`
   padding: 40px;
 
   gap: 20px;
+
+  & > div:nth-child(2) {
+    white-space: pre-wrap;
+  }
 `;
 
 const TitleWrapper = styled.div`
