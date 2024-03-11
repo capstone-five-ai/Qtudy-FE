@@ -15,7 +15,7 @@ function Tooltip() {
   return (
     <Container $isVisible={show}>
       <TooltipContainer>
-        <Typography variant="detail" color="mainMintDark">
+        <Typography variant="detail" color="mainMintLight">
           생성 후에는 여기서 편집이 가능해요!
         </Typography>
         <TooltipIcon style={{ position: 'relative' }} />
