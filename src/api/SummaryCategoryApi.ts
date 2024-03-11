@@ -3,11 +3,7 @@ import apiClient from './client';
 const SummaryCategoryApi = {
   get: async (categorizedSummaryId: string) => {
     // 카테고리별 요약(Categorized Summary)/카테고리별 요약 조회
-    const response = await apiClient.get(`api/categorized-summary/${categorizedSummaryId}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-    });
+    const response = await apiClient.get(`api/categorized-summary/${categorizedSummaryId}`);
     return response.data;
   },
 
@@ -32,11 +28,7 @@ const SummaryCategoryApi = {
 
   delete: async (categorizedSummaryId: number) => {
     // 카테고리별 요약(Categorized Summary)/카테고리에 저장된 요약 삭제
-    const response = await apiClient.delete(`api/categorized-summary/delete/${categorizedSummaryId}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-    });
+    const response = await apiClient.delete(`api/categorized-summary/delete/${categorizedSummaryId}`);
     return response.data;
   },
 };
