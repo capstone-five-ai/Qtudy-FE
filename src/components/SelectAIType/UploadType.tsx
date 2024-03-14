@@ -136,9 +136,6 @@ const Preview = styled.div`
 
   object {
     width: 111%;
-    position: absolute;
-    top: -70px;
-    left: -4px;
     opacity: 0.6;
   }
 
@@ -146,7 +143,7 @@ const Preview = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.8;
+    opacity: 0.7;
   }
 
   .delete-icon {
