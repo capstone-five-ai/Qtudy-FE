@@ -8,7 +8,7 @@ function Tooltip() {
   useEffect(() => {
     setTimeout(() => {
       setShow(false);
-    }, 2000);
+    }, 5000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
