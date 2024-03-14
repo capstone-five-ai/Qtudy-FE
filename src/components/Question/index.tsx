@@ -36,7 +36,7 @@ function Question({ question, questionNum }: Props) {
               <Typography
                 key={choice}
                 variant="body2"
-                color={showAnswer && Number(question.problemAnswer) === idx + 1 ? 'mainMintDark' : 'grayScale02'}
+                color={showAnswer && Number(question.problemAnswer) === idx + 1 ? 'correctBlue' : 'grayScale02'}
               >
                 {getCircleNum(idx + 1)} {choice}
               </Typography>
@@ -55,7 +55,12 @@ function Question({ question, questionNum }: Props) {
         {showAnswer && (
           <Commentary>
             {question.problemAnswer && (
-              <Typography variant="subtitle">정답 {getCircleNum(question.problemAnswer)}</Typography>
+              <div className="answer">
+                <Typography variant="subtitle">정답</Typography>
+                <Typography variant="subtitle" color="correctBlue">
+                  {getCircleNum(question.problemAnswer)}
+                </Typography>
+              </div>
             )}
             <Typography variant="body3">{question.problemCommentary}</Typography>
           </Commentary>
@@ -116,6 +121,12 @@ const Commentary = styled.div`
   padding: 16px;
   border-radius: 8px;
   background-color: ${(props) => props.theme.colors.mainMintLight};
+
+  .answer {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
 `;
 
 export default Question;
