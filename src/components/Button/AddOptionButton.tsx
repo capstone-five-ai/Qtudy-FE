@@ -18,7 +18,7 @@ function AddOptionButton({ disabled = false, handleClick }: AddOptionButtonProps
       >
         <PlusIcon />
         <Typography variant="caption2" color={disabled ? 'grayScale06' : 'mainMintDark'}>
-          선지 추가하기
+          항목 추가하기
         </Typography>
       </StyledButton>
     </Container>
@@ -59,4 +59,8 @@ const StyledButton = styled.button<{ $disabled: boolean }>`
 
           border: dashed 1px ${props.theme.colors.grayScale05};
         `}
+
+  &:hover {
+    background: ${(props) => props.theme.colors.mainMintLight};
+  }
 `;
