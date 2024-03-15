@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import React, { useEffect, useRef, useState } from 'react';
 import Typography from '../../../../components/Typography';
 import { ReactComponent as EditIcon } from '../../../../assets/icons/edit_gray.svg';
@@ -99,6 +99,15 @@ const Container = styled.button<{ $active: boolean }>`
   .icon-list {
     display: flex;
     gap: 16px;
+  }
+
+  &:hover {
+    ${(props) =>
+      !props.$active &&
+      css`
+        background: ${props.theme.colors.grayScale07};
+        border-left: 1px solid ${props.theme.colors.grayScale06};
+      `}
   }
 `;
 
