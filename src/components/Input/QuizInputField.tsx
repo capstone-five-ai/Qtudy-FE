@@ -5,8 +5,8 @@ import { ReactComponent as DeleteIcon } from '../../assets/icons/delete.svg';
 import { UserQuizInputType } from '../../types';
 
 const PLACEHOLDER = {
-  question: '퀴즈 질문을 작성해주세요.',
-  option: '선지 내용을 작성해주세요.',
+  question: '퀴즈 질문을 입력해주세요.',
+  option: '항목을 입력해주세요.',
 };
 
 export interface QuizInputFieldProps {

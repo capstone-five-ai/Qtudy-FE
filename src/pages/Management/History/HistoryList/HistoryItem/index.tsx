@@ -79,7 +79,7 @@ function HistoryItem({ history, updateList }: Props) {
               ref={inputRef}
               value={newFileName}
               onChange={(e) => setNewFileName(e.target.value)}
-              placeholder="지정하실 파일명을 입력해주세요."
+              placeholder="파일명을 입력해주세요."
               onBlur={editFileName}
             />
           </Form>

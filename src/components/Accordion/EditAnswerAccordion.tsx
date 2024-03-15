@@ -39,7 +39,7 @@ function EditAnswerAccordion({ answer, commentary, setCommentary }: EditAnswerAc
           >
             <StyledTextarea
               minRows={2}
-              placeholder="생성하고 싶은 해설을 입력해주세요."
+              placeholder="해설을 입력해주세요."
               value={commentary.input}
               onChange={handleTextareaChange}
               readOnly={commentary.check}

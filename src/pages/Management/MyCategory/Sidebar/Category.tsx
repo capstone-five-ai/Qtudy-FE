@@ -43,7 +43,7 @@ function Category({ category, active, setActiveCategory, handleEditCategory, han
           ref={inputRef}
           value={newCategoryName}
           onChange={(e) => setNewCategoryName(e.target.value)}
-          placeholder="지정하실 파일명을 입력해주세요."
+          placeholder="파일명을 입력해주세요."
         />
       ) : (
         <>
