@@ -54,7 +54,7 @@ function PDFButton({ label, variant, fileId, pdfType, type, fileName }: Props) {
     return (
       <Wrapper onClick={handleClickDownload}>
         <PDFIcon />
-        <Typography variant="caption3" color="grayScale03">
+        <Typography variant="caption3" color="grayScale03" hoverVariant="caption1">
           {label} PDF
         </Typography>
       </Wrapper>
