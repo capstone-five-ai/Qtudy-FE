@@ -118,16 +118,6 @@ const DownloadButtonContainer = styled.div`
   justify-content: flex-end;
   gap: 12px;
   padding: 0px 36px;
-
-  .download-button {
-    display: flex;
-    gap: 4px;
-    cursor: pointer;
-    padding: 0;
-    margin: 0;
-    border: none;
-    background: transparent;
-  }
 `;
 
 const CategoryItemWrapper = styled.div`
