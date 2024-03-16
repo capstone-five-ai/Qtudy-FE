@@ -18,7 +18,7 @@ function CopySummaryButton({ text }: Props) {
   return (
     <Wrapper onClick={async () => handleCopyClipBoard()}>
       <CopyIcon />
-      <Typography variant="caption3" color="grayScale03">
+      <Typography variant="caption3" color="grayScale03" hoverVariant="caption1">
         요약 복사
       </Typography>
     </Wrapper>

@@ -35,7 +35,7 @@ function ShareLinkModal({ onClose, link }: Props) {
           </UrlWrapper>
           <Copy type="button" onClick={async () => handleCopyClipBoard()}>
             <CopyIcon />
-            <Typography variant="caption3" color="grayScale03" hoverVariant="caption2">
+            <Typography variant="caption3" color="grayScale03" hoverVariant="caption1">
               링크 복사
             </Typography>
           </Copy>
