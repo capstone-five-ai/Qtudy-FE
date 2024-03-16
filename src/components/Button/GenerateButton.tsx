@@ -1,25 +1,23 @@
-import { ReactNode } from 'react';
 import { styled } from 'styled-components';
-import { ReactComponent as TwinkleIcon } from '../../assets/icons/icon-twinkle.svg';
+import { ReactComponent as SparkleIcon } from '../../assets/icons/sparkle.svg';
 import Typography from '../Typography';
 
 type Props = {
   disabled: boolean;
   onClick?: () => void;
-  children: ReactNode;
 };
 
-TwinkleButton.defaultProps = {
+GenerateButton.defaultProps = {
   onClick: null,
 };
 
-function TwinkleButton({ disabled, onClick, children }: Props) {
+function GenerateButton({ disabled, onClick }: Props) {
   return (
     <Container $disabled={disabled}>
       <button type="button" disabled={disabled} onClick={onClick}>
-        <TwinkleIcon />
+        <SparkleIcon />
         <Typography variant="button" color="grayScale09">
-          {children}
+          Generate
         </Typography>
       </button>
     </Container>
@@ -56,4 +54,4 @@ const Container = styled.div<{ $disabled: boolean }>`
   }
 `;
 
-export default TwinkleButton;
+export default GenerateButton;

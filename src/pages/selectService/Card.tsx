@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { ReactComponent as Arrow } from '../../assets/icons/select_arrow.svg';
+import { ReactComponent as Arrow } from '../../assets/icons/long_arrow.svg';
 import Typography from '../../components/Typography';
 
 type Props = {

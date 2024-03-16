@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { CategoryType } from '../../../../types';
 import Typography from '../../../../components/Typography';
-import { ReactComponent as PlusIcon } from '../../../../assets/icons/icon-plus.svg';
+import { ReactComponent as PlusIcon } from '../../../../assets/icons/plus.svg';
 
 interface CategoryContainerTitleProps {
   activeTabBar: CategoryType;
@@ -34,14 +34,11 @@ const Container = styled.div`
     align-items: center;
     gap: 8px;
 
+    height: min-content;
+    padding: 0;
     border: none;
     background: transparent;
-    padding: 0;
     cursor: pointer;
-
-    path {
-      fill: ${(props) => props.theme.colors.mainMintDark};
-    }
   }
 `;
 

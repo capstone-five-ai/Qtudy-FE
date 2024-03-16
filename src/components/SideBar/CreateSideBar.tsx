@@ -5,8 +5,8 @@ import FileNameInputField from '../Input/FileNameInputField';
 
 const LIST = {
   quiz: [
-    { dataKey: 'type', label: '문제 유형', button: ['객관식', '주관식'] },
-    { dataKey: 'amount', label: '문제량', button: ['적게', '적당히', '많이'] },
+    { dataKey: 'type', label: '퀴즈 유형', button: ['객관식', '주관식'] },
+    { dataKey: 'amount', label: '퀴즈 양', button: ['적게', '적당히', '많이'] },
     { dataKey: 'difficulty', label: '난이도', button: ['상', '중', '하'] },
   ],
   summary: [{ dataKey: 'amount', label: '요약량', button: ['짧게', '적당히', '길게'] }],

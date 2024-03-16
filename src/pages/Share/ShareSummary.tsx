@@ -4,8 +4,8 @@ import Typography from '../../components/Typography';
 import { SummaryType } from '../../types/summary.type';
 import CopySummaryButton from '../Summary/SummaryComplete/CopySummaryButton';
 import LinkButton from '../../components/Button/LinkButton';
-import TwinkleButton from '../../components/Button/TwinkleButton';
 import SummaryCategoryApi from '../../api/SummaryCategoryApi';
+import SaveButton from '../../components/Button/SaveButton';
 
 function ShareSummary({ currentId }: { currentId: string | null }) {
   const link = window.location.href;
@@ -49,7 +49,7 @@ function ShareSummary({ currentId }: { currentId: string | null }) {
             <LinkButton link={link} />
           </ButtonWrapper>
 
-          <TwinkleButton disabled>Save to Category</TwinkleButton>
+          <SaveButton disabled />
         </SideBar>
       </SideWrapper>
     </>

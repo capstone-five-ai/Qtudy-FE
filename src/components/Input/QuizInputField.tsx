@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { ReactComponent as CheckIcon } from '../../assets/icons/icon-check.svg';
-import { ReactComponent as EditIcon } from '../../assets/icons/icon-edit.svg';
-import { ReactComponent as TrashIcon } from '../../assets/icons/icon-trash.svg';
+import { ReactComponent as CheckIcon } from '../../assets/icons/complete.svg';
+import { ReactComponent as EditIcon } from '../../assets/icons/edit_gray.svg';
+import { ReactComponent as DeleteIcon } from '../../assets/icons/delete.svg';
 import { UserQuizInputType } from '../../types';
 
 const PLACEHOLDER = {
-  question: '퀴즈 질문을 작성해주세요.',
-  option: '선지 내용을 작성해주세요.',
+  question: '퀴즈 질문을 입력해주세요.',
+  option: '항목을 입력해주세요.',
 };
 
 export interface QuizInputFieldProps {
@@ -57,7 +57,7 @@ function QuizInputField({
           />
         )}
         {type === 'option' && handleDelete && (
-          <TrashIcon
+          <DeleteIcon
             className="icon"
             onClick={() => {
               handleDelete(index);

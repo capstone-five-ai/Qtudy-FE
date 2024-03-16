@@ -27,9 +27,7 @@ function QuizView({ quizType, question, options, answer, setQuestion, setOptions
     <div>
       {quizType === CREATE_USER_QUIZ_TYPE[0].value ? (
         <QuizInputFieldContainer>
-          <div className="question-field">
-            <QuestionField question={question} setQuestion={setQuestion} />
-          </div>
+          <QuestionField question={question} setQuestion={setQuestion} />
           <OptionField options={options} answer={answer} setOptions={setOptions} setAnswer={setAnswer} />
           <AddOptionButton handleClick={handleAddOption} disabled={options.length >= MAX_OPTION_COUNT} />
         </QuizInputFieldContainer>
@@ -48,8 +46,4 @@ const QuizInputFieldContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-
-  .question-field {
-    padding-left: 28px;
-  }
 `;

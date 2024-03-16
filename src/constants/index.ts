@@ -3,7 +3,7 @@ import { ProblemType } from '../types/question.type';
 
 export const HEADER_MENU_LIST = [
   { menu: '퀴즈 생성', path: '/quiz', defaultPath: '/quiz/ai' },
-  { menu: '요약 정리 생성', path: '/summary', defaultPath: '/summary/ai' },
+  { menu: '요약정리 생성', path: '/summary', defaultPath: '/summary/ai' },
   { menu: '관리 및 복습', path: '/management', defaultPath: '/management/history' },
 ];
 

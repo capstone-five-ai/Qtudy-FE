@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as TrashIcon } from '../../../assets/icons/icon-trash.svg';
+import { useState } from 'react';
+import { ReactComponent as DeleteIcon } from '../../../assets/icons/delete.svg';
 import CategoryItemDate from './CategoryItemDate';
+import DeleteModal from '../../../components/Modal/DeleteModal';
 
 interface CategoryItemContainerProps {
   itemId: number;
@@ -19,6 +21,7 @@ function CategoryItemContainer({
   children,
   handleDeleteItem,
 }: CategoryItemContainerProps) {
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const navigate = useNavigate();
 
   return (
@@ -26,30 +29,41 @@ function CategoryItemContainer({
       onClick={() => {
         navigate(`/management/mycategory/detail?category=${itemType}&id=${itemId}`);
       }}
+      $itemType={itemType}
     >
       <ItemContainer>
         <ChildrenContainer>{children}</ChildrenContainer>
-        <TrashIcon
+        <DeleteIcon
           className="icon"
           onClick={(e) => {
             e.stopPropagation();
-            handleDeleteItem();
+            setShowDeleteModal(true);
           }}
         />
       </ItemContainer>
       <CategoryItemDate createDate={createDate} updateDate={updateDate} />
+      {showDeleteModal && (
+        <DeleteModal
+          onCancel={() => {
+            setShowDeleteModal(false);
+          }}
+          onConfirm={() => {
+            handleDeleteItem();
+          }}
+          title={itemType === 'quiz' ? '퀴즈를 삭제하시겠습니까?' : '요약을 삭제하시겠습니까?'}
+        />
+      )}
     </Container>
   );
 }
 
-const Container = styled.div`
+const Container = styled.div<{ $itemType: string }>`
   display: flex;
   flex-direction: column;
   gap: 14px;
 
   width: 728px;
-  height: 196px;
-  padding: 20px;
+  padding: ${(props) => (props.$itemType === 'quiz' ? '18.5px' : '19.5px 19px')};
   border-radius: 8px;
   border: 1px solid transparent;
   box-shadow: 0px 0px 12px 0px rgba(189, 189, 189, 0.2);
@@ -76,7 +90,6 @@ const Container = styled.div`
 
 const ItemContainer = styled.div`
   display: flex;
-  gap: 20px;
   width: 100%;
 `;
 

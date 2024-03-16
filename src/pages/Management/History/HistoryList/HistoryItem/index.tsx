@@ -2,8 +2,8 @@ import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import FileApi from '../../../../../api/FileApi';
-import { ReactComponent as EditIcon } from '../../../../../assets/icons/icon-edit.svg';
-import { ReactComponent as DeleteIcon } from '../../../../../assets/icons/icon-trash.svg';
+import { ReactComponent as EditIcon } from '../../../../../assets/icons/edit_gray.svg';
+import { ReactComponent as DeleteIcon } from '../../../../../assets/icons/delete.svg';
 import PDFButton from '../../../../../components/Button/PDFButton';
 import DeleteModal from '../../../../../components/Modal/DeleteModal';
 import Typography from '../../../../../components/Typography';
@@ -79,14 +79,16 @@ function HistoryItem({ history, updateList }: Props) {
               ref={inputRef}
               value={newFileName}
               onChange={(e) => setNewFileName(e.target.value)}
-              placeholder="지정하실 파일명을 입력해주세요."
+              placeholder="파일명을 입력해주세요."
               onBlur={editFileName}
             />
           </Form>
         ) : (
           <>
             <FileNameWrapper type="button" onClick={handleClickFile}>
-              <Typography variant="subtitle">{fileName}</Typography>
+              <Typography variant="subtitle" hoverVariant="subtitle2">
+                {fileName}
+              </Typography>
             </FileNameWrapper>
             <EditIcon width={20} height={20} onClick={handleClickEdit} cursor="pointer" />
           </>

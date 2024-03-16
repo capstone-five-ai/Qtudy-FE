@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { ReactNode } from 'react';
-import TwinkleButton from '../Button/TwinkleButton';
+import GenerateButton from '../Button/GenerateButton';
 
 interface SideBarProps {
   buttonDisabled: boolean;
@@ -14,9 +14,7 @@ function SideBar({ buttonDisabled, handleSubmit, children }: SideBarProps) {
       <InnerContainer>
         <ChildrenContainer>
           <div>{children}</div>
-          <TwinkleButton disabled={buttonDisabled} onClick={handleSubmit}>
-            Generate
-          </TwinkleButton>
+          <GenerateButton disabled={buttonDisabled} onClick={handleSubmit} />
         </ChildrenContainer>
       </InnerContainer>
     </Container>

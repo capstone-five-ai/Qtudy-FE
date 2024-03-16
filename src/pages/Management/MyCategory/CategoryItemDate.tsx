@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Typography from '../../../components/Typography';
-import { ReactComponent as ArrowIcon } from '../../../assets/icons/icon-longArrow.svg';
+import { ReactComponent as ArrowIcon } from '../../../assets/icons/long_arrow.svg';
 
 interface CategoryItemDateProps {
   createDate: string;

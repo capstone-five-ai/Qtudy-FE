@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useMemo } from 'react';
-import { ReactComponent as UploadIcon } from '../../assets/icons/icon-upload.svg';
-import { ReactComponent as ExitIcon } from '../../assets/icons/icon-exit.svg';
+import { ReactComponent as UploadIcon } from '../../assets/icons/upload_file.svg';
+import { ReactComponent as DeleteIcon } from '../../assets/icons/delete_file.svg';
 import Typography from '../Typography';
 import { UploadedFileType } from '../../types';
 import uploadFileUtils from '../../utils/uploadFileUtils';
@@ -56,9 +56,7 @@ function UploadType({ inputRef, pdfFile, imageFiles, handleFileUpload, handleDel
       <PreviewInnerContainer>
         {pdfFile !== null && (
           <Preview>
-            <button type="button" className="icon-container" onClick={() => handleDelete(null)}>
-              <ExitIcon />
-            </button>
+            <DeleteIcon className="delete-icon" onClick={() => handleDelete(null)} />
             <object data={pdfObjectURL} type="application/pdf" width="400" height="300">
               PDF 미리보기를 지원하지 않는 브라우저입니다.
             </object>
@@ -83,9 +81,7 @@ function UploadType({ inputRef, pdfFile, imageFiles, handleFileUpload, handleDel
         {imageFiles.length > 0 &&
           imageFiles.map((image, index) => (
             <Preview key={image.name}>
-              <button type="button" className="icon-container" onClick={() => handleDelete(index)}>
-                <ExitIcon />
-              </button>
+              <DeleteIcon className="delete-icon" onClick={() => handleDelete(index)} />
               <img src={imageObjectURLs[index]} alt="이미지 미리보기" />
             </Preview>
           ))}
@@ -135,13 +131,11 @@ const Preview = styled.div`
   border: 1px solid;
   border-color: transparent;
   position: relative;
+  overflow: hidden;
   box-shadow: 0px 0px 4px 0px rgba(117, 117, 117, 0.28);
 
   object {
     width: 111%;
-    position: absolute;
-    top: -70px;
-    left: -4px;
     opacity: 0.6;
   }
 
@@ -149,36 +143,24 @@ const Preview = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.8;
+    opacity: 0.7;
   }
 
-  .icon-container {
+  .delete-icon {
     display: none;
   }
 
   &:hover {
-    border-color: ${(props) => props.theme.colors.grayScale06};
-    .icon-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      width: 24px;
-      height: 24px;
-      border: none;
-      border-radius: 50%;
-      background: rgba(117, 117, 117, 0.6);
-
+    .delete-icon {
+      display: block;
       position: absolute;
       z-index: 1;
       top: 12px;
       right: 12px;
       cursor: pointer;
-
-      path {
-        stroke: white;
-      }
     }
+
+    border-color: ${(props) => props.theme.colors.grayScale06};
 
     img {
       opacity: 1;

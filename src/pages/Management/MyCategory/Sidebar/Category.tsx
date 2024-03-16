@@ -1,9 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import React, { useEffect, useRef, useState } from 'react';
 import Typography from '../../../../components/Typography';
-import { ReactComponent as EditIcon } from '../../../../assets/icons/icon-edit.svg';
-import { ReactComponent as TrashIcon } from '../../../../assets/icons/icon-trash.svg';
+import { ReactComponent as EditIcon } from '../../../../assets/icons/edit_gray.svg';
+import { ReactComponent as DeleteIcon } from '../../../../assets/icons/delete.svg';
 import { CategoryInfoType } from '../../../../types';
+import DeleteModal from '../../../../components/Modal/DeleteModal';
 
 interface CategoryProps {
   category: CategoryInfoType;
@@ -17,6 +18,7 @@ function Category({ category, active, setActiveCategory, handleEditCategory, han
   const [editMode, setEditMode] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -41,10 +43,17 @@ function Category({ category, active, setActiveCategory, handleEditCategory, han
           ref={inputRef}
           value={newCategoryName}
           onChange={(e) => setNewCategoryName(e.target.value)}
-          placeholder="지정하실 파일명을 입력해주세요."
+          placeholder="파일명을 입력해주세요."
         />
       ) : (
         <>
+          {showDeleteModal && (
+            <DeleteModal
+              onCancel={() => setShowDeleteModal(false)}
+              onConfirm={() => handleDeleteCategory(category.categoryId)}
+              title="카테고리를 삭제하시겠습니까?"
+            />
+          )}
           <Typography variant="body2" color={active ? 'mainMintDark' : `grayScale02`}>
             {category.categoryName}
           </Typography>
@@ -57,7 +66,7 @@ function Category({ category, active, setActiveCategory, handleEditCategory, han
                 }}
                 style={{ cursor: 'pointer' }}
               />
-              <TrashIcon onClick={() => handleDeleteCategory(category.categoryId)} style={{ cursor: 'pointer' }} />
+              <DeleteIcon onClick={() => setShowDeleteModal(true)} style={{ cursor: 'pointer' }} />
             </div>
           )}
         </>
@@ -71,6 +80,7 @@ export default Category;
 const Container = styled.button<{ $active: boolean }>`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   text-align: left;
   padding: 8px 0px 8px 20px;
 
@@ -78,6 +88,7 @@ const Container = styled.button<{ $active: boolean }>`
   border-left: 2px solid;
   border-color: ${(props) => (props.$active ? props.theme.colors.mainMint : 'transparent')};
   background: transparent;
+  margin-left: -1px;
 
   & > div:nth-child(1) {
     word-break: break-all;
@@ -88,6 +99,15 @@ const Container = styled.button<{ $active: boolean }>`
   .icon-list {
     display: flex;
     gap: 16px;
+  }
+
+  &:hover {
+    ${(props) =>
+      !props.$active &&
+      css`
+        background: ${props.theme.colors.grayScale07};
+        border-left: 1px solid ${props.theme.colors.grayScale06};
+      `}
   }
 `;
 

@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { styled } from 'styled-components';
-import { ReactComponent as AnswerIcon } from '../../assets/icons/answer.svg';
-import { ReactComponent as ArrowDown } from '../../assets/icons/arrow_down.svg';
-import { ReactComponent as ArrowUp } from '../../assets/icons/arrow_up.svg';
+import { ReactComponent as ExplanationIcon } from '../../assets/icons/explanation.svg';
+import { ReactComponent as ArrowIcon } from '../../assets/icons/arrow.svg';
 import { QuestionType } from '../../types/question.type';
 import getCircleNum from '../../utils/getCircleNum';
 import Typography from '../Typography';
@@ -37,7 +36,7 @@ function Question({ question, questionNum }: Props) {
               <Typography
                 key={choice}
                 variant="body2"
-                color={showAnswer && Number(question.problemAnswer) === idx + 1 ? 'mainMintDark' : 'grayScale02'}
+                color={showAnswer && Number(question.problemAnswer) === idx + 1 ? 'correctBlue' : 'grayScale02'}
               >
                 {getCircleNum(idx + 1)} {choice}
               </Typography>
@@ -47,16 +46,21 @@ function Question({ question, questionNum }: Props) {
       </Quiz>
       <AnswerWrapper>
         <AnswerButton type="button" onClick={handleClickAnswer}>
-          <AnswerIcon />
+          <ExplanationIcon />
           <Typography variant="button" color="mainMintDark">
             정답 및 해설
           </Typography>
-          {showAnswer ? <ArrowUp fill="#36BDB4" /> : <ArrowDown fill="#36BDB4" />}
+          <ArrowIcon className={showAnswer ? 'arrow-close' : 'arrow-open'} />
         </AnswerButton>
         {showAnswer && (
           <Commentary>
             {question.problemAnswer && (
-              <Typography variant="subtitle">정답 {getCircleNum(question.problemAnswer)}</Typography>
+              <div className="answer">
+                <Typography variant="subtitle">정답</Typography>
+                <Typography variant="subtitle" color="correctBlue">
+                  {getCircleNum(question.problemAnswer)}
+                </Typography>
+              </div>
             )}
             <Typography variant="body3">{question.problemCommentary}</Typography>
           </Commentary>
@@ -100,6 +104,14 @@ const AnswerButton = styled.button`
   background-color: transparent;
   padding: 0;
   cursor: pointer;
+
+  .arrow-open {
+    transform: rotate(-180deg);
+  }
+
+  .arrow-close {
+    transform: rotate(0deg);
+  }
 `;
 
 const Commentary = styled.div`
@@ -109,6 +121,12 @@ const Commentary = styled.div`
   padding: 16px;
   border-radius: 8px;
   background-color: ${(props) => props.theme.colors.mainMintLight};
+
+  .answer {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
 `;
 
 export default Question;

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { ColorsTypes } from '../../styles/theme';
 
 const NotoSansRegular = 'NotoSansRegular';
@@ -49,6 +49,13 @@ const typographies: Style[] = [
   {
     type: 'subtitle',
     font: NotoSansMedium,
+    size: 14,
+    lineHeight: 'auto',
+    letterSpacing: 0,
+  },
+  {
+    type: 'subtitle2',
+    font: NotoSansBold,
     size: 14,
     lineHeight: 'auto',
     letterSpacing: 0,
@@ -138,12 +145,14 @@ function Typography({
   component,
   variant,
   color,
+  hoverVariant,
   hoverColor,
 }: {
   children?: ReactNode;
   component?: string;
   variant: string;
   color?: keyof ColorsTypes;
+  hoverVariant?: string;
   hoverColor?: keyof ColorsTypes;
 }) {
   return (
@@ -151,6 +160,7 @@ function Typography({
       as={component}
       $style={typographies.find((el) => el.type === variant) || defaultStyle}
       $color={color}
+      $hoverStyle={typographies.find((el) => el.type === hoverVariant)}
       $hoverColor={hoverColor}
     >
       {children}
@@ -162,12 +172,14 @@ Typography.defaultProps = {
   children: null,
   component: 'div',
   color: 'grayScale02',
+  hoverVariant: undefined,
   hoverColor: undefined,
 };
 
 const STypography = styled.div<{
   $style: Style;
   $color: keyof ColorsTypes | undefined;
+  $hoverStyle: Style | undefined;
   $hoverColor: keyof ColorsTypes | undefined;
 }>`
   font-family: ${(props) => props.$style.font};
@@ -179,6 +191,14 @@ const STypography = styled.div<{
 
   &:hover {
     color: ${(props) => props.$hoverColor && props.theme.colors[props.$hoverColor]};
+    ${(props) =>
+      props.$hoverStyle &&
+      css`
+        font-family: ${props.$hoverStyle.font};
+        font-size: ${props.$hoverStyle.size}px;
+        line-height: ${props.$hoverStyle.lineHeight};
+        letter-spacing: ${props.$hoverStyle.letterSpacing}%;
+      `}
   }
 `;
 

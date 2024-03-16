@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import LinkButton from '../../../../components/Button/LinkButton';
-import TwinkleButton from '../../../../components/Button/TwinkleButton';
 import CategoryModal from '../../../../components/Modal/CategoryModal';
 import Typography from '../../../../components/Typography';
 import CategoryItemContentWrapper from '../../../../components/Wrapper/CategoryItemContentWrapper';
@@ -10,6 +9,7 @@ import { SummaryType } from '../../../../types/summary.type';
 import CopySummaryButton from '../../../Summary/SummaryComplete/CopySummaryButton';
 import PDFButton from '../../../../components/Button/PDFButton';
 import SummaryCategoryApi from '../../../../api/SummaryCategoryApi';
+import SaveButton from '../../../../components/Button/SaveButton';
 
 function SummaryItemDetail() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
@@ -75,9 +75,7 @@ function SummaryItemDetail() {
               />
             </ButtonWrapper>
 
-            <TwinkleButton disabled={false} onClick={() => setShowCategoryModal(true)}>
-              Save to Category
-            </TwinkleButton>
+            <SaveButton disabled={false} onClick={() => setShowCategoryModal(true)} />
           </SideBar>
         </SideWrapper>
         {showCategoryModal && (

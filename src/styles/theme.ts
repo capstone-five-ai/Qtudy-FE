@@ -24,6 +24,9 @@ const colors = {
 
   /** Error Colors */
   errorRed: '#ee0000',
+
+  /** Secondary Colors */
+  correctBlue: '#168fff',
 };
 
 const fontSize = {

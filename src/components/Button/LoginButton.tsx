@@ -35,6 +35,7 @@ const Container = styled.div`
 
 const Button = styled.button`
   display: flex;
+  text-align: center;
   align-items: center;
   width: 100%;
   height: 100%;

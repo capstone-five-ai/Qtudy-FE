@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as Exit } from '../../assets/icons/exit_nostroke.svg';
+import { ReactComponent as Exit } from '../../assets/icons/exit.svg';
 
 type Props = {
   onClose?: () => void;
@@ -35,7 +35,7 @@ function ModalContainer({ onClose, children }: Props) {
       <Wrapper>
         {onClose && (
           <Close onClick={handleClickClose}>
-            <Exit stroke="#424242" />
+            <Exit />
           </Close>
         )}
         <ContentWrapper>{children}</ContentWrapper>

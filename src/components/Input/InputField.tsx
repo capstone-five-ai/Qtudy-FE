@@ -23,6 +23,6 @@ const Input = styled.input`
   }
 
   &:focus {
-    border-bottom: 1px solid ${(props) => props.theme.colors.mainMint};
+    border-bottom: 1px solid rgba(62, 215, 205, 0.4);
   }
 `;
