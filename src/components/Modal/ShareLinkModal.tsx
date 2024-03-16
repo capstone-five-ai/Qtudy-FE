@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ReactComponent as CheckIcon } from '../../assets/icons/complete.svg';
 import { ReactComponent as CopyIcon } from '../../assets/icons/copy.svg';
 import { ReactComponent as LinkIcon } from '../../assets/icons/link_white.svg';
 
@@ -16,7 +17,7 @@ function ShareLinkModal({ onClose, link }: Props) {
   const { fireToast } = useToast();
   const handleCopyClipBoard = async () => {
     await navigator.clipboard.writeText(link);
-    fireToast('링크 복사 완료!');
+    fireToast('링크 복사 완료!', <CheckIcon />);
   };
 
   return (

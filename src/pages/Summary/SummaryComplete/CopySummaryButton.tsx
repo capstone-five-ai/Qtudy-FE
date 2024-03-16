@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { ReactComponent as CheckIcon } from '../../../assets/icons/complete.svg';
 import { ReactComponent as CopyIcon } from '../../../assets/icons/copy_text.svg';
 import Typography from '../../../components/Typography';
 import useToast from '../../../hooks/useToast';
@@ -12,7 +13,7 @@ function CopySummaryButton({ text }: Props) {
 
   const handleCopyClipBoard = async () => {
     await navigator.clipboard.writeText(text);
-    fireToast('텍스트 복사 완료!');
+    fireToast('텍스트 복사 완료!', <CheckIcon />);
   };
 
   return (
