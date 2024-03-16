@@ -7,6 +7,7 @@ import { ReactComponent as PrevIcon } from '../../../assets/icons/arrow_prev.svg
 import Chip from '../../../components/Chip';
 import Typography from '../../../components/Typography';
 import { HistoryType } from '../../../types/history.type';
+import EmptyHistory from './EmptyHistory';
 import HistoryList from './HistoryList';
 
 const PROBLEM = 'PROBLEM';
@@ -55,6 +56,10 @@ function History() {
   const handlePageClick = ({ selected }: { selected: number }) => {
     setPage(selected + 1);
   };
+
+  if (histories.length === 0) {
+    return <EmptyHistory />;
+  }
 
   return (
     <Wrapper>
