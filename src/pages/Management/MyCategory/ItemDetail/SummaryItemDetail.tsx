@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
+import SummaryCategoryApi from '../../../../api/SummaryCategoryApi';
 import LinkButton from '../../../../components/Button/LinkButton';
+import PDFButton from '../../../../components/Button/PDFButton';
+import SaveButton from '../../../../components/Button/SaveButton';
 import CategoryModal from '../../../../components/Modal/CategoryModal';
 import Typography from '../../../../components/Typography';
 import CategoryItemContentWrapper from '../../../../components/Wrapper/CategoryItemContentWrapper';
 import { SummaryType } from '../../../../types/summary.type';
 import CopySummaryButton from '../../../Summary/SummaryComplete/CopySummaryButton';
-import PDFButton from '../../../../components/Button/PDFButton';
-import SummaryCategoryApi from '../../../../api/SummaryCategoryApi';
-import SaveButton from '../../../../components/Button/SaveButton';
 
 function SummaryItemDetail() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
@@ -64,15 +64,17 @@ function SummaryItemDetail() {
         <SideWrapper>
           <SideBar>
             <ButtonWrapper>
-              <CopySummaryButton text={currentSummary.summaryContent} />
-              <LinkButton link={`${mainUrl}/management/mycategory/share?category=summary&id=${params.get('id')}`} />
-              <PDFButton
-                label="요약"
-                type="category"
-                fileId={currentSummaryId || -1}
-                pdfType="SUMMARY"
-                fileName={currentSummary.summaryTitle}
-              />
+              <div>
+                <CopySummaryButton text={currentSummary.summaryContent} />
+                <LinkButton link={`${mainUrl}/management/mycategory/share?category=summary&id=${params.get('id')}`} />
+                <PDFButton
+                  label="요약"
+                  type="category"
+                  fileId={currentSummaryId || -1}
+                  pdfType="SUMMARY"
+                  fileName={currentSummary.summaryTitle}
+                />
+              </div>
             </ButtonWrapper>
 
             <SaveButton disabled={false} onClick={() => setShowCategoryModal(true)} />
@@ -118,9 +120,15 @@ const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 30px;
-  gap: 16px;
   justify-content: end;
   align-items: end;
 
   height: 100%;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: start;
+  }
 `;

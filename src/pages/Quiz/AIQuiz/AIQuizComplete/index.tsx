@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
+import styled from 'styled-components';
 import QuizApi from '../../../../api/QuizApi';
 import LinkButton from '../../../../components/Button/LinkButton';
 import PDFButton from '../../../../components/Button/PDFButton';
+import SaveButton from '../../../../components/Button/SaveButton';
 import CategoryModal from '../../../../components/Modal/CategoryModal';
 import Question from '../../../../components/Question';
+import authState from '../../../../recoil/atoms/authState';
 import { QuestionType } from '../../../../types/question.type';
 import NumberPannel from './NumberPannel';
-import authState from '../../../../recoil/atoms/authState';
-import SaveButton from '../../../../components/Button/SaveButton';
 
 function AIQuizComplete() {
   const [qs] = useSearchParams();
@@ -62,19 +62,27 @@ function AIQuizComplete() {
           <div>
             <NumberPannel numOfQuiz={questions.length} questionNum={questionNum} setQuestionNum={setQuestionNum} />
             <ButtonWrapper>
-              <LinkButton link={link} />
-              {isWriter && (
-                <PDFWrapper>
-                  <PDFButton
-                    label="퀴즈"
-                    fileId={fileId}
-                    pdfType="PROBLEM"
-                    type="ai"
-                    fileName={`${fileName}_PROBLEM`}
-                  />
-                  <PDFButton label="정답" fileId={fileId} pdfType="ANSWER" type="ai" fileName={`${fileName}_ANSWER`} />
-                </PDFWrapper>
-              )}
+              <div>
+                <LinkButton link={link} />
+                {isWriter && (
+                  <PDFWrapper>
+                    <PDFButton
+                      label="퀴즈"
+                      fileId={fileId}
+                      pdfType="PROBLEM"
+                      type="ai"
+                      fileName={`${fileName}_PROBLEM`}
+                    />
+                    <PDFButton
+                      label="정답"
+                      fileId={fileId}
+                      pdfType="ANSWER"
+                      type="ai"
+                      fileName={`${fileName}_ANSWER`}
+                    />
+                  </PDFWrapper>
+                )}
+              </div>
             </ButtonWrapper>
           </div>
 
@@ -120,8 +128,14 @@ const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 16px;
-  gap: 16px;
   align-items: end;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: start;
+  }
 `;
 
 const PDFWrapper = styled.div`

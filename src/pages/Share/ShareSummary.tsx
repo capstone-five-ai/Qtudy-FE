@@ -1,11 +1,11 @@
-import styled from 'styled-components';
 import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import SummaryCategoryApi from '../../api/SummaryCategoryApi';
+import LinkButton from '../../components/Button/LinkButton';
+import SaveButton from '../../components/Button/SaveButton';
 import Typography from '../../components/Typography';
 import { SummaryType } from '../../types/summary.type';
 import CopySummaryButton from '../Summary/SummaryComplete/CopySummaryButton';
-import LinkButton from '../../components/Button/LinkButton';
-import SummaryCategoryApi from '../../api/SummaryCategoryApi';
-import SaveButton from '../../components/Button/SaveButton';
 
 function ShareSummary({ currentId }: { currentId: string | null }) {
   const link = window.location.href;
@@ -45,8 +45,10 @@ function ShareSummary({ currentId }: { currentId: string | null }) {
       <SideWrapper>
         <SideBar>
           <ButtonWrapper>
-            <CopySummaryButton text={currentSummary ? currentSummary.summaryContent : ''} />
-            <LinkButton link={link} />
+            <div>
+              <CopySummaryButton text={currentSummary ? currentSummary.summaryContent : ''} />
+              <LinkButton link={link} />
+            </div>
           </ButtonWrapper>
 
           <SaveButton disabled />
@@ -97,9 +99,15 @@ const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 30px;
-  gap: 16px;
   justify-content: end;
   align-items: end;
 
   height: 100%;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: start;
+  }
 `;
