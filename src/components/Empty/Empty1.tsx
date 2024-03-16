@@ -28,7 +28,7 @@ function Empty1({ title, subtitle, highlight }: Empty1Props) {
               </Highlighted>
             ) : (
               // eslint-disable-next-line react/no-danger
-              <span dangerouslySetInnerHTML={{ __html: finalPart }} />
+              <span key={uuidv4()} dangerouslySetInnerHTML={{ __html: finalPart }} />
             );
           })}
         </TitleWrapper>
