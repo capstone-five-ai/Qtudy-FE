@@ -16,7 +16,7 @@ function ShareLinkModal({ onClose, link }: Props) {
   const { fireToast } = useToast();
   const handleCopyClipBoard = async () => {
     await navigator.clipboard.writeText(link);
-    fireToast('링크가 복사되었습니다!');
+    fireToast('링크 복사 완료!');
   };
 
   return (

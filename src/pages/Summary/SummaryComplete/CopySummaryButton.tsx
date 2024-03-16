@@ -12,7 +12,7 @@ function CopySummaryButton({ text }: Props) {
 
   const handleCopyClipBoard = async () => {
     await navigator.clipboard.writeText(text);
-    fireToast('텍스트가 복사되었습니다!');
+    fireToast('텍스트 복사 완료!');
   };
 
   return (
