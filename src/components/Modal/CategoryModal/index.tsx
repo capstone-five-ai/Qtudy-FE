@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CategoryApi from '../../../api/CategoryApi';
@@ -22,7 +23,7 @@ function CategoryModal({ onClose, categoryType, contentId, generateType }: Props
   const [categories, setCategories] = useState<CategoryInfoType[]>([]);
   const [newCategory, setNewCategory] = useState('');
   const [saveCategoryIds, setSaveCategoryIds] = useState<number[]>([]);
-  const [showWarn] = useState(false);
+  const [showWarn, setShowWarn] = useState(false);
 
   const getCategories = useCallback(async () => {
     const data = await CategoryApi.getCategoryList(categoryType);
@@ -38,9 +39,13 @@ function CategoryModal({ onClose, categoryType, contentId, generateType }: Props
   };
 
   const handlePostCategory = async () => {
-    const data = await CategoryApi.createCategory(newCategory, categoryType);
-
-    setCategories([...categories, data]);
+    try {
+      const data = await CategoryApi.createCategory(newCategory, categoryType);
+      setCategories([...categories, data]);
+      setShowWarn(false);
+    } catch (e) {
+      if (e instanceof AxiosError && e.response?.status === 400) setShowWarn(true);
+    }
   };
 
   const handleClickSave = async () => {
@@ -70,7 +75,7 @@ function CategoryModal({ onClose, categoryType, contentId, generateType }: Props
             <>
               <FormWrapper>
                 <InputWrapper>
-                  <InputField value={newCategory} onChange={handleChangeCategory} />
+                  <InputField error={showWarn} value={newCategory} onChange={handleChangeCategory} />
                 </InputWrapper>
                 <CompleteButton onClick={handlePostCategory} />
               </FormWrapper>
