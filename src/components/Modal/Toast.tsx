@@ -4,7 +4,7 @@ import useToast from '../../hooks/useToast';
 import Typography from '../Typography';
 
 function Toast() {
-  const { toast } = useToast();
+  const { toast, icon } = useToast();
   const [isClosing, setIsClosing] = useState<boolean>(false);
   const [show, setShow] = useState(toast.length > 0);
 
@@ -30,6 +30,7 @@ function Toast() {
   return (
     <Wrapper>
       <ToastWrapper className={isClosing ? 'closing show' : `${show && 'show'}`}>
+        {icon}
         <Typography variant="caption3" color="grayScale09">
           {toast}
         </Typography>
@@ -58,6 +59,7 @@ const ToastWrapper = styled.div`
   padding: 8px;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 
   opacity: 0;
   &.show {

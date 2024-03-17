@@ -19,7 +19,7 @@ function LinkButton({ link }: Props) {
     <>
       <Wrapper onClick={handleClickLink}>
         <LinkIcon />
-        <Typography variant="caption3" color="grayScale03" hoverVariant="caption2">
+        <Typography variant="caption3" color="grayScale03" hoverVariant="caption1">
           링크 공유
         </Typography>
       </Wrapper>

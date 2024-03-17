@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { ReactComponent as CheckIcon } from '../../../assets/icons/complete.svg';
 import { ReactComponent as CopyIcon } from '../../../assets/icons/copy_text.svg';
 import Typography from '../../../components/Typography';
 import useToast from '../../../hooks/useToast';
@@ -12,13 +13,13 @@ function CopySummaryButton({ text }: Props) {
 
   const handleCopyClipBoard = async () => {
     await navigator.clipboard.writeText(text);
-    fireToast('텍스트가 복사되었습니다!');
+    fireToast('텍스트 복사 완료!', <CheckIcon />);
   };
 
   return (
     <Wrapper onClick={async () => handleCopyClipBoard()}>
       <CopyIcon />
-      <Typography variant="caption3" color="grayScale03">
+      <Typography variant="caption3" color="grayScale03" hoverVariant="caption1">
         요약 복사
       </Typography>
     </Wrapper>

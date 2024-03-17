@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
+import styled from 'styled-components';
 import SummaryApi from '../../../api/SummaryApi';
 import LinkButton from '../../../components/Button/LinkButton';
 import PDFButton from '../../../components/Button/PDFButton';
+import SaveButton from '../../../components/Button/SaveButton';
 import CategoryModal from '../../../components/Modal/CategoryModal';
+import Scrollbar from '../../../components/Scrollbar';
 import Typography from '../../../components/Typography';
+import authState from '../../../recoil/atoms/authState';
 import { SummaryType } from '../../../types/summary.type';
 import CopySummaryButton from './CopySummaryButton';
-import authState from '../../../recoil/atoms/authState';
-import Scrollbar from '../../../components/Scrollbar';
-import SaveButton from '../../../components/Button/SaveButton';
 
 type Props = {
   type: 'ai' | 'user';
@@ -60,9 +60,17 @@ function SummaryComplete({ type }: Props) {
       <SideWrapper>
         <SideBar>
           <ButtonWrapper>
-            <CopySummaryButton text={summary.summaryContent} />
-            <LinkButton link={link} />
-            <PDFButton label="요약" fileId={summaryId} type={type} pdfType="SUMMARY" fileName={summary.summaryTitle} />
+            <div>
+              <CopySummaryButton text={summary.summaryContent} />
+              <LinkButton link={link} />
+              <PDFButton
+                label="요약"
+                fileId={summaryId}
+                type={type}
+                pdfType="SUMMARY"
+                fileName={summary.summaryTitle}
+              />
+            </div>
           </ButtonWrapper>
 
           <SaveButton disabled={!isWriter} onClick={() => setShowCategoryModal(true)} />
@@ -122,11 +130,17 @@ const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 30px;
-  gap: 16px;
   justify-content: end;
   align-items: end;
 
   height: 100%;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: start;
+  }
 `;
 
 export default SummaryComplete;

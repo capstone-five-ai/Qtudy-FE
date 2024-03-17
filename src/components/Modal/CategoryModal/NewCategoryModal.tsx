@@ -1,12 +1,12 @@
 import { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
+import CategoryApi from '../../../api/CategoryApi';
 import { ReactComponent as AddCategory } from '../../../assets/icons/add_category.svg';
 import { CategoryInfoType } from '../../../types';
 import CompleteButton from '../../Button/CompleteButton';
 import InputField from '../../Input/InputField';
 import Typography from '../../Typography';
 import ModalContainer from '../ModalContainer';
-import CategoryApi from '../../../api/CategoryApi';
 
 type Props = {
   onClose: () => void;
@@ -39,7 +39,7 @@ function NewCategoryModal({ onClose, categoryType, categoryList, setCategoryList
         <NewCategoryWrapper>
           <NewCategoryButton type="button">
             <AddCategory />
-            <Typography variant="caption2">새 카테고리 추가</Typography>
+            <Typography variant="caption2">카테고리 추가</Typography>
           </NewCategoryButton>
           <FormWrapper>
             <InputWrapper>

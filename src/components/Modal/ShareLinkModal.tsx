@@ -1,8 +1,10 @@
 import styled from 'styled-components';
+import { ReactComponent as CheckIcon } from '../../assets/icons/complete.svg';
 import { ReactComponent as CopyIcon } from '../../assets/icons/copy.svg';
 import { ReactComponent as LinkIcon } from '../../assets/icons/link_white.svg';
 
 import useToast from '../../hooks/useToast';
+import LinkInput from '../Input/LinkInput';
 import Typography from '../Typography';
 import ModalContainer from './ModalContainer';
 
@@ -15,7 +17,7 @@ function ShareLinkModal({ onClose, link }: Props) {
   const { fireToast } = useToast();
   const handleCopyClipBoard = async () => {
     await navigator.clipboard.writeText(link);
-    fireToast('링크가 복사되었습니다!');
+    fireToast('링크 복사 완료!', <CheckIcon />);
   };
 
   return (
@@ -29,13 +31,11 @@ function ShareLinkModal({ onClose, link }: Props) {
         </Header>
         <LinkWrapper>
           <UrlWrapper>
-            <Typography variant="caption3" color="grayScale03">
-              {link}
-            </Typography>
+            <LinkInput link={link} />
           </UrlWrapper>
           <Copy type="button" onClick={async () => handleCopyClipBoard()}>
             <CopyIcon />
-            <Typography variant="caption3" color="grayScale03" hoverVariant="caption2">
+            <Typography variant="caption3" color="grayScale03" hoverVariant="caption1">
               링크 복사
             </Typography>
           </Copy>
@@ -83,10 +83,10 @@ const LinkWrapper = styled.div`
 `;
 
 const UrlWrapper = styled.div`
-  flex: 1;
+  width: 347px;
 
   display: flex;
-  padding: 5px 12px;
+  padding: 5px 10px;
   align-items: center;
 
   border-radius: 4px;

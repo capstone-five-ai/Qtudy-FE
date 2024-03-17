@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import fileDownload from 'js-file-download';
+import styled from 'styled-components';
 import FileApi from '../../api/FileApi';
 import { ReactComponent as PDFIcon } from '../../assets/icons/download_pdf.svg';
 import Typography from '../Typography';
@@ -43,7 +43,7 @@ function PDFButton({ label, variant, fileId, pdfType, type, fileName }: Props) {
           <Label>{label}</Label>
         </IconWrapper>
         <TypographyWrapper>
-          <Typography variant="caption3" color="grayScale03" hoverVariant="caption2">
+          <Typography variant="caption3" color="grayScale03" hoverVariant="caption1">
             PDF 다운
           </Typography>
         </TypographyWrapper>
@@ -72,6 +72,8 @@ const TypographyWrapper = styled.div`
   display: flex;
   justify-content: center;
   width: 52px;
+
+  white-space: nowrap;
 `;
 
 const IconWrapper = styled.div`
