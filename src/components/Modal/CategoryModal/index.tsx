@@ -19,8 +19,9 @@ type Props = {
 };
 
 function CategoryModal({ onClose, categoryType, contentId, generateType }: Props) {
-  const [showCategoryInput, setShowCategoryInput] = useState(false);
   const [categories, setCategories] = useState<CategoryInfoType[]>([]);
+  const [showCategoryInput, setShowCategoryInput] = useState(categories.length === 0);
+
   const [newCategory, setNewCategory] = useState('');
   const [saveCategoryIds, setSaveCategoryIds] = useState<number[]>([]);
   const [showWarn, setShowWarn] = useState(false);
@@ -61,11 +62,15 @@ function CategoryModal({ onClose, categoryType, contentId, generateType }: Props
         <Header>
           <Typography variant="button">나만의 카테고리에 저장하고 관리할 수 있어요</Typography>
         </Header>
-        <CategoryList
-          categories={categories}
-          saveCategoryIds={saveCategoryIds}
-          setSaveCategoryIds={setSaveCategoryIds}
-        />
+        {categories.length > 0 ? (
+          <CategoryList
+            categories={categories}
+            saveCategoryIds={saveCategoryIds}
+            setSaveCategoryIds={setSaveCategoryIds}
+          />
+        ) : (
+          <div />
+        )}
         <NewCategoryWrapper>
           <NewCategoryButton type="button" onClick={() => setShowCategoryInput(!showCategoryInput)}>
             <AddCategory />
