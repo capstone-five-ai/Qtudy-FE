@@ -17,14 +17,14 @@ function RightSideBar({ quizType, disabled, setQuizType, handleSubmit }: RightSi
     <SideBar buttonDisabled={disabled} handleSubmit={handleSubmit}>
       <Container>
         <Typography variant="subtitle" color="grayScale02">
-          문제 유형
+          퀴즈 유형
         </Typography>
         <ButtonContainer>
           {CREATE_USER_QUIZ_TYPE.map((button) => (
             <RadioButtonField
               key={button.label}
               value={button.label}
-              name="문제 유형"
+              name="퀴즈 유형"
               checked={button.label === quizType.label}
               onChange={() => {
                 setQuizType(button);
