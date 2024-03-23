@@ -136,6 +136,9 @@ const Preview = styled.div`
 
   object {
     width: 111%;
+    position: absolute;
+    top: -70px;
+    left: -4px;
     opacity: 0.6;
   }
 
