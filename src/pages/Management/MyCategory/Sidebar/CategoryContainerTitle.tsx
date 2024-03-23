@@ -15,7 +15,7 @@ function CategoryContainerTitle({ activeTabBar, handleAddCategory }: CategoryCon
       </Typography>
       <button type="button" className="plus-button" onClick={handleAddCategory}>
         <PlusIcon />
-        <Typography variant="caption3" color="mainMintDark">
+        <Typography variant="caption3" color="grayScale03">
           카테고리 추가
         </Typography>
       </button>
@@ -39,6 +39,10 @@ const Container = styled.div`
     border: none;
     background: transparent;
     cursor: pointer;
+
+    path {
+      fill: #757575;
+    }
   }
 `;
 
