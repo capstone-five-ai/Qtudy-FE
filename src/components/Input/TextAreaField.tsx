@@ -1,12 +1,29 @@
-import reactTextareaAutosize from 'react-textarea-autosize';
 import styled from 'styled-components';
 import Scrollbar from '../Scrollbar';
 
-function TextAreaField({ ...props }) {
+interface TextAreaFieldProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  handleChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+}
+
+function TextAreaField({ handleChange, ...props }: TextAreaFieldProps) {
+  const handleChangeTextareaHeight = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const textareaTarget = event.target;
+
+    textareaTarget.style.height = '0px';
+    textareaTarget.style.height = `${textareaTarget.scrollHeight}px`;
+  };
+
   return (
     <Container>
       <TextFieldContainer>
-        <StyledTextArea minRows={19} {...props} />
+        <StyledTextArea
+          onChange={(e) => {
+            handleChange(e);
+            handleChangeTextareaHeight(e);
+          }}
+          {...props}
+          rows={1}
+        />
       </TextFieldContainer>
     </Container>
   );
@@ -28,16 +45,17 @@ const TextFieldContainer = styled.div`
   ${Scrollbar}
 `;
 
-const StyledTextArea = styled(reactTextareaAutosize)`
+const StyledTextArea = styled.textarea`
   width: 100%;
   resize: none;
   border: none;
   text-align: justify;
+  overflow: hidden;
 
   font-family: NotoSansRegular;
   font-size: 14px;
   font-style: normal;
-  line-height: 180%; /* 25.2px */
+  line-height: 180%;
   letter-spacing: 0.28px;
 
   white-space: pre-wrap;
