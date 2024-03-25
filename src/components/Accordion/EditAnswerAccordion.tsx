@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components';
 import { useState } from 'react';
-import reactTextareaAutosize from 'react-textarea-autosize';
 import Typography from '../Typography';
 import { ReactComponent as CheckIcon } from '../../assets/icons/complete.svg';
 import { ReactComponent as EditIcon } from '../../assets/icons/edit_gray.svg';
@@ -21,6 +20,13 @@ function EditAnswerAccordion({ answer, commentary, setCommentary }: EditAnswerAc
     setCommentary({ ...commentary, input: e.target.value });
   };
 
+  const handleChangeTextareaHeight = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const textareaTarget = event.target;
+
+    textareaTarget.style.height = '0px';
+    textareaTarget.style.height = `${textareaTarget.scrollHeight}px`;
+  };
+
   return (
     <Container>
       <AnswerAccordionTitle show={show} setShow={setShow} />
@@ -38,10 +44,13 @@ function EditAnswerAccordion({ answer, commentary, setCommentary }: EditAnswerAc
             $activeClick={commentary.check && commentary.input === ''}
           >
             <StyledTextarea
-              minRows={2}
+              rows={1}
               placeholder="해설을 입력해주세요."
               value={commentary.input}
-              onChange={handleTextareaChange}
+              onChange={(e) => {
+                handleTextareaChange(e);
+                handleChangeTextareaHeight(e);
+              }}
               readOnly={commentary.check}
               $readOnly={commentary.check}
               $activeClick={commentary.check && commentary.input === ''}
@@ -94,7 +103,7 @@ const CommentaryContainer = styled.div<{ $activeClick: boolean }>`
   cursor: ${(props) => props.$activeClick && 'pointer'};
 `;
 
-const StyledTextarea = styled(reactTextareaAutosize)<{ $readOnly: boolean; $activeClick: boolean }>`
+const StyledTextarea = styled.textarea<{ $readOnly: boolean; $activeClick: boolean }>`
   resize: none;
   border: none;
   padding: 0;
