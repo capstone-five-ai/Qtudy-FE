@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
 import CategoryQuizItem from './CategoryQuizItem';
-import Scrollbar from '../../../components/Scrollbar';
 import CategorySummaryItem from './CategorySummaryItem';
 import { CategoryInfoType, CategoryType } from '../../../types';
 import { CategoryQuizItemsType } from '../../../types/quiz.type';
@@ -125,7 +124,4 @@ const CategoryItemWrapper = styled.div`
   flex-direction: column;
   gap: 20px;
   padding: 9px 20px 9px 36px;
-
-  overflow-y: scroll;
-  ${Scrollbar}
 `;

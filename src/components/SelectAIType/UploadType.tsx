@@ -5,7 +5,6 @@ import { ReactComponent as DeleteIcon } from '../../assets/icons/delete_file.svg
 import Typography from '../Typography';
 import { UploadedFileType } from '../../types';
 import uploadFileUtils from '../../utils/uploadFileUtils';
-import Scrollbar from '../Scrollbar';
 
 interface UploadTypeProps {
   inputRef: React.MutableRefObject<HTMLInputElement | null>;
@@ -112,8 +111,6 @@ const Text = styled.div`
 
 const PreviewContainer = styled.div`
   height: 100%;
-  overflow-y: scroll;
-  ${Scrollbar}
 `;
 
 const PreviewInnerContainer = styled.div`

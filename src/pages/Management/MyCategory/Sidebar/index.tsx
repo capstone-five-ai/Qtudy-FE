@@ -3,7 +3,6 @@ import Typography from '../../../../components/Typography';
 import { CategoryInfoType, CategoryType } from '../../../../types';
 import CategoryTabBar from './CategoryTabBar';
 import CategoryContainerTitle from './CategoryContainerTitle';
-import Scrollbar from '../../../../components/Scrollbar';
 import Category from './Category';
 import CategoryApi from '../../../../api/CategoryApi';
 
@@ -117,6 +116,4 @@ const CategoryContainer = styled.div`
 
 const CategoryListContainer = styled.div`
   max-height: 355px;
-  overflow-y: scroll;
-  ${Scrollbar}
 `;

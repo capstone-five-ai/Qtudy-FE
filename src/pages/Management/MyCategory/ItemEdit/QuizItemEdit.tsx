@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { QuestionType } from '../../../../types/question.type';
 import CategoryItemContentWrapper from '../../../../components/Wrapper/CategoryItemContentWrapper';
 import NoButtonSideBar from '../../../../components/SideBar/NoButtonSideBar';
-import Scrollbar from '../../../../components/Scrollbar';
 import EditAnswerAccordion from '../../../../components/Accordion/EditAnswerAccordion';
 import { CREATE_USER_QUIZ_TYPE } from '../../../../constants';
 import QuizView from '../../../Quiz/UserQuiz/CreateUserQuiz/QuizView';
@@ -107,7 +106,4 @@ const QuizContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 48px;
-
-  overflow-y: scroll;
-  ${Scrollbar}
 `;
