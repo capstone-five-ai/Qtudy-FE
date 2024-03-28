@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import React, { MouseEventHandler } from 'react';
 import Typography from '../Typography';
 
@@ -84,8 +84,18 @@ const Container = styled.div<{ $disabled: boolean; $style: Style; $theme: 'mint'
     cursor: pointer;
 
     &:hover {
-      background: ${(props) =>
-        props.$theme === 'mint' ? props.theme.gradation.mainMintDarkGra : props.theme.colors.grayScale07};
+      ${(props) =>
+        props.$theme === 'gray' &&
+        css`
+          background: ${props.theme.colors.grayScale07};
+          box-shadow: 4px 2px 16px 0px rgba(142, 142, 142, 0.28);
+        `};
+      ${(props) =>
+        props.$theme === 'mint' &&
+        css`
+          background: ${props.theme.gradation.mainMintDarkGra};
+          box-shadow: 4px 2px 16px 0px rgba(54, 189, 189, 0.28);
+        `};
     }
   }
 
