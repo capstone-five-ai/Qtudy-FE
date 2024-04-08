@@ -1,30 +1,33 @@
 import styled from 'styled-components';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Typography from '../../../../components/Typography';
-import { CategoryInfoType, CategoryType } from '../../../../types';
+import { CategoryInfoType } from '../../../../types';
 import CategoryTabBar from './CategoryTabBar';
 import CategoryContainerTitle from './CategoryContainerTitle';
 import Category from './Category';
 import CategoryApi from '../../../../api/CategoryApi';
+import { CategoryTypeMapping } from '../../../../types/category.type';
 
 interface SidebarProps {
-  activeTabBar: CategoryType;
+  currentType: keyof CategoryTypeMapping;
   categoryList: CategoryInfoType[];
-  activeCategory: CategoryInfoType | null;
+  activeCategoryId: string;
   setCategoryList: React.Dispatch<React.SetStateAction<CategoryInfoType[]>>;
-  setActiveTabBar: React.Dispatch<React.SetStateAction<CategoryType>>;
-  setActiveCategory: React.Dispatch<React.SetStateAction<CategoryInfoType | null>>;
+  setActiveCategoryName: React.Dispatch<React.SetStateAction<string>>;
   setShowCategoryModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function Sidebar({
-  activeTabBar,
+  currentType,
   categoryList,
-  activeCategory,
+  activeCategoryId,
+  setActiveCategoryName,
   setCategoryList,
-  setActiveTabBar,
-  setActiveCategory,
   setShowCategoryModal,
 }: SidebarProps) {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const handleAddCategory = () => {
     setShowCategoryModal(true);
   };
@@ -45,15 +48,19 @@ function Sidebar({
     await CategoryApi.deleteCategory(id).then(() => {
       const updatedCategoryList = categoryList.filter((category) => category.categoryId !== id);
       setCategoryList(updatedCategoryList);
-      setActiveCategory(null);
+
+      const searchParams = new URLSearchParams(location.search);
+      searchParams.delete('categoryId');
+
+      navigate(`${location.pathname}?${searchParams.toString()}`);
     });
   };
 
   return (
     <Container>
-      <CategoryTabBar activeTabBar={activeTabBar} setActiveTabBar={setActiveTabBar} />
+      <CategoryTabBar currentType={currentType} />
       <CategoryContainer>
-        <CategoryContainerTitle activeTabBar={activeTabBar} handleAddCategory={handleAddCategory} />
+        <CategoryContainerTitle currentType={currentType} handleAddCategory={handleAddCategory} />
         <CategoryListContainer>
           {categoryList.length > 0 ? (
             <div className="category-list">
@@ -61,10 +68,10 @@ function Sidebar({
                 <Category
                   key={category.categoryId}
                   category={category}
-                  active={activeCategory !== null && activeCategory.categoryId === category.categoryId}
-                  setActiveCategory={setActiveCategory}
+                  active={activeCategoryId === String(category.categoryId)}
                   handleEditCategory={handleEditCategory}
                   handleDeleteCategory={handleDeleteCategory}
+                  setActiveCategoryName={setActiveCategoryName}
                 />
               ))}
             </div>

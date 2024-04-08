@@ -1,24 +1,39 @@
 import styled from 'styled-components';
-import { CategoryType } from '../../../../types';
+import { useNavigate } from 'react-router-dom';
 import Typography from '../../../../components/Typography';
-
-const TAB_LIST: CategoryType[] = ['퀴즈', '요약'];
+import { CategoryTypeMapping } from '../../../../types/category.type';
+import { CATEGORY_TYPE_MAPPING } from '../../../../constants';
 
 interface CategoryTabBarProps {
-  activeTabBar: CategoryType;
-  setActiveTabBar: React.Dispatch<React.SetStateAction<CategoryType>>;
+  currentType: keyof CategoryTypeMapping;
 }
 
-function CategoryTabBar({ activeTabBar, setActiveTabBar }: CategoryTabBarProps) {
+function CategoryTabBar({ currentType }: CategoryTabBarProps) {
+  const navigate = useNavigate();
   return (
     <Container>
-      {TAB_LIST.map((tab) => (
-        <TabBar key={tab} $active={activeTabBar === tab} onClick={() => setActiveTabBar(tab)}>
-          <Typography variant="button" color={activeTabBar === tab ? 'mainMintDark' : 'grayScale03'}>
-            {tab}
-          </Typography>
-        </TabBar>
-      ))}
+      <TabBar
+        $active={CATEGORY_TYPE_MAPPING[currentType].ko === '퀴즈'}
+        onClick={() => navigate(`/management/mycategory?type=quiz`)}
+      >
+        <Typography
+          variant="button"
+          color={CATEGORY_TYPE_MAPPING[currentType].ko === '퀴즈' ? 'mainMintDark' : 'grayScale03'}
+        >
+          퀴즈
+        </Typography>
+      </TabBar>
+      <TabBar
+        $active={CATEGORY_TYPE_MAPPING[currentType].ko === '요약'}
+        onClick={() => navigate(`/management/mycategory?type=summary`)}
+      >
+        <Typography
+          variant="button"
+          color={CATEGORY_TYPE_MAPPING[currentType].ko === '요약' ? 'mainMintDark' : 'grayScale03'}
+        >
+          요약
+        </Typography>
+      </TabBar>
     </Container>
   );
 }

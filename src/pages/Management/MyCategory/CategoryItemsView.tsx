@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import React from 'react';
 import CategoryQuizItem from './CategoryQuizItem';
 import CategorySummaryItem from './CategorySummaryItem';
-import { CategoryInfoType, CategoryType } from '../../../types';
 import { CategoryQuizItemsType } from '../../../types/quiz.type';
 import { CategorySummaryItemsType } from '../../../types/summary.type';
 import NoItem from './NoItem';
@@ -11,8 +10,9 @@ import SummaryCategoryApi from '../../../api/SummaryCategoryApi';
 import PDFButton from '../../../components/Button/PDFButton';
 
 interface CategoryItemsViewProps {
-  activeTabBar: CategoryType;
-  activeCategory: CategoryInfoType | null;
+  activeTabBar: string;
+  activeCategoryId: string;
+  activeCategoryName: string;
   activeCategoryQuizItems: CategoryQuizItemsType[];
   activeCategorySummaryItems: CategorySummaryItemsType[];
   setActiveCategoryQuizItems: React.Dispatch<React.SetStateAction<CategoryQuizItemsType[]>>;
@@ -21,7 +21,8 @@ interface CategoryItemsViewProps {
 
 function CategoryItemsView({
   activeTabBar,
-  activeCategory,
+  activeCategoryId,
+  activeCategoryName,
   activeCategoryQuizItems,
   activeCategorySummaryItems,
   setActiveCategoryQuizItems,
@@ -48,23 +49,23 @@ function CategoryItemsView({
           <NoItem categoryType={activeTabBar} />
         ) : (
           <>
-            {activeCategory && (
+            {activeCategoryId !== '' && (
               <DownloadButtonContainer>
                 <PDFButton
                   label="퀴즈"
                   variant={2}
-                  fileId={activeCategory.categoryId}
+                  fileId={Number(activeCategoryId)}
                   pdfType="PROBLEM"
                   type="category"
-                  fileName={`${activeCategory.categoryName}_QUIZ`}
+                  fileName={`${activeCategoryName}_QUIZ`}
                 />
                 <PDFButton
                   label="정답"
                   variant={2}
-                  fileId={activeCategory.categoryId}
+                  fileId={Number(activeCategoryId)}
                   pdfType="ANSWER"
                   type="category"
-                  fileName={`${activeCategory.categoryName}_ANSWER`}
+                  fileName={`${activeCategoryName}_ANSWER`}
                 />
               </DownloadButtonContainer>
             )}

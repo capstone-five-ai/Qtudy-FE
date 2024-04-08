@@ -7,10 +7,12 @@ import CompleteButton from '../../Button/CompleteButton';
 import InputField from '../../Input/InputField';
 import Typography from '../../Typography';
 import ModalContainer from '../ModalContainer';
+import { CATEGORY_TYPE_MAPPING } from '../../../constants';
+import { CategoryTypeMapping } from '../../../types/category.type';
 
 type Props = {
   onClose: () => void;
-  categoryType: 'PROBLEM' | 'SUMMARY';
+  categoryType: keyof CategoryTypeMapping;
   categoryList: CategoryInfoType[];
   setCategoryList: React.Dispatch<React.SetStateAction<CategoryInfoType[]>>;
 };
@@ -19,7 +21,7 @@ function NewCategoryModal({ onClose, categoryType, categoryList, setCategoryList
   const [newCategory, setNewCategory] = useState('');
 
   const handlePostCategory = async () => {
-    await CategoryApi.createCategory(newCategory, categoryType)
+    await CategoryApi.createCategory(newCategory, CATEGORY_TYPE_MAPPING[categoryType].api)
       .then((data) => {
         setCategoryList([...categoryList, data]);
         onClose();

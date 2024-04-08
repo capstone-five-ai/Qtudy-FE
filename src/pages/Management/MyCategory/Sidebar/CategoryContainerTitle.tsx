@@ -1,17 +1,18 @@
 import styled from 'styled-components';
-import { CategoryType } from '../../../../types';
 import Typography from '../../../../components/Typography';
 import { ReactComponent as PlusIcon } from '../../../../assets/icons/plus.svg';
+import { CategoryTypeMapping } from '../../../../types/category.type';
+import { CATEGORY_TYPE_MAPPING } from '../../../../constants';
 
 interface CategoryContainerTitleProps {
-  activeTabBar: CategoryType;
+  currentType: keyof CategoryTypeMapping;
   handleAddCategory: () => void;
 }
-function CategoryContainerTitle({ activeTabBar, handleAddCategory }: CategoryContainerTitleProps) {
+function CategoryContainerTitle({ currentType, handleAddCategory }: CategoryContainerTitleProps) {
   return (
     <Container>
       <Typography variant="h4" color="grayScale02">
-        {activeTabBar}
+        {CATEGORY_TYPE_MAPPING[currentType].ko}
       </Typography>
       <button type="button" className="plus-button" onClick={handleAddCategory}>
         <PlusIcon />

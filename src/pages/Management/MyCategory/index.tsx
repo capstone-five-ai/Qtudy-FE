@@ -1,55 +1,58 @@
+import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import CategoryApi from '../../../api/CategoryApi';
+import { CategoryInfoType } from '../../../types';
 import NoCategory from './NoCategory';
+import NewCategoryModal from '../../../components/Modal/CategoryModal/NewCategoryModal';
 import Sidebar from './Sidebar';
-import CategoryItemsView from './CategoryItemsView';
+import { CategoryTypeMapping } from '../../../types/category.type';
 import { CATEGORY_TYPE_MAPPING } from '../../../constants';
 import ContentWrapper from '../../../components/Wrapper/ContentWrapper';
-import DefaultButton from '../../../components/Button/DefaultButton';
-import CategoryApi from '../../../api/CategoryApi';
-import NewCategoryModal from '../../../components/Modal/CategoryModal/NewCategoryModal';
-import { CategoryInfoType, CategoryType } from '../../../types';
+import DefaultView from './DefaultView';
+import CategoryItemsView from './CategoryItemsView';
 import { CategoryQuizItemsType } from '../../../types/quiz.type';
 import { CategorySummaryItemsType } from '../../../types/summary.type';
-import DefaultView from './DefaultView';
+import DefaultButton from '../../../components/Button/DefaultButton';
 
-const BUTTON = { 퀴즈: '카테고리에 퀴즈 추가', 요약: '카테고리에 요약 추가' };
+const BUTTON = { quiz: '카테고리에 퀴즈 추가', summary: '카테고리에 요약 추가' };
 
 function MyCategory() {
-  const [activeTabBar, setActiveTabBar] = useState<CategoryType>('퀴즈'); // 탭바 (퀴즈/요약)
-  const [showNoCategoryView, setShowNoCategoryView] = useState(true); // NoCategory 출력 여부
+  const [params] = useSearchParams();
+  const categoryType = params.get('type');
+  const categoryId = params.get('categoryId') || '';
+  const [currentType, setCurrentType] = useState<keyof CategoryTypeMapping | null>(null); // 탭바 (퀴즈/요약)
   const [quizCategoryList, setQuizCategoryList] = useState<CategoryInfoType[]>([]); // 퀴즈 카테고리 목록
   const [summaryCategoryList, setSummaryCategoryList] = useState<CategoryInfoType[]>([]); // 요약 카테고리 목록
-  const [activeCategory, setActiveCategory] = useState<CategoryInfoType | null>(null); // 조회 중인 카테고리 (퀴즈/요약)
+  const [activeCategoryName, setActiveCategoryName] = useState<string>(''); // 조회 중인 카테고리 (퀴즈/요약)
   const [activeCategoryQuizItems, setActiveCategoryQuizItems] = useState<CategoryQuizItemsType[]>([]);
   const [activeCategorySummaryItems, setActiveCategorySummaryItems] = useState<CategorySummaryItemsType[]>([]);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
-  const location = useLocation();
+  const [isLoading, setIsLoading] = useState(true);
+  const [completedRequests, setCompletedRequests] = useState(0);
   const navigate = useNavigate();
 
-  const getAllCategorys = async () => {
-    const quizResponse = await CategoryApi.getCategoryList(CATEGORY_TYPE_MAPPING['퀴즈']);
-    const summaryResponse = await CategoryApi.getCategoryList(CATEGORY_TYPE_MAPPING['요약']);
-
-    if (quizResponse.data.length > 0 || summaryResponse.data.length > 0) {
-      setShowNoCategoryView(false);
-    }
+  const completeRequest = () => {
+    setCompletedRequests((prev) => prev + 1);
   };
 
-  const getCategorys = async () => {
-    await CategoryApi.getCategoryList(CATEGORY_TYPE_MAPPING[activeTabBar]).then((data) => {
-      if (activeTabBar === '퀴즈') {
-        setQuizCategoryList(data.data);
-      } else {
-        setSummaryCategoryList(data.data);
-      }
+  const getQuizCategories = async () => {
+    await CategoryApi.getCategoryList('quiz').then((data) => {
+      setQuizCategoryList(data.data);
+      completeRequest();
+    });
+  };
+
+  const getSummaryCategories = async () => {
+    await CategoryApi.getCategoryList('summary').then((data) => {
+      setSummaryCategoryList(data.data);
+      completeRequest();
     });
   };
 
   const getCategoryItems = async (id: number, type: string) => {
     await CategoryApi.getCategoryItems(id).then((data) => {
-      if (type === 'PROBLEM') {
+      if (type === 'quiz') {
         setActiveCategoryQuizItems(data.categorizedProblemResponses.data);
       } else {
         setActiveCategorySummaryItems(data.categorizedProblemResponses.data);
@@ -58,63 +61,73 @@ function MyCategory() {
   };
 
   useEffect(() => {
-    getAllCategorys();
+    getQuizCategories();
+    getSummaryCategories();
+
+    if (categoryType && Object.keys(CATEGORY_TYPE_MAPPING).includes(categoryType)) {
+      setCurrentType(categoryType as keyof CategoryTypeMapping);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [params.get('type')]);
 
   useEffect(() => {
-    const { state } = location;
-    if (state && state.activeTab) setActiveTabBar(state.activeTab);
-  }, [location]);
+    if (completedRequests === 2) {
+      setIsLoading(false);
+    }
+  }, [completedRequests]);
 
   useEffect(() => {
-    getCategorys();
-    setActiveCategory(null);
+    if (categoryType && Object.keys(CATEGORY_TYPE_MAPPING).includes(categoryType) && categoryId !== '') {
+      getCategoryItems(Number(categoryId), categoryType);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTabBar]);
+  }, [params.get('type'), params.get('categoryId')]);
 
   useEffect(() => {
-    if (activeCategory) getCategoryItems(activeCategory.categoryId, activeCategory.categoryType);
-  }, [activeCategory]);
-
-  useEffect(() => {
-    if (!showCategoryModal) getCategorys();
+    if (!showCategoryModal) {
+      getQuizCategories();
+      getSummaryCategories();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showCategoryModal]);
 
   const handleAddItem = () => {
-    if (activeTabBar === '퀴즈') navigate('/quiz/ai');
+    if (currentType === 'quiz') navigate('/quiz/ai');
     else navigate('/summary/ai');
   };
 
-  if (showNoCategoryView) return <NoCategory setShowNoCategoryView={setShowNoCategoryView} />;
+  if (isLoading) return <p>Loading...</p>;
+
+  if (quizCategoryList.length + summaryCategoryList.length === 0) return <NoCategory />;
+
+  if (currentType === null) return <Navigate to="/management/mycategory?type=quiz" replace />;
 
   return (
     <>
       {showCategoryModal && (
         <NewCategoryModal
           onClose={() => setShowCategoryModal(false)}
-          categoryType={CATEGORY_TYPE_MAPPING[activeTabBar]}
-          categoryList={activeTabBar === '퀴즈' ? quizCategoryList : summaryCategoryList}
-          setCategoryList={activeTabBar === '퀴즈' ? setQuizCategoryList : setSummaryCategoryList}
+          categoryType={currentType}
+          categoryList={currentType === 'quiz' ? quizCategoryList : summaryCategoryList}
+          setCategoryList={currentType === 'quiz' ? setQuizCategoryList : setSummaryCategoryList}
         />
       )}
       <Container>
         <Sidebar
-          activeTabBar={activeTabBar}
-          categoryList={activeTabBar === '퀴즈' ? quizCategoryList : summaryCategoryList}
-          activeCategory={activeCategory}
-          setCategoryList={activeTabBar === '퀴즈' ? setQuizCategoryList : setSummaryCategoryList}
-          setActiveTabBar={setActiveTabBar}
-          setActiveCategory={setActiveCategory}
+          currentType={currentType}
+          categoryList={currentType === 'quiz' ? quizCategoryList : summaryCategoryList}
+          activeCategoryId={categoryId}
+          setActiveCategoryName={setActiveCategoryName}
+          setCategoryList={currentType === 'quiz' ? setQuizCategoryList : setSummaryCategoryList}
           setShowCategoryModal={setShowCategoryModal}
         />
         <ContentWrapper>
-          {activeTabBar === '퀴즈' &&
-            (activeCategory ? (
+          {CATEGORY_TYPE_MAPPING[currentType].ko === '퀴즈' &&
+            (categoryId !== '' ? (
               <CategoryItemsView
-                activeTabBar={activeTabBar}
-                activeCategory={activeCategory}
+                activeTabBar={CATEGORY_TYPE_MAPPING[currentType].ko}
+                activeCategoryId={categoryId}
+                activeCategoryName={activeCategoryName}
                 activeCategoryQuizItems={activeCategoryQuizItems}
                 activeCategorySummaryItems={activeCategorySummaryItems}
                 setActiveCategoryQuizItems={setActiveCategoryQuizItems}
@@ -123,11 +136,12 @@ function MyCategory() {
             ) : (
               <DefaultView />
             ))}
-          {activeTabBar === '요약' &&
-            (activeCategory ? (
+          {CATEGORY_TYPE_MAPPING[currentType].ko === '요약' &&
+            (categoryId !== '' ? (
               <CategoryItemsView
-                activeTabBar={activeTabBar}
-                activeCategory={activeCategory}
+                activeTabBar={CATEGORY_TYPE_MAPPING[currentType].ko}
+                activeCategoryId={categoryId}
+                activeCategoryName={activeCategoryName}
                 activeCategoryQuizItems={activeCategoryQuizItems}
                 activeCategorySummaryItems={activeCategorySummaryItems}
                 setActiveCategoryQuizItems={setActiveCategoryQuizItems}
@@ -137,9 +151,9 @@ function MyCategory() {
               <DefaultView />
             ))}
           <div className="button-container">
-            {activeCategory && (
+            {categoryId !== '' && (
               <DefaultButton size="large" onClick={handleAddItem}>
-                {BUTTON[activeTabBar]}
+                {BUTTON[currentType]}
               </DefaultButton>
             )}
           </div>

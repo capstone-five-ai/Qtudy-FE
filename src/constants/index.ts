@@ -1,4 +1,5 @@
 import { HeaderContentType, TabType } from '../types';
+import { CategoryTypeMapping } from '../types/category.type';
 import { ProblemType } from '../types/question.type';
 
 export const HEADER_MENU_LIST = [
@@ -37,9 +38,15 @@ export const HEADER_CONTENT: { [key: string]: { header: HeaderContentType; tabs:
   },
 };
 
-export const CATEGORY_TYPE_MAPPING: { [key: string]: 'PROBLEM' | 'SUMMARY' } = {
-  퀴즈: 'PROBLEM',
-  요약: 'SUMMARY',
+export const CATEGORY_TYPE_MAPPING: CategoryTypeMapping = {
+  quiz: {
+    ko: '퀴즈',
+    api: 'PROBLEM',
+  },
+  summary: {
+    ko: '요약',
+    api: 'SUMMARY',
+  },
 };
 
 export const GENERATED_BY: { [key: string]: string } = {

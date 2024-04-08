@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Typography from '../../../../components/Typography';
 import { ReactComponent as EditIcon } from '../../../../assets/icons/edit_gray.svg';
 import { ReactComponent as DeleteIcon } from '../../../../assets/icons/delete.svg';
@@ -10,16 +11,24 @@ import DeleteModal from '../../../../components/Modal/DeleteModal';
 interface CategoryProps {
   category: CategoryInfoType;
   active: boolean;
-  setActiveCategory: React.Dispatch<React.SetStateAction<CategoryInfoType | null>>;
   handleEditCategory: (id: number, name: string) => void;
   handleDeleteCategory: (id: number) => void;
+  setActiveCategoryName: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function Category({ category, active, setActiveCategory, handleEditCategory, handleDeleteCategory }: CategoryProps) {
+function Category({
+  category,
+  active,
+  handleEditCategory,
+  handleDeleteCategory,
+  setActiveCategoryName,
+}: CategoryProps) {
   const [editMode, setEditMode] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -38,7 +47,16 @@ function Category({ category, active, setActiveCategory, handleEditCategory, han
   }, [editMode, newCategoryName]);
 
   return (
-    <Container type="button" $active={active} onClick={() => setActiveCategory(category)}>
+    <Container
+      type="button"
+      $active={active}
+      onClick={() => {
+        setActiveCategoryName(category.categoryName);
+        const searchParams = new URLSearchParams(location.search);
+        searchParams.set('categoryId', String(category.categoryId));
+        navigate(`${location.pathname}?${searchParams.toString()}`);
+      }}
+    >
       {editMode ? (
         <>
           <Input
