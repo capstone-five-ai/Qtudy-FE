@@ -13,7 +13,7 @@ function QuizItemDetail() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const navigate = useNavigate();
   const [params] = useSearchParams();
-  const [currentCategoaryId, setCurrentCategoaryId] = useState(-1);
+  const [currentCategoryId, setCurrentCategoryId] = useState(-1);
   const [currentQuiz, setCurrentQuiz] = useState<QuestionType | null>(null);
   const mainUrl = window.location.origin;
 
@@ -27,7 +27,7 @@ function QuizItemDetail() {
         problemType: quizData.problemType,
         problemChoices: quizData.problemChoices,
       });
-      setCurrentCategoaryId(quizData.categoryId);
+      setCurrentCategoryId(quizData.categoryId);
     });
   };
 
@@ -37,7 +37,7 @@ function QuizItemDetail() {
   }, [params]);
 
   const handleMoveToList = () => {
-    navigate('/management/mycategory', { state: { activeTab: '퀴즈', categoryId: currentCategoaryId } });
+    navigate(`/management/mycategory?type=quiz&categoryId=${currentCategoryId}`);
   };
 
   const handleEdit = () => {
