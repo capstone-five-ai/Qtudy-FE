@@ -27,7 +27,7 @@ function ShareLinkModal({ onClose, link }: Props) {
           <LinkCircle>
             <LinkIcon />
           </LinkCircle>
-          <Typography variant="button">링크를 공유하고 함께 풀어보세요</Typography>
+          <Typography variant="button">링크를 공유하고 함께 학습하세요</Typography>
         </Header>
         <LinkWrapper>
           <UrlWrapper>
