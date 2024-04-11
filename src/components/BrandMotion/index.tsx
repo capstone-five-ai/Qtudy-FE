@@ -14,7 +14,7 @@ function Brand() {
   return (
     <Wrapper>
       <Typography variant="h4" color="mainMintDark">
-        AI와 함께 퀴즈와 요약을 통해 스스로 학습하는
+        AI가 생성한 퀴즈와 요약으로 효율적인 학습을 돕는
       </Typography>
       <Logo />
     </Wrapper>
