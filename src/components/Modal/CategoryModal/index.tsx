@@ -62,14 +62,14 @@ function CategoryModal({ onClose, categoryType, contentId, generateType }: Props
         <Header>
           <Typography variant="button">나만의 카테고리에 저장하고 관리할 수 있어요</Typography>
         </Header>
-        {categories.length > 0 ? (
-          <CategoryList
-            categories={categories}
-            saveCategoryIds={saveCategoryIds}
-            setSaveCategoryIds={setSaveCategoryIds}
-          />
-        ) : (
-          <div />
+        {categories.length > 0 && (
+          <CategoryWrapper>
+            <CategoryList
+              categories={categories}
+              saveCategoryIds={saveCategoryIds}
+              setSaveCategoryIds={setSaveCategoryIds}
+            />
+          </CategoryWrapper>
         )}
         <NewCategoryWrapper>
           <NewCategoryButton type="button" onClick={() => setShowCategoryInput(!showCategoryInput)}>
@@ -108,9 +108,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 60px 32px 20px 32px;
-
-  gap: 24px;
-
   width: 100%;
 `;
 
@@ -120,6 +117,13 @@ const Header = styled.div`
   align-items: center;
   width: 100%;
   gap: 16px;
+
+  margin-bottom: 40px;
+`;
+
+const CategoryWrapper = styled.div`
+  margin-bottom: 24px;
+  width: 100%;
 `;
 
 const NewCategoryWrapper = styled.div`
