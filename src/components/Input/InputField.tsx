@@ -1,15 +1,38 @@
 import { InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
+import Typography from '../Typography';
 
-function InputField({ error = false, ...props }: { error?: boolean } & InputHTMLAttributes<HTMLInputElement>) {
-  return <Input $error={error} {...props} />;
+interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
+  error?: boolean;
+  errorMessage?: string;
+}
+
+function InputField({ error = false, errorMessage = '', ...props }: InputFieldProps) {
+  return (
+    <Container>
+      <Input $error={error} {...props} />
+      {error && (
+        <Typography variant="caption4" color="errorRed">
+          {errorMessage}
+        </Typography>
+      )}
+    </Container>
+  );
 }
 
 export default InputField;
 
 InputField.defaultProps = {
   error: false,
+  errorMessage: '',
 };
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+`;
 
 const Input = styled.input<{ $error: boolean }>`
   padding: 5px 12px;
@@ -31,5 +54,5 @@ const Input = styled.input<{ $error: boolean }>`
     ${({ $error }) => !$error && 'border-bottom: 1px solid rgba(62, 215, 205, 0.4);'}
   }
 
-  ${({ $error }) => $error && 'border-bottom: 1px solid rgba(238, 0, 0, 0.4);'}
+  ${({ $error }) => $error && 'border-bottom: 1px solid rgba(238, 0, 0, 0.4);'}//background: green;
 `;
