@@ -11,11 +11,13 @@ function InputField({ error = false, errorMessage = '', ...props }: InputFieldPr
   return (
     <Container>
       <Input $error={error} {...props} />
-      {error && (
-        <Typography variant="caption4" color="errorRed">
-          {errorMessage}
-        </Typography>
-      )}
+      <div className="error-message">
+        {error && (
+          <Typography variant="caption4" color="errorRed">
+            {errorMessage}
+          </Typography>
+        )}
+      </div>
     </Container>
   );
 }
@@ -32,6 +34,15 @@ const Container = styled.div`
   flex-direction: column;
   gap: 4px;
   width: 100%;
+
+  position: relative;
+
+  .error-message {
+    position: absolute;
+    transform: translate(0, 100%);
+    bottom: 0;
+    left: 0;
+  }
 `;
 
 const Input = styled.input<{ $error: boolean }>`
@@ -54,5 +65,5 @@ const Input = styled.input<{ $error: boolean }>`
     ${({ $error }) => !$error && 'border-bottom: 1px solid rgba(62, 215, 205, 0.4);'}
   }
 
-  ${({ $error }) => $error && 'border-bottom: 1px solid rgba(238, 0, 0, 0.4);'}//background: green;
+  ${({ $error }) => $error && 'border-bottom: 1px solid rgba(238, 0, 0, 0.4);'}
 `;

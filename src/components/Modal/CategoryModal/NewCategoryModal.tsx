@@ -19,15 +19,17 @@ type Props = {
 
 function NewCategoryModal({ onClose, categoryType, categoryList, setCategoryList }: Props) {
   const [newCategory, setNewCategory] = useState('');
+  const [categoryError, setCategoryError] = useState(false);
 
   const handlePostCategory = async () => {
+    setCategoryError(false);
     await CategoryApi.createCategory(newCategory, CATEGORY_TYPE_MAPPING[categoryType].api)
       .then((data) => {
         setCategoryList([...categoryList, data]);
         onClose();
       })
       .catch((err) => {
-        if (err.response.data.errorCode === 'C-002') window.alert('중복되는 카테고리는 사용할 수 없습니다.');
+        if (err.response.data.errorCode === 'C-002') setCategoryError(true);
       });
   };
 
@@ -45,7 +47,12 @@ function NewCategoryModal({ onClose, categoryType, categoryList, setCategoryList
           </NewCategoryButton>
           <FormWrapper>
             <InputWrapper>
-              <InputField value={newCategory} onChange={handleChangeCategory} />
+              <InputField
+                value={newCategory}
+                onChange={handleChangeCategory}
+                error={categoryError}
+                errorMessage="중복되는 카테고리입니다."
+              />
             </InputWrapper>
             <CompleteButton onClick={handlePostCategory} />
           </FormWrapper>
