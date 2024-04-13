@@ -137,7 +137,7 @@ function HistoryItem({ history, updateList }: Props) {
         <DeleteModal
           onCancel={() => setShowDeleteModal(false)}
           onConfirm={deleteFile}
-          title={`${history.dtype === 'PROBLEM' ? '퀴츠' : '요약'}을 삭제하시겠습니까?`}
+          title={`${history.dtype === 'PROBLEM' ? '퀴즈를' : '요약을'} 삭제하시겠습니까?`}
         />
       )}
     </Wrapper>
