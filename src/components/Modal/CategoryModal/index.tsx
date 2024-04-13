@@ -10,10 +10,11 @@ import InputField from '../../Input/InputField';
 import Typography from '../../Typography';
 import ModalContainer from '../ModalContainer';
 import CategoryList from './CategoryList';
+import { CategoryTypeMapping } from '../../../types/category.type';
 
 type Props = {
   onClose: () => void;
-  categoryType: 'PROBLEM' | 'SUMMARY';
+  categoryType: keyof CategoryTypeMapping;
   contentId: number;
   generateType: 'ai' | 'user';
 };
@@ -50,8 +51,8 @@ function CategoryModal({ onClose, categoryType, contentId, generateType }: Props
   };
 
   const handleClickSave = async () => {
-    if (categoryType === 'SUMMARY') await CategoryApi.saveSummaryToCategory(saveCategoryIds, contentId, generateType);
-    if (categoryType === 'PROBLEM') await CategoryApi.saveProblemToCategory(saveCategoryIds, contentId, generateType);
+    if (categoryType === 'summary') await CategoryApi.saveSummaryToCategory(saveCategoryIds, contentId, generateType);
+    if (categoryType === 'quiz') await CategoryApi.saveProblemToCategory(saveCategoryIds, contentId, generateType);
 
     onClose();
   };

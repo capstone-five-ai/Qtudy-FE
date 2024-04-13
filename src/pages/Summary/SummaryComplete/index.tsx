@@ -78,7 +78,7 @@ function SummaryComplete({ type }: Props) {
       {showCategoryModal && (
         <CategoryModal
           onClose={() => setShowCategoryModal(false)}
-          categoryType="SUMMARY"
+          categoryType="summary"
           contentId={summary.memberSavedSummaryId || summary.aiGeneratedSummaryId || -1}
           generateType={type}
         />

@@ -84,7 +84,7 @@ function AIQuizComplete() {
       {showCategoryModal && (
         <CategoryModal
           onClose={() => setShowCategoryModal(false)}
-          categoryType="PROBLEM"
+          categoryType="quiz"
           contentId={question.aiGeneratedProblemId || -1}
           generateType="ai"
         />
