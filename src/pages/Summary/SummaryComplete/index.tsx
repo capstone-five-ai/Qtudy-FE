@@ -7,7 +7,6 @@ import LinkButton from '../../../components/Button/LinkButton';
 import PDFButton from '../../../components/Button/PDFButton';
 import SaveButton from '../../../components/Button/SaveButton';
 import CategoryModal from '../../../components/Modal/CategoryModal';
-import Scrollbar from '../../../components/Scrollbar';
 import Typography from '../../../components/Typography';
 import authState from '../../../recoil/atoms/authState';
 import { SummaryType } from '../../../types/summary.type';
@@ -95,9 +94,6 @@ const MainWrapper = styled.div`
   padding: 40px;
 
   gap: 20px;
-
-  overflow-y: scroll;
-  ${Scrollbar}
 
   & > div:nth-child(2) {
     white-space: pre-wrap;

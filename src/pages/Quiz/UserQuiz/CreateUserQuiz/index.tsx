@@ -4,7 +4,6 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 import RightSideBar from './RightSideBar';
 import { CREATE_USER_QUIZ_TYPE } from '../../../../constants';
-import Scrollbar from '../../../../components/Scrollbar';
 import EditAnswerAccordion from '../../../../components/Accordion/EditAnswerAccordion';
 import QuizView from './QuizView';
 import { useCreateQuizByUser } from '../../../../hooks/useCreateQuiz';
@@ -99,7 +98,4 @@ const QuizContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 48px;
-
-  overflow-y: scroll;
-  ${Scrollbar}
 `;

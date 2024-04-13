@@ -7,25 +7,29 @@ import CompleteButton from '../../Button/CompleteButton';
 import InputField from '../../Input/InputField';
 import Typography from '../../Typography';
 import ModalContainer from '../ModalContainer';
+import { CATEGORY_TYPE_MAPPING } from '../../../constants';
+import { CategoryTypeMapping } from '../../../types/category.type';
 
 type Props = {
   onClose: () => void;
-  categoryType: 'PROBLEM' | 'SUMMARY';
+  categoryType: keyof CategoryTypeMapping;
   categoryList: CategoryInfoType[];
   setCategoryList: React.Dispatch<React.SetStateAction<CategoryInfoType[]>>;
 };
 
 function NewCategoryModal({ onClose, categoryType, categoryList, setCategoryList }: Props) {
   const [newCategory, setNewCategory] = useState('');
+  const [categoryError, setCategoryError] = useState(false);
 
   const handlePostCategory = async () => {
-    await CategoryApi.createCategory(newCategory, categoryType)
+    setCategoryError(false);
+    await CategoryApi.createCategory(newCategory, CATEGORY_TYPE_MAPPING[categoryType].api)
       .then((data) => {
         setCategoryList([...categoryList, data]);
         onClose();
       })
       .catch((err) => {
-        if (err.response.data.errorCode === 'C-002') window.alert('중복되는 카테고리는 사용할 수 없습니다.');
+        if (err.response.data.errorCode === 'C-002') setCategoryError(true);
       });
   };
 
@@ -43,7 +47,12 @@ function NewCategoryModal({ onClose, categoryType, categoryList, setCategoryList
           </NewCategoryButton>
           <FormWrapper>
             <InputWrapper>
-              <InputField value={newCategory} onChange={handleChangeCategory} />
+              <InputField
+                value={newCategory}
+                onChange={handleChangeCategory}
+                error={categoryError}
+                errorMessage="중복되는 카테고리입니다."
+              />
             </InputWrapper>
             <CompleteButton onClick={handlePostCategory} />
           </FormWrapper>

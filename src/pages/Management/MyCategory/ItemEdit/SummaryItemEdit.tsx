@@ -46,7 +46,7 @@ function SummaryItemEdit() {
         <TextAreaField
           placeholder="요약을 생성하고 싶은 관련 텍스트를 입력해주세요."
           value={content}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)}
+          handleChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)}
         />
       </CategoryItemContentWrapper>
       <NoButtonSideBar>

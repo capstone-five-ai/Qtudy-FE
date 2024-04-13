@@ -17,7 +17,7 @@ function TextType({ service, inputText, setInputText }: TextTypeProps) {
       <TextAreaField
         placeholder={PLACEHOLDER[service]}
         value={inputText}
-        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInputText(e.target.value)}
+        handleChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInputText(e.target.value)}
       />
     </Container>
   );

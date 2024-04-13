@@ -15,7 +15,7 @@ function SummaryItemDetail() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const navigate = useNavigate();
   const [params] = useSearchParams();
-  const [currentCategoaryId, setCurrentCategoaryId] = useState(-1);
+  const [currentCategoryId, setCurrentCategoryId] = useState(-1);
   const [currentSummaryId, setCurrentSummaryId] = useState(-1);
   const [currentSummary, setCurrentSummary] = useState<SummaryType | null>(null);
   const mainUrl = window.location.origin;
@@ -27,7 +27,7 @@ function SummaryItemDetail() {
         summaryTitle: summaryData.summaryTitle,
         summaryContent: summaryData.summaryContent,
       });
-      setCurrentCategoaryId(summaryData.categoryId);
+      setCurrentCategoryId(summaryData.categoryId);
       setCurrentSummaryId(summaryData.categorizedSummaryId);
     });
   };
@@ -38,7 +38,7 @@ function SummaryItemDetail() {
   }, [params]);
 
   const handleMoveToList = () => {
-    navigate('/management/mycategory', { state: { activeTab: '요약', categoryId: currentCategoaryId } });
+    navigate(`/management/mycategory?type=summary&categoryId=${currentCategoryId}`);
   };
 
   const handleEdit = () => {

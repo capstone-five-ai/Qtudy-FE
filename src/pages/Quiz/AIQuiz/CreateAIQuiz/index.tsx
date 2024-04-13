@@ -14,7 +14,7 @@ import { convertToRequestData } from '../../../../utils/convertToRequestData';
 import { useCreateQuizByImage, useCreateQuizByPdf, useCreateQuizByText } from '../../../../hooks/useCreateQuiz';
 
 const DEFAULT_INPUT_OPTION = {
-  type: '', // 문제 유형
+  type: '', // 퀴즈 유형
   amount: '', // 문제량
   difficulty: '', // 난이도
   file: '', // 파일명

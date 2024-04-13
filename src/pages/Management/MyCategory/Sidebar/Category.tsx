@@ -1,24 +1,34 @@
 import styled, { css } from 'styled-components';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Typography from '../../../../components/Typography';
 import { ReactComponent as EditIcon } from '../../../../assets/icons/edit_gray.svg';
 import { ReactComponent as DeleteIcon } from '../../../../assets/icons/delete.svg';
+import { ReactComponent as CompleteIcon } from '../../../../assets/icons/complete.svg';
 import { CategoryInfoType } from '../../../../types';
 import DeleteModal from '../../../../components/Modal/DeleteModal';
 
 interface CategoryProps {
   category: CategoryInfoType;
   active: boolean;
-  setActiveCategory: React.Dispatch<React.SetStateAction<CategoryInfoType | null>>;
   handleEditCategory: (id: number, name: string) => void;
   handleDeleteCategory: (id: number) => void;
+  setActiveCategoryName: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function Category({ category, active, setActiveCategory, handleEditCategory, handleDeleteCategory }: CategoryProps) {
+function Category({
+  category,
+  active,
+  handleEditCategory,
+  handleDeleteCategory,
+  setActiveCategoryName,
+}: CategoryProps) {
   const [editMode, setEditMode] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -37,14 +47,31 @@ function Category({ category, active, setActiveCategory, handleEditCategory, han
   }, [editMode, newCategoryName]);
 
   return (
-    <Container type="button" $active={active} onClick={() => setActiveCategory(category)}>
+    <Container
+      type="button"
+      $active={active}
+      onClick={() => {
+        setActiveCategoryName(category.categoryName);
+        const searchParams = new URLSearchParams(location.search);
+        searchParams.set('categoryId', String(category.categoryId));
+        navigate(`${location.pathname}?${searchParams.toString()}`);
+      }}
+    >
       {editMode ? (
-        <Input
-          ref={inputRef}
-          value={newCategoryName}
-          onChange={(e) => setNewCategoryName(e.target.value)}
-          placeholder="파일명을 입력해주세요."
-        />
+        <>
+          <Input
+            ref={inputRef}
+            value={newCategoryName}
+            onChange={(e) => setNewCategoryName(e.target.value)}
+            placeholder="파일명을 입력해주세요."
+          />
+          <div className="icon-list">
+            <CompleteIcon
+              onClick={() => handleEditCategory(category.categoryId, newCategoryName)}
+              style={{ cursor: 'pointer' }}
+            />
+          </div>
+        </>
       ) : (
         <>
           {showDeleteModal && (
@@ -85,10 +112,8 @@ const Container = styled.button<{ $active: boolean }>`
   padding: 8px 0px 8px 20px;
 
   border: none;
-  border-left: 2px solid;
-  border-color: ${(props) => (props.$active ? props.theme.colors.mainMint : 'transparent')};
+  box-shadow: inset 2px 0 0 ${(props) => (props.$active ? props.theme.colors.mainMint : 'transparent')};
   background: transparent;
-  margin-left: -1px;
 
   & > div:nth-child(1) {
     word-break: break-all;
@@ -106,7 +131,7 @@ const Container = styled.button<{ $active: boolean }>`
       !props.$active &&
       css`
         background: ${props.theme.colors.grayScale07};
-        border-left: 1px solid ${props.theme.colors.grayScale06};
+        box-shadow: inset 1px 0 0 ${props.theme.colors.grayScale06};
       `}
   }
 `;

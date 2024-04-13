@@ -1,16 +1,18 @@
+import { CATEGORY_TYPE_MAPPING } from '../constants';
+import { CategoryTypeMapping } from '../types/category.type';
 import apiClient from './client';
 
 const PAGE = 1;
 const SIZE = 20;
 
 const CategoryApi = {
-  getCategoryList: async (categoryType: string) => {
+  getCategoryList: async (categoryType: keyof CategoryTypeMapping) => {
     // 카테고리(Category)/카테고리 목록 조회
     const response = await apiClient.get('api/category/list', {
       params: {
         page: PAGE,
         size: SIZE,
-        categoryType,
+        categoryType: CATEGORY_TYPE_MAPPING[categoryType].api,
       },
     });
     return response.data;
