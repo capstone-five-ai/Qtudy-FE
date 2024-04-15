@@ -7,6 +7,7 @@ import LinkButton from '../../../components/Button/LinkButton';
 import PDFButton from '../../../components/Button/PDFButton';
 import SaveButton from '../../../components/Button/SaveButton';
 import CategoryModal from '../../../components/Modal/CategoryModal';
+import Scrollbar from '../../../components/Scrollbar';
 import Typography from '../../../components/Typography';
 import authState from '../../../recoil/atoms/authState';
 import { SummaryType } from '../../../types/summary.type';
@@ -45,7 +46,7 @@ function SummaryComplete({ type }: Props) {
   if (!summary) return <div />;
 
   return (
-    <>
+    <Wrapper>
       <MainWrapper>
         <TitleWrapper>
           <Typography variant="subtitle" color="mainMintDark">
@@ -83,15 +84,22 @@ function SummaryComplete({ type }: Props) {
           generateType={type}
         />
       )}
-    </>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  display: flex;
+`;
 
 const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
   padding: 40px;
+  width: 800px;
+  overflow-y: auto;
+  ${Scrollbar}
 
   gap: 20px;
 
