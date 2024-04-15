@@ -25,6 +25,7 @@ function Typography({
       $color={color}
       $hoverStyle={typographies.find((el) => el.type === hoverVariant)}
       $hoverColor={hoverColor}
+      className="typography"
     >
       {children}
     </STypography>
