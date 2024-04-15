@@ -54,7 +54,9 @@ function SummaryComplete({ type }: Props) {
           </Typography>
           <Typography variant="subtitle">{summary.summaryTitle}</Typography>
         </TitleWrapper>
-        <Typography variant="body3">{summary.summaryContent}</Typography>
+        <ContentWrapper>
+          <Typography variant="body3">{summary.summaryContent}</Typography>
+        </ContentWrapper>
       </MainWrapper>
 
       <SideWrapper>
@@ -112,6 +114,12 @@ const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
+`;
+
+const ContentWrapper = styled.div`
+  .typography {
+    word-wrap: break-word;
+  }
 `;
 
 const SideWrapper = styled.div`
