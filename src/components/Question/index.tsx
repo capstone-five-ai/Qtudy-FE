@@ -52,9 +52,10 @@ function Question({ question, questionNum }: Props) {
           </Typography>
           <ArrowIcon className={showAnswer ? 'arrow-close' : 'arrow-open'} />
         </AnswerButton>
+        {console.log(question)}
         {showAnswer && (
           <Commentary>
-            {question.problemType === 'MULTIPLE' && question.problemAnswer && (
+            {question.problemChoices && question.problemChoices.length > 0 && question.problemAnswer && (
               <div className="answer">
                 <Typography variant="subtitle">정답</Typography>
                 <Typography variant="subtitle" color="correctBlue">
