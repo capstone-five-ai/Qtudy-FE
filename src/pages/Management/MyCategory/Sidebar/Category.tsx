@@ -109,7 +109,7 @@ const Container = styled.button<{ $active: boolean }>`
   justify-content: space-between;
   align-items: center;
   text-align: left;
-  padding: 8px 0px 8px 20px;
+  padding: 12px 0px 12px 20px;
 
   border: none;
   box-shadow: inset 2px 0 0 ${(props) => (props.$active ? props.theme.colors.mainMint : 'transparent')};

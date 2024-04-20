@@ -109,7 +109,6 @@ const CategoryContainer = styled.div`
   .category-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
 
     box-shadow: inset 1px 0 0 ${(props) => props.theme.colors.grayScale06};
     margin-left: 1px;
