@@ -13,7 +13,7 @@ import DefaultView from './DefaultView';
 import CategoryItemsView from './CategoryItemsView';
 import { CategoryQuizItemsType } from '../../../types/quiz.type';
 import { CategorySummaryItemsType } from '../../../types/summary.type';
-import DefaultButton from '../../../components/Button/DefaultButton';
+import CTAButton from '../../../components/Button/CTAButton';
 
 const BUTTON = { quiz: '카테고리에 퀴즈 추가', summary: '카테고리에 요약 추가' };
 
@@ -152,9 +152,9 @@ function MyCategory() {
             ))}
           <div className="button-container">
             {categoryId !== '' && (
-              <DefaultButton size="large" onClick={handleAddItem}>
+              <CTAButton size="large" onClick={handleAddItem}>
                 {BUTTON[currentType]}
-              </DefaultButton>
+              </CTAButton>
             )}
           </div>
         </ContentWrapper>

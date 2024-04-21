@@ -5,7 +5,7 @@ import CategoryApi from '../../../api/CategoryApi';
 import { ReactComponent as AddCategory } from '../../../assets/icons/add_category.svg';
 import { CategoryInfoType } from '../../../types';
 import CompleteButton from '../../Button/CompleteButton';
-import DefaultButton from '../../Button/DefaultButton';
+import CTAButton from '../../Button/CTAButton';
 import InputField from '../../Input/InputField';
 import Typography from '../../Typography';
 import ModalContainer from '../ModalContainer';
@@ -95,9 +95,9 @@ function CategoryModal({ onClose, categoryType, contentId, generateType }: Props
         </NewCategoryWrapper>
 
         <ButtonWrapper>
-          <DefaultButton size="small" onClick={handleClickSave}>
+          <CTAButton size="small" onClick={handleClickSave}>
             저장
-          </DefaultButton>
+          </CTAButton>
         </ButtonWrapper>
       </Wrapper>
     </ModalContainer>

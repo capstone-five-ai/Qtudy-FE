@@ -1,4 +1,4 @@
-import DefaultButton from './DefaultButton';
+import CTAButton from './CTAButton';
 import { ReactComponent as SaveIcon } from '../../assets/icons/save.svg';
 
 interface Props {
@@ -13,9 +13,9 @@ SaveButton.defaultProps = {
 
 function SaveButton({ disabled, onClick }: Props) {
   return (
-    <DefaultButton icon={<SaveIcon />} disabled={disabled} onClick={onClick}>
+    <CTAButton icon={<SaveIcon />} disabled={disabled} onClick={onClick}>
       Save to Category
-    </DefaultButton>
+    </CTAButton>
   );
 }
 
