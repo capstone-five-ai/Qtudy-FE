@@ -93,7 +93,7 @@ const StyledButton = styled.button<{ $disabled: boolean; $style: SizeStyle; $the
     `}
 
   ${(props) =>
-    props.$theme === 'mint' && !props.$disabled && `box-shadow: 4px 4px 16px 0px ${props.theme.colors.mainMintShadow}`};
+    props.$theme === 'mint' && !props.$disabled && `box-shadow: 4px 2px 16px 0px ${props.theme.colors.mainMintShadow}`};
   ${(props) =>
     props.$theme === 'gray' && !props.$disabled && 'box-shadow: 4px 2px 16px 0px rgba(189, 189, 189, 0.28);'};
 
