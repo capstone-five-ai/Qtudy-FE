@@ -36,21 +36,6 @@ CTAButton.defaultProps = {
 };
 
 function CTAButton({ size = 'medium', disabled = false, onClick, theme = 'mint', icon, children }: CTAButtonProps) {
-  /* return (
-    <Container
-      $disabled={disabled}
-      $theme={theme}
-      $style={buttonSizeStyle.find((el) => el.type === size) || buttonSizeStyle[1]}
-    >
-      <button type="button" disabled={disabled} onClick={onClick as React.MouseEventHandler<HTMLButtonElement>}>
-        {icon}
-        <Typography variant="button" color={theme === 'mint' ? 'grayScale09' : 'grayScale02'}>
-          {children}
-        </Typography>
-      </button>
-    </Container>
-  ); */
-
   return (
     <StyledButton
       type="button"
@@ -60,7 +45,7 @@ function CTAButton({ size = 'medium', disabled = false, onClick, theme = 'mint',
       onClick={onClick as React.MouseEventHandler<HTMLButtonElement>}
     >
       {icon}
-      <Typography variant="button" color={theme === 'gray' && !disabled ? 'grayScale02' : 'grayScale09'}>
+      <Typography variant="button" color={theme === 'gray' && !disabled ? 'grayScale03' : 'grayScale09'}>
         {children}
       </Typography>
     </StyledButton>
@@ -101,8 +86,11 @@ const StyledButton = styled.button<{ $disabled: boolean; $style: SizeStyle; $the
     ${(props) =>
       props.$theme === 'gray' &&
       css`
-        background: ${props.theme.colors.grayScale07};
         box-shadow: 4px 2px 16px 0px rgba(142, 142, 142, 0.28);
+
+        & > div {
+          color: ${props.theme.colors.grayScale02};
+        }
       `}
     ${(props) =>
       props.$theme === 'mint' &&
