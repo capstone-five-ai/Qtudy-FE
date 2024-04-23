@@ -47,6 +47,7 @@ const Container = styled.div`
 
 const Input = styled.input<{ $error: boolean }>`
   padding: 5px 12px;
+  margin-bottom: 2px;
   border: none;
   border-bottom: 1px solid ${(props) => props.theme.colors.grayScale06};
   color: ${(props) => props.theme.colors.grayScale02};
