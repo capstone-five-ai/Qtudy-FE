@@ -1,5 +1,5 @@
 import { Navigate, createBrowserRouter } from 'react-router-dom';
-import Layout from '../layouts';
+import Layout from '../components/Layout';
 import Management from '../pages/Management';
 import Quiz from '../pages/Quiz';
 import Summary from '../pages/Summary';
@@ -18,11 +18,15 @@ const routes = [
     children: [
       {
         path: '/',
-        element: <Layout />,
+        element: <Layout contentKey="management" />,
         children: [
           {
             path: 'management/*',
             element: <Management />,
+          },
+          {
+            path: 'management/mycategory/share',
+            element: <Share />,
           },
         ],
       },
@@ -45,18 +49,18 @@ const routes = [
   },
   {
     path: '/',
-    element: <Layout />,
+    element: <Layout contentKey="quiz" />,
     children: [
       {
         path: 'quiz/*',
         element: <Quiz />,
       },
-      { path: 'summary/*', element: <Summary /> },
-      {
-        path: 'management/mycategory/share',
-        element: <Share />,
-      },
     ],
+  },
+  {
+    path: '/',
+    element: <Layout contentKey="summary" />,
+    children: [{ path: 'summary/*', element: <Summary /> }],
   },
 ];
 

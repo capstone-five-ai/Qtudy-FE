@@ -9,7 +9,7 @@ import KakaoLoginSmallButton from '../Button/KakaoLoginSmallButton';
 import Typography from '../Typography';
 import MenuBar from './MenuBar';
 
-function Header() {
+function TopNavigation() {
   const [isAuthenticated, setIsAuthenticated] = useRecoilState(authState);
   const navigate = useNavigate();
 
@@ -49,7 +49,7 @@ function Header() {
   );
 }
 
-export default Header;
+export default TopNavigation;
 
 const Container = styled.div`
   background: ${(props) => props.theme.colors.mainMintLight};

@@ -9,7 +9,7 @@ export const HEADER_MENU_LIST = [
 ];
 
 export const HEADER_CONTENT: { [key: string]: { header: HeaderContentType; tabs: TabType[] } } = {
-  createQuiz: {
+  quiz: {
     header: {
       main: '퀴즈 생성',
       sub: 'AI와 함께 혹은 자체적으로 퀴즈를 만들어보세요',
@@ -19,7 +19,7 @@ export const HEADER_CONTENT: { [key: string]: { header: HeaderContentType; tabs:
       { tab: '자체 퀴즈 생성', path: '/quiz/user' },
     ],
   },
-  createSummary: {
+  summary: {
     header: {
       main: '요약정리 생성',
       sub: 'AI와 함께 혹은 자체적으로 요약해 보세요',
