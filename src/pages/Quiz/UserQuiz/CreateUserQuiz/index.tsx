@@ -9,6 +9,7 @@ import QuizView from './QuizView';
 import { useCreateQuizByUser } from '../../../../hooks/useCreateQuiz';
 import loadingSelector from '../../../../recoil/selectors/loading';
 import Loader from '../../../../components/Modal/Loader';
+import Scrollbar from '../../../../components/Scrollbar';
 
 const DEFAULT_INPUT = { input: '', check: false };
 const DEFAULT_INPUT_COMMENTARY = { input: '', check: true };
@@ -98,4 +99,7 @@ const QuizContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 48px;
+
+  overflow-y: scroll;
+  ${Scrollbar};
 `;
