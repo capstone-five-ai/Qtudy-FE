@@ -25,6 +25,7 @@ function Layout({ contentKey }: LayoutProps) {
 export default Layout;
 
 const OutletContainer = styled.div`
-  padding: 20px 0px;
-  width: 100%;
+  width: 1200px;
+  padding: 20px;
+  margin: 0 auto;
 `;
