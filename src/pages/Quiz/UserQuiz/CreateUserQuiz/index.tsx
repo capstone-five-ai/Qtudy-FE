@@ -4,22 +4,22 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 import RightSideBar from './RightSideBar';
 import { CREATE_USER_QUIZ_TYPE } from '../../../../constants';
-import EditAnswerAccordion from '../../../../components/Accordion/EditAnswerAccordion';
 import QuizView from './QuizView';
 import { useCreateQuizByUser } from '../../../../hooks/useCreateQuiz';
 import loadingSelector from '../../../../recoil/selectors/loading';
 import Loader from '../../../../components/Modal/Loader';
 import Scrollbar from '../../../../components/Scrollbar';
+import QuizCommentary from '../../../../components/Accordion/QuizCommentary';
+import getCircleNum from '../../../../utils/getCircleNum';
 
 const DEFAULT_INPUT = { input: '', check: false };
-const DEFAULT_INPUT_COMMENTARY = { input: '', check: true };
 
 function CreateUserQuiz() {
   const [quizType, setQuizType] = useState(CREATE_USER_QUIZ_TYPE[0]);
   const [question, setQuestion] = useState({ ...DEFAULT_INPUT, id: uuidv4() });
   const [options, setOptions] = useState([{ ...DEFAULT_INPUT, id: uuidv4() }]);
-  const [answer, setAnswer] = useState(-1);
-  const [commentary, setCommentary] = useState({ ...DEFAULT_INPUT_COMMENTARY, id: uuidv4() });
+  const [answer, setAnswer] = useState<number | null>(null);
+  const [commentary, setCommentary] = useState<string>('');
   const showLoader = useRecoilValue(loadingSelector);
   const setShowLoader = useSetRecoilState(loadingSelector);
 
@@ -29,7 +29,7 @@ function CreateUserQuiz() {
     setQuestion({ ...DEFAULT_INPUT, id: uuidv4() });
     setOptions([{ ...DEFAULT_INPUT, id: uuidv4() }]);
     setAnswer(-1);
-    setCommentary({ ...DEFAULT_INPUT_COMMENTARY, id: uuidv4() });
+    setCommentary('');
   }, [quizType]);
 
   const handleSubmit = () => {
@@ -40,14 +40,14 @@ function CreateUserQuiz() {
         mutate({
           problemName: question.input,
           problemAnswer: answer.toString(),
-          problemCommentary: commentary.input,
+          problemCommentary: commentary,
           problemType: quizType.value,
           problemChoices: options.map((option) => option.input),
         });
       } else {
         mutate({
           problemName: question.input,
-          problemCommentary: commentary.input,
+          problemCommentary: commentary,
           problemType: quizType.value,
         });
       }
@@ -69,8 +69,8 @@ function CreateUserQuiz() {
           setOptions={setOptions}
           setAnswer={setAnswer}
         />
-        <EditAnswerAccordion
-          answer={quizType.value === CREATE_USER_QUIZ_TYPE[0].value ? answer.toString() : null}
+        <QuizCommentary
+          answer={quizType.value === CREATE_USER_QUIZ_TYPE[0].value ? getCircleNum(answer) : null}
           commentary={commentary}
           setCommentary={setCommentary}
         />
@@ -79,8 +79,8 @@ function CreateUserQuiz() {
         quizType={quizType}
         disabled={
           quizType.value === CREATE_USER_QUIZ_TYPE[0].value
-            ? !(question.check && answer > 0 && commentary.check && options.every((option) => option.check === true))
-            : !(question.check && commentary.check)
+            ? !(question.check && answer > 0 && options.every((option) => option.check === true))
+            : !question.check
         }
         setQuizType={setQuizType}
         handleSubmit={handleSubmit}
@@ -102,4 +102,6 @@ const QuizContainer = styled.div`
 
   overflow-y: scroll;
   ${Scrollbar};
+
+  background: green;
 `;
