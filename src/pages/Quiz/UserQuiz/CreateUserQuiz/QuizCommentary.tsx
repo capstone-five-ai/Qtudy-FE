@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import AnswerAccordionTitle from './AnswerAccordionTitle';
-import Typography from '../Typography';
+import AnswerAccordionTitle from '../../../../components/Accordion/AnswerAccordionTitle';
+import Typography from '../../../../components/Typography';
 
 interface EditAnswerAccordionProps {
   answer: string | null;

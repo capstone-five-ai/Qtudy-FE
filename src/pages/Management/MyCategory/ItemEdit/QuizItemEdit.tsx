@@ -7,7 +7,7 @@ import CategoryItemContentWrapper from '../../../../components/Wrapper/CategoryI
 import NoButtonSideBar from '../../../../components/SideBar/NoButtonSideBar';
 import EditAnswerAccordion from '../../../../components/Accordion/EditAnswerAccordion';
 import { CREATE_USER_QUIZ_TYPE } from '../../../../constants';
-import QuizView from '../../../Quiz/UserQuiz/CreateUserQuiz/QuizView';
+import QuizView from '../../../Quiz/UserQuiz/CreateUserQuiz/QuizForm';
 import { UserQuizInputType } from '../../../../types';
 import QuizCategoryApi from '../../../../api/QuizCategoryApi';
 

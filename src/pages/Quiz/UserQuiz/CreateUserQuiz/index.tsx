@@ -4,21 +4,19 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 import RightSideBar from './RightSideBar';
 import { CREATE_USER_QUIZ_TYPE } from '../../../../constants';
-import QuizView from './QuizView';
 import { useCreateQuizByUser } from '../../../../hooks/useCreateQuiz';
 import loadingSelector from '../../../../recoil/selectors/loading';
 import Loader from '../../../../components/Modal/Loader';
 import Scrollbar from '../../../../components/Scrollbar';
-import QuizCommentary from '../../../../components/Accordion/QuizCommentary';
+import QuizCommentary from './QuizCommentary';
 import getCircleNum from '../../../../utils/getCircleNum';
-
-const DEFAULT_INPUT = { input: '', check: false };
+import QuizForm from './QuizForm';
 
 function CreateUserQuiz() {
   const [quizType, setQuizType] = useState(CREATE_USER_QUIZ_TYPE[0]);
-  const [question, setQuestion] = useState({ ...DEFAULT_INPUT, id: uuidv4() });
-  const [options, setOptions] = useState([{ ...DEFAULT_INPUT, id: uuidv4() }]);
-  const [answer, setAnswer] = useState<number | null>(null);
+  const [question, setQuestion] = useState<string>('');
+  const [choices, setChoices] = useState([{ id: uuidv4(), content: '' }]);
+  const [answer, setAnswer] = useState<number>(-1);
   const [commentary, setCommentary] = useState<string>('');
   const showLoader = useRecoilValue(loadingSelector);
   const setShowLoader = useSetRecoilState(loadingSelector);
@@ -26,8 +24,8 @@ function CreateUserQuiz() {
   const { mutate, isLoading } = useCreateQuizByUser();
 
   useEffect(() => {
-    setQuestion({ ...DEFAULT_INPUT, id: uuidv4() });
-    setOptions([{ ...DEFAULT_INPUT, id: uuidv4() }]);
+    setQuestion('');
+    setChoices([{ id: uuidv4(), content: '' }]);
     setAnswer(-1);
     setCommentary('');
   }, [quizType]);
@@ -38,15 +36,15 @@ function CreateUserQuiz() {
     try {
       if (quizType === CREATE_USER_QUIZ_TYPE[0]) {
         mutate({
-          problemName: question.input,
-          problemAnswer: answer.toString(),
+          problemName: question,
+          problemAnswer: answer ? answer.toString() : '',
           problemCommentary: commentary,
           problemType: quizType.value,
-          problemChoices: options.map((option) => option.input),
+          problemChoices: choices.map((choice) => choice.content),
         });
       } else {
         mutate({
-          problemName: question.input,
+          problemName: question,
           problemCommentary: commentary,
           problemType: quizType.value,
         });
@@ -59,14 +57,14 @@ function CreateUserQuiz() {
   return (
     <>
       {showLoader && <Loader isLoading={isLoading} />}
-      <QuizContainer>
-        <QuizView
+      <StyledQuizContainer>
+        <QuizForm
           quizType={quizType.value}
           question={question}
-          options={options}
+          choices={choices}
           answer={answer}
           setQuestion={setQuestion}
-          setOptions={setOptions}
+          setChoices={setChoices}
           setAnswer={setAnswer}
         />
         <QuizCommentary
@@ -74,14 +72,10 @@ function CreateUserQuiz() {
           commentary={commentary}
           setCommentary={setCommentary}
         />
-      </QuizContainer>
+      </StyledQuizContainer>
       <RightSideBar
         quizType={quizType}
-        disabled={
-          quizType.value === CREATE_USER_QUIZ_TYPE[0].value
-            ? !(question.check && answer > 0 && options.every((option) => option.check === true))
-            : !question.check
-        }
+        disabled={quizType.value === CREATE_USER_QUIZ_TYPE[0].value ? !answer : false}
         setQuizType={setQuizType}
         handleSubmit={handleSubmit}
       />
@@ -91,7 +85,7 @@ function CreateUserQuiz() {
 
 export default CreateUserQuiz;
 
-const QuizContainer = styled.div`
+const StyledQuizContainer = styled.div`
   flex-grow: 1;
   margin: 40px 0px 40px 20px;
   padding: 0px 20px;
@@ -102,6 +96,4 @@ const QuizContainer = styled.div`
 
   overflow-y: scroll;
   ${Scrollbar};
-
-  background: green;
 `;
