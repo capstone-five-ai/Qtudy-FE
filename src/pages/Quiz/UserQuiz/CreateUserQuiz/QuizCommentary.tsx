@@ -19,13 +19,7 @@ QuizCommentary.defaultProps = {
 
 function QuizCommentary({ isEdit = false, setIsEdit = null, answer, commentary, setCommentary }: QuizCommentaryProps) {
   const [show, setShow] = useState(false);
-
-  const handleChangeTextareaHeight = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const textareaTarget = event.target;
-
-    textareaTarget.style.height = '0px';
-    textareaTarget.style.height = `${textareaTarget.scrollHeight}px`;
-  };
+  const [textareaHeight, setTextAreaHeight] = useState(0);
 
   return (
     <StyledContainer>
@@ -44,9 +38,10 @@ function QuizCommentary({ isEdit = false, setIsEdit = null, answer, commentary, 
               value={commentary}
               onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                 setCommentary(e.target.value);
-                handleChangeTextareaHeight(e);
+                setTextAreaHeight(e.target.scrollHeight);
               }}
               disabled={!isEdit}
+              $height={textareaHeight}
             />
             {!isEdit && (
               <EditIcon
@@ -88,9 +83,11 @@ const StyledCommentary = styled.div`
   }
 `;
 
-const StyledTextarea = styled.textarea`
+const StyledTextarea = styled.textarea<{ $height: number }>`
   resize: none;
   border: none;
+
+  height: ${({ $height }) => ($height > 0 ? `${$height}px` : 'auto')};
   padding: 0;
   margin: 0;
   color: ${(props) => props.theme.colors.grayScale02};
@@ -106,5 +103,12 @@ const StyledTextarea = styled.textarea`
 
   &:disabled {
     background: transparent;
+  }
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
   }
 `;
