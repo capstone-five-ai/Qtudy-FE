@@ -44,6 +44,7 @@ function CreateUserQuiz() {
         });
       } else {
         mutate({
+          // TODO: Commentary -> Answer로 변경
           problemName: question,
           problemCommentary: commentary,
           problemType: quizType.value,
@@ -71,6 +72,7 @@ function CreateUserQuiz() {
           answer={quizType.value === CREATE_USER_QUIZ_TYPE[0].value ? getCircleNum(answer) : null}
           commentary={commentary}
           setCommentary={setCommentary}
+          isEdit
         />
       </StyledQuizContainer>
       <RightSideBar
