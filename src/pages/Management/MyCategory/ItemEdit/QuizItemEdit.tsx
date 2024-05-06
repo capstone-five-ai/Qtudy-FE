@@ -1,109 +1,122 @@
 import { Navigate, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import CategoryItemButtonBar from '../../../../components/ButtonBar/CategoryItemButtonBar';
+import Scrollbar from '../../../../components/Scrollbar';
+import QuizForm from '../../../Quiz/UserQuiz/CreateUserQuiz/QuizForm';
 import { QuestionType } from '../../../../types/question.type';
-import CategoryItemContentWrapper from '../../../../components/Wrapper/CategoryItemContentWrapper';
-import NoButtonSideBar from '../../../../components/SideBar/NoButtonSideBar';
-import EditAnswerAccordion from '../../../../components/Accordion/EditAnswerAccordion';
-import { CREATE_USER_QUIZ_TYPE } from '../../../../constants';
-import QuizView from '../../../Quiz/UserQuiz/CreateUserQuiz/QuizForm';
 import { UserQuizInputType } from '../../../../types';
+import QuizCommentary from '../../../Quiz/UserQuiz/CreateUserQuiz/QuizCommentary';
+import getCircleNum from '../../../../utils/getCircleNum';
 import QuizCategoryApi from '../../../../api/QuizCategoryApi';
 
 function QuizItemEdit() {
   const [params] = useSearchParams();
   const location = useLocation();
+  const [isEdit, setIsEdit] = useState(false);
   const [quizId, setQuizId] = useState('');
-  const [type, setType] = useState('MULTIPLE');
-  const [question, setQuestion] = useState({ id: uuidv4(), input: '', check: true });
-  const [answer, setAnswer] = useState(-1);
-  const [commentary, setCommentary] = useState({ id: uuidv4(), input: '', check: true });
-  const [options, setOptions] = useState<UserQuizInputType[]>([]);
+  const [quizType, setQuizType] = useState('MULTIPLE');
+  const [question, setQuestion] = useState('');
+  const [answer, setAnswer] = useState<number>(-1);
+  const [commentary, setCommentary] = useState('');
+  const [choices, setChoices] = useState<UserQuizInputType[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const { state } = location;
-    const id = params.get('id');
-    if (id) setQuizId(id);
-
+    setQuizId(params.get('id') || '');
     if (state.quizData) {
       const quiz = state.quizData as QuestionType;
-      const quizAnswer = Number(quiz.problemAnswer);
-      setType(quiz.problemType);
-      setQuestion({ ...question, input: quiz.problemName });
-      setAnswer(!Number.isNaN(quizAnswer) ? quizAnswer : -1);
-      setCommentary({ ...commentary, input: quiz.problemCommentary });
-
+      setQuizType(quiz.problemType);
+      setQuestion(quiz.problemName);
+      setCommentary(quiz.problemCommentary);
       if (quiz.problemType === 'MULTIPLE' && quiz.problemChoices) {
-        const choices = quiz.problemChoices.map((choice) => {
-          return { id: uuidv4(), input: choice, check: true };
-        });
-
-        setOptions(choices);
+        setAnswer(Number(quiz.problemAnswer));
+        setChoices(
+          quiz.problemChoices.map((choice) => {
+            return { id: uuidv4(), content: choice };
+          })
+        );
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleFinishEdit = async () => {
-    if (type === 'MULTIPLE') {
-      const editQuizData = {
-        problemName: question.input,
-        problemAnswer: answer.toString(),
-        problemCommentary: commentary.input,
-        problemChoices: options.map((option) => option.input),
-      };
-      await QuizCategoryApi.edit(quizId, editQuizData).then(() => {
-        navigate(`/management/mycategory/detail?category=quiz&id=${quizId}`);
-      });
-    } else {
-      const editQuizData = {
-        problemName: question.input,
-        problemCommentary: commentary.input,
-      };
-
-      await QuizCategoryApi.edit(quizId, editQuizData).then(() => {
-        navigate(`/management/mycategory/detail?category=quiz&id=${quizId}`);
-      });
-    }
-  };
-
   if (!params.get('id')) return <Navigate to="/management/mycategory" replace />;
+
+  const handleFinishEdit = async () => {
+    let editQuizData;
+    if (quizType === 'MULTIPLE') {
+      editQuizData = {
+        problemName: question,
+        problemAnswer: answer.toString(),
+        problemCommentary: commentary,
+        problemChoices: choices.map((option) => option.content),
+      };
+    } else {
+      editQuizData = {
+        problemName: question,
+        problemCommentary: commentary,
+      };
+    }
+
+    await QuizCategoryApi.edit(quizId, editQuizData).then(() => {
+      navigate(`/management/mycategory/detail?category=quiz&id=${quizId}`);
+    });
+  };
 
   return (
     <>
-      <CategoryItemContentWrapper isEdit handleFinishEdit={handleFinishEdit}>
-        <QuizContainer>
-          <QuizView
-            quizType={type}
+      <StyledContainer>
+        <CategoryItemButtonBar handleComplete={handleFinishEdit} isEdit />
+        <StyledQuizContainer>
+          <QuizForm
+            quizType={quizType}
             question={question}
-            options={options}
+            choices={choices}
             answer={answer}
             setQuestion={setQuestion}
-            setOptions={setOptions}
+            setChoices={setChoices}
             setAnswer={setAnswer}
           />
-          <EditAnswerAccordion
-            answer={type === CREATE_USER_QUIZ_TYPE[0].value ? answer.toString() : null}
+          <QuizCommentary
+            answer={answer !== -1 ? getCircleNum(answer) : null}
             commentary={commentary}
             setCommentary={setCommentary}
+            isEdit={isEdit}
+            setIsEdit={setIsEdit}
           />
-        </QuizContainer>
-      </CategoryItemContentWrapper>
-      <NoButtonSideBar />
+        </StyledQuizContainer>
+      </StyledContainer>
+      <Sidebar />
     </>
   );
 }
 
 export default QuizItemEdit;
 
-const QuizContainer = styled.div`
+const StyledContainer = styled.div`
   flex-grow: 1;
-  margin: 40px 0px 40px 20px;
-  padding: 0px 20px;
+  padding: 24px 0px 20px 40px;
 
   display: flex;
   flex-direction: column;
+`;
+
+const StyledQuizContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   gap: 48px;
+
+  padding-right: 20px;
+  overflow-y: scroll;
+
+  ${Scrollbar}
+`;
+
+const Sidebar = styled.div`
+  width: 360px;
+  margin: 24px 0;
+  border-left: 1px solid ${(props) => props.theme.colors.grayScale06};
 `;

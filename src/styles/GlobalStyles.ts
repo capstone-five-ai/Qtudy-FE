@@ -50,6 +50,13 @@ const GlobalStyles = createGlobalStyle`
     src: url(${NanumSquareExtraBold}) format('woff');
     font-style: normal;
   }
+
+  button {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+  }
 `;
 
 export default GlobalStyles;
