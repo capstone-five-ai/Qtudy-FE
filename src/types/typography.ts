@@ -1,17 +1,11 @@
 import { ReactNode } from 'react';
 import { ColorsTypes } from '../styles/theme';
 
-const NotoSansRegular = 'NotoSansRegular';
-const NotoSansMedium = 'NotoSansMedium';
-const NotoSansBold = 'NotoSansBold';
-
-const NanumSquareBold = 'NanumSquareBold';
-const NanumSquareExtraBold = 'NanumSquareExtraBold';
-
 export interface Style {
   type: string;
   font: string;
   size: number;
+  weight: number;
   lineHeight: string;
   letterSpacing: number;
 }
@@ -19,106 +13,121 @@ export interface Style {
 export const typographies: Style[] = [
   {
     type: 'h1',
-    font: NanumSquareExtraBold,
+    font: 'Nanum Square Neo',
     size: 20,
+    weight: 800,
     lineHeight: 'auto',
     letterSpacing: 0,
   },
   {
     type: 'h2',
-    font: NanumSquareExtraBold,
+    font: 'Nanum Square Neo',
     size: 18,
+    weight: 800,
     lineHeight: 'auto',
     letterSpacing: 0,
   },
   {
     type: 'h3',
-    font: NanumSquareExtraBold,
+    font: 'Nanum Square Neo',
     size: 16,
+    weight: 800,
     lineHeight: 'auto',
     letterSpacing: 2,
   },
   {
     type: 'h4',
-    font: NotoSansMedium,
+    font: 'Noto Sans KR',
     size: 16,
+    weight: 500,
     lineHeight: 'auto',
     letterSpacing: 0,
   },
   {
     type: 'subtitle',
-    font: NotoSansMedium,
+    font: 'Noto Sans KR',
     size: 14,
+    weight: 500,
     lineHeight: 'auto',
     letterSpacing: 0,
   },
   {
     type: 'subtitle2',
-    font: NotoSansBold,
+    font: 'Noto Sans KR',
     size: 14,
+    weight: 500,
     lineHeight: 'auto',
     letterSpacing: 0,
   },
   {
     type: 'body1',
-    font: NotoSansMedium,
+    font: 'Noto Sans KR',
     size: 14,
+    weight: 500,
     lineHeight: '160%',
     letterSpacing: 0,
   },
   {
     type: 'body2',
-    font: NotoSansRegular,
+    font: 'Noto Sans KR',
     size: 14,
+    weight: 400,
     lineHeight: 'auto',
     letterSpacing: 0,
   },
   {
     type: 'body3',
-    font: NotoSansRegular,
+    font: 'Noto Sans KR',
     size: 14,
+    weight: 400,
     lineHeight: '180%',
     letterSpacing: 2,
   },
   {
     type: 'detail',
-    font: NanumSquareBold,
+    font: 'Nanum Square Neo',
     size: 13,
+    weight: 700,
     lineHeight: 'auto',
     letterSpacing: 2,
   },
   {
     type: 'caption1',
-    font: NotoSansBold,
+    font: 'Noto Sans KR',
     size: 13,
+    weight: 700,
     lineHeight: 'auto',
     letterSpacing: 0,
   },
   {
     type: 'caption2',
-    font: NotoSansMedium,
+    font: 'Noto Sans KR',
     size: 13,
+    weight: 500,
     lineHeight: 'auto',
     letterSpacing: 0,
   },
   {
     type: 'caption3',
-    font: NotoSansRegular,
+    font: 'Noto Sans KR',
     size: 13,
+    weight: 400,
     lineHeight: 'auto',
     letterSpacing: 0,
   },
   {
     type: 'caption4',
-    font: NotoSansRegular,
+    font: 'Noto Sans KR',
     size: 11,
+    weight: 400,
     lineHeight: 'auto',
     letterSpacing: 0,
   },
   {
     type: 'button',
-    font: NanumSquareExtraBold,
+    font: 'Nanum Square Neo',
     size: 14,
+    weight: 800,
     lineHeight: 'auto',
     letterSpacing: 0,
   },
@@ -126,6 +135,7 @@ export const typographies: Style[] = [
     type: 'default',
     font: '',
     size: 14.5,
+    weight: 500,
     lineHeight: 'auto',
     letterSpacing: 0,
   },
@@ -133,8 +143,9 @@ export const typographies: Style[] = [
 
 export const defaultStyle: Style = {
   type: 'body1',
-  font: NotoSansRegular,
+  font: 'Noto Sans KR',
   size: 14,
+  weight: 400,
   lineHeight: 'auto',
   letterSpacing: 0,
 };

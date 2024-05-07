@@ -1,10 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
-import NanumSquareBold from '../assets/fonts/NanumSquareNeoTTF-cBd.woff';
-import NanumSquareExtraBold from '../assets/fonts/NanumSquareNeoTTF-dEb.woff';
 import NotoSansBold from '../assets/fonts/NotoSansKR-Bold.woff';
 import NotoSansMedium from '../assets/fonts/NotoSansKR-Medium.woff';
 import NotoSansRegular from '../assets/fonts/NotoSansKR-Regular.woff';
+import NanumSquareNeoEB from '../assets/fonts/NanumSquareNeoTTF-dEb.woff';
+import NanumSquareNeoB from '../assets/fonts/NanumSquareNeoTTF-cBd.woff';
 
 const GlobalStyles = createGlobalStyle`
   ${reset}
@@ -22,32 +22,37 @@ const GlobalStyles = createGlobalStyle`
   }
 
   @font-face {
-    font-family: NotoSansRegular;
-    src: url(${NotoSansRegular}) format('woff');
+    font-family: 'Noto Sans KR';
+    src: url('${NotoSansRegular}') format('woff');
+    font-weight: 400;
     font-style: normal;
   }
 
   @font-face {
-    font-family: NotoSansMedium;
-    src: url(${NotoSansMedium}) format('woff');
+    font-family: 'Noto Sans KR';
+    src: url('${NotoSansMedium}') format('woff');
+    font-weight: 500;
     font-style: normal;
   }
   
   @font-face {
-    font-family: NotoSansBold;
-    src: url(${NotoSansBold}) format('woff');
+    font-family: 'Noto Sans KR';
+    src: url('${NotoSansBold}') format('woff');
+    font-weight: 700;
     font-style: normal;
   }
 
   @font-face {
-    font-family: NanumSquareBold;
-    src: url(${NanumSquareBold}) format('woff');
+    font-family: 'Nanum Square Neo';
+    src: url('${NanumSquareNeoEB}') format('woff');
+    font-weight: 800;
     font-style: normal;
   }
 
   @font-face {
-    font-family: NanumSquareExtraBold;
-    src: url(${NanumSquareExtraBold}) format('woff');
+    font-family: 'Nanum Square Neo';
+    src: url('${NanumSquareNeoB}') format('woff');
+    font-weight: 700;
     font-style: normal;
   }
 
