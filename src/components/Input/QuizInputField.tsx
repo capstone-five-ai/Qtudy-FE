@@ -56,10 +56,7 @@ const StyledInput = styled.input`
   color: ${(props) => props.theme.colors.grayScale02}
   background: transparent;
 
-  font-family: NotoSansRegular;
-  size: 14px;
-  line-height: auto;
-  letter-spacing: 0;
+  ${({ theme }) => theme.typography.body2};
 
   &::placeholder {
     color: ${(props) => props.theme.colors.grayScale05};

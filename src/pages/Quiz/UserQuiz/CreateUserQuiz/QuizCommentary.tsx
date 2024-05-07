@@ -91,11 +91,7 @@ const StyledTextarea = styled.textarea<{ $height: number }>`
   padding: 0;
   margin: 0;
   color: ${(props) => props.theme.colors.grayScale02};
-
-  font-family: NotoSansRegular;
-  font-size: 14px;
-  font-style: normal;
-  line-height: normal;
+  ${({ theme }) => theme.typography.body2};
 
   &::placeholder {
     color: ${(props) => props.theme.colors.grayScale05};

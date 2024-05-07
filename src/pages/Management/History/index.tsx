@@ -139,10 +139,7 @@ const Pagination = styled.div`
     color: var(--grayscale04, #9e9e9e);
     text-align: center;
 
-    font-family: NotoSansRegular;
-    font-size: 13px;
-    font-style: normal;
-    line-height: normal;
+    ${({ theme }) => theme.typography.caption3};
 
     cursor: pointer;
   }
@@ -150,7 +147,8 @@ const Pagination = styled.div`
   .selected > a {
     color: var(--grayscale02, #424242);
 
-    font-family: NotoSansBold;
+    font-family: 'Noto Sans KR';
+    font-weight: 700;
   }
 `;
 
