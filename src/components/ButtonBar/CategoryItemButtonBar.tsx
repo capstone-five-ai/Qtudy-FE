@@ -7,26 +7,27 @@ import { ReactComponent as CheckIcon } from '../../assets/icons/complete.svg';
 interface CategoryItemButtonBarProps {
   isEdit?: boolean;
   handleComplete?: () => void;
+  handleReturnToList?: () => void;
+  handleEdit?: () => void;
 }
 
 CategoryItemButtonBar.defaultProps = {
   isEdit: false,
   handleComplete: () => {},
+  handleReturnToList: () => {},
+  handleEdit: () => {},
 };
 
-function CategoryItemButtonBar({ isEdit = false, handleComplete }: CategoryItemButtonBarProps) {
+function CategoryItemButtonBar({
+  isEdit = false,
+  handleComplete,
+  handleReturnToList,
+  handleEdit,
+}: CategoryItemButtonBarProps) {
   const navigate = useNavigate();
 
   const handleCancel = () => {
     navigate(-1);
-  };
-
-  const handleReturnToList = () => {
-    // TODO: 목록으로
-  };
-
-  const handleEdit = () => {
-    // TODO: 편집하기
   };
 
   return (
