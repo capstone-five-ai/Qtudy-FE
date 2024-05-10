@@ -44,7 +44,6 @@ function CreateUserQuiz() {
         });
       } else {
         mutate({
-          // TODO: Commentary -> Answer로 변경
           problemName: question,
           problemCommentary: commentary,
           problemType: quizType.value,

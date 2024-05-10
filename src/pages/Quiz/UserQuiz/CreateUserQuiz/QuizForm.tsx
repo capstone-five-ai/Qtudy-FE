@@ -34,8 +34,10 @@ function QuizForm({ quizType, question, choices, answer, setQuestion, setChoices
     setChoices(updatedChoices);
   };
 
-  const handleDelete = () => {
-    // TODO : Delete 로직 구현하기
+  const handleDelete = (index: number) => {
+    const updatedChoices = [...choices];
+    updatedChoices.splice(index, 1);
+    setChoices(updatedChoices);
   };
 
   return (
