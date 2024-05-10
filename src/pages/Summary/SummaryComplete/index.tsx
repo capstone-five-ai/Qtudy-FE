@@ -11,6 +11,7 @@ import Typography from '../../../components/Typography';
 import authState from '../../../recoil/atoms/authState';
 import { SummaryType } from '../../../types/summary.type';
 import CopySummaryButton from './CopySummaryButton';
+import Scrollbar from '../../../components/Scrollbar';
 
 type Props = {
   type: 'ai' | 'user';
@@ -53,7 +54,9 @@ function SummaryComplete({ type }: Props) {
           </Typography>
           <Typography variant="subtitle">{summary.summaryTitle}</Typography>
         </TitleWrapper>
-        <Typography variant="body3">{summary.summaryContent}</Typography>
+        <ContentWrapper>
+          <Typography variant="body3">{summary.summaryContent}</Typography>
+        </ContentWrapper>
       </MainWrapper>
 
       <SideWrapper>
@@ -92,6 +95,7 @@ const MainWrapper = styled.div`
   flex-direction: column;
   flex: 1;
   padding: 40px;
+  padding-right: 20px;
 
   gap: 20px;
 
@@ -104,6 +108,11 @@ const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
+`;
+
+const ContentWrapper = styled.div`
+  overflow-y: auto;
+  ${Scrollbar};
 `;
 
 const SideWrapper = styled.div`
