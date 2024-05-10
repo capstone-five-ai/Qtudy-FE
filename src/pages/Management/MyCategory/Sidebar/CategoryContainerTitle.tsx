@@ -1,18 +1,18 @@
 import styled from 'styled-components';
 import Typography from '../../../../components/Typography';
 import { ReactComponent as PlusIcon } from '../../../../assets/icons/plus.svg';
-import { CategoryTypeMapping } from '../../../../types/category.type';
-import { CATEGORY_TYPE_MAPPING } from '../../../../constants';
+import { CategoryType } from '../../../../types/category.type';
+import { CATEGORY_TYPE } from '../../../../constants';
 
 interface CategoryContainerTitleProps {
-  currentType: keyof CategoryTypeMapping;
+  currentType: keyof CategoryType;
   handleAddCategory: () => void;
 }
 function CategoryContainerTitle({ currentType, handleAddCategory }: CategoryContainerTitleProps) {
   return (
     <Container>
       <Typography variant="h4" color="grayScale02">
-        {CATEGORY_TYPE_MAPPING[currentType].ko}
+        {CATEGORY_TYPE[currentType].key}
       </Typography>
       <button type="button" className="plus-button" onClick={handleAddCategory}>
         <PlusIcon />

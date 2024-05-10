@@ -10,18 +10,17 @@ import InputField from '../../Input/InputField';
 import Typography from '../../Typography';
 import ModalContainer from '../ModalContainer';
 import CategoryList from './CategoryList';
-import { CategoryTypeMapping } from '../../../types/category.type';
+import { CategoryType } from '../../../types/category.type';
 
 type Props = {
   onClose: () => void;
-  categoryType: keyof CategoryTypeMapping;
+  categoryType: keyof CategoryType;
   contentId: number;
   generateType: 'ai' | 'user';
 };
 
 function CategoryModal({ onClose, categoryType, contentId, generateType }: Props) {
   const [categories, setCategories] = useState<CategoryInfoType[]>([]);
-  const [showCategoryInput, setShowCategoryInput] = useState(categories.length === 0);
 
   const [newCategory, setNewCategory] = useState('');
   const [saveCategoryIds, setSaveCategoryIds] = useState<number[]>([]);
@@ -73,25 +72,23 @@ function CategoryModal({ onClose, categoryType, contentId, generateType }: Props
           </CategoryWrapper>
         )}
         <NewCategoryWrapper>
-          <NewCategoryButton type="button" onClick={() => setShowCategoryInput(!showCategoryInput)}>
+          <NewCategoryText>
             <AddCategory />
             <Typography variant="caption2">카테고리 추가</Typography>
-          </NewCategoryButton>
-          {showCategoryInput && (
-            <>
-              <FormWrapper>
-                <InputWrapper>
-                  <InputField error={showWarn} value={newCategory} onChange={handleChangeCategory} />
-                </InputWrapper>
-                <CompleteButton onClick={handlePostCategory} />
-              </FormWrapper>
-              {showWarn && (
-                <Typography variant="caption4" color="errorRed">
-                  중복되는 카테고리입니다.
-                </Typography>
-              )}
-            </>
-          )}
+          </NewCategoryText>
+          <>
+            <FormWrapper>
+              <InputWrapper>
+                <InputField error={showWarn} value={newCategory} onChange={handleChangeCategory} />
+              </InputWrapper>
+              <CompleteButton onClick={handlePostCategory} />
+            </FormWrapper>
+            {showWarn && (
+              <Typography variant="caption4" color="errorRed">
+                중복되는 카테고리입니다.
+              </Typography>
+            )}
+          </>
         </NewCategoryWrapper>
 
         <ButtonWrapper>
@@ -134,7 +131,7 @@ const NewCategoryWrapper = styled.div`
   width: 100%;
 `;
 
-const NewCategoryButton = styled.button`
+const NewCategoryText = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
@@ -145,8 +142,6 @@ const NewCategoryButton = styled.button`
   border-radius: 0;
   padding: 0;
   overflow: visible;
-
-  cursor: pointer;
 
   width: fit-content;
 `;

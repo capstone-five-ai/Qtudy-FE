@@ -1,9 +1,9 @@
 interface MappingData {
-  ko: string;
-  api: string;
+  key: string;
+  apiKey: string;
 }
 
-export interface CategoryTypeMapping {
+export interface CategoryType {
   quiz: MappingData;
   summary: MappingData;
 }
