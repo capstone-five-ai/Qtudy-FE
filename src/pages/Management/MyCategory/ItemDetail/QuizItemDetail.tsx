@@ -9,6 +9,8 @@ import CategoryItemButtonBar from '../../../../components/ButtonBar/CategoryItem
 import Scrollbar from '../../../../components/Scrollbar';
 import { ReactComponent as DeleteIcon } from '../../../../assets/icons/delete.svg';
 import { CategoryOtherQuiz } from '../../../../types/quiz.type';
+import LinkButton from '../../../../components/Button/LinkButton';
+import SaveButton from '../../../../components/Button/SaveButton';
 
 function QuizItemDetail() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
@@ -18,6 +20,7 @@ function QuizItemDetail() {
   const [prevQuiz, setPrevQuiz] = useState<CategoryOtherQuiz | null>(null);
   const [currentQuiz, setCurrentQuiz] = useState<QuestionType | null>(null);
   const [nextQuiz, setNextQuiz] = useState<CategoryOtherQuiz | null>(null);
+  const mainUrl = window.location.origin;
 
   const getQuizItem = async (id: string) => {
     await QuizCategoryApi.get(id).then((data) => {
@@ -91,6 +94,10 @@ function QuizItemDetail() {
             </Navigation>
           )}
         </div>
+        <ButtonWrapper>
+          <LinkButton link={`${mainUrl}/management/mycategory/share?category=quiz&id=${params.get('id')}`} />
+        </ButtonWrapper>
+        <SaveButton disabled={false} onClick={() => setShowCategoryModal(true)} />
       </Sidebar>
       {showCategoryModal && (
         <CategoryModal
@@ -132,6 +139,11 @@ const Sidebar = styled.div`
 
   position: relative;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 36px;
+
   .content {
     position: absolute;
     top: 0;
@@ -159,9 +171,7 @@ const Navigation = styled.div`
 
   .label {
     ${({ theme }) => theme.typography.caption2};
-    //background: red;
-    color: ${(props) => props.theme.colors.mainMintDark};
-    color-opacity: 0.72;
+    color: rgba(54, 189, 180, 0.72);
   }
 
   button {
@@ -195,4 +205,15 @@ const CurrentNavigation = styled(Navigation)`
   .delete-button {
     cursor: pointer;
   }
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 30px;
+  gap: 16px;
+  justify-content: end;
+  align-items: end;
+
+  height: 100%;
 `;
