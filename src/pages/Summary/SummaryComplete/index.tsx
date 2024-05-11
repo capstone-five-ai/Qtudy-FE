@@ -111,7 +111,7 @@ const TitleWrapper = styled.div`
 `;
 
 const ContentWrapper = styled.div`
-  overflow-y: auto;
+  overflow-y: scroll;
   ${Scrollbar};
 `;
 

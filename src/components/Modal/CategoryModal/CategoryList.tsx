@@ -51,7 +51,7 @@ const Main = styled.div`
   background: var(--grayscale07, #fafafa);
   box-shadow: 0px 0px 4px 0px rgba(189, 189, 189, 0.28);
 
-  overflow-y: auto;
+  overflow-y: scroll;
   ${Scrollbar};
 `;
 
