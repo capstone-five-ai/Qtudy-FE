@@ -29,27 +29,35 @@ function CategoryList({ categories, saveCategoryIds, setSaveCategoryIds }: Props
   };
 
   return (
-    <Main>
-      {categories.map((el) => (
-        <Item onClick={() => handleCheckCategory(el.categoryId)} key={el.categoryId}>
-          <CheckBox checked={saveCategoryIds.includes(el.categoryId)} />
-          <Typography variant="caption3">{el.categoryName}</Typography>
-        </Item>
-      ))}
-    </Main>
+    <MainContainer>
+      <InnerContainer>
+        {categories.map((el) => (
+          <Item onClick={() => handleCheckCategory(el.categoryId)} key={el.categoryId}>
+            <CheckBox checked={saveCategoryIds.includes(el.categoryId)} />
+            <Typography variant="caption3">{el.categoryName}</Typography>
+          </Item>
+        ))}
+      </InnerContainer>
+    </MainContainer>
   );
 }
 
-const Main = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+const MainContainer = styled.div`
   width: 100%;
-  max-height: 200px;
-  padding: 24px 24px 24px 16px;
+  padding: 24px;
+  padding-right: 8px;
   border-radius: 4px;
   background: var(--grayscale07, #fafafa);
   box-shadow: 0px 0px 4px 0px rgba(189, 189, 189, 0.28);
+  overflow: hidden;
+`;
+
+const InnerContainer = styled.div`
+  max-height: 200px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 
   overflow-y: scroll;
   ${Scrollbar};

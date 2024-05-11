@@ -25,6 +25,7 @@ function CategoryModal({ onClose, categoryType, contentId, generateType }: Props
   const [newCategory, setNewCategory] = useState('');
   const [saveCategoryIds, setSaveCategoryIds] = useState<number[]>([]);
   const [showWarn, setShowWarn] = useState(false);
+  const [showInput, setShowInput] = useState(false);
 
   const getCategories = useCallback(async () => {
     const data = await CategoryApi.getCategoryList(categoryType);
@@ -72,17 +73,24 @@ function CategoryModal({ onClose, categoryType, contentId, generateType }: Props
           </CategoryWrapper>
         )}
         <NewCategoryWrapper>
-          <NewCategoryText>
+          <NewCategoryButton onClick={() => setShowInput((prev) => !prev)}>
             <AddCategory />
             <Typography variant="caption2">카테고리 추가</Typography>
-          </NewCategoryText>
+          </NewCategoryButton>
           <>
-            <FormWrapper>
-              <InputWrapper>
-                <InputField error={showWarn} value={newCategory} onChange={handleChangeCategory} />
-              </InputWrapper>
-              <CompleteButton onClick={handlePostCategory} />
-            </FormWrapper>
+            {showInput && (
+              <FormWrapper>
+                <InputWrapper>
+                  <InputField
+                    error={showWarn}
+                    value={newCategory}
+                    onChange={handleChangeCategory}
+                    placeholder="카테고리명을 입력해주세요."
+                  />
+                </InputWrapper>
+                <CompleteButton onClick={handlePostCategory} />
+              </FormWrapper>
+            )}
             {showWarn && (
               <Typography variant="caption4" color="errorRed">
                 중복되는 카테고리입니다.
@@ -131,7 +139,7 @@ const NewCategoryWrapper = styled.div`
   width: 100%;
 `;
 
-const NewCategoryText = styled.div`
+const NewCategoryButton = styled.button`
   display: flex;
   align-items: center;
   gap: 8px;
@@ -156,10 +164,6 @@ const FormWrapper = styled.div`
 const InputWrapper = styled.div`
   display: flex;
   flex: 1;
-
-  > input {
-    flex: 1;
-  }
 `;
 
 const ButtonWrapper = styled.div`

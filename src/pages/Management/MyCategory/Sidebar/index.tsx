@@ -6,10 +6,10 @@ import CategoryTabBar from './CategoryTabBar';
 import CategoryContainerTitle from './CategoryContainerTitle';
 import Category from './Category';
 import CategoryApi from '../../../../api/CategoryApi';
-import { CategoryTypeMapping } from '../../../../types/category.type';
+import { CategoryType } from '../../../../types/category.type';
 
 interface SidebarProps {
-  currentType: keyof CategoryTypeMapping;
+  currentType: keyof CategoryType;
   categoryList: CategoryInfoType[];
   activeCategoryId: string;
   setCategoryList: React.Dispatch<React.SetStateAction<CategoryInfoType[]>>;
