@@ -165,6 +165,7 @@ const StyledContainer = styled.div`
     ${({ theme }) => theme.typography.body3};
     color: ${({ theme }) => theme.colors.grayScale02};
     word-break: break-all;
+    white-space: pre-wrap;
     overflow-y: scroll;
     ${Scrollbar}
   }
