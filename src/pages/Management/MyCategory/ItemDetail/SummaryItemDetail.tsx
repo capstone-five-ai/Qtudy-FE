@@ -87,7 +87,7 @@ function SummaryItemDetail() {
               <button
                 type="button"
                 onClick={() =>
-                  navigate(`/management/mycategory/detail?category=quiz&id=${prevSummary.categorizedSummaryId}`)
+                  navigate(`/management/mycategory/detail?category=summary&id=${prevSummary.categorizedSummaryId}`)
                 }
               >
                 {prevSummary.categorizedSummaryName}
@@ -106,7 +106,7 @@ function SummaryItemDetail() {
               <button
                 type="button"
                 onClick={() =>
-                  navigate(`/management/mycategory/detail?category=quiz&id=${nextSummary.categorizedSummaryId}`)
+                  navigate(`/management/mycategory/detail?category=summary&id=${nextSummary.categorizedSummaryId}`)
                 }
               >
                 {nextSummary.categorizedSummaryName}
