@@ -36,9 +36,8 @@ export default CategoryTabBar;
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 20px;
 
   padding: 6px 22px;
   border-radius: 26px;
@@ -50,8 +49,10 @@ const TabBar = styled.div<{ $active: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
+
   width: 130px;
   height: 40px;
+
   border-radius: 30px;
   border: 1px solid;
   cursor: pointer;

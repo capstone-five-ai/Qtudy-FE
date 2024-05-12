@@ -110,10 +110,23 @@ const Container = styled.button<{ $active: boolean }>`
   align-items: center;
   text-align: left;
   padding: 12px 0px 12px 20px;
+  border-left: 1px solid ${(props) => props.theme.colors.grayScale06};
 
-  border: none;
-  box-shadow: inset 2px 0 0 ${(props) => (props.$active ? props.theme.colors.mainMint : 'transparent')};
-  background: transparent;
+  position: relative;
+
+  ${(props) =>
+    props.$active &&
+    css`
+      &:before {
+        content: '';
+        width: 2px;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: -1px;
+        background-color: ${props.theme.colors.mainMint};
+      }
+    `}
 
   & > div:nth-child(1) {
     word-break: break-all;
@@ -131,7 +144,6 @@ const Container = styled.button<{ $active: boolean }>`
       !props.$active &&
       css`
         background: ${props.theme.colors.grayScale07};
-        box-shadow: inset 1px 0 0 ${props.theme.colors.grayScale06};
       `}
   }
 `;

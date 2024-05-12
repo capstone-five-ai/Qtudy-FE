@@ -7,6 +7,7 @@ import CategoryContainerTitle from './CategoryContainerTitle';
 import Category from './Category';
 import CategoryApi from '../../../../api/CategoryApi';
 import { CategoryType } from '../../../../types/category.type';
+import Scrollbar from '../../../../components/Scrollbar';
 
 interface SidebarProps {
   currentType: keyof CategoryType;
@@ -59,31 +60,29 @@ function Sidebar({
   return (
     <Container>
       <CategoryTabBar currentType={currentType} />
-      <CategoryContainer>
-        <CategoryContainerTitle currentType={currentType} handleAddCategory={handleAddCategory} />
-        <CategoryListContainer>
-          {categoryList.length > 0 ? (
-            <div className="category-list">
-              {categoryList.map((category) => (
-                <Category
-                  key={category.categoryId}
-                  category={category}
-                  active={activeCategoryId === String(category.categoryId)}
-                  handleEditCategory={handleEditCategory}
-                  handleDeleteCategory={handleDeleteCategory}
-                  setActiveCategoryName={setActiveCategoryName}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="no-category">
-              <Typography variant="detail" color="grayScale04">
-                카테고리를 추가해주세요
-              </Typography>
-            </div>
-          )}
-        </CategoryListContainer>
-      </CategoryContainer>
+      <CategoryContainerTitle currentType={currentType} handleAddCategory={handleAddCategory} />
+      <CategoryListContainer>
+        {categoryList.length > 0 ? (
+          <>
+            {categoryList.map((category) => (
+              <Category
+                key={category.categoryId}
+                category={category}
+                active={activeCategoryId === String(category.categoryId)}
+                handleEditCategory={handleEditCategory}
+                handleDeleteCategory={handleDeleteCategory}
+                setActiveCategoryName={setActiveCategoryName}
+              />
+            ))}
+          </>
+        ) : (
+          <div className="no-category">
+            <Typography variant="detail" color="grayScale04">
+              카테고리를 추가해주세요
+            </Typography>
+          </div>
+        )}
+      </CategoryListContainer>
     </Container>
   );
 }
@@ -93,33 +92,27 @@ export default Sidebar;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 16px;
+
   width: 340px;
+  height: 572px;
 
   & > div:nth-child(1) {
     margin-right: 16px;
+    margin-bottom: 16px;
   }
 `;
 
-const CategoryContainer = styled.div`
+const CategoryListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
 
-  .category-list {
-    display: flex;
-    flex-direction: column;
-
-    box-shadow: inset 1px 0 0 ${(props) => props.theme.colors.grayScale06};
-    margin-left: 1px;
-  }
+  flex: 1;
+  overflow-y: scroll;
+  ${Scrollbar}
 
   .no-category {
     padding: 100px 0px;
     text-align: center;
   }
-`;
-
-const CategoryListContainer = styled.div`
-  max-height: 355px;
 `;

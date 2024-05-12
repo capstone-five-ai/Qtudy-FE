@@ -172,7 +172,6 @@ const Container = styled.div`
 
   max-height: calc(100vh - 65px - 190px);
   min-height: 572px;
-  padding: 0px 20px;
 
   & > div:nth-child(2) {
     width: 800px;
