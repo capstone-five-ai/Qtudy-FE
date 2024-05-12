@@ -52,7 +52,6 @@ function Question({ question, questionNum }: Props) {
           </Typography>
           <ArrowIcon className={showAnswer ? 'arrow-close' : 'arrow-open'} />
         </AnswerButton>
-        {console.log(question)}
         {showAnswer && (
           <Commentary>
             {question.problemChoices && question.problemChoices.length > 0 && question.problemAnswer && (
