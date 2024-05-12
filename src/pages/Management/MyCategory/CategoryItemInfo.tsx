@@ -10,7 +10,7 @@ function CategoryItemInfo({ createInfo, title }: CategoryItemInfoProps) {
   return (
     <Container>
       <Typography variant="caption3" color="mainMintDark">
-        {createInfo}
+        {createInfo} 생성
       </Typography>
       <div className="title-container">
         <Typography variant="body2" color="grayScale02">
