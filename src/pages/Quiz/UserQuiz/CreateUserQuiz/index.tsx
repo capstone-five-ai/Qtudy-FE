@@ -76,7 +76,11 @@ function CreateUserQuiz() {
       </StyledQuizContainer>
       <RightSideBar
         quizType={quizType}
-        disabled={quizType.value === CREATE_USER_QUIZ_TYPE[0].value ? !answer : false}
+        disabled={
+          quizType.value === CREATE_USER_QUIZ_TYPE[0].value
+            ? answer < 0 || question === '' || choices.every((choice) => choice.content === '')
+            : question === '' || commentary === ''
+        }
         setQuizType={setQuizType}
         handleSubmit={handleSubmit}
       />
