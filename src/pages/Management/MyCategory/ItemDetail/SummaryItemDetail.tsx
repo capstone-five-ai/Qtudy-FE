@@ -12,9 +12,11 @@ import CopySummaryButton from '../../../Summary/SummaryComplete/CopySummaryButto
 import { ReactComponent as DeleteIcon } from '../../../../assets/icons/delete.svg';
 import CategoryItemButtonBar from '../../../../components/ButtonBar/CategoryItemButtonBar';
 import Scrollbar from '../../../../components/Scrollbar';
+import DeleteModal from '../../../../components/Modal/DeleteModal';
 
 function SummaryItemDetail() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const [currentCategoryId, setCurrentCategoryId] = useState(-1);
@@ -50,6 +52,12 @@ function SummaryItemDetail() {
   const handleEdit = () => {
     navigate(`/management/mycategory/edit?category=summary&id=${params.get('id')}`, {
       state: { summaryData: currentSummary },
+    });
+  };
+
+  const handleDeleteItem = () => {
+    SummaryCategoryApi.delete(Number(params.get('id'))).then(() => {
+      handleReturnToList();
     });
   };
 
@@ -89,7 +97,7 @@ function SummaryItemDetail() {
           {currentSummary && (
             <CurrentNavigation>
               <button type="button">{currentSummary.summaryTitle}</button>
-              <DeleteIcon className="delete-button" onClick={() => SummaryCategoryApi.delete(currentCategoryId)} />
+              <DeleteIcon className="delete-button" onClick={() => setShowDeleteModal(true)} />
             </CurrentNavigation>
           )}
           {nextSummary && (
@@ -127,6 +135,17 @@ function SummaryItemDetail() {
           categoryType="summary"
           contentId={Number(params.get('id') || -1)}
           generateType={currentSummary.aiGeneratedSummaryId ? 'ai' : 'user'}
+        />
+      )}
+      {showDeleteModal && (
+        <DeleteModal
+          onCancel={() => {
+            setShowDeleteModal(false);
+          }}
+          onConfirm={() => {
+            handleDeleteItem();
+          }}
+          title="요약을 삭제하시겠습니까?"
         />
       )}
     </>

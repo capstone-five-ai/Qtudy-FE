@@ -11,9 +11,11 @@ import { ReactComponent as DeleteIcon } from '../../../../assets/icons/delete.sv
 import { CategoryOtherQuiz } from '../../../../types/quiz.type';
 import LinkButton from '../../../../components/Button/LinkButton';
 import SaveButton from '../../../../components/Button/SaveButton';
+import DeleteModal from '../../../../components/Modal/DeleteModal';
 
 function QuizItemDetail() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const [currentCategoryId, setCurrentCategoryId] = useState(-1);
@@ -51,6 +53,12 @@ function QuizItemDetail() {
     navigate(`/management/mycategory/edit?category=quiz&id=${params.get('id')}`, { state: { quizData: currentQuiz } });
   };
 
+  const handleDeleteItem = () => {
+    QuizCategoryApi.delete(Number(params.get('id'))).then(() => {
+      handleReturnToList();
+    });
+  };
+
   if (!params.get('id')) return <Navigate to="/management/mycategory" replace />;
 
   return (
@@ -77,7 +85,7 @@ function QuizItemDetail() {
           {currentQuiz && (
             <CurrentNavigation>
               <button type="button">{currentQuiz.problemName}</button>
-              <DeleteIcon className="delete-button" onClick={() => QuizCategoryApi.delete(currentCategoryId)} />
+              <DeleteIcon className="delete-button" onClick={() => setShowDeleteModal(true)} />
             </CurrentNavigation>
           )}
           {nextQuiz && (
@@ -105,6 +113,17 @@ function QuizItemDetail() {
           categoryType="quiz"
           contentId={Number(params.get('id') || -1)}
           generateType={currentQuiz?.aiGeneratedProblemId ? 'ai' : 'user'}
+        />
+      )}
+      {showDeleteModal && (
+        <DeleteModal
+          onCancel={() => {
+            setShowDeleteModal(false);
+          }}
+          onConfirm={() => {
+            handleDeleteItem();
+          }}
+          title="퀴즈를 삭제하시겠습니까?"
         />
       )}
     </>
