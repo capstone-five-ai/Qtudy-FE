@@ -41,8 +41,9 @@ function History() {
   );
 
   useEffect(() => {
-    updateList(1);
-  }, [filter, updateList]);
+    getQuizes(1);
+    getSummaries(1);
+  }, []);
 
   if (quizes.totalPages === 0 && summaries.totalPages === 0) {
     return <EmptyHistory type="all" />;
