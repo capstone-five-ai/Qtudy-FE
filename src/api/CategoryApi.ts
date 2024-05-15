@@ -65,11 +65,11 @@ const CategoryApi = {
     return response.data;
   },
 
-  createCategory: async (categoryName: string, categoryType: string) => {
+  createCategory: async (categoryName: string, categoryType: keyof CategoryTypeMapping) => {
     // 카테고리(Category)/카테고리 생성
     const response = await apiClient.post('api/category/new', {
       categoryName,
-      categoryType,
+      categoryType: CATEGORY_TYPE_MAPPING[categoryType].api,
     });
     return response.data;
   },
