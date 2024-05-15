@@ -1,64 +1,52 @@
 import { useCallback, useEffect, useState } from 'react';
-import ReactPaginate from 'react-paginate';
 import styled from 'styled-components';
 import HistoryApi from '../../../api/HistoryApi';
-import { ReactComponent as NextIcon } from '../../../assets/icons/arrow_next.svg';
-import { ReactComponent as PrevIcon } from '../../../assets/icons/arrow_prev.svg';
 import Chip from '../../../components/Chip';
 import Typography from '../../../components/Typography';
 import { HistoryType } from '../../../types/history.type';
 import EmptyHistory from './EmptyHistory';
-import HistoryList from './HistoryList';
+import HistoryPagination from './HistoryPagination';
 
 const PROBLEM = 'PROBLEM';
 const SUMMARY = 'SUMMARY';
 
+interface HistoryPageType {
+  histories: HistoryType[];
+  totalPages: number;
+}
+
 function History() {
   const [filter, setFilter] = useState<'PROBLEM' | 'SUMMARY'>(PROBLEM);
-  const [histories, setHistories] = useState<HistoryType[]>([]);
-  const [page, setPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(1);
-  const [loading, setLoading] = useState(true);
+  const [quizes, setQuizes] = useState<HistoryPageType>({ histories: [], totalPages: 0 });
+  const [summaries, setSummaries] = useState<HistoryPageType>({ histories: [], totalPages: 0 });
 
   const getQuizes = async (quizPage: number) => {
     const response = await HistoryApi.getQuizList(quizPage);
     const newHistories = response.content;
-    setHistories(newHistories);
-    setTotalPage(response.totalPages);
+    setQuizes({ histories: newHistories, totalPages: response.totalPages });
   };
 
   const getSummaries = async (summaryPage: number) => {
     const response = await HistoryApi.getSummaryList(summaryPage);
     const newHistories = response.content;
-    setHistories(newHistories);
-    setTotalPage(response.totalPages);
+    setSummaries({ histories: newHistories, totalPages: response.totalPages });
   };
 
   const updateList = useCallback(
     (updatePage: number) => {
       if (filter === 'PROBLEM') getQuizes(updatePage);
       if (filter === 'SUMMARY') getSummaries(updatePage);
-      setLoading(false);
     },
     [filter]
   );
 
   useEffect(() => {
-    if (loading) return;
-    updateList(page);
-  }, [loading, page, updateList]);
+    getQuizes(1);
+    getSummaries(1);
+  }, []);
 
-  useEffect(() => {
-    updateList(1);
-    setPage(1);
-  }, [filter, updateList]);
-
-  const handlePageClick = ({ selected }: { selected: number }) => {
-    setPage(selected + 1);
-  };
-
-  if (histories.length === 0) {
-    return <EmptyHistory />;
+  if (quizes.totalPages === 0 && summaries.totalPages === 0) {
+    return <EmptyHistory type="all" />;
   }
 
   return (
@@ -76,18 +64,12 @@ function History() {
           </Chip>
         </ChipWrapper>
       </Header>
-      <ListWrapper>
-        <HistoryList histories={histories} updateList={updateList} />
-      </ListWrapper>
-      <Pagination>
-        <ReactPaginate
-          forcePage={page - 1}
-          pageCount={totalPage}
-          previousLabel={<PrevIcon />}
-          nextLabel={<NextIcon />}
-          onPageChange={handlePageClick}
-        />
-      </Pagination>
+      <HistoryPagination
+        type={filter === PROBLEM ? 'quiz' : 'summary'}
+        fetchPage={updateList}
+        histories={filter === PROBLEM ? quizes.histories : summaries.histories}
+        totalPages={filter === PROBLEM ? quizes.totalPages : summaries.totalPages}
+      />
     </Wrapper>
   );
 }
@@ -116,42 +98,6 @@ const ChipWrapper = styled.div`
   display: flex;
   gap: 12px;
   align-items: center;
-`;
-
-const ListWrapper = styled.div``;
-
-const Pagination = styled.div`
-  display: flex;
-  justify-content: center;
-
-  margin-top: 10px;
-
-  > ul {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-
-  a {
-    display: flex;
-    align-items: center;
-
-    color: var(--grayscale04, #9e9e9e);
-    text-align: center;
-
-    font-family: NotoSansRegular;
-    font-size: 13px;
-    font-style: normal;
-    line-height: normal;
-
-    cursor: pointer;
-  }
-
-  .selected > a {
-    color: var(--grayscale02, #424242);
-
-    font-family: NotoSansBold;
-  }
 `;
 
 export default History;
