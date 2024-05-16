@@ -7,11 +7,11 @@ import LinkButton from '../../../components/Button/LinkButton';
 import PDFButton from '../../../components/Button/PDFButton';
 import SaveButton from '../../../components/Button/SaveButton';
 import CategoryModal from '../../../components/Modal/CategoryModal';
+import Scrollbar from '../../../components/Scrollbar';
 import Typography from '../../../components/Typography';
 import authState from '../../../recoil/atoms/authState';
 import { SummaryType } from '../../../types/summary.type';
 import CopySummaryButton from './CopySummaryButton';
-import Scrollbar from '../../../components/Scrollbar';
 
 type Props = {
   type: 'ai' | 'user';
@@ -95,7 +95,14 @@ const MainWrapper = styled.div`
   flex-direction: column;
   flex: 1;
   padding: 40px;
+
   padding-right: 20px;
+
+  ///////////////////////////
+  //width: 800px;
+  //overflow-y: auto;
+  //${Scrollbar}
+  ///////////////////////////
 
   gap: 20px;
 

@@ -63,11 +63,11 @@ function SummaryItemDetail() {
 
   if (!params.get('id')) return <Navigate to="/management/mycategory" replace />;
 
-  return (
-    <>
-      <StyledContainer>
-        <CategoryItemButtonBar handleReturnToList={handleReturnToList} handleEdit={handleEdit} />
-        {currentSummary && (
+  if (currentSummary)
+    return (
+      <>
+        <StyledContainer>
+          <CategoryItemButtonBar handleReturnToList={handleReturnToList} handleEdit={handleEdit} />
           <>
             <TitleWrapper>
               <Typography variant="subtitle" color="mainMintDark">
@@ -77,79 +77,78 @@ function SummaryItemDetail() {
             </TitleWrapper>
             <div className="summary-content">{currentSummary.summaryContent}</div>
           </>
-        )}
-      </StyledContainer>
-      <Sidebar>
-        <div className="content">
-          {prevSummary && (
-            <Navigation>
-              <span className="label">Pre</span>
-              <button
-                type="button"
-                onClick={() =>
-                  navigate(`/management/mycategory/detail?category=summary&id=${prevSummary.categorizedSummaryId}`)
-                }
-              >
-                {prevSummary.categorizedSummaryName}
-              </button>
-            </Navigation>
-          )}
+        </StyledContainer>
+        <Sidebar>
+          <div className="content">
+            {prevSummary && (
+              <Navigation>
+                <span className="label">Pre</span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    navigate(`/management/mycategory/detail?category=summary&id=${prevSummary.categorizedSummaryId}`)
+                  }
+                >
+                  {prevSummary.categorizedSummaryName}
+                </button>
+              </Navigation>
+            )}
+            {currentSummary && (
+              <CurrentNavigation>
+                <button type="button">{currentSummary.summaryTitle}</button>
+                <DeleteIcon className="delete-button" onClick={() => setShowDeleteModal(true)} />
+              </CurrentNavigation>
+            )}
+            {nextSummary && (
+              <Navigation>
+                <span className="label">Next</span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    navigate(`/management/mycategory/detail?category=summary&id=${nextSummary.categorizedSummaryId}`)
+                  }
+                >
+                  {nextSummary.categorizedSummaryName}
+                </button>
+              </Navigation>
+            )}
+          </div>
           {currentSummary && (
-            <CurrentNavigation>
-              <button type="button">{currentSummary.summaryTitle}</button>
-              <DeleteIcon className="delete-button" onClick={() => setShowDeleteModal(true)} />
-            </CurrentNavigation>
+            <ButtonWrapper>
+              <CopySummaryButton text={currentSummary.summaryContent} />
+              <LinkButton link={`${mainUrl}/management/mycategory/share?category=summary&id=${params.get('id')}`} />
+              <PDFButton
+                label="요약"
+                type="category"
+                fileId={currentSummaryId || -1}
+                pdfType="SUMMARY"
+                fileName={currentSummary.summaryTitle}
+              />
+            </ButtonWrapper>
           )}
-          {nextSummary && (
-            <Navigation>
-              <span className="label">Next</span>
-              <button
-                type="button"
-                onClick={() =>
-                  navigate(`/management/mycategory/detail?category=summary&id=${nextSummary.categorizedSummaryId}`)
-                }
-              >
-                {nextSummary.categorizedSummaryName}
-              </button>
-            </Navigation>
-          )}
-        </div>
-        {currentSummary && (
-          <ButtonWrapper>
-            <CopySummaryButton text={currentSummary.summaryContent} />
-            <LinkButton link={`${mainUrl}/management/mycategory/share?category=summary&id=${params.get('id')}`} />
-            <PDFButton
-              label="요약"
-              type="category"
-              fileId={currentSummaryId || -1}
-              pdfType="SUMMARY"
-              fileName={currentSummary.summaryTitle}
-            />
-          </ButtonWrapper>
+          <SaveButton disabled={false} onClick={() => setShowCategoryModal(true)} />
+        </Sidebar>
+        {showCategoryModal && currentSummary && (
+          <CategoryModal
+            onClose={() => setShowCategoryModal(false)}
+            categoryType="summary"
+            contentId={Number(params.get('id') || -1)}
+            generateType={currentSummary.aiGeneratedSummaryId ? 'ai' : 'user'}
+          />
         )}
-        <SaveButton disabled={false} onClick={() => setShowCategoryModal(true)} />
-      </Sidebar>
-      {showCategoryModal && currentSummary && (
-        <CategoryModal
-          onClose={() => setShowCategoryModal(false)}
-          categoryType="summary"
-          contentId={Number(params.get('id') || -1)}
-          generateType={currentSummary.aiGeneratedSummaryId ? 'ai' : 'user'}
-        />
-      )}
-      {showDeleteModal && (
-        <DeleteModal
-          onCancel={() => {
-            setShowDeleteModal(false);
-          }}
-          onConfirm={() => {
-            handleDeleteItem();
-          }}
-          title="요약을 삭제하시겠습니까?"
-        />
-      )}
-    </>
-  );
+        {showDeleteModal && (
+          <DeleteModal
+            onCancel={() => {
+              setShowDeleteModal(false);
+            }}
+            onConfirm={() => {
+              handleDeleteItem();
+            }}
+            title="요약을 삭제하시겠습니까?"
+          />
+        )}
+      </>
+    );
 }
 
 export default SummaryItemDetail;
