@@ -44,7 +44,7 @@ export default Loader;
 function Generating() {
   return (
     <GenerateContainer>
-      <Typography variant="h3" color="grayScale09">
+      <Typography variant="h3" color="grayScale05">
         Generating ...
       </Typography>
       {/* <Loading /> */}
@@ -56,7 +56,7 @@ function Complete() {
   return (
     <CompleteContainer>
       <SparkleIcon />
-      <Typography variant="h3" color="mainMint">
+      <Typography variant="h3" color="grayScale09">
         Complete!
       </Typography>
     </CompleteContainer>
@@ -126,7 +126,7 @@ const CompleteContainer = styled.div`
   align-items: center;
 
   path {
-    fill: ${(props) => props.theme.colors.mainMint};
+    fill: ${(props) => props.theme.colors.grayScale09};
   }
 `;
 

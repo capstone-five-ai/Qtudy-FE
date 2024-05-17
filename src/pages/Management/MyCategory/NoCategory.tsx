@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as EmptyIcon } from '../../../assets/icons/empty.svg';
 import Typography from '../../../components/Typography';
-import DefaultButton from '../../../components/Button/DefaultButton';
+import CTAButton from '../../../components/Button/CTAButton';
 
 function NoCategory() {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ function NoCategory() {
           퀴즈 및 요약을 생성하고 카테고리에 저장해보세요
         </Typography>
       </div>
-      <DefaultButton onClick={() => navigate('/management/mycategory?type=quiz')}>카테고리 먼저 만들기</DefaultButton>
+      <CTAButton onClick={() => navigate('/management/mycategory?type=quiz')}>카테고리 먼저 만들기</CTAButton>
     </Container>
   );
 }

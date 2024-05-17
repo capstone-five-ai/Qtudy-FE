@@ -76,7 +76,7 @@ export default CategoryItemContentWrapper;
 
 const Container = styled.div`
   flex-grow: 1;
-  heigth: 100%;
+  height: 100%;
   padding: 24px 40px;
 
   .button-container {

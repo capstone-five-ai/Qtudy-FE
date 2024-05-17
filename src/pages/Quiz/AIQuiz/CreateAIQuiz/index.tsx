@@ -86,7 +86,9 @@ function CreateAIQuiz() {
         service="quiz"
         disabled={!type}
         buttonDisabled={
-          Object.values(inputOption).includes('') && (!pdfFile || imageFiles.length > 0 || inputText !== '')
+          type === 'upload'
+            ? Object.values(inputOption).includes('') || !(pdfFile || imageFiles.length > 0)
+            : Object.values(inputOption).includes('') || inputText === ''
         }
         inputOption={inputOption}
         setInputOption={setInputOption}

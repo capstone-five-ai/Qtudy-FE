@@ -6,14 +6,14 @@ import { CategoryInfoType } from '../../../types';
 import NoCategory from './NoCategory';
 import NewCategoryModal from '../../../components/Modal/CategoryModal/NewCategoryModal';
 import Sidebar from './Sidebar';
-import { CategoryTypeMapping } from '../../../types/category.type';
-import { CATEGORY_TYPE_MAPPING } from '../../../constants';
+import { CategoryType } from '../../../types/category.type';
+import { CATEGORY_TYPE } from '../../../constants';
 import ContentWrapper from '../../../components/Wrapper/ContentWrapper';
 import DefaultView from './DefaultView';
 import CategoryItemsView from './CategoryItemsView';
 import { CategoryQuizItemsType } from '../../../types/quiz.type';
 import { CategorySummaryItemsType } from '../../../types/summary.type';
-import DefaultButton from '../../../components/Button/DefaultButton';
+import CTAButton from '../../../components/Button/CTAButton';
 
 const BUTTON = { quiz: '카테고리에 퀴즈 추가', summary: '카테고리에 요약 추가' };
 
@@ -21,7 +21,7 @@ function MyCategory() {
   const [params] = useSearchParams();
   const categoryType = params.get('type');
   const categoryId = params.get('categoryId') || '';
-  const [currentType, setCurrentType] = useState<keyof CategoryTypeMapping | null>(null); // 탭바 (퀴즈/요약)
+  const [currentType, setCurrentType] = useState<keyof CategoryType | null>(null); // 탭바 (퀴즈/요약)
   const [quizCategoryList, setQuizCategoryList] = useState<CategoryInfoType[]>([]); // 퀴즈 카테고리 목록
   const [summaryCategoryList, setSummaryCategoryList] = useState<CategoryInfoType[]>([]); // 요약 카테고리 목록
   const [activeCategoryName, setActiveCategoryName] = useState<string>(''); // 조회 중인 카테고리 (퀴즈/요약)
@@ -64,8 +64,8 @@ function MyCategory() {
     getQuizCategories();
     getSummaryCategories();
 
-    if (categoryType && Object.keys(CATEGORY_TYPE_MAPPING).includes(categoryType)) {
-      setCurrentType(categoryType as keyof CategoryTypeMapping);
+    if (categoryType && Object.keys(CATEGORY_TYPE).includes(categoryType)) {
+      setCurrentType(categoryType as keyof CategoryType);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.get('type')]);
@@ -77,7 +77,7 @@ function MyCategory() {
   }, [completedRequests]);
 
   useEffect(() => {
-    if (categoryType && Object.keys(CATEGORY_TYPE_MAPPING).includes(categoryType) && categoryId !== '') {
+    if (categoryType && Object.keys(CATEGORY_TYPE).includes(categoryType) && categoryId !== '') {
       getCategoryItems(Number(categoryId), categoryType);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -122,10 +122,10 @@ function MyCategory() {
           setShowCategoryModal={setShowCategoryModal}
         />
         <ContentWrapper>
-          {CATEGORY_TYPE_MAPPING[currentType].ko === '퀴즈' &&
+          {CATEGORY_TYPE[currentType].key === '퀴즈' &&
             (categoryId !== '' ? (
               <CategoryItemsView
-                activeTabBar={CATEGORY_TYPE_MAPPING[currentType].ko}
+                activeTabBar={CATEGORY_TYPE[currentType].key}
                 activeCategoryId={categoryId}
                 activeCategoryName={activeCategoryName}
                 activeCategoryQuizItems={activeCategoryQuizItems}
@@ -136,10 +136,10 @@ function MyCategory() {
             ) : (
               <DefaultView />
             ))}
-          {CATEGORY_TYPE_MAPPING[currentType].ko === '요약' &&
+          {CATEGORY_TYPE[currentType].key === '요약' &&
             (categoryId !== '' ? (
               <CategoryItemsView
-                activeTabBar={CATEGORY_TYPE_MAPPING[currentType].ko}
+                activeTabBar={CATEGORY_TYPE[currentType].key}
                 activeCategoryId={categoryId}
                 activeCategoryName={activeCategoryName}
                 activeCategoryQuizItems={activeCategoryQuizItems}
@@ -152,9 +152,9 @@ function MyCategory() {
             ))}
           <div className="button-container">
             {categoryId !== '' && (
-              <DefaultButton size="large" onClick={handleAddItem}>
+              <CTAButton size="large" onClick={handleAddItem}>
                 {BUTTON[currentType]}
-              </DefaultButton>
+              </CTAButton>
             )}
           </div>
         </ContentWrapper>
@@ -172,7 +172,6 @@ const Container = styled.div`
 
   max-height: calc(100vh - 65px - 190px);
   min-height: 572px;
-  padding: 0px 20px;
 
   & > div:nth-child(2) {
     width: 800px;

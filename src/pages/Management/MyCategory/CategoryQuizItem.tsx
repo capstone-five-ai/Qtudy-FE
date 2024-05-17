@@ -21,7 +21,7 @@ function CategoryQuizItem({ quizItem, handleDeleteQuizItem }: CategoryQuizItemPr
       handleDeleteItem={() => handleDeleteQuizItem(quizItem.categorizedProblemId)}
     >
       <CategoryItemInfo
-        createInfo={`${GENERATED_BY[quizItem.problemGeneratedBy]} / ${QUIZ_TYPE[quizItem.problemType]}`}
+        createInfo={`${GENERATED_BY[quizItem.problemGeneratedBy]} 생성 / ${QUIZ_TYPE[quizItem.problemType]}`}
         title={`Q. ${quizItem.problemName}`}
       />
     </CategoryItemContainer>

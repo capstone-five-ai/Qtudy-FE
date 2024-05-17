@@ -2,12 +2,11 @@ import styled, { keyframes } from 'styled-components';
 import BrandMotion from '../../components/BrandMotion';
 import LoginButton from '../../components/Button/LoginButton';
 import Typography from '../../components/Typography';
-import MainWrapper from '../../components/Wrapper/MainWrapper';
 import navigateToLogin from '../../utils/navigateToLogin';
 
 function Login() {
   return (
-    <MainWrapper>
+    <>
       <BrandWrapper>
         <BrandMotion />
       </BrandWrapper>
@@ -15,7 +14,7 @@ function Login() {
         <LoginButton onClick={navigateToLogin}>Login with Kakao</LoginButton>
         <Typography variant="caption3">로그인 후 서비스 이용이 가능합니다</Typography>
       </LoginWrapper>
-    </MainWrapper>
+    </>
   );
 }
 

@@ -1,5 +1,5 @@
 import { HeaderContentType, TabType } from '../types';
-import { CategoryTypeMapping } from '../types/category.type';
+import { CategoryType } from '../types/category.type';
 import { ProblemType } from '../types/question.type';
 
 export const HEADER_MENU_LIST = [
@@ -9,7 +9,7 @@ export const HEADER_MENU_LIST = [
 ];
 
 export const HEADER_CONTENT: { [key: string]: { header: HeaderContentType; tabs: TabType[] } } = {
-  createQuiz: {
+  quiz: {
     header: {
       main: '퀴즈 생성',
       sub: 'AI와 함께 혹은 자체적으로 퀴즈를 만들어보세요',
@@ -19,7 +19,7 @@ export const HEADER_CONTENT: { [key: string]: { header: HeaderContentType; tabs:
       { tab: '자체 퀴즈 생성', path: '/quiz/user' },
     ],
   },
-  createSummary: {
+  summary: {
     header: {
       main: '요약정리 생성',
       sub: 'AI와 함께 혹은 자체적으로 요약해 보세요',
@@ -38,14 +38,14 @@ export const HEADER_CONTENT: { [key: string]: { header: HeaderContentType; tabs:
   },
 };
 
-export const CATEGORY_TYPE_MAPPING: CategoryTypeMapping = {
+export const CATEGORY_TYPE: CategoryType = {
   quiz: {
-    ko: '퀴즈',
-    api: 'PROBLEM',
+    key: '퀴즈',
+    apiKey: 'PROBLEM',
   },
   summary: {
-    ko: '요약',
-    api: 'SUMMARY',
+    key: '요약',
+    apiKey: 'SUMMARY',
   },
 };
 

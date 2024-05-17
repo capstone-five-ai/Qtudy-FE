@@ -81,7 +81,6 @@ const TextContainer = styled.div`
   gap: 2px;
 
   .sub {
-    font-family: NotoSansRegular;
-    font-size: 13px;
+    ${({ theme }) => theme.typography.caption3};
   }
 `;

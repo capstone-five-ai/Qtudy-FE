@@ -1,20 +1,27 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
-import LinkButton from '../../../../components/Button/LinkButton';
 import Question from '../../../../components/Question';
-import CategoryItemContentWrapper from '../../../../components/Wrapper/CategoryItemContentWrapper';
 import { QuestionType } from '../../../../types/question.type';
 import CategoryModal from '../../../../components/Modal/CategoryModal';
 import QuizCategoryApi from '../../../../api/QuizCategoryApi';
+import CategoryItemButtonBar from '../../../../components/ButtonBar/CategoryItemButtonBar';
+import Scrollbar from '../../../../components/Scrollbar';
+import { ReactComponent as DeleteIcon } from '../../../../assets/icons/delete.svg';
+import { CategoryOtherQuiz } from '../../../../types/quiz.type';
+import LinkButton from '../../../../components/Button/LinkButton';
 import SaveButton from '../../../../components/Button/SaveButton';
+import DeleteModal from '../../../../components/Modal/DeleteModal';
 
 function QuizItemDetail() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const [currentCategoryId, setCurrentCategoryId] = useState(-1);
+  const [prevQuiz, setPrevQuiz] = useState<CategoryOtherQuiz | null>(null);
   const [currentQuiz, setCurrentQuiz] = useState<QuestionType | null>(null);
+  const [nextQuiz, setNextQuiz] = useState<CategoryOtherQuiz | null>(null);
   const mainUrl = window.location.origin;
 
   const getQuizItem = async (id: string) => {
@@ -28,6 +35,8 @@ function QuizItemDetail() {
         problemChoices: quizData.problemChoices,
       });
       setCurrentCategoryId(quizData.categoryId);
+      setPrevQuiz(quizData.previousProblem);
+      setNextQuiz(quizData.nextProblem);
     });
   };
 
@@ -36,7 +45,7 @@ function QuizItemDetail() {
     if (id) getQuizItem(id);
   }, [params]);
 
-  const handleMoveToList = () => {
+  const handleReturnToList = () => {
     navigate(`/management/mycategory?type=quiz&categoryId=${currentCategoryId}`);
   };
 
@@ -44,22 +53,60 @@ function QuizItemDetail() {
     navigate(`/management/mycategory/edit?category=quiz&id=${params.get('id')}`, { state: { quizData: currentQuiz } });
   };
 
+  const handleDeleteItem = () => {
+    QuizCategoryApi.delete(Number(params.get('id'))).then(() => {
+      handleReturnToList();
+    });
+  };
+
   if (!params.get('id')) return <Navigate to="/management/mycategory" replace />;
 
   return (
     <>
-      <CategoryItemContentWrapper handleMoveToList={handleMoveToList} handleEdit={handleEdit}>
-        {currentQuiz && <Question question={currentQuiz} />}
-      </CategoryItemContentWrapper>
-      <SideWrapper>
-        <SideBar>
-          <ButtonWrapper>
-            <LinkButton link={`${mainUrl}/management/mycategory/share?category=quiz&id=${params.get('id')}`} />
-          </ButtonWrapper>
-
-          <SaveButton disabled={false} onClick={() => setShowCategoryModal(true)} />
-        </SideBar>
-      </SideWrapper>
+      <StyledContainer>
+        <CategoryItemButtonBar handleReturnToList={handleReturnToList} handleEdit={handleEdit} />
+        <StyledQuizContainer>{currentQuiz && <Question question={currentQuiz} />}</StyledQuizContainer>
+      </StyledContainer>
+      <Sidebar>
+        <div className="content">
+          {prevQuiz && (
+            <Navigation>
+              <span className="label">Pre</span>
+              <button
+                type="button"
+                onClick={() =>
+                  navigate(`/management/mycategory/detail?category=quiz&id=${prevQuiz.categorizedProblemId}`)
+                }
+              >
+                {prevQuiz.categorizedProblemName}
+              </button>
+            </Navigation>
+          )}
+          {currentQuiz && (
+            <CurrentNavigation>
+              <button type="button">{currentQuiz.problemName}</button>
+              <DeleteIcon className="delete-button" onClick={() => setShowDeleteModal(true)} />
+            </CurrentNavigation>
+          )}
+          {nextQuiz && (
+            <Navigation>
+              <span className="label">Next</span>
+              <button
+                type="button"
+                onClick={() =>
+                  navigate(`/management/mycategory/detail?category=quiz&id=${nextQuiz.categorizedProblemId}`)
+                }
+              >
+                {nextQuiz.categorizedProblemName}
+              </button>
+            </Navigation>
+          )}
+        </div>
+        <ButtonWrapper>
+          <LinkButton link={`${mainUrl}/management/mycategory/share?category=quiz&id=${params.get('id')}`} />
+        </ButtonWrapper>
+        <SaveButton disabled={false} onClick={() => setShowCategoryModal(true)} />
+      </Sidebar>
       {showCategoryModal && (
         <CategoryModal
           onClose={() => setShowCategoryModal(false)}
@@ -68,26 +115,115 @@ function QuizItemDetail() {
           generateType={currentQuiz?.aiGeneratedProblemId ? 'ai' : 'user'}
         />
       )}
+      {showDeleteModal && (
+        <DeleteModal
+          onCancel={() => {
+            setShowDeleteModal(false);
+          }}
+          onConfirm={() => {
+            handleDeleteItem();
+          }}
+          title="퀴즈를 삭제하시겠습니까?"
+        />
+      )}
     </>
   );
 }
 
 export default QuizItemDetail;
 
-const SideWrapper = styled.div`
+const StyledContainer = styled.div`
+  flex-grow: 1;
+  padding: 24px 0px 20px 40px;
+
   display: flex;
   flex-direction: column;
-  min-height: 100%;
 `;
 
-const SideBar = styled.div`
+const StyledQuizContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+
+  padding-right: 20px;
+  overflow-y: scroll;
+
+  ${Scrollbar}
+`;
+
+const Sidebar = styled.div`
+  width: 360px;
+  margin: 24px 0;
+  border-left: 1px solid ${(props) => props.theme.colors.grayScale06};
+
+  position: relative;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-left: 1px solid ${(props) => props.theme.colors.grayScale06};
-  margin: 24px 0;
   padding: 0 36px;
-  flex: 1;
+
+  .content {
+    position: absolute;
+    top: 0;
+    left: -1px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    width: 100%;
+    margin-top: 16px;
+  }
+`;
+
+const Navigation = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  padding-left: 24px;
+  padding-right: 36px;
+  border-left: 2px solid transparent;
+
+  min-height: 38px;
+
+  .label {
+    ${({ theme }) => theme.typography.caption2};
+    color: rgba(54, 189, 180, 0.72);
+  }
+
+  button {
+    width: 248px;
+
+    cursor: pointer;
+    text-align: left;
+    ${({ theme }) => theme.typography.caption3};
+    color: ${({ theme }) => theme.colors.grayScale03};
+
+    word-break: break-all;
+  }
+`;
+
+const CurrentNavigation = styled(Navigation)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  border-left-color: ${(props) => props.theme.colors.mainMint};
+
+  button {
+    width: 248px;
+    cursor: pointer;
+    text-align: left;
+    ${({ theme }) => theme.typography.caption2};
+    color: ${({ theme }) => theme.colors.grayScale02};
+  }
+
+  .delete-button {
+    cursor: pointer;
+  }
 `;
 
 const ButtonWrapper = styled.div`

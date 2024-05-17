@@ -5,27 +5,27 @@ import CategoryApi from '../../../api/CategoryApi';
 import { ReactComponent as AddCategory } from '../../../assets/icons/add_category.svg';
 import { CategoryInfoType } from '../../../types';
 import CompleteButton from '../../Button/CompleteButton';
-import DefaultButton from '../../Button/DefaultButton';
+import CTAButton from '../../Button/CTAButton';
 import InputField from '../../Input/InputField';
 import Typography from '../../Typography';
 import ModalContainer from '../ModalContainer';
 import CategoryList from './CategoryList';
-import { CategoryTypeMapping } from '../../../types/category.type';
+import { CategoryType } from '../../../types/category.type';
 
 type Props = {
   onClose: () => void;
-  categoryType: keyof CategoryTypeMapping;
+  categoryType: keyof CategoryType;
   contentId: number;
   generateType: 'ai' | 'user';
 };
 
 function CategoryModal({ onClose, categoryType, contentId, generateType }: Props) {
   const [categories, setCategories] = useState<CategoryInfoType[]>([]);
-  const [showCategoryInput, setShowCategoryInput] = useState(categories.length === 0);
 
   const [newCategory, setNewCategory] = useState('');
   const [saveCategoryIds, setSaveCategoryIds] = useState<number[]>([]);
   const [showWarn, setShowWarn] = useState(false);
+  const [showInput, setShowInput] = useState(false);
 
   const getCategories = useCallback(async () => {
     const data = await CategoryApi.getCategoryList(categoryType);
@@ -73,31 +73,36 @@ function CategoryModal({ onClose, categoryType, contentId, generateType }: Props
           </CategoryWrapper>
         )}
         <NewCategoryWrapper>
-          <NewCategoryButton type="button" onClick={() => setShowCategoryInput(!showCategoryInput)}>
+          <NewCategoryButton onClick={() => setShowInput((prev) => !prev)}>
             <AddCategory />
             <Typography variant="caption2">카테고리 추가</Typography>
           </NewCategoryButton>
-          {showCategoryInput && (
-            <>
+          <>
+            {showInput && (
               <FormWrapper>
                 <InputWrapper>
-                  <InputField error={showWarn} value={newCategory} onChange={handleChangeCategory} />
+                  <InputField
+                    error={showWarn}
+                    value={newCategory}
+                    onChange={handleChangeCategory}
+                    placeholder="카테고리명을 입력해주세요."
+                  />
                 </InputWrapper>
                 <CompleteButton onClick={handlePostCategory} />
               </FormWrapper>
-              {showWarn && (
-                <Typography variant="caption4" color="errorRed">
-                  중복되는 카테고리입니다.
-                </Typography>
-              )}
-            </>
-          )}
+            )}
+            {showWarn && (
+              <Typography variant="caption4" color="errorRed">
+                중복되는 카테고리입니다.
+              </Typography>
+            )}
+          </>
         </NewCategoryWrapper>
 
         <ButtonWrapper>
-          <DefaultButton size="small" onClick={handleClickSave}>
+          <CTAButton size="small" onClick={handleClickSave}>
             저장
-          </DefaultButton>
+          </CTAButton>
         </ButtonWrapper>
       </Wrapper>
     </ModalContainer>
@@ -146,8 +151,6 @@ const NewCategoryButton = styled.button`
   padding: 0;
   overflow: visible;
 
-  cursor: pointer;
-
   width: fit-content;
 `;
 
@@ -161,10 +164,6 @@ const FormWrapper = styled.div`
 const InputWrapper = styled.div`
   display: flex;
   flex: 1;
-
-  > input {
-    flex: 1;
-  }
 `;
 
 const ButtonWrapper = styled.div`

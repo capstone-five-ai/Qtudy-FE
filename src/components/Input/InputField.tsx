@@ -42,6 +42,7 @@ const Container = styled.div`
     transform: translate(0, 100%);
     bottom: 0;
     left: 0;
+    padding-top: 2px;
   }
 `;
 
@@ -52,10 +53,7 @@ const Input = styled.input<{ $error: boolean }>`
   color: ${(props) => props.theme.colors.grayScale02};
   background-color: transparent;
 
-  font-family: NotoSansRegular;
-  font-size: 13px;
-  line-height: auto;
-  letter-spacing: 0;
+  ${({ theme }) => theme.typography.caption3};
 
   &::placeholder {
     color: ${(props) => props.theme.colors.grayScale05};

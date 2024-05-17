@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router';
-import { styled } from 'styled-components';
-import DefaultButton from '../../../../components/Button/DefaultButton';
+import styled from 'styled-components';
+import CTAButton from '../../../../components/Button/CTAButton';
 import Empty1 from '../../../../components/Empty/Empty1';
 
 interface Props {
@@ -22,10 +22,10 @@ function EmptyHistory({ type }: Props) {
       <Empty1 title={title} highlight={highlight} />
       <ButtonContainer>
         {(type === 'all' || type === 'quiz') && (
-          <DefaultButton onClick={() => navigate('/quiz/ai')}>AI 퀴즈 생성하러 가기</DefaultButton>
+          <CTAButton onClick={() => navigate('/quiz/ai')}>AI 퀴즈 생성하러 가기</CTAButton>
         )}
         {(type === 'all' || type === 'summary') && (
-          <DefaultButton onClick={() => navigate('/summary/ai')}>AI 요약 생성하러 가기</DefaultButton>
+          <CTAButton onClick={() => navigate('/summary/ai')}>AI 요약 생성하러 가기</CTAButton>
         )}
       </ButtonContainer>
     </Container>

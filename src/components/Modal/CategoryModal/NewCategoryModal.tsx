@@ -7,12 +7,11 @@ import CompleteButton from '../../Button/CompleteButton';
 import InputField from '../../Input/InputField';
 import Typography from '../../Typography';
 import ModalContainer from '../ModalContainer';
-import { CATEGORY_TYPE_MAPPING } from '../../../constants';
-import { CategoryTypeMapping } from '../../../types/category.type';
+import { CategoryType } from '../../../types/category.type';
 
 type Props = {
   onClose: () => void;
-  categoryType: keyof CategoryTypeMapping;
+  categoryType: keyof CategoryType;
   categoryList: CategoryInfoType[];
   setCategoryList: React.Dispatch<React.SetStateAction<CategoryInfoType[]>>;
 };
@@ -23,7 +22,7 @@ function NewCategoryModal({ onClose, categoryType, categoryList, setCategoryList
 
   const handlePostCategory = async () => {
     setCategoryError(false);
-    await CategoryApi.createCategory(newCategory, CATEGORY_TYPE_MAPPING[categoryType].api)
+    await CategoryApi.createCategory(newCategory, categoryType)
       .then((data) => {
         setCategoryList([...categoryList, data]);
         onClose();

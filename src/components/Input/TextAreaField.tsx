@@ -52,11 +52,7 @@ const StyledTextArea = styled.textarea`
   text-align: justify;
   overflow: hidden;
 
-  font-family: NotoSansRegular;
-  font-size: 14px;
-  font-style: normal;
-  line-height: 180%;
-  letter-spacing: 0.28px;
+  ${({ theme }) => theme.typography.body3};
 
   white-space: pre-wrap;
   color: ${(props) => props.theme.colors.grayScale02};

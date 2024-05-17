@@ -46,7 +46,7 @@ function SummaryComplete({ type }: Props) {
   if (!summary) return <div />;
 
   return (
-    <Wrapper>
+    <>
       <MainWrapper>
         <TitleWrapper>
           <Typography variant="subtitle" color="mainMintDark">
@@ -86,22 +86,23 @@ function SummaryComplete({ type }: Props) {
           generateType={type}
         />
       )}
-    </Wrapper>
+    </>
   );
 }
-
-const Wrapper = styled.div`
-  display: flex;
-`;
 
 const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
   padding: 40px;
-  width: 800px;
-  overflow-y: auto;
-  ${Scrollbar}
+
+  padding-right: 20px;
+
+  ///////////////////////////
+  //width: 800px;
+  //overflow-y: auto;
+  //${Scrollbar}
+  ///////////////////////////
 
   gap: 20px;
 
@@ -117,9 +118,8 @@ const TitleWrapper = styled.div`
 `;
 
 const ContentWrapper = styled.div`
-  .typography {
-    word-wrap: break-word;
-  }
+  overflow-y: scroll;
+  ${Scrollbar};
 `;
 
 const SideWrapper = styled.div`

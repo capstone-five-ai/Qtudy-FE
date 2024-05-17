@@ -1,8 +1,6 @@
 import { Navigate, Route, Routes, useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import ContentWrapper from '../../components/Wrapper/ContentWrapper';
-import MainWrapper from '../../components/Wrapper/MainWrapper';
-import MainLayout from '../../layouts/MainLayout';
 import authState from '../../recoil/atoms/authState';
 import AIQuizComplete from './AIQuiz/AIQuizComplete';
 import CreateAIQuiz from './AIQuiz/CreateAIQuiz';
@@ -18,16 +16,12 @@ function Quiz() {
   if (!complete && !isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
-    <MainLayout contentKey="createQuiz">
-      <MainWrapper>
-        <ContentWrapper>
-          <Routes>
-            <Route path="/ai" element={complete ? <AIQuizComplete /> : <CreateAIQuiz />} />
-            <Route path="/user" element={complete ? <UserQuizComplete /> : <CreateUserQuiz />} />
-          </Routes>
-        </ContentWrapper>
-      </MainWrapper>
-    </MainLayout>
+    <ContentWrapper>
+      <Routes>
+        <Route path="/ai" element={complete ? <AIQuizComplete /> : <CreateAIQuiz />} />
+        <Route path="/user" element={complete ? <UserQuizComplete /> : <CreateUserQuiz />} />
+      </Routes>
+    </ContentWrapper>
   );
 }
 

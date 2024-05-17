@@ -17,8 +17,7 @@ export type QuizType = 'SUBJECTIVE' | 'MULTIPLE';
 
 export interface UserQuizInputType {
   id: string;
-  input: string;
-  check: boolean;
+  content: string;
 }
 
 // 카테고리 관련 타입

@@ -46,8 +46,9 @@ const STypography = styled.div<{
   $hoverStyle: Style | undefined;
   $hoverColor: keyof ColorsTypes | undefined;
 }>`
-  font-family: ${(props) => props.$style.font};
+  font-family: '${(props) => props.$style.font}', sans-serif;
   font-size: ${(props) => props.$style.size}px;
+  font-weight: ${(props) => props.$style.weight};
   line-height: ${(props) => props.$style.lineHeight};
   letter-spacing: ${(props) => props.$style.letterSpacing}%;
 
@@ -58,8 +59,9 @@ const STypography = styled.div<{
     ${(props) =>
       props.$hoverStyle &&
       css`
-        font-family: ${props.$hoverStyle.font};
+        font-family: '${props.$hoverStyle.font}';
         font-size: ${props.$hoverStyle.size}px;
+        font-weight: ${props.$style.weight};
         line-height: ${props.$hoverStyle.lineHeight};
         letter-spacing: ${props.$hoverStyle.letterSpacing}%;
       `}

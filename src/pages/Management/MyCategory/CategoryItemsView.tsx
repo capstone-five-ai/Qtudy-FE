@@ -8,6 +8,7 @@ import NoItem from './NoItem';
 import QuizCategoryApi from '../../../api/QuizCategoryApi';
 import SummaryCategoryApi from '../../../api/SummaryCategoryApi';
 import PDFButton from '../../../components/Button/PDFButton';
+import Scrollbar from '../../../components/Scrollbar';
 
 interface CategoryItemsViewProps {
   activeTabBar: string;
@@ -125,4 +126,7 @@ const CategoryItemWrapper = styled.div`
   flex-direction: column;
   gap: 20px;
   padding: 9px 20px 9px 36px;
+
+  overflow-y: scroll;
+  ${Scrollbar}
 `;

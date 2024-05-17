@@ -4,8 +4,8 @@ import HistoryApi from '../../../api/HistoryApi';
 import Chip from '../../../components/Chip';
 import Typography from '../../../components/Typography';
 import { HistoryType } from '../../../types/history.type';
-import EmptyHistory from './EmptyHistory';
 import HistoryPagination from './HistoryPagination';
+import EmptyHistory from './EmptyHistory';
 
 const PROBLEM = 'PROBLEM';
 const SUMMARY = 'SUMMARY';

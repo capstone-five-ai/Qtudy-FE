@@ -1,18 +1,18 @@
-import { CATEGORY_TYPE_MAPPING } from '../constants';
-import { CategoryTypeMapping } from '../types/category.type';
+import { CATEGORY_TYPE } from '../constants';
+import { CategoryType } from '../types/category.type';
 import apiClient from './client';
 
 const PAGE = 1;
 const SIZE = 20;
 
 const CategoryApi = {
-  getCategoryList: async (categoryType: keyof CategoryTypeMapping) => {
+  getCategoryList: async (categoryType: keyof CategoryType) => {
     // 카테고리(Category)/카테고리 목록 조회
     const response = await apiClient.get('api/category/list', {
       params: {
         page: PAGE,
         size: SIZE,
-        categoryType: CATEGORY_TYPE_MAPPING[categoryType].api,
+        categoryType: CATEGORY_TYPE[categoryType].apiKey,
       },
     });
     return response.data;
@@ -65,11 +65,11 @@ const CategoryApi = {
     return response.data;
   },
 
-  createCategory: async (categoryName: string, categoryType: keyof CategoryTypeMapping) => {
+  createCategory: async (categoryName: string, categoryType: keyof CategoryType) => {
     // 카테고리(Category)/카테고리 생성
     const response = await apiClient.post('api/category/new', {
       categoryName,
-      categoryType: CATEGORY_TYPE_MAPPING[categoryType].api,
+      categoryType: CATEGORY_TYPE[categoryType].apiKey,
     });
     return response.data;
   },

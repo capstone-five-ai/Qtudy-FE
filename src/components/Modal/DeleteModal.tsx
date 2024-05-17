@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { ReactComponent as DeleteIcon } from '../../assets/icons/delete.svg';
-import DefaultButton from '../Button/DefaultButton';
+import CTAButton from '../Button/CTAButton';
 import Typography from '../Typography';
 import ModalContainer from './ModalContainer';
 
@@ -22,7 +22,7 @@ function DeleteModal({ title, onCancel, onConfirm }: Props) {
         </Header>
 
         <ButtonWrapper>
-          <DefaultButton
+          <CTAButton
             size="small"
             onClick={(e) => {
               e.stopPropagation();
@@ -31,8 +31,8 @@ function DeleteModal({ title, onCancel, onConfirm }: Props) {
             theme="gray"
           >
             취소
-          </DefaultButton>
-          <DefaultButton
+          </CTAButton>
+          <CTAButton
             size="small"
             onClick={(e) => {
               e.stopPropagation();
@@ -40,7 +40,7 @@ function DeleteModal({ title, onCancel, onConfirm }: Props) {
             }}
           >
             삭제
-          </DefaultButton>
+          </CTAButton>
         </ButtonWrapper>
       </Wrapper>
     </ModalContainer>

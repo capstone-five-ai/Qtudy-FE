@@ -32,3 +32,8 @@ export interface CategoryQuizType {
   problemCommentary: string;
   problemChoices?: string[];
 }
+
+export interface CategoryOtherQuiz {
+  categorizedProblemId: number;
+  categorizedProblemName: string;
+}

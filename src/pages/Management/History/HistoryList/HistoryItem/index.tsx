@@ -173,10 +173,7 @@ const Input = styled.input`
   color: ${(props) => props.theme.colors.grayScale02};
   background-color: transparent;
 
-  font-family: NotoSansRegular;
-  font-size: 13px;
-  line-height: auto;
-  letter-spacing: 0;
+  ${({ theme }) => theme.typography.body3};
 
   &::placeholder {
     color: ${(props) => props.theme.colors.grayScale05};

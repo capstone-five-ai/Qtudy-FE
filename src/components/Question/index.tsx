@@ -54,7 +54,7 @@ function Question({ question, questionNum }: Props) {
         </AnswerButton>
         {showAnswer && (
           <Commentary>
-            {question.problemType === 'MULTIPLE' && question.problemAnswer && (
+            {question.problemChoices && question.problemChoices.length > 0 && question.problemAnswer && (
               <div className="answer">
                 <Typography variant="subtitle">정답</Typography>
                 <Typography variant="subtitle" color="correctBlue">
