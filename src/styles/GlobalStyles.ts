@@ -1,14 +1,13 @@
+import NanumSquareNeoBold from '@/assets/fonts/NanumSqureNeo/NanumSquareNeo-Bold.woff2';
+import NanumSquareNeoExtraBold from '@/assets/fonts/NanumSqureNeo/NanumSquareNeo-ExtraBold.woff2';
+import NotoSansKRBold from '@/assets/fonts/NotoSansKR/NotoSans-Bold.woff2';
+import NotoSansKRMedium from '@/assets/fonts/NotoSansKR/NotoSans-Medium.woff2';
+import NotoSansKRRegular from '@/assets/fonts/NotoSansKR/NotoSans-Regular.woff2';
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
-import NotoSansBold from '../assets/fonts/NotoSansKR-Bold.woff';
-import NotoSansMedium from '../assets/fonts/NotoSansKR-Medium.woff';
-import NotoSansRegular from '../assets/fonts/NotoSansKR-Regular.woff';
-import NanumSquareNeoEB from '../assets/fonts/NanumSquareNeoTTF-dEb.woff';
-import NanumSquareNeoB from '../assets/fonts/NanumSquareNeoTTF-cBd.woff';
 
 const GlobalStyles = createGlobalStyle`
   ${reset}
-
   * {
     box-sizing: border-box;
   }
@@ -21,46 +20,46 @@ const GlobalStyles = createGlobalStyle`
     line-height: normal;
   }
 
-  @font-face {
-    font-family: 'Noto Sans KR';
-    src: url('${NotoSansRegular}') format('woff');
-    font-weight: 400;
-    font-style: normal;
+  button {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
   }
 
   @font-face {
     font-family: 'Noto Sans KR';
-    src: url('${NotoSansMedium}') format('woff');
-    font-weight: 500;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Noto Sans KR';
-    src: url('${NotoSansBold}') format('woff');
+    src: url('${NotoSansKRBold}) format('woff2');
     font-weight: 700;
     font-style: normal;
   }
 
   @font-face {
+    font-family: 'Noto Sans KR';
+    src: url('${NotoSansKRMedium}) format('woff2');
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Noto Sans KR';
+    src: url('${NotoSansKRRegular}) format('woff2');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
     font-family: 'Nanum Square Neo';
-    src: url('${NanumSquareNeoEB}') format('woff');
+    src: url('${NanumSquareNeoExtraBold}) format('woff2');
     font-weight: 800;
     font-style: normal;
   }
 
   @font-face {
     font-family: 'Nanum Square Neo';
-    src: url('${NanumSquareNeoB}') format('woff');
+    src: url('${NanumSquareNeoBold}) format('woff2');
     font-weight: 700;
     font-style: normal;
-  }
-
-  button {
-    border: none;
-    background: none;
-    padding: 0;
-    cursor: pointer;
   }
 `;
 

@@ -6,14 +6,20 @@ interface Typography {
   letterSpacing: number;
 }
 
-const TYPOGRAPHY = ({ font, weight, size, lineHeight, letterSpacing }: Typography) => {
+const TYPOGRAPHY = ({
+  font,
+  weight,
+  size,
+  lineHeight,
+  letterSpacing,
+}: Typography) => {
   return `
     font-family: "${font}", sans-serif;
     font-weight: ${weight};
     font-size: ${size}px;
     line-height: ${lineHeight ? `${lineHeight}%` : 'auto'};
     letter-spacing: ${letterSpacing}%;
-    `;
+  `;
 };
 
 const typography = {
