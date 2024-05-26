@@ -1,7 +1,7 @@
+import { ReactComponent as KakaoIcon } from '@/assets/icons/kakao-icon.svg';
+import Typography from '@/components/Typography';
 import { ReactNode } from 'react';
 import { styled } from 'styled-components';
-import { ReactComponent as KakaoIcon } from '../../assets/icons/icon_kakao.svg';
-import Typography from '../Typography';
 
 type Props = {
   onClick?: () => void;
