@@ -14,7 +14,7 @@ const TYPOGRAPHY = ({
   letterSpacing,
 }: Typography) => {
   return `
-    font-family: "${font}", sans-serif;
+    font-family: '${font}', sans-serif;
     font-weight: ${weight};
     font-size: ${size}px;
     line-height: ${lineHeight ? `${lineHeight}%` : 'auto'};
@@ -24,19 +24,19 @@ const TYPOGRAPHY = ({
 
 const typography = {
   h1: TYPOGRAPHY({
-    font: 'Nanum Square Neo',
+    font: 'NanumSquareNeoExtraBold',
     weight: 800,
     size: 20,
     letterSpacing: 0,
   }),
   h2: TYPOGRAPHY({
-    font: 'Nanum Square Neo',
+    font: 'NanumSquareNeoExtraBold',
     weight: 800,
     size: 18,
     letterSpacing: 0,
   }),
   h3: TYPOGRAPHY({
-    font: 'Nanum Square Neo',
+    font: 'NanumSquareNeoExtraBold',
     weight: 800,
     size: 16,
     letterSpacing: 2,
@@ -74,7 +74,7 @@ const typography = {
     letterSpacing: 2,
   }),
   detail: TYPOGRAPHY({
-    font: 'Nanum Square Neo',
+    font: 'NanumSquareNeoBold',
     weight: 700,
     size: 13,
     letterSpacing: 2,
@@ -104,7 +104,7 @@ const typography = {
     letterSpacing: 0,
   }),
   button: TYPOGRAPHY({
-    font: 'Nanum Square Neo',
+    font: 'NanumSquareNeoExtraBold',
     weight: 800,
     size: 14,
     letterSpacing: 0,

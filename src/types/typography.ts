@@ -1,5 +1,5 @@
+import { ColorsTypes } from '@/styles/theme';
 import { ReactNode } from 'react';
-import { ColorsTypes } from '../styles/theme';
 
 export interface Style {
   type: string;
@@ -13,7 +13,7 @@ export interface Style {
 export const typographies: Style[] = [
   {
     type: 'h1',
-    font: 'Nanum Square Neo',
+    font: 'NanumSquareNeoExtraBold',
     size: 20,
     weight: 800,
     lineHeight: 'auto',
@@ -21,7 +21,7 @@ export const typographies: Style[] = [
   },
   {
     type: 'h2',
-    font: 'Nanum Square Neo',
+    font: 'NanumSquareNeoExtraBold',
     size: 18,
     weight: 800,
     lineHeight: 'auto',
@@ -29,7 +29,7 @@ export const typographies: Style[] = [
   },
   {
     type: 'h3',
-    font: 'Nanum Square Neo',
+    font: 'NanumSquareNeoExtraBold',
     size: 16,
     weight: 800,
     lineHeight: 'auto',
@@ -85,7 +85,7 @@ export const typographies: Style[] = [
   },
   {
     type: 'detail',
-    font: 'Nanum Square Neo',
+    font: 'NanumSquareNeoBold',
     size: 13,
     weight: 700,
     lineHeight: 'auto',
@@ -125,7 +125,7 @@ export const typographies: Style[] = [
   },
   {
     type: 'button',
-    font: 'Nanum Square Neo',
+    font: 'NanumSquareNeoExtraBold',
     size: 14,
     weight: 800,
     lineHeight: 'auto',
