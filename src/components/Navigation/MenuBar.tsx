@@ -1,16 +1,10 @@
 import AnnouncementTooltip from '@/components/Tooltip/AnnouncementTooltip';
+import { HEADER_MENU_LIST } from '@/constants';
 import tooltipState from '@/recoils/atoms/tooltipState';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled, { css } from 'styled-components';
-
-// TODO: path 수정
-const HEADER_MENU_LIST = [
-  { menu: '퀴즈 생성', path: '/' },
-  { menu: '요약정리 생성', path: '/' },
-  { menu: '관리 및 복습', path: '/' },
-];
 
 function MenuBar() {
   const [currentPath, setCurrentPath] = useState<string | null>(null);
@@ -40,9 +34,13 @@ function MenuBar() {
   return (
     <StyledContainer>
       {HEADER_MENU_LIST.map((menu) => (
-        <Link key={menu.menu} to={menu.path} style={{ textDecoration: 'none' }}>
+        <Link
+          key={menu.header.title}
+          to={menu.path}
+          style={{ textDecoration: 'none' }}
+        >
           <StyledMenuButton $isActive={location.pathname.includes(menu.path)}>
-            {menu.menu}
+            {menu.header.title}
             <StyledActiveIcon
               $isActive={location.pathname.includes(menu.path)}
             />
