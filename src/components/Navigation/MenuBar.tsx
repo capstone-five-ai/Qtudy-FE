@@ -86,13 +86,15 @@ const StyledMenuButton = styled.button<{ $isActive: boolean }>`
   width: max-content;
   z-index: 4;
 
-  // 이거 삭제해도 되는 거 아닐까?
-  &:hover ${StyledActiveIcon} {
-    background: ${(props) => props.theme.colors.mainMint};
-    box-shadow: 2px 1px 4px rgba(54, 189, 180, 0.24);
-  }
-
   ${({ theme }) => theme.typography.subtitle};
   color: ${({ $isActive, theme }) =>
     $isActive ? theme.colors.grayScale02 : theme.colors.grayScale03};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.grayScale02};
+    ${StyledActiveIcon} {
+      background: ${(props) => props.theme.colors.mainMint};
+      box-shadow: 2px 1px 4px rgba(54, 189, 180, 0.24);
+    }
+  }
 `;

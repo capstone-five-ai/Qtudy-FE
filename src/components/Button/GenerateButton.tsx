@@ -1,21 +1,16 @@
-import CTAButton from './CTAButton';
-import { ReactComponent as SparkleIcon } from '../../assets/icons/sparkle.svg';
+import { ReactComponent as TwinkleIcon } from '@/assets/icons/twinkle.svg';
+import PlainButton from '@/components/Button/PlainButton';
 
-interface Props {
-  disabled?: boolean;
+interface GenerateButtonProps {
   onClick?: () => void;
 }
 
-GenerateButton.defaultProps = {
-  disabled: false,
-  onClick() {},
-};
-
-function GenerateButton({ disabled, onClick }: Props) {
+function GenerateButton({ onClick }: GenerateButtonProps) {
   return (
-    <CTAButton icon={<SparkleIcon />} disabled={disabled} onClick={onClick}>
+    <PlainButton onClick={onClick}>
+      <TwinkleIcon />
       Generate
-    </CTAButton>
+    </PlainButton>
   );
 }
 
