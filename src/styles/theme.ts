@@ -1,13 +1,6 @@
 import { DefaultTheme } from 'styled-components';
-
-// 예시. 디자인에 따라 변경 필요
-const colors = {
-  header: '#1565C0',
-  primary: '#2196F3',
-  white: '#ffffff',
-  black: '#000000',
-  border: '#E5E5E5',
-};
+import colors from './color';
+import typography from './typography';
 
 const fontSize = {
   title: 20,
@@ -15,12 +8,21 @@ const fontSize = {
   text: 14,
 };
 
+const gradation = {
+  mainMintGra: 'linear-gradient(rgba(62, 215, 205, 0.6), rgba(62, 215, 205, 1))',
+  mainMintDarkGra: 'linear-gradient(rgba(54, 189, 180, 0.6), rgba(54, 189, 180, 1))',
+};
+
 export type ColorsTypes = typeof colors;
 export type FontSizeTypes = typeof fontSize;
+export type GradationTypes = typeof gradation;
+export type TypographyTypes = typeof typography;
 
 const theme: DefaultTheme = {
   colors,
   fontSize,
+  gradation,
+  typography,
 };
 
 export default theme;
