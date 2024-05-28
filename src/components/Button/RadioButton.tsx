@@ -1,14 +1,16 @@
 import styled from 'styled-components';
 
-function RadioButton({ ...props }) {
-  const { disabled } = props;
+interface RadioButtonProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {}
 
-  return <StyledInput type="radio" $disabled={disabled !== undefined ? disabled : false} {...props} />;
+// 라디오 버튼
+function RadioButton({ ...props }: RadioButtonProps) {
+  return <StyledRadioButton type="radio" {...props} />;
 }
 
 export default RadioButton;
 
-const StyledInput = styled.input.attrs({ type: 'radio' })<{ $disabled: boolean }>`
+const StyledRadioButton = styled.input.attrs({ type: 'radio' })`
   -webkit-appearance: none;
   -moz-appearance: none;
   -ms-appearance: none;
@@ -20,7 +22,11 @@ const StyledInput = styled.input.attrs({ type: 'radio' })<{ $disabled: boolean }
   background: white;
   box-shadow: 0 0 0 1px ${(props) => props.theme.colors.grayScale05};
   border-radius: 50%;
-  cursor: ${(props) => (props.$disabled ? 'default' : 'pointer')};
+  cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+  }
 
   &:checked {
     background: ${(props) => props.theme.colors.mainMint};

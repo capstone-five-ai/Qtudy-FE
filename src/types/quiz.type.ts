@@ -1,39 +1,8 @@
-import { QuizType } from '.';
-
-export interface QuizOptionType {
-  type: string;
-  amount: string;
-  difficulty: string;
-  fileName: string;
+export interface GenerateQuizData {
+  problemName: string; // 문제명
+  problemAnswer: number; // 답안
+  problemCommentary: string; // 해설
+  problemChoices: string[]; // 선지
 }
 
-export interface QuizCreationByFileType {
-  option: QuizOptionType;
-  file: FormData;
-}
-
-export interface QuizCreationByTextType {
-  option: QuizOptionType;
-  text: string;
-}
-
-export interface CategoryQuizItemsType {
-  categorizedProblemId: number;
-  problemGeneratedBy: string;
-  problemType: QuizType;
-  problemName: string;
-  createTime: string;
-  updateTime: string;
-}
-
-export interface CategoryQuizType {
-  problemName: string;
-  problemAnswer?: string;
-  problemCommentary: string;
-  problemChoices?: string[];
-}
-
-export interface CategoryOtherQuiz {
-  categorizedProblemId: number;
-  categorizedProblemName: string;
-}
+export type GenerateQuizType = '객관식' | '주관식';

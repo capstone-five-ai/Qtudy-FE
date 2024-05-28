@@ -1,5 +1,5 @@
 import { ColorsTypes } from '@/styles/theme';
-import { Style, defaultStyle, typographies } from '@/types/typography';
+import { Style, defaultStyle, typographies } from '@/types/typography.type';
 import { ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 
@@ -38,7 +38,7 @@ const STypography = styled.div<{
   $hoverStyle: Style | undefined;
   $hoverColor: keyof ColorsTypes | undefined;
 }>`
-  font-family: ${(props) => props.$style.font};
+  font-family: '${(props) => props.$style.font}', sans-serif;
   font-size: ${(props) => props.$style.size}px;
   font-weight: ${(props) => props.$style.weight};
   line-height: ${(props) => props.$style.lineHeight};

@@ -23,6 +23,16 @@ const GlobalStyles = createGlobalStyle`
     background: none;
     padding: 0;
     cursor: pointer;
+
+    &:disabled {
+      cursor: default;
+    }
+  }
+
+  input {
+    border: none;
+    background: none;
+    outline: none;
   }
 
   @font-face {
