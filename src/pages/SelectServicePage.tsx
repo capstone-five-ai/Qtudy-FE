@@ -1,7 +1,7 @@
 import { ReactComponent as GenerateQuiz } from '@/assets/icons/generate-quiz.svg';
 import { ReactComponent as GenerateSummary } from '@/assets/icons/generate-summary.svg';
 import { ReactComponent as SaveAndManage } from '@/assets/icons/manage-review.svg';
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 import Gradation from '@/assets/images/gradation-ellipse.png';
@@ -9,7 +9,7 @@ import Typography from '@/components/Typography';
 import Card from '@/containers/SelectServicePage/Card';
 
 type MenuType = {
-  icon: ReactNode;
+  icon: JSX.Element;
   title: string;
   subTitle: string;
   content: string;

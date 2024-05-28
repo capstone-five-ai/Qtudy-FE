@@ -11,18 +11,18 @@ const colors = {
   grayScale01: '#000000',
   grayScale02: '#424242',
   grayScale03: '#757575',
-  grayScale04: '#9e9e9e',
-  grayScale05: '#bdbdbd',
-  grayScale06: '#e0e0e0',
-  grayScale07: '#fafafa',
-  grayScale08: '#fcfcfc',
-  grayScale09: '#ffffff',
+  grayScale04: '#9E9E9E',
+  grayScale05: '#BDBDBD',
+  grayScale06: '#E0E0E0',
+  grayScale07: '#FAFAFA',
+  grayScale08: '#FCFCFC',
+  grayScale09: '#FFFFFF',
 
   kakaoYellow: '#FEE500',
   kakaoBlack: '#000000',
 
-  errorRed: '#ee0000',
-  correctBlue: '#168fff',
+  errorRed: '#EE0000',
+  correctBlue: '#168FFF',
 };
 
 export default colors;

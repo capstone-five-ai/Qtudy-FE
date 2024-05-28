@@ -1,11 +1,11 @@
 import { ReactComponent as Arrow } from '@/assets/icons/long-arrow.svg';
 import Typography from '@/components/Typography';
-import React, { ReactNode } from 'react';
+import { cloneElement } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 type Props = {
-  icon: ReactNode;
+  icon: JSX.Element;
   title: string;
   subTitle: string;
   content: string;
@@ -31,18 +31,9 @@ function Card({
     navigate(path);
   };
 
-  const fillOption = {
-    fill: selected ? '#3ED7CD' : '#9e9e9e',
-  };
-
-  const strokeOption = {
-    stroke: selected ? '#3ED7CD' : '#9e9e9e',
-  };
-
-  const getOption = () => {
-    if (svgType === 'fill') return { ...fillOption };
-    return { ...strokeOption };
-  };
+  const iconWithClass = cloneElement(icon, {
+    className: svgType,
+  });
 
   return (
     <Container
@@ -51,8 +42,8 @@ function Card({
       onClick={handleClickMenu}
     >
       <Center>
-        <TitleContainer>
-          {React.cloneElement(icon as React.ReactElement, getOption())}
+        <TitleContainer $selected={selected}>
+          {iconWithClass}
           <TextContainer>
             <Typography variant="h2">{title}</Typography>
             <Typography variant="h4" color="grayScale03">
@@ -114,11 +105,23 @@ const Center = styled.div`
   gap: 64px;
 `;
 
-const TitleContainer = styled.div`
+const TitleContainer = styled.div<{ $selected: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 28px;
+
+  ${({ $selected }) =>
+    !$selected &&
+    css`
+      .fill path {
+        fill: ${({ theme }) => theme.colors.grayScale04};
+      }
+
+      .stroke path {
+        stroke: ${({ theme }) => theme.colors.grayScale04};
+      }
+    `}
 `;
 
 const TextContainer = styled.div`
