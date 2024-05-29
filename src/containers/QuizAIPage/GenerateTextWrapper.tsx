@@ -1,4 +1,5 @@
 import Scrollbar from '@/components/Scrollbar/Scrollbar';
+import textareaAdjustHeight from '@/utils/textareaAdjustHeight';
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
@@ -20,16 +21,8 @@ function GenerateTextWrapper({
 }: GenerateTextWrapperProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const adjustHeight = () => {
-    if (!textareaRef.current) return;
-
-    textareaRef.current.style.height = 'auto';
-    const newHeight = textareaRef.current.scrollHeight;
-    textareaRef.current.style.height = `${newHeight}px`;
-  };
-
   useEffect(() => {
-    adjustHeight();
+    textareaAdjustHeight(textareaRef);
   }, [inputText]);
 
   return (
@@ -38,9 +31,9 @@ function GenerateTextWrapper({
         <StyledTextArea
           ref={textareaRef}
           placeholder={PLACEHOLDER[type]}
+          value={inputText}
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
             setInputText(e.target.value);
-            adjustHeight();
           }}
         />
       </TextFieldContainer>

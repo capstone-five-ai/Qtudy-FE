@@ -2,6 +2,7 @@ import { ReactComponent as ArrowIcon } from '@/assets/icons/arrow-up.svg';
 import { ReactComponent as CommentIcon } from '@/assets/icons/commentary.svg';
 import { ReactComponent as EditIcon } from '@/assets/icons/edit.svg';
 import getCircleNum from '@/utils/getCircleNum';
+import textareaAdjustHeight from '@/utils/textareaAdjustHeight';
 import { useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
 
@@ -28,14 +29,8 @@ export function CommentDefaultInputField({
 }: CommentInputFieldProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const adjustHeight = () => {
-    if (!textareaRef.current) return;
-    const newHeight = textareaRef.current.scrollHeight;
-    textareaRef.current.style.height = `${newHeight}px`;
-  };
-
   useEffect(() => {
-    if (isCommentOpen) adjustHeight();
+    if (isCommentOpen) textareaAdjustHeight(textareaRef);
   }, [isCommentOpen, commentary]);
 
   return (
@@ -77,16 +72,8 @@ export function CommentEditInputField({
 }: CommentEditInputFieldProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const adjustHeight = () => {
-    if (!textareaRef.current) return;
-
-    textareaRef.current.style.height = 'auto';
-    const newHeight = textareaRef.current.scrollHeight;
-    textareaRef.current.style.height = `${newHeight}px`;
-  };
-
   useEffect(() => {
-    if (isCommentOpen) adjustHeight();
+    if (isCommentOpen) textareaAdjustHeight(textareaRef);
   }, [isCommentOpen, commentary]);
 
   return (
@@ -114,7 +101,6 @@ export function CommentEditInputField({
               value={commentary}
               onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
                 onChange && onChange(event);
-                adjustHeight();
               }}
               disabled={!isEdit}
             />
