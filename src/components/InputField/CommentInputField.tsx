@@ -79,6 +79,8 @@ export function CommentEditInputField({
 
   const adjustHeight = () => {
     if (!textareaRef.current) return;
+
+    textareaRef.current.style.height = 'auto';
     const newHeight = textareaRef.current.scrollHeight;
     textareaRef.current.style.height = `${newHeight}px`;
   };

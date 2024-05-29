@@ -1,7 +1,12 @@
-import { UploadedFileType } from '../types';
+export interface UploadedFileType {
+  file: File;
+  name: string;
+}
 
-const uploadFileUtils = {
-  handleUploadButtonClick(inputRef: React.MutableRefObject<HTMLInputElement | null>) {
+const uploadFile = {
+  handleUploadButtonClick(
+    inputRef: React.MutableRefObject<HTMLInputElement | null>
+  ) {
     if (!inputRef || !inputRef.current) return;
     inputRef.current.click();
   },
@@ -52,4 +57,4 @@ const uploadFileUtils = {
   },
 };
 
-export default uploadFileUtils;
+export default uploadFile;

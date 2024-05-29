@@ -31,6 +31,7 @@ function RadioInputFieldContainer({
             name={inputFieldLabel}
             checked={inputOption[optionInputKey] === field}
             onChange={() =>
+              !disabled &&
               setInputOption({ ...inputOption, [optionInputKey]: field })
             }
             disabled={disabled}

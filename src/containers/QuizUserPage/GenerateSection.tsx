@@ -1,6 +1,6 @@
 import QuizGenerationForm from '@/components/Form/QuizGenerationForm';
 import Scrollbar from '@/components/Scrollbar/Scrollbar';
-import GenerateSidebar from '@/containers/QuizUserPage/GenerateSidebar';
+import GenerateSidebar from '@/components/Sidebar/GenerateSidebar';
 import { GenerateQuizData } from '@/types/quiz.type';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -26,6 +26,7 @@ function GenerateSection() {
 
   useEffect(() => {
     setQuizContent(initialQuizContent);
+    setInputOption({ ...inputOption, fileName: '' });
   }, [inputOption.type]);
 
   const handleFileNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,6 +53,12 @@ function GenerateSection() {
           // TODO: 제출 버튼 클릭시 동작
           console.log(quizContent);
         }}
+        generateButtonDisabled={
+          Object.values(inputOption).includes('') ||
+          quizContent.problemName === '' ||
+          quizContent.problemAnswer === -1 ||
+          quizContent.problemChoices.length === 0
+        }
       />
     </>
   );

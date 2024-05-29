@@ -12,6 +12,8 @@ interface GenerateSidebarProps {
   >;
   handleFileNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: () => void;
+  generateButtonDisabled?: boolean;
+  inputFieldDisabled?: boolean;
 }
 
 function GenerateSidebar({
@@ -20,6 +22,8 @@ function GenerateSidebar({
   setInputOption,
   handleFileNameChange,
   handleSubmit,
+  generateButtonDisabled = false,
+  inputFieldDisabled = false,
 }: GenerateSidebarProps) {
   return (
     <Sidebar>
@@ -33,17 +37,19 @@ function GenerateSidebar({
               setInputOption={setInputOption}
               inputFieldLabel={option.label}
               inputFieldList={option.options}
+              disabled={inputFieldDisabled}
             />
           ))}
           <FileNameInputField
             name="fileName"
-            value={inputOption.file}
+            value={inputOption.fileName}
             onChange={handleFileNameChange}
+            disabled={inputFieldDisabled}
           />
         </StyledOptionContainer>
         <GenerateButton
           onClick={handleSubmit}
-          disabled={Object.values(inputOption).includes('')}
+          disabled={generateButtonDisabled}
         />
       </StyledSidebarContentContainer>
     </Sidebar>
