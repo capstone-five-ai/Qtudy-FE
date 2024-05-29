@@ -26,7 +26,6 @@ function GenerateMethodWrapper({ type }: GenerateMethodWrapperProps) {
 export default GenerateMethodWrapper;
 
 const StyledContainer = styled.div`
-  height: 100%;
   margin-top: 86px;
 
   .text {
