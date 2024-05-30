@@ -9,6 +9,7 @@ interface DeleteItemModalProps {
   title: string;
 }
 
+// TODO: 삭제 성공 시 토스트 메시지 띄우기
 function DeleteItemModal({ onConfirm, onCancel, title }: DeleteItemModalProps) {
   return (
     <DefaultModal height="224px">

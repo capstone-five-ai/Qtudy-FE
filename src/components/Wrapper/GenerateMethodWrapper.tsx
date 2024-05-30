@@ -1,4 +1,5 @@
 import GenerateMethodCard from '@/components/Card/GenerateMethodCard';
+import { ServiceType } from '@/types/category.type';
 import styled from 'styled-components';
 
 const EXPLANATION_TEXT = {
@@ -8,7 +9,7 @@ const EXPLANATION_TEXT = {
 };
 
 interface GenerateMethodWrapperProps {
-  type: 'QUIZ' | 'SUMMARY';
+  type: ServiceType;
 }
 
 function GenerateMethodWrapper({ type }: GenerateMethodWrapperProps) {

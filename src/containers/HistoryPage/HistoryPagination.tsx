@@ -2,6 +2,7 @@ import { ReactComponent as PrevIcon } from '@/assets/icons/arrow-left.svg';
 import { ReactComponent as NextIcon } from '@/assets/icons/arrow-right.svg';
 import EmptyHistory from '@/containers/HistoryPage/EmptyHistory';
 import HistoryList from '@/containers/HistoryPage/HistoryList';
+import { ServiceType } from '@/types/category.type';
 import { HistoryType } from '@/types/history.type';
 import { useCallback, useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
@@ -11,7 +12,7 @@ interface Props {
   fetchPage: (page: number) => void;
   histories: HistoryType[];
   totalPages: number;
-  type: 'ALL' | 'QUIZ' | 'SUMMARY';
+  type: 'ALL' | ServiceType;
 }
 
 function HistoryPagination({ fetchPage, histories, totalPages, type }: Props) {

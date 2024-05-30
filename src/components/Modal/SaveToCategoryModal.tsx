@@ -11,6 +11,7 @@ interface SaveToCategoryModalProps {
   onClose: () => void;
 }
 
+// TODO: 저장 성공 시 토스트 메시지 띄우기
 function SaveToCategoryModal({ onClose }: SaveToCategoryModalProps) {
   const [categories, setCategories] = useState<CategoryInfoType[]>([]);
   const [newCategory, setNewCategory] = useState('');

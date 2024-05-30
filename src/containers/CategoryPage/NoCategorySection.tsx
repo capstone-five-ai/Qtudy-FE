@@ -1,10 +1,10 @@
-import styled from 'styled-components';
+import { ReactComponent as EmptyIcon } from '@/assets/icons/chat.svg';
+import PlainButton from '@/components/Button/PlainButton';
+import Typography from '@/components/Typography/Typography';
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as EmptyIcon } from '../../../assets/icons/empty.svg';
-import Typography from '../../../components/Typography';
-import CTAButton from '../../../components/Button/CTAButton';
+import styled from 'styled-components';
 
-function NoCategory() {
+function NoCategorySection() {
   const navigate = useNavigate();
 
   return (
@@ -22,12 +22,14 @@ function NoCategory() {
           퀴즈 및 요약을 생성하고 카테고리에 저장해보세요
         </Typography>
       </div>
-      <CTAButton onClick={() => navigate('/management/mycategory?type=quiz')}>카테고리 먼저 만들기</CTAButton>
+      <PlainButton onClick={() => navigate('/management/category?type=quiz')}>
+        카테고리 먼저 만들기
+      </PlainButton>
     </Container>
   );
 }
 
-export default NoCategory;
+export default NoCategorySection;
 
 const Container = styled.div`
   display: flex;

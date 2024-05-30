@@ -2,11 +2,12 @@ import styled from 'styled-components';
 
 interface ContentWrapperProps {
   children: React.ReactNode;
+  className?: string;
 }
 
 // 회색 라운드 박스 컴포넌트
-function ContentWrapper({ children }: ContentWrapperProps) {
-  return <StyledContainer>{children}</StyledContainer>;
+function ContentWrapper({ children, className }: ContentWrapperProps) {
+  return <StyledContainer className={className}>{children}</StyledContainer>;
 }
 
 const StyledContainer = styled.div`

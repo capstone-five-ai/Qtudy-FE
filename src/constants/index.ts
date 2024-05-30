@@ -1,3 +1,8 @@
+export const CATEGORY_TYPE = {
+  QUIZ: '퀴즈',
+  SUMMARY: '요약',
+};
+
 // TODO: path 수정
 export const HEADER_MENU_LIST = [
   {

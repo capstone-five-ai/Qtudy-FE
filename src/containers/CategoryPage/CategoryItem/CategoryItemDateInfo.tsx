@@ -1,15 +1,18 @@
+import { ReactComponent as ArrowIcon } from '@/assets/icons/long-arrow.svg';
+import Typography from '@/components/Typography/Typography';
 import styled from 'styled-components';
-import Typography from '../../../components/Typography';
-import { ReactComponent as ArrowIcon } from '../../../assets/icons/long_arrow.svg';
 
-interface CategoryItemDateProps {
+interface CategoryItemDateInfoProps {
   createDate: string;
   updateDate: string;
 }
 
-function CategoryItemDate({ createDate, updateDate }: CategoryItemDateProps) {
+function CategoryItemDateInfo({
+  createDate,
+  updateDate,
+}: CategoryItemDateInfoProps) {
   return (
-    <Container>
+    <StyledContainer>
       <div className="date">
         <Typography variant="caption2" color="grayScale04">
           생성 일자
@@ -18,7 +21,13 @@ function CategoryItemDate({ createDate, updateDate }: CategoryItemDateProps) {
           {new Date(createDate).toLocaleDateString().replace(/.$/, '')}
         </Typography>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-end',
+        }}
+      >
         <div className="date">
           <Typography variant="caption2" color="grayScale04">
             최근 수정
@@ -29,13 +38,13 @@ function CategoryItemDate({ createDate, updateDate }: CategoryItemDateProps) {
         </div>
         <ArrowIcon className="icon" />
       </div>
-    </Container>
+    </StyledContainer>
   );
 }
 
-export default CategoryItemDate;
+export default CategoryItemDateInfo;
 
-const Container = styled.div`
+const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;

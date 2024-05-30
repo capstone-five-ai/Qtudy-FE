@@ -1,12 +1,16 @@
+import { ReactComponent as NoneIcon } from '@/assets/icons/none.svg';
+import Typography from '@/components/Typography/Typography';
+import { ServiceType } from '@/types/category.type';
 import styled from 'styled-components';
-import Typography from '../../../components/Typography';
-import { ReactComponent as NoneIcon } from '../../../assets/icons/none.svg';
 
-const TEXT: { [key: string]: string } = { 퀴즈: '아직 생성된 퀴즈가 없어요', 요약: '아직 생성된 요약이 없어요' };
+const TEXT = {
+  QUIZ: '아직 생성된 퀴즈가 없어요',
+  SUMMARY: '아직 생성된 요약이 없어요',
+};
 
-function NoItem({ categoryType }: { categoryType: string }) {
+function NoItemSection({ categoryType }: { categoryType: ServiceType }) {
   return (
-    <Container>
+    <StyledContainer>
       <div className="text-container">
         <Typography variant="h3" color="grayScale03">
           {TEXT[categoryType]}
@@ -14,13 +18,13 @@ function NoItem({ categoryType }: { categoryType: string }) {
         <NoneIcon />
         <Highlight />
       </div>
-    </Container>
+    </StyledContainer>
   );
 }
 
-export default NoItem;
+export default NoItemSection;
 
-const Container = styled.div`
+const StyledContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;

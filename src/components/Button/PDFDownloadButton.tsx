@@ -2,11 +2,12 @@ import styled from 'styled-components';
 //import fileDownload from 'js-file-download';
 //import FileApi from '../../api/FileApi';
 import { ReactComponent as PDFIcon } from '@/assets/icons/download.svg';
+import { ServiceType } from '@/types/category.type';
 //import Typography from '../Typography';
 
 type Props = {
   //fileId: number; // 카테고리에서는 카테고리 id값
-  pdfType: 'QUIZ' | 'ANSWER' | 'SUMMARY';
+  pdfType: ServiceType | 'ANSWER';
   variant?: 1 | 2;
   //type: 'ai' | 'user' | 'category';
   //fileName: string;

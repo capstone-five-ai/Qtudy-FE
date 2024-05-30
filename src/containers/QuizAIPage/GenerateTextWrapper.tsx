@@ -1,10 +1,11 @@
 import Scrollbar from '@/components/Scrollbar/Scrollbar';
+import { ServiceType } from '@/types/category.type';
 import textareaAdjustHeight from '@/utils/textareaAdjustHeight';
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 interface GenerateTextWrapperProps {
-  type: 'QUIZ' | 'SUMMARY';
+  type: ServiceType;
   inputText: string;
   setInputText: React.Dispatch<React.SetStateAction<string>>;
 }

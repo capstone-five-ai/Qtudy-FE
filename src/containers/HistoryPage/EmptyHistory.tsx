@@ -2,12 +2,13 @@ import { ReactComponent as EmptyIcon } from '@/assets/icons/chat.svg';
 import PlainButton from '@/components/Button/PlainButton';
 import Highlighted from '@/components/Typography/Highlighted';
 import Typography from '@/components/Typography/Typography';
+import { ServiceType } from '@/types/category.type';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 interface Props {
-  type: 'ALL' | 'QUIZ' | 'SUMMARY';
+  type: 'ALL' | ServiceType;
 }
 
 function EmptyHistory({ type }: Props) {

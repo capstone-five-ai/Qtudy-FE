@@ -1,6 +1,7 @@
 import FileTypeChip from '@/components/Chip/FileTypeChip';
 import Typography from '@/components/Typography/Typography';
 import HistoryPagination from '@/containers/HistoryPage/HistoryPagination';
+import { ServiceType } from '@/types/category.type';
 import { HistoryType } from '@/types/history.type';
 import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -11,7 +12,7 @@ interface HistoryPageType {
 }
 
 const HistoryPage = () => {
-  const [filter, setFilter] = useState<'QUIZ' | 'SUMMARY'>('QUIZ');
+  const [filter, setFilter] = useState<ServiceType>('QUIZ');
   const [quizzes, setQuizzes] = useState<HistoryPageType>({
     histories: [
       {
