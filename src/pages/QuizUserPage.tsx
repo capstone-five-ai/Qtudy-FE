@@ -1,5 +1,6 @@
 import ContentWrapper from '@/components/Wrapper/ContentWrapper';
 import GenerateSection from '@/containers/QuizUserPage/GenerateSection';
+import ResultSection from '@/containers/QuizUserPage/ResultSection';
 import { useSearchParams } from 'react-router-dom';
 
 // complete 여부에 따라 완료 페이지 vs 생성 페이지
@@ -11,7 +12,7 @@ const QuizUserPage = () => {
   // TODO: complete가 true일 경우 완료 페이지 렌더링
   return (
     <ContentWrapper>
-      {complete === 'true' ? null : <GenerateSection />}
+      {complete === 'true' ? <ResultSection /> : <GenerateSection />}
     </ContentWrapper>
   );
 };

@@ -1,12 +1,19 @@
+import LoginModal from '@/components/Modal/LoginModal';
 import { HEADER_MENU_LIST } from '@/constants';
-import { Link, Navigate, useLocation } from 'react-router-dom';
+import authState from '@/recoils/atoms/authState';
+import { useState } from 'react';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled, { css } from 'styled-components';
 
 function ContentHeader() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const isAuthenticated = useRecoilValue(authState);
   const currentContent = HEADER_MENU_LIST.find((menu) =>
     location.pathname.includes(menu.path)
   );
+  const [showModal, setShowModal] = useState(false);
 
   if (currentContent && location.pathname === currentContent.path)
     return <Navigate to={currentContent.path + currentContent.tabs[0].path} />;
@@ -20,20 +27,30 @@ function ContentHeader() {
         </StyledContentContainer>
         <StyledTabContainer>
           {currentContent.tabs.map((tabItem) => (
-            <Link
-              to={currentContent.path + tabItem.path}
-              style={{ textDecoration: 'none' }}
+            <TabButton
               key={tabItem.tab}
+              $active={location.pathname.includes(tabItem.path)}
+              onClick={() => {
+                if (isAuthenticated) {
+                  navigate(currentContent.path + tabItem.path);
+                } else {
+                  setShowModal(true);
+                }
+              }}
             >
-              <TabButton
-                key={tabItem.tab}
-                $active={location.pathname.includes(tabItem.path)}
-              >
-                {tabItem.tab}
-              </TabButton>
-            </Link>
+              {tabItem.tab}
+            </TabButton>
           ))}
         </StyledTabContainer>
+        {showModal && (
+          <LoginModal
+            onConfirm={() => {
+              setShowModal(false);
+              navigate('/login');
+            }}
+            onCancel={() => setShowModal(false)}
+          />
+        )}
       </>
     );
 }
@@ -44,7 +61,9 @@ const StyledContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+
   text-align: center;
+  width: 100%;
   padding: 28px 0px 20px;
 
   .title {
@@ -59,12 +78,12 @@ const StyledContentContainer = styled.div`
 `;
 
 const StyledTabContainer = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 
+  width: 100%;
   border-bottom: 1px solid;
   border-color: ${(props) => props.theme.colors.grayScale06};
 `;

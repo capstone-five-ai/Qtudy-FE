@@ -53,6 +53,7 @@ function TopNavigation() {
 export default TopNavigation;
 
 const StyledContainer = styled.div`
+  width: 100%;
   background: ${({ theme }) => theme.colors.mainMintLight};
 `;
 

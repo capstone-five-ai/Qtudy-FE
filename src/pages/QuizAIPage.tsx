@@ -1,5 +1,6 @@
 import ContentWrapper from '@/components/Wrapper/ContentWrapper';
 import GenerateSection from '@/containers/QuizAIPage/GenerateSection';
+import ResultSection from '@/containers/QuizAIPage/ResultSection';
 import { useSearchParams } from 'react-router-dom';
 
 function QuizAIPage() {
@@ -10,7 +11,7 @@ function QuizAIPage() {
   // TODO: complete가 true일 경우 완료 페이지 렌더링
   return (
     <ContentWrapper>
-      {complete === 'true' ? null : <GenerateSection />}
+      {complete === 'true' ? <ResultSection /> : <GenerateSection />}
     </ContentWrapper>
   );
 }

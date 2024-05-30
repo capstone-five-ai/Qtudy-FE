@@ -5,17 +5,22 @@ import styled from 'styled-components';
 
 function MainLayout() {
   return (
-    <>
+    <MainContainer>
       <TopNavigation />
       <ContentHeader />
       <OutletContainer>
         <Outlet />
       </OutletContainer>
-    </>
+    </MainContainer>
   );
 }
 
 export default MainLayout;
+
+const MainContainer = styled.div`
+  width: 100%;
+  min-width: 1200px;
+`;
 
 const OutletContainer = styled.div`
   width: 1200px;

@@ -1,14 +1,17 @@
-import { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import NumberItem from './NumberItem';
 
-type Props = {
+interface NumberPanelProps {
   numOfQuiz: number;
   questionNum: number;
-  setQuestionNum: Dispatch<SetStateAction<number>>;
-};
+  setQuestionNum: React.Dispatch<React.SetStateAction<number>>;
+}
 
-function NumberPannel({ numOfQuiz, questionNum, setQuestionNum }: Props) {
+function NumberPanel({
+  numOfQuiz,
+  questionNum,
+  setQuestionNum,
+}: NumberPanelProps) {
   const handleSelectNum = (num: number) => {
     setQuestionNum(num);
   };
@@ -16,13 +19,19 @@ function NumberPannel({ numOfQuiz, questionNum, setQuestionNum }: Props) {
   return (
     <Wrapper>
       {Array.from({ length: numOfQuiz }, (_, index) => (
-        <NumButton type="button" key={index} onClick={() => handleSelectNum(index + 1)}>
+        <NumButton
+          type="button"
+          key={index}
+          onClick={() => handleSelectNum(index + 1)}
+        >
           <NumberItem selected={questionNum === index + 1} num={index + 1} />
         </NumButton>
       ))}
     </Wrapper>
   );
 }
+
+export default NumberPanel;
 
 const Wrapper = styled.div`
   display: grid;
@@ -33,8 +42,8 @@ const Wrapper = styled.div`
   gap: 14px 22px;
 
   border-radius: 8px;
-  border: 1px solid ${(props) => props.theme.colors.grayScale06};
-  background: ${(props) => props.theme.colors.grayScale09};
+  border: 1px solid ${({ theme }) => theme.colors.grayScale06};
+  background: ${({ theme }) => theme.colors.grayScale09};
 `;
 
 const NumButton = styled.button`
@@ -42,5 +51,3 @@ const NumButton = styled.button`
   background-color: transparent;
   padding: 0;
 `;
-
-export default NumberPannel;

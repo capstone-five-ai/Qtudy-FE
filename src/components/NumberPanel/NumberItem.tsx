@@ -1,5 +1,5 @@
+import Typography from '@/components/Typography';
 import styled from 'styled-components';
-import Typography from '../../../../../components/Typography';
 
 type Props = {
   selected: boolean;

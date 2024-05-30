@@ -120,6 +120,14 @@ const StyledLinkButton = styled.button`
   align-items: center;
   gap: 8px;
 
-  ${({ theme }) => theme.typography.caption3};
-  color: ${({ theme }) => theme.colors.grayScale03};
+  span {
+    ${({ theme }) => theme.typography.caption3};
+    color: ${({ theme }) => theme.colors.grayScale03};
+  }
+
+  &:hover {
+    span {
+      ${({ theme }) => theme.typography.caption1};
+    }
+  }
 `;

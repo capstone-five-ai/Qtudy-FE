@@ -7,15 +7,15 @@ import Typography from '@/components/Typography';
 
 type Props = {
   //fileId: number; // 카테고리에서는 카테고리 id값
-  pdfType: 'PROBLEM' | 'ANSWER' | 'SUMMARY';
+  pdfType: 'QUIZ' | 'ANSWER' | 'SUMMARY';
   variant?: 1 | 2;
   //type: 'ai' | 'user' | 'category';
   //fileName: string;
 };
 
 const BUTTON_LABEL = {
-  PROBLEM: '문제',
-  ANSWER: '답안',
+  QUIZ: '퀴즈',
+  ANSWER: '정답',
   SUMMARY: '요약',
 };
 
