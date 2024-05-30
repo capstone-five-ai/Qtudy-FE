@@ -1,5 +1,5 @@
 import LoginButton from '@/components/Button/LoginButton';
-import Typography from '@/components/Typography';
+import Typography from '@/components/Typography/Typography';
 import BrandMotion from '@/containers/LoginPage/BrandMotion';
 import navigateToLogin from '@/utils/navigateToLogin';
 import styled, { keyframes } from 'styled-components';

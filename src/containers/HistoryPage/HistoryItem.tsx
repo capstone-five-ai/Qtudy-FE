@@ -1,14 +1,19 @@
+import { ReactComponent as EditIcon } from '@/assets/icons/edit.svg';
+import { ReactComponent as DeleteIcon } from '@/assets/icons/trash.svg';
+import PDFDownloadButton from '@/components/Button/PDFDownloadButton';
+import DeleteItemModal from '@/components/Modal/DeleteItemModal';
+import Typography from '@/components/Typography/Typography';
+import {
+  CreatedTime,
+  Delete,
+  FileName,
+  Filter,
+  PDFDown,
+} from '@/containers/HistoryPage/HistoryList.style';
+import { HistoryType } from '@/types/history.type';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import FileApi from '../../../../../api/FileApi';
-import { ReactComponent as DeleteIcon } from '../../../../../assets/icons/delete.svg';
-import { ReactComponent as EditIcon } from '../../../../../assets/icons/edit_gray.svg';
-import PDFButton from '../../../../../components/Button/PDFButton';
-import DeleteModal from '../../../../../components/Modal/DeleteModal';
-import Typography from '../../../../../components/Typography';
-import { HistoryType } from '../../../../../types/history.type';
-import { CreatedTime, Delete, FileName, Filter, PDFDown } from '../../ItemLayout';
 
 type Props = {
   history: HistoryType;
@@ -36,8 +41,9 @@ function HistoryItem({ history, updateList }: Props) {
   };
 
   const handleClickFile = () => {
-    const typeParam = history.dtype === 'PROBLEM' ? 'quiz' : 'summary';
-    navigate(`/${typeParam}/ai?complete=true&id=${history.fileId}`);
+    navigate(
+      `/${history.dtype.toLowerCase()}/ai?complete=true&id=${history.fileId}`
+    );
   };
 
   const handleClickEdit = () => {
@@ -55,18 +61,18 @@ function HistoryItem({ history, updateList }: Props) {
   };
 
   const editFileName = async () => {
-    await FileApi.updateFileName(history.fileId, newFileName);
+    //await FileApi.updateFileName(history.fileId, newFileName);
     setEditMode(false);
-    setFileName(newFileName);
+    //setFileName(newFileName);
   };
 
   const deleteFile = async () => {
-    await FileApi.deleteFile(history.fileId);
-    setShowDeleteModal(false);
-    updateList(1);
+    //await FileApi.deleteFile(history.fileId);
+    //setShowDeleteModal(false);
+    //updateList(1);
   };
 
-  const filterName = history.dtype === 'PROBLEM' ? '퀴즈' : '요약';
+  const filterName = history.dtype === 'QUIZ' ? '퀴즈' : '요약';
   return (
     <Wrapper>
       <Filter>
@@ -86,11 +92,14 @@ function HistoryItem({ history, updateList }: Props) {
         ) : (
           <>
             <FileNameWrapper type="button" onClick={handleClickFile}>
-              <Typography variant="subtitle" hoverVariant="subtitle2">
-                {fileName}
-              </Typography>
+              <div className="fileName">{fileName}</div>
             </FileNameWrapper>
-            <EditIcon width={20} height={20} onClick={handleClickEdit} cursor="pointer" />
+            <EditIcon
+              width={20}
+              height={20}
+              onClick={handleClickEdit}
+              cursor="pointer"
+            />
           </>
         )}
       </FileName>
@@ -100,44 +109,49 @@ function HistoryItem({ history, updateList }: Props) {
         </Typography>
       </CreatedTime>
       <PDFDown>
-        {history.dtype === 'PROBLEM' ? (
+        {history.dtype === 'QUIZ' ? (
           <>
-            <PDFButton
-              label="퀴즈"
+            <PDFDownloadButton
               variant={2}
-              fileId={history.fileId}
-              pdfType="PROBLEM"
-              type="ai"
-              fileName={history.fileName}
+              //fileId={history.fileId}
+              pdfType="QUIZ"
+              //type="ai"
+              //fileName={history.fileName}
             />
-            <PDFButton
-              label="정답"
+            <PDFDownloadButton
               variant={2}
-              fileId={history.fileId}
+              //fileId={history.fileId}
               pdfType="ANSWER"
-              type="ai"
-              fileName={history.fileName}
+              //type="ai"
+              //fileName={history.fileName}
             />
           </>
         ) : (
-          <PDFButton
-            label="요약"
+          <PDFDownloadButton
             variant={2}
-            fileId={history.fileId}
+            //fileId={history.fileId}
             pdfType="SUMMARY"
-            type="ai"
-            fileName={history.fileName}
+            //type="ai"
+            //fileName={history.fileName}
           />
         )}
       </PDFDown>
       <Delete>
-        <DeleteIcon width={20} height={20} cursor="pointer" onClick={handleClickDelete} />
+        <DeleteIcon
+          width={20}
+          height={20}
+          onClick={handleClickDelete}
+          cursor="pointer"
+        />
       </Delete>
       {showDeleteModal && (
-        <DeleteModal
+        <DeleteItemModal
           onCancel={() => setShowDeleteModal(false)}
-          onConfirm={deleteFile}
-          title={`${history.dtype === 'PROBLEM' ? '퀴즈를' : '요약을'} 삭제하시겠습니까?`}
+          onConfirm={() => {
+            setShowDeleteModal(false);
+            deleteFile();
+          }}
+          title={`${history.dtype === 'QUIZ' ? '퀴즈를' : '요약을'} 삭제하시겠습니까?`}
         />
       )}
     </Wrapper>
@@ -161,7 +175,15 @@ const FileNameWrapper = styled.button`
   padding: 0;
   margin: 0;
   background: transparent;
-  cursor: pointer;
+
+  .fileName {
+    ${({ theme }) => theme.typography.subtitle};
+    color: ${(props) => props.theme.colors.grayScale02};
+
+    &:hover {
+      ${({ theme }) => theme.typography.subtitle2};
+    }
+  }
 `;
 
 const Form = styled.form`
@@ -173,9 +195,10 @@ const Input = styled.input`
   color: ${(props) => props.theme.colors.grayScale02};
   background-color: transparent;
 
-  ${({ theme }) => theme.typography.body3};
+  ${({ theme }) => theme.typography.subtitle};
 
   &::placeholder {
+    ${({ theme }) => theme.typography.caption3};
     color: ${(props) => props.theme.colors.grayScale05};
   }
 

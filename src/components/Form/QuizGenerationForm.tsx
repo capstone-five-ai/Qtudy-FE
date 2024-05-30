@@ -2,7 +2,7 @@ import AddQuizOptionButton from '@/components/Button/AddQuizOptionButton';
 import RadioButton from '@/components/Button/RadioButton';
 import { CommentEditInputField } from '@/components/InputField/CommentInputField';
 import QuizInputField from '@/components/InputField/QuizInputField';
-import Typography from '@/components/Typography';
+import Typography from '@/components/Typography/Typography';
 import { GenerateQuizData } from '@/types/quiz.type';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';

@@ -1,5 +1,5 @@
 import { ReactComponent as PlusIcon } from '@/assets/icons/plus.svg';
-import Typography from '@/components/Typography';
+import Typography from '@/components/Typography/Typography';
 import styled from 'styled-components';
 
 interface AddOptionButtonProps {

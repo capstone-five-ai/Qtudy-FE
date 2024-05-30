@@ -1,7 +1,7 @@
 import { ReactComponent as SpinnerImage } from '@/assets/icons/loader.svg';
 import { ReactComponent as TwinkleIcon } from '@/assets/icons/twinkle.svg';
 import { ReactComponent as LogoIcon } from '@/assets/logo/qtudy.svg';
-import Typography from '@/components/Typography';
+import Typography from '@/components/Typography/Typography';
 import loadingState from '@/recoils/atoms/loadingState';
 
 import { useEffect } from 'react';

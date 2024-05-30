@@ -1,5 +1,5 @@
 import { ReactComponent as Logo } from '@/assets/logo/qtudy.svg';
-import Typography from '@/components/Typography';
+import Typography from '@/components/Typography/Typography';
 import styled, { keyframes } from 'styled-components';
 
 function BrandMotion() {

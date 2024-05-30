@@ -49,6 +49,11 @@ const typography = {
     weight: 500,
     size: 14,
   }),
+  subtitle2: TYPOGRAPHY({
+    font: 'Noto Sans KR',
+    weight: 700,
+    size: 14,
+  }),
   body1: TYPOGRAPHY({
     font: 'Noto Sans KR',
     weight: 500,

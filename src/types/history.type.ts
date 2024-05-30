@@ -1,6 +1,6 @@
 export interface HistoryType {
   fileId: number;
   fileName: string;
-  dtype: 'PROBLEM' | 'SUMMARY';
+  dtype: 'QUIZ' | 'SUMMARY';
   createTime: string;
 }

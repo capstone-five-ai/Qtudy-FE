@@ -1,4 +1,4 @@
-import Typography from '@/components/Typography';
+import Typography from '@/components/Typography/Typography';
 import styled from 'styled-components';
 
 type Props = {

@@ -91,6 +91,8 @@ const StyledIconContainer = styled.div`
   gap: 16px;
 
   .icon {
+    width: 20px;
+    height: 20px;
     cursor: pointer;
   }
 `;

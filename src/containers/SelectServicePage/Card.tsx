@@ -1,5 +1,5 @@
 import { ReactComponent as Arrow } from '@/assets/icons/long-arrow.svg';
-import Typography from '@/components/Typography';
+import Typography from '@/components/Typography/Typography';
 import { cloneElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';

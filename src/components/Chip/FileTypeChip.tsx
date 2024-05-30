@@ -1,25 +1,33 @@
-import { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from 'react';
+import Typography from '@/components/Typography/Typography';
 import styled from 'styled-components';
-import Typography from '../Typography';
 
 type Props = {
-  children: ReactNode;
+  children: React.ReactNode;
   selected: boolean;
 };
 
-function Chip({
+function FileTypeChip({
   children,
   selected,
   ...props
-}: Props & DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>) {
+}: Props &
+  React.DetailedHTMLProps<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  >) {
   return (
     <Wrapper type="button" {...props} $selected={selected}>
-      <Typography variant="detail" color={selected ? 'grayScale09' : 'mainMintDark'}>
+      <Typography
+        variant="detail"
+        color={selected ? 'grayScale09' : 'mainMintDark'}
+      >
         {children}
       </Typography>
     </Wrapper>
   );
 }
+
+export default FileTypeChip;
 
 const Wrapper = styled.button<{ $selected: boolean }>`
   display: flex;
@@ -31,10 +39,4 @@ const Wrapper = styled.button<{ $selected: boolean }>`
   border-radius: 15px;
   border: 1px solid #36bdb4;
   background: ${({ $selected }) => ($selected ? '#3ed7cd' : '#fff')};
-
-  box-shadow: none;
-
-  cursor: pointer;
 `;
-
-export default Chip;

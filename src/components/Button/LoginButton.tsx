@@ -1,5 +1,5 @@
 import { ReactComponent as KakaoIcon } from '@/assets/icons/kakao-icon.svg';
-import Typography from '@/components/Typography';
+import Typography from '@/components/Typography/Typography';
 import { ReactNode } from 'react';
 import { styled } from 'styled-components';
 

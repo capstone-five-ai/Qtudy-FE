@@ -23,7 +23,7 @@ function GenerateSection() {
     <>
       <StyledContent>
         <GenerateTextWrapper
-          type="summary"
+          type="SUMMARY"
           inputText={summaryContent}
           setInputText={setSummaryContent}
         />

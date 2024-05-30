@@ -4,14 +4,14 @@ import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 interface GenerateTextWrapperProps {
-  type: 'quiz' | 'summary';
+  type: 'QUIZ' | 'SUMMARY';
   inputText: string;
   setInputText: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const PLACEHOLDER = {
-  quiz: '퀴즈를 생성하고 싶은 관련 텍스트를 입력해주세요.',
-  summary: '요약을 생성하고 싶은 관련 텍스트를 입력해주세요.',
+  QUIZ: '퀴즈를 생성하고 싶은 관련 텍스트를 입력해주세요.',
+  SUMMARY: '요약을 생성하고 싶은 관련 텍스트를 입력해주세요.',
 };
 
 function GenerateTextWrapper({

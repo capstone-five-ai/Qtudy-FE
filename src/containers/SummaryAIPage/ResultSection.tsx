@@ -5,7 +5,7 @@ import ShareLinkButton from '@/components/Button/ShareLinkButton';
 import SaveToCategoryModal from '@/components/Modal/SaveToCategoryModal';
 import Scrollbar from '@/components/Scrollbar/Scrollbar';
 import Sidebar from '@/components/Sidebar/Sidebar';
-import Typography from '@/components/Typography';
+import Typography from '@/components/Typography/Typography';
 import authState from '@/recoils/atoms/authState';
 import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -15,7 +15,7 @@ import styled from 'styled-components';
 function ResultSection() {
   const isAuthenticated = useRecoilValue(authState);
   const [showModal, setShowModal] = useState(false);
-  const [summaryType, setSummaryType] = useState<'ai' | 'user' | null>(null);
+  const [summaryType, setSummaryType] = useState<'AI' | 'USER' | null>(null);
   const [summary, setSummary] = useState({
     summaryTitle: '요약 제목',
     summaryContent: '요약 내용',
@@ -41,8 +41,8 @@ function ResultSection() {
 
   useEffect(() => {
     const currentPath = window.location.pathname;
-    if (currentPath.includes('ai')) setSummaryType('ai');
-    if (currentPath.includes('user')) setSummaryType('user');
+    if (currentPath.includes('ai')) setSummaryType('AI');
+    if (currentPath.includes('user')) setSummaryType('USER');
   }, []);
 
   useEffect(() => {

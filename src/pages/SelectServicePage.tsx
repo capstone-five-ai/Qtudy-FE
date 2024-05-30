@@ -5,7 +5,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 import Gradation from '@/assets/images/gradation-ellipse.png';
-import Typography from '@/components/Typography';
+import Typography from '@/components/Typography/Typography';
 import Card from '@/containers/SelectServicePage/Card';
 
 type MenuType = {

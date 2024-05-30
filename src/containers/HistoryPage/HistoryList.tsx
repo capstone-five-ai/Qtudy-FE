@@ -1,8 +1,14 @@
+import Typography from '@/components/Typography/Typography';
+import HistoryItem from '@/containers/HistoryPage/HistoryItem';
+import {
+  CreatedTime,
+  Delete,
+  FileName,
+  Filter,
+  PDFDown,
+} from '@/containers/HistoryPage/HistoryList.style';
+import { HistoryType } from '@/types/history.type';
 import styled from 'styled-components';
-import Typography from '../../../../components/Typography';
-import { HistoryType } from '../../../../types/history.type';
-import { CreatedTime, Delete, FileName, Filter, PDFDown } from '../ItemLayout';
-import HistoryItem from './HistoryItem';
 
 type Props = {
   histories: HistoryType[];
@@ -46,6 +52,8 @@ function HistoryList({ histories, updateList }: Props) {
   );
 }
 
+export default HistoryList;
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -63,5 +71,3 @@ const Header = styled.div`
 
   border-bottom: 1px solid rgba(62, 215, 205, 0.32);
 `;
-
-export default HistoryList;

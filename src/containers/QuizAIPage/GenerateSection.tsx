@@ -43,7 +43,7 @@ function GenerateSection() {
   return (
     <>
       <StyledContent>
-        {!method && <GenerateMethodWrapper type="quiz" />}
+        {!method && <GenerateMethodWrapper type="QUIZ" />}
         {method === 'upload' && (
           <GenerateUploadWrapper
             inputRef={inputRef}
@@ -70,7 +70,7 @@ function GenerateSection() {
         )}
         {method === 'text' && (
           <GenerateTextWrapper
-            type="quiz"
+            type="QUIZ"
             inputText={text}
             setInputText={setText}
           />

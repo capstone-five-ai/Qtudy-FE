@@ -1,6 +1,6 @@
 import { ReactComponent as ExitIcon } from '@/assets/icons/exit.svg';
 import { ReactComponent as UploadIcon } from '@/assets/icons/upload-file.svg';
-import Typography from '@/components/Typography';
+import Typography from '@/components/Typography/Typography';
 import uploadFile, { UploadedFileType } from '@/utils/uploadFile';
 import { useMemo } from 'react';
 import styled from 'styled-components';

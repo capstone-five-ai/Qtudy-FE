@@ -1,17 +1,17 @@
+import { ReactComponent as PrevIcon } from '@/assets/icons/arrow-left.svg';
+import { ReactComponent as NextIcon } from '@/assets/icons/arrow-right.svg';
+import EmptyHistory from '@/containers/HistoryPage/EmptyHistory';
+import HistoryList from '@/containers/HistoryPage/HistoryList';
+import { HistoryType } from '@/types/history.type';
 import { useCallback, useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import styled from 'styled-components';
-import { ReactComponent as NextIcon } from '../../../../assets/icons/arrow_next.svg';
-import { ReactComponent as PrevIcon } from '../../../../assets/icons/arrow_prev.svg';
-import { HistoryType } from '../../../../types/history.type';
-import EmptyHistory from '../EmptyHistory';
-import HistoryList from '../HistoryList';
 
 interface Props {
   fetchPage: (page: number) => void;
   histories: HistoryType[];
   totalPages: number;
-  type: 'quiz' | 'summary';
+  type: 'ALL' | 'QUIZ' | 'SUMMARY';
 }
 
 function HistoryPagination({ fetchPage, histories, totalPages, type }: Props) {
@@ -40,7 +40,7 @@ function HistoryPagination({ fetchPage, histories, totalPages, type }: Props) {
     setPage(selected + 1);
   };
 
-  if (histories.length === 0) {
+  if (type === 'ALL' || histories.length === 0) {
     return <EmptyHistory type={type} />;
   }
 
@@ -80,21 +80,16 @@ const Pagination = styled.div`
     display: flex;
     align-items: center;
 
-    color: var(--grayscale04, #9e9e9e);
+    ${({ theme }) => theme.typography.caption3};
+    color: ${({ theme }) => theme.colors.grayScale04};
     text-align: center;
-
-    font-family: NotoSansRegular;
-    font-size: 13px;
-    font-style: normal;
-    line-height: normal;
 
     cursor: pointer;
   }
 
   .selected > a {
-    color: var(--grayscale02, #424242);
-
-    font-family: NotoSansBold;
+    ${({ theme }) => theme.typography.caption1};
+    color: ${({ theme }) => theme.colors.grayScale02};
   }
 `;
 

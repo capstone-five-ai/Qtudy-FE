@@ -28,8 +28,8 @@ export const HEADER_MENU_LIST = [
       subtitle: '히스토리와 카테고리로 관리하고 복습할 수 있어요',
     },
     tabs: [
-      { tab: '생성 히스토리', path: '/' },
-      { tab: '나만의 카테고리', path: '/' },
+      { tab: '생성 히스토리', path: '/history' },
+      { tab: '나만의 카테고리', path: '/category' },
     ],
     path: '/management',
   },

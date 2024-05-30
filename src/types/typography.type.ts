@@ -55,7 +55,7 @@ export const typographies: Style[] = [
     type: 'subtitle2',
     font: 'Noto Sans KR',
     size: 14,
-    weight: 500,
+    weight: 700,
     lineHeight: 'auto',
     letterSpacing: 0,
   },

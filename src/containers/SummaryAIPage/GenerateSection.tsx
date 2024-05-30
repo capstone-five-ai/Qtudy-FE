@@ -39,7 +39,7 @@ function GenerateSection() {
   return (
     <>
       <StyledContent>
-        {!method && <GenerateMethodWrapper type="summary" />}
+        {!method && <GenerateMethodWrapper type="SUMMARY" />}
         {method === 'upload' && (
           <GenerateUploadWrapper
             inputRef={inputRef}
@@ -66,7 +66,7 @@ function GenerateSection() {
         )}
         {method === 'text' && (
           <GenerateTextWrapper
-            type="summary"
+            type="SUMMARY"
             inputText={text}
             setInputText={setText}
           />
