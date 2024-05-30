@@ -1,9 +1,5 @@
-interface MappingData {
-  key: string;
-  apiKey: string;
-}
-
-export interface CategoryType {
-  quiz: MappingData;
-  summary: MappingData;
+export interface CategoryInfoType {
+  categoryId: number;
+  categoryName: string;
+  categoryType: string;
 }

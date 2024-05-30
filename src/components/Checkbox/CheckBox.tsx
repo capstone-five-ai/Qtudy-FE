@@ -1,5 +1,5 @@
+import { ReactComponent as CheckIcon } from '@/assets/icons/check.svg';
 import styled from 'styled-components';
-import { ReactComponent as CheckIcon } from '../../assets/icons/check.svg';
 
 type Props = {
   checked: boolean;
@@ -8,7 +8,7 @@ type Props = {
 function CheckBox({ checked, ...props }: Props) {
   return (
     <Wrapper {...props} $checked={checked}>
-      {checked && <CheckIcon />}
+      {checked && <CheckIcon width="16px" height="16px" />}
     </Wrapper>
   );
 }
@@ -21,8 +21,11 @@ const Wrapper = styled.div<{ $checked: boolean }>`
   width: 16px;
   height: 16px;
 
-  border: 1px solid ${({ $checked }) => ($checked ? '#3ED7CD' : '#BDBDBD')};
-  background: ${({ $checked }) => ($checked ? '#3ED7CD' : '#fff')};
+  border: 1px solid
+    ${({ $checked, theme }) =>
+      $checked ? theme.colors.mainMint : theme.colors.grayScale05};
+  background: ${({ $checked, theme }) =>
+    $checked ? theme.colors.mainMint : theme.colors.grayScale09};
 `;
 
 export default CheckBox;

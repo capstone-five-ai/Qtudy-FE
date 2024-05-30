@@ -1,13 +1,11 @@
 import { ReactComponent as SaveIcon } from '@/assets/icons/save.svg';
 import PlainButton from '@/components/Button/PlainButton';
 
-interface SaveToCategoryButtonProps {
-  onClick?: () => void;
-}
-
-function SaveToCategoryButton({ onClick }: SaveToCategoryButtonProps) {
+function SaveToCategoryButton(
+  props: React.ButtonHTMLAttributes<HTMLButtonElement>
+) {
   return (
-    <PlainButton onClick={onClick}>
+    <PlainButton {...props}>
       <SaveIcon />
       Save to Category
     </PlainButton>

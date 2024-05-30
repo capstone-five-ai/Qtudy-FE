@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-function LinkInput({ link }: { link: string }) {
+function LinkInputField({ link }: { link: string }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     e.target.selectionStart = e.target.value.length;
@@ -24,6 +24,7 @@ const Input = styled.input`
   border: none;
   background: none;
   color: ${(props) => props.theme.colors.grayScale03};
+  ${({ theme }) => theme.typography.caption3};
 `;
 
-export default LinkInput;
+export default LinkInputField;

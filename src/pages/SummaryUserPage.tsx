@@ -1,9 +1,9 @@
 import ContentWrapper from '@/components/Wrapper/ContentWrapper';
-import GenerateSection from '@/containers/SummaryAIPage/GenerateSection';
-import ResultSection from '@/containers/SummaryAIPage/ResultSection';
+import GenerateSection from '@/containers/SummaryUserPage/GenerateSection';
+import ResultSection from '@/containers/SummaryUserPage/ResultSection';
 import { useSearchParams } from 'react-router-dom';
 
-function SummaryAIPage() {
+function SummaryUserPage() {
   const [searchParams] = useSearchParams();
   const complete = searchParams.get('complete');
 
@@ -14,4 +14,4 @@ function SummaryAIPage() {
   );
 }
 
-export default SummaryAIPage;
+export default SummaryUserPage;
