@@ -83,7 +83,7 @@ function ResultSection() {
         {showModal && (
           <SaveToCategoryModal
             categoryType="QUIZ"
-            contentId={fileId}
+            contentId={currentQuiz.aiGeneratedProblemId}
             onClose={() => setShowModal(false)}
           />
         )}

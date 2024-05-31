@@ -3,63 +3,56 @@ import ShareLinkButton from '@/components/Button/ShareLinkButton';
 import QuizCheckForm from '@/components/Form/QuizCheckForm';
 import SaveToCategoryModal from '@/components/Modal/SaveToCategoryModal';
 import Sidebar from '@/components/Sidebar/Sidebar';
+import { useGetUserQuizItem } from '@/hooks/useGetQuiz';
 import authState from '@/recoils/atoms/authState';
-import { useState } from 'react';
+import { GenerateUserQuizItem } from '@/types/quiz.type';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 function ResultSection() {
+  const [searchParams] = useSearchParams();
+  const quizId = Number(searchParams.get('id'));
   const isAuthenticated = useRecoilValue(authState);
   const [showModal, setShowModal] = useState(false);
-  const [quiz, setQuiz] = useState({
-    problemName: '문제 이름',
-    problemContent: '문제 내용',
-    problemAnswer: 2,
-    problemCommentary: '문제 해설',
-    problemType: 'MULTIPLE',
-    problemChoices: ['선택지1', '선택지2', '선택지3', '선택지4'],
-  });
-  //const [isWriter, setIsWriter] = useState<boolean>();
-  const [qs] = useSearchParams();
-  const quizId = Number(qs.get('id'));
+  const [quiz, setQuiz] = useState<GenerateUserQuizItem>();
+  const { data: fetchedQuiz, isLoading } = useGetUserQuizItem(quizId);
 
-  /* const getQuiz = useCallback(
-    async (id: number) => {
-      const data = await QuizApi.getUserQuiz(id, isAuthenticated);
-      setQuestion(data.response);
+  useEffect(() => {
+    if (fetchedQuiz) {
+      setQuiz(fetchedQuiz.response);
+    }
+  }, [fetchedQuiz]);
 
-      if (data.isWriter) setIsWriter(true);
-    },
-    [isAuthenticated]
-  ); */
+  if (isLoading) return <div>Loading...</div>;
 
-  /* useEffect(() => {
-    if (memberSavedProblemId === undefined) return;
-    getQuiz(memberSavedProblemId);
-  }, [getQuiz, memberSavedProblemId]);
-
-  if (!question) return null; */
-
-  return (
-    <>
-      <StyledContent>
-        <QuizCheckForm quiz={quiz} />
-      </StyledContent>
-      <Sidebar>
-        <SidebarContentContainer>
-          <StyledButtonContainer>
-            <ShareLinkButton link={window.location.href} />
-          </StyledButtonContainer>
-          <SaveToCategoryButton
-            disabled={!isAuthenticated}
-            onClick={() => setShowModal(true)}
+  if (quiz)
+    return (
+      <>
+        <StyledContent>
+          <QuizCheckForm quiz={quiz} />
+        </StyledContent>
+        <Sidebar>
+          <SidebarContentContainer>
+            <StyledButtonContainer>
+              <ShareLinkButton link={window.location.href} />
+            </StyledButtonContainer>
+            <SaveToCategoryButton
+              disabled={!isAuthenticated}
+              onClick={() => setShowModal(true)}
+            />
+          </SidebarContentContainer>
+        </Sidebar>
+        {showModal && (
+          <SaveToCategoryModal
+            categoryType="QUIZ"
+            contentId={quizId}
+            onClose={() => setShowModal(false)}
           />
-        </SidebarContentContainer>
-      </Sidebar>
-      {showModal && <SaveToCategoryModal onClose={() => setShowModal(false)} />}
-    </>
-  );
+        )}
+      </>
+    );
 }
 
 export default ResultSection;

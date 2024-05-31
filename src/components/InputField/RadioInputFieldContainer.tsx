@@ -1,11 +1,11 @@
 import RadioInputField from '@/components/InputField/RadioInputField';
-import { GenerateAIQuizOption } from '@/types/quiz.type';
+import { GenerateQuizOption } from '@/types/quiz.type';
 import styled from 'styled-components';
 
 interface RadioInputFieldContainerProps {
-  optionInputKey: keyof GenerateAIQuizOption;
-  inputOption: GenerateAIQuizOption;
-  setInputOption: React.Dispatch<React.SetStateAction<GenerateAIQuizOption>>;
+  optionInputKey: keyof GenerateQuizOption;
+  inputOption: GenerateQuizOption;
+  setInputOption: React.Dispatch<React.SetStateAction<GenerateQuizOption>>;
   inputFieldLabel: string;
   inputFieldList: string[];
   disabled?: boolean;
@@ -48,7 +48,7 @@ export default RadioInputFieldContainer;
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 
   .label {
     ${({ theme }) => theme.typography.subtitle};

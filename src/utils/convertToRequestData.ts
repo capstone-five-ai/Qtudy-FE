@@ -1,4 +1,4 @@
-import { GenerateAIQuizOption } from '@/types/quiz.type';
+import { GenerateQuizOption } from '@/types/quiz.type';
 
 interface ConvertType {
   [key: string]: string;
@@ -8,8 +8,8 @@ const AMOUNT: ConvertType = {
   적게: 'FEW',
   적당히: 'MEDIUM',
   많이: 'MANY',
-  //짧게: 'FEW',
-  //길게: 'MANY',
+  짧게: 'FEW',
+  길게: 'MANY',
 };
 
 const DIFFICULTY: ConvertType = {
@@ -18,28 +18,24 @@ const DIFFICULTY: ConvertType = {
   하: 'EASY',
 };
 
-const TYPE: ConvertType = {
+export const QUIZ_TYPE: ConvertType = {
   객관식: 'MULTIPLE',
   주관식: 'SUBJECTIVE',
 };
 
-export const convertToQuizRequestData = (inputOption: GenerateAIQuizOption) => {
-  const convert: GenerateAIQuizOption = {
-    type: TYPE[inputOption.type],
-    amount: AMOUNT[inputOption.amount],
-    difficulty: DIFFICULTY[inputOption.difficulty],
+export const convertToQuizRequestData = (inputOption: GenerateQuizOption) => {
+  const convert: GenerateQuizOption = {
+    type: QUIZ_TYPE[inputOption.type],
     fileName: inputOption.fileName,
   };
 
+  if (inputOption.amount) {
+    convert.amount = AMOUNT[inputOption.amount];
+  }
+
+  if (inputOption.difficulty) {
+    convert.difficulty = DIFFICULTY[inputOption.difficulty];
+  }
+
   return convert;
 };
-
-/* export const convertToSummaryData = (inputOption: ConvertType) => {
-  const convert: SummaryOptionType = {
-    amount: AMOUNT[inputOption.amount],
-    fileName: inputOption.file,
-  };
-
-  return convert;
-};
- */

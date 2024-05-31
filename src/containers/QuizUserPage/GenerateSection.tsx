@@ -1,40 +1,50 @@
 import QuizGenerationForm from '@/components/Form/QuizGenerationForm';
+import GenerateLoader from '@/components/Loader/GenerateLoader';
 import Scrollbar from '@/components/Scrollbar/Scrollbar';
 import GenerateSidebar from '@/components/Sidebar/GenerateSidebar';
-import { GenerateQuizData } from '@/types/quiz.type';
+import { usePostQuizByUser } from '@/hooks/usePostQuiz';
+import loadingState from '@/recoils/atoms/loadingState';
+import {
+  GenerateQuizOption,
+  GenerateQuizType,
+  QuizType,
+} from '@/types/quiz.type';
 import { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-const GENERATE_OPTIONS = [
-  { key: 'type', label: '퀴즈 유형', options: ['객관식', '주관식'] },
-];
+const GENERATE_OPTIONS: {
+  key: keyof GenerateQuizOption;
+  label: string;
+  options: string[];
+}[] = [{ key: 'type', label: '퀴즈 유형', options: ['객관식', '주관식'] }];
 
-const initialQuizContent: GenerateQuizData = {
+const initialQuizContent: QuizType = {
   problemName: '',
-  problemAnswer: -1,
+  problemAnswer: '-1',
   problemCommentary: '',
   problemChoices: [''],
 };
 
 function GenerateSection() {
-  const [quizContent, setQuizContent] =
-    useState<GenerateQuizData>(initialQuizContent);
-  const [inputOption, setInputOption] = useState<{ [key: string]: string }>({
+  const showLoading = useRecoilValue(loadingState);
+  const [quizContent, setQuizContent] = useState<QuizType>(initialQuizContent);
+  const [inputOption, setInputOption] = useState<GenerateQuizOption>({
     type: '객관식',
-    fileName: '',
   });
+  const { mutate: generateByUser, status: generateStatus } =
+    usePostQuizByUser();
 
   useEffect(() => {
     setQuizContent(initialQuizContent);
-    setInputOption({ ...inputOption, fileName: '' });
+    setInputOption({ ...inputOption });
   }, [inputOption.type]);
-
-  const handleFileNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputOption({ ...inputOption, [e.target.name]: e.target.value });
-  };
 
   return (
     <>
+      {showLoading && (
+        <GenerateLoader isLoading={generateStatus === 'pending'} />
+      )}
       <StyledContent>
         <StyledInnerContent>
           <QuizGenerationForm
@@ -48,15 +58,16 @@ function GenerateSection() {
         optionList={GENERATE_OPTIONS}
         inputOption={inputOption}
         setInputOption={setInputOption}
-        handleFileNameChange={handleFileNameChange}
         handleSubmit={() => {
-          // TODO: 제출 버튼 클릭시 동작
-          console.log(quizContent);
+          generateByUser({
+            newQuizData: quizContent,
+            quizType: inputOption.type as GenerateQuizType,
+          });
         }}
         generateButtonDisabled={
           Object.values(inputOption).includes('') ||
           quizContent.problemName === '' ||
-          quizContent.problemAnswer === -1 ||
+          quizContent.problemAnswer === '-1' ||
           quizContent.problemChoices.length === 0
         }
       />

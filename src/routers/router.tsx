@@ -12,7 +12,7 @@ import RedirectPage from '@/pages/RedirectPage';
 import SelectServicePage from '@/pages/SelectServicePage';
 import SummaryAIPage from '@/pages/SummaryAIPage';
 import SummaryUserPage from '@/pages/SummaryUserPage';
-import { createBrowserRouter } from 'react-router-dom';
+import { Navigate, createBrowserRouter } from 'react-router-dom';
 
 const routes = [
   { path: '/', element: <SelectServicePage /> },
@@ -25,6 +25,7 @@ const routes = [
       {
         path: 'quiz',
         children: [
+          { path: '', element: <Navigate replace to="ai" /> },
           { path: 'ai', element: <QuizAIPage /> },
           { path: 'user', element: <QuizUserPage /> },
         ],
@@ -32,6 +33,7 @@ const routes = [
       {
         path: 'summary',
         children: [
+          { path: '', element: <Navigate replace to="ai" /> },
           { path: 'ai', element: <SummaryAIPage /> },
           { path: 'user', element: <SummaryUserPage /> },
         ],
@@ -39,6 +41,7 @@ const routes = [
       {
         path: 'management',
         children: [
+          { path: '', element: <Navigate replace to="history" /> },
           { path: 'history', element: <HistoryPage /> },
           { path: 'category', element: <CategoryPage /> },
           { path: 'category/quiz', element: <CategoryQuizDetailPage /> },

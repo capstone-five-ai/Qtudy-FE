@@ -3,14 +3,14 @@ import RadioButton from '@/components/Button/RadioButton';
 import { CommentEditInputField } from '@/components/InputField/CommentInputField';
 import QuizInputField from '@/components/InputField/QuizInputField';
 import Typography from '@/components/Typography/Typography';
-import { GenerateQuizData } from '@/types/quiz.type';
+import { QuizType } from '@/types/quiz.type';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 interface QuizFormProps {
   quizType: string;
-  quizContent: GenerateQuizData;
-  setQuizContent: (newQuizContent: GenerateQuizData) => void;
+  quizContent: QuizType;
+  setQuizContent: (newQuizContent: QuizType) => void;
 }
 
 const MAX_OPTION_COUNT = 10;
@@ -49,7 +49,7 @@ function QuizGenerationForm({
     let updatedAnswer = quizContent.problemAnswer;
     updatedChoices.splice(index, 1);
 
-    if (quizContent.problemAnswer === index + 1) updatedAnswer = -1;
+    if (quizContent.problemAnswer === `${index + 1}`) updatedAnswer = '-1';
 
     setQuizContent({
       ...quizContent,
@@ -107,11 +107,11 @@ function QuizGenerationForm({
                 <StyledChoiceWrapper key={`${index}`}>
                   <RadioButton
                     value={choice}
-                    checked={quizContent.problemAnswer === index + 1}
+                    checked={quizContent.problemAnswer === `${index + 1}`}
                     onChange={() => {
                       setQuizContent({
                         ...quizContent,
-                        problemAnswer: index + 1,
+                        problemAnswer: `${index + 1}`,
                       });
                     }}
                   />
@@ -137,7 +137,9 @@ function QuizGenerationForm({
       <CommentEditInputField
         commentary={quizContent.problemCommentary}
         isMultiple={quizType === '객관식'}
-        answer={quizContent.problemAnswer}
+        answer={
+          quizContent.problemAnswer ? quizContent.problemAnswer : undefined
+        }
         isCommentOpen={isCommentOpen}
         setIsCommentOpen={setIsCommentOpen}
         isEdit

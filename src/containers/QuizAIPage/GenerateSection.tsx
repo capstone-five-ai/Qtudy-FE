@@ -10,7 +10,7 @@ import {
   usePostQuizByText,
 } from '@/hooks/usePostQuiz';
 import loadingState from '@/recoils/atoms/loadingState';
-import { GenerateAIQuizOption } from '@/types/quiz.type';
+import { GenerateQuizOption } from '@/types/quiz.type';
 import uploadFile, { UploadedFileType } from '@/utils/uploadFile';
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -18,7 +18,7 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 export interface GenerateOptionsType {
-  key: keyof GenerateAIQuizOption;
+  key: keyof GenerateQuizOption;
   label: string;
   options: string[];
 }
@@ -40,7 +40,7 @@ function GenerateSection() {
   const [searchParams] = useSearchParams();
   const method = searchParams.get('method');
   const [inputOption, setInputOption] =
-    useState<GenerateAIQuizOption>(initialInputOption);
+    useState<GenerateQuizOption>(initialInputOption);
   const [text, setText] = useState<string>('');
   const [pdfFile, setPdfFile] = useState<UploadedFileType | null>(null);
   const [imageFiles, setImageFiles] = useState<UploadedFileType[]>([]);

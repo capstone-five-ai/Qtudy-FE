@@ -1,5 +1,5 @@
 import { authClient, noAuthClient } from '@/apis/client';
-import { GenerateAIQuizOption } from '@/types/quiz.type';
+import { GenerateQuizOption, GenerateUserQuizOption } from '@/types/quiz.type';
 
 export const getAIQuizFile = async (
   fileId: number,
@@ -15,8 +15,22 @@ export const getAIQuizFile = async (
   return response.data;
 };
 
+export const getUserQuizItem = async (
+  quizId: number,
+  isAuthenticated: boolean
+) => {
+  const path = `/api/member-saved-problem/${quizId}`;
+
+  if (isAuthenticated) {
+    const response = await authClient.get(path);
+    return response.data;
+  }
+  const response = await noAuthClient.get(path);
+  return response.data;
+};
+
 export const postQuizByText = async (
-  option: GenerateAIQuizOption,
+  option: GenerateQuizOption,
   text: string
 ) => {
   const response = await authClient.post(
@@ -30,7 +44,7 @@ export const postQuizByText = async (
 };
 
 export const postQuizByPdf = async (
-  option: GenerateAIQuizOption,
+  option: GenerateQuizOption,
   file: FormData
 ) => {
   const response = await authClient.post(
@@ -47,7 +61,7 @@ export const postQuizByPdf = async (
 };
 
 export const postQuizByImage = async (
-  option: GenerateAIQuizOption,
+  option: GenerateQuizOption,
   file: FormData
 ) => {
   const response = await authClient.post(
@@ -59,6 +73,14 @@ export const postQuizByImage = async (
       },
       params: { ...option },
     }
+  );
+  return response.data;
+};
+
+export const postQuizByUser = async (newQuizData: GenerateUserQuizOption) => {
+  const response = await authClient.post(
+    'api/member-saved-problem/new',
+    newQuizData
   );
   return response.data;
 };

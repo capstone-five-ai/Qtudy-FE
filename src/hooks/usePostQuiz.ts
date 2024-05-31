@@ -1,7 +1,19 @@
-import { postQuizByImage, postQuizByPdf, postQuizByText } from '@/apis/quizApi';
+import {
+  postQuizByImage,
+  postQuizByPdf,
+  postQuizByText,
+  postQuizByUser,
+} from '@/apis/quizApi';
 import loadingState from '@/recoils/atoms/loadingState';
-import { GenerateAIQuizOption } from '@/types/quiz.type';
-import { convertToQuizRequestData } from '@/utils/convertToRequestData';
+import {
+  GenerateQuizOption,
+  GenerateQuizType,
+  QuizType,
+} from '@/types/quiz.type';
+import {
+  QUIZ_TYPE,
+  convertToQuizRequestData,
+} from '@/utils/convertToRequestData';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
@@ -15,7 +27,7 @@ export const usePostQuizByText = () => {
       option,
       text,
     }: {
-      option: GenerateAIQuizOption;
+      option: GenerateQuizOption;
       text: string;
     }) => {
       try {
@@ -41,12 +53,12 @@ export const usePostQuizByPdf = () => {
   const navigate = useNavigate();
   const setLoading = useSetRecoilState(loadingState);
 
-  const createByTextMutation = useMutation({
+  const createByPdfMutation = useMutation({
     mutationFn: async ({
       option,
       file,
     }: {
-      option: GenerateAIQuizOption;
+      option: GenerateQuizOption;
       file: FormData;
     }) => {
       try {
@@ -65,19 +77,19 @@ export const usePostQuizByPdf = () => {
     },
   });
 
-  return createByTextMutation;
+  return createByPdfMutation;
 };
 
 export const usePostQuizByImage = () => {
   const navigate = useNavigate();
   const setLoading = useSetRecoilState(loadingState);
 
-  const createByTextMutation = useMutation({
+  const createByImageMutation = useMutation({
     mutationFn: async ({
       option,
       file,
     }: {
-      option: GenerateAIQuizOption;
+      option: GenerateQuizOption;
       file: FormData;
     }) => {
       try {
@@ -96,5 +108,39 @@ export const usePostQuizByImage = () => {
     },
   });
 
-  return createByTextMutation;
+  return createByImageMutation;
+};
+
+export const usePostQuizByUser = () => {
+  const navigate = useNavigate();
+  const setLoading = useSetRecoilState(loadingState);
+
+  const createByUserMutation = useMutation({
+    mutationFn: async ({
+      newQuizData,
+      quizType,
+    }: {
+      newQuizData: QuizType;
+      quizType: GenerateQuizType;
+    }) => {
+      try {
+        setLoading(true);
+
+        const response = await postQuizByUser({
+          ...newQuizData,
+          problemType: QUIZ_TYPE[quizType],
+        });
+        setTimeout(() => {
+          navigate(`/quiz/user?complete=true&id=${response.problemId}`);
+          setLoading(false);
+        }, 1000);
+      } catch (error) {
+        console.error('Error generating quiz:', error);
+        // TODO: 에러 처리 로직
+        setLoading(false);
+      }
+    },
+  });
+
+  return createByUserMutation;
 };

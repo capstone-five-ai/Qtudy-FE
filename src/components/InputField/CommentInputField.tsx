@@ -8,7 +8,7 @@ import styled, { css } from 'styled-components';
 
 interface CommentInputFieldProps {
   isMultiple?: boolean;
-  answer?: number;
+  answer?: string;
   commentary: string;
   isCommentOpen: boolean;
   setIsCommentOpen: React.Dispatch<React.SetStateAction<boolean>>;

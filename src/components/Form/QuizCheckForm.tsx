@@ -1,11 +1,11 @@
 import { CommentDefaultInputField } from '@/components/InputField/CommentInputField';
-import { ProblemsOfAIQuizFile } from '@/types/quiz.type';
+import { GenerateUserQuizItem, ProblemsOfAIQuizFile } from '@/types/quiz.type';
 import getCircleNum from '@/utils/getCircleNum';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 interface QuizCheckFormProps {
-  quiz: ProblemsOfAIQuizFile;
+  quiz: ProblemsOfAIQuizFile | GenerateUserQuizItem;
 }
 
 function QuizCheckForm({ quiz }: QuizCheckFormProps) {
@@ -40,7 +40,7 @@ function QuizCheckForm({ quiz }: QuizCheckFormProps) {
         commentary={quiz.problemCommentary}
         answer={
           quiz.problemAnswer && Number(quiz.problemAnswer) > 0
-            ? Number(quiz.problemAnswer)
+            ? quiz.problemAnswer
             : undefined
         }
         isCommentOpen={showComment}
