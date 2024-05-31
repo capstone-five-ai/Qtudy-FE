@@ -4,6 +4,13 @@ import {
   GenerateUserSummaryOption,
 } from '@/types/summary.type';
 
+export const getAISummaryAllFile = async (pageNumber: number) => {
+  const response = await authClient.get(
+    `/api/summaryFile/searchAiSummaryFileList/${pageNumber}`
+  );
+  return response.data;
+};
+
 export const getAISummaryFile = async (
   fileId: number,
   isAuthenticated: boolean

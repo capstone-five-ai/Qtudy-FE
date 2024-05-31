@@ -1,3 +1,4 @@
+import { deleteFile, updateFileName } from '@/apis/fileApi';
 import { ReactComponent as EditIcon } from '@/assets/icons/edit.svg';
 import { ReactComponent as DeleteIcon } from '@/assets/icons/trash.svg';
 import PDFDownloadButton from '@/components/Button/PDFDownloadButton';
@@ -11,6 +12,7 @@ import {
   PDFDown,
 } from '@/containers/HistoryPage/HistoryList.style';
 import { HistoryType } from '@/types/history.type';
+import { convertToKRTime } from '@/utils/convertToKRTime';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
@@ -35,8 +37,8 @@ function HistoryItem({ history, updateList }: Props) {
   }, [editMode]);
 
   const getDateFormat = (dateStr: string) => {
-    const date = dateStr.slice(0, 16).replace(/-/g, '.').replace(/T/g, ' ');
-
+    //const date = dateStr.slice(0, 16).replace(/-/g, '.').replace(/T/g, ' ');
+    const date = convertToKRTime(dateStr);
     return date;
   };
 
@@ -61,15 +63,15 @@ function HistoryItem({ history, updateList }: Props) {
   };
 
   const editFileName = async () => {
-    //await FileApi.updateFileName(history.fileId, newFileName);
+    await updateFileName(history.fileId, newFileName);
     setEditMode(false);
-    //setFileName(newFileName);
+    setFileName(newFileName);
   };
 
-  const deleteFile = async () => {
-    //await FileApi.deleteFile(history.fileId);
-    //setShowDeleteModal(false);
-    //updateList(1);
+  const deleteFileItem = async () => {
+    await deleteFile(history.fileId);
+    setShowDeleteModal(false);
+    updateList(1);
   };
 
   const filterName = history.dtype === 'QUIZ' ? '퀴즈' : '요약';
@@ -113,26 +115,26 @@ function HistoryItem({ history, updateList }: Props) {
           <>
             <PDFDownloadButton
               variant={2}
-              //fileId={history.fileId}
+              fileId={history.fileId}
               pdfType="QUIZ"
-              //type="ai"
-              //fileName={history.fileName}
+              type="AI"
+              fileName={history.fileName}
             />
             <PDFDownloadButton
               variant={2}
-              //fileId={history.fileId}
+              fileId={history.fileId}
               pdfType="ANSWER"
-              //type="ai"
-              //fileName={history.fileName}
+              type="AI"
+              fileName={history.fileName}
             />
           </>
         ) : (
           <PDFDownloadButton
             variant={2}
-            //fileId={history.fileId}
+            fileId={history.fileId}
             pdfType="SUMMARY"
-            //type="ai"
-            //fileName={history.fileName}
+            type="AI"
+            fileName={history.fileName}
           />
         )}
       </PDFDown>
@@ -149,7 +151,7 @@ function HistoryItem({ history, updateList }: Props) {
           onCancel={() => setShowDeleteModal(false)}
           onConfirm={() => {
             setShowDeleteModal(false);
-            deleteFile();
+            deleteFileItem();
           }}
           title={`${history.dtype === 'QUIZ' ? '퀴즈를' : '요약을'} 삭제하시겠습니까?`}
         />

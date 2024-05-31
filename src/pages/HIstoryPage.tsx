@@ -1,3 +1,5 @@
+import { getAIQuizAllFile } from '@/apis/quizApi';
+import { getAISummaryAllFile } from '@/apis/summaryApi';
 import FileTypeChip from '@/components/Chip/FileTypeChip';
 import Typography from '@/components/Typography/Typography';
 import HistoryPagination from '@/containers/HistoryPage/HistoryPagination';
@@ -30,15 +32,18 @@ const HistoryPage = () => {
   });
 
   const getQuizzes = async (quizPage: number) => {
-    //const response = await HistoryApi.getQuizList(quizPage);
-    //const newHistories = response.content;
-    //setQuizzes({ histories: newHistories, totalPages: response.totalPages });
+    const response = await getAIQuizAllFile(quizPage);
+    const newHistories = response.content.map((item: HistoryType) =>
+      item.dtype === 'PROBLEM' ? { ...item, dtype: 'QUIZ' } : item
+    );
+
+    setQuizzes({ histories: newHistories, totalPages: response.totalPages });
   };
 
   const getSummaries = async (summaryPage: number) => {
-    //const response = await HistoryApi.getSummaryList(summaryPage);
-    //const newHistories = response.content;
-    //setSummaries({ histories: newHistories, totalPages: response.totalPages });
+    const response = await getAISummaryAllFile(summaryPage);
+    const newHistories = response.content;
+    setSummaries({ histories: newHistories, totalPages: response.totalPages });
   };
 
   const updateList = useCallback(

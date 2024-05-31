@@ -1,6 +1,13 @@
 import { authClient, noAuthClient } from '@/apis/client';
 import { GenerateQuizOption, GenerateUserQuizOption } from '@/types/quiz.type';
 
+export const getAIQuizAllFile = async (pageNumber: number) => {
+  const response = await authClient.get(
+    `api/problemFile/searchAiProblemFileList/${pageNumber}`
+  );
+  return response.data;
+};
+
 export const getAIQuizFile = async (
   fileId: number,
   isAuthenticated: boolean

@@ -1,8 +1,14 @@
-import styled from 'styled-components';
-//import fileDownload from 'js-file-download';
-import { downloadAIQuizFile } from '@/apis/fileApi';
+import {
+  downloadAIFile,
+  downloadCategoryAnswerFile,
+  downloadCategoryProblemFile,
+  downloadCategorySummaryFile,
+  downloadUserSummaryFile,
+} from '@/apis/fileApi';
 import { ReactComponent as PDFIcon } from '@/assets/icons/download.svg';
 import { ServiceType } from '@/types/category.type';
+import fileDownload from 'js-file-download';
+import styled from 'styled-components';
 
 type Props = {
   fileId: number; // 카테고리에서는 카테고리 id값
@@ -18,7 +24,6 @@ const BUTTON_LABEL = {
   SUMMARY: '요약',
 };
 
-// TODO: PDF 다운로드 버튼 기능 구현
 function PDFDownloadButton({
   variant = 1,
   fileId,
@@ -29,23 +34,23 @@ function PDFDownloadButton({
   const handleClickDownload = async () => {
     if (type === 'AI') {
       const convertPdfType = pdfType === 'QUIZ' ? 'PROBLEM' : pdfType;
-      const data = await downloadAIQuizFile(fileId, convertPdfType);
+      const data = await downloadAIFile(fileId, convertPdfType);
       window.location.href = data.fileUrl;
       return;
     }
 
-    /* let pdfBlob;
+    let pdfBlob;
 
     if (type === 'USER' && pdfType === 'SUMMARY')
-      pdfBlob = await FileApi.downloadUserSummaryFile(fileId);
-    if (type === 'CATEGORY' && pdfType === 'PROBLEM')
-      pdfBlob = await FileApi.downloadCategoryProblemFile(fileId);
+      pdfBlob = await downloadUserSummaryFile(fileId);
+    if (type === 'CATEGORY' && pdfType === 'QUIZ')
+      pdfBlob = await downloadCategoryProblemFile(fileId);
     if (type === 'CATEGORY' && pdfType === 'ANSWER')
-      pdfBlob = await FileApi.downloadCategoryAnswerFile(fileId);
+      pdfBlob = await downloadCategoryAnswerFile(fileId);
     if (type === 'CATEGORY' && pdfType === 'SUMMARY')
-      pdfBlob = await FileApi.downloadCategorySummaryFile(fileId);
+      pdfBlob = await downloadCategorySummaryFile(fileId);
 
-    fileDownload(pdfBlob, `${fileName}.pdf`); */
+    fileDownload(pdfBlob, `${fileName}.pdf`);
   };
 
   if (variant === 1)
