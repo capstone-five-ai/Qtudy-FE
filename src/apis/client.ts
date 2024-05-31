@@ -1,4 +1,4 @@
-import authApi from '@/apis/AuthApi';
+import { postUpdateToken } from '@/apis/authApi';
 import axios, { InternalAxiosRequestConfig } from 'axios';
 
 export const authClient = axios.create({
@@ -31,7 +31,7 @@ authClient.interceptors.response.use(
     if (status === 401) {
       const originRequest = config;
       try {
-        const response = await authApi.updateToken();
+        const response = await postUpdateToken();
         if (response.status === 200) {
           const newAccessToken = response.data.accessToken;
           localStorage.setItem('accessToken', newAccessToken);

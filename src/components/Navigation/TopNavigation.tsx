@@ -1,4 +1,4 @@
-import authApi from '@/apis/authApi';
+import { postLogout } from '@/apis/authApi';
 import { ReactComponent as Logo } from '@/assets/logo/qtudy.svg';
 import KakaoLoginSmallButton from '@/components/Button/KakaoLoginSmallButton';
 import MenuBar from '@/components/Navigation/MenuBar';
@@ -18,7 +18,7 @@ function TopNavigation() {
 
   const handleLogout = async () => {
     try {
-      const response = await authApi.logout();
+      const response = await postLogout();
 
       if (response) {
         setIsAuthenticated(false);

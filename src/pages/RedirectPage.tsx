@@ -1,4 +1,4 @@
-import authApi from '@/apis/AuthApi';
+import { getAuthKakao, postLogin } from '@/apis/authApi';
 import authState from '@/recoils/atoms/authState';
 import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -13,8 +13,8 @@ function RedirectPage() {
     if (!code) return;
 
     try {
-      const kakaoRes = await authApi.authKakao(code);
-      const loginRes = await authApi.login(kakaoRes.access_token);
+      const kakaoRes = await getAuthKakao(code);
+      const loginRes = await postLogin(kakaoRes.access_token);
       localStorage.setItem('accessToken', loginRes.accessToken);
       localStorage.setItem('refreshToken', loginRes.refreshToken);
       setIsAuthenticated(true);
