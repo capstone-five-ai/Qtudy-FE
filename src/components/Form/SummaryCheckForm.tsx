@@ -1,10 +1,13 @@
 import Scrollbar from '@/components/Scrollbar/Scrollbar';
 import Typography from '@/components/Typography/Typography';
-import { GenerateUserSummaryItem } from '@/types/summary.type';
+import {
+  GenerateAISummaryFile,
+  GenerateUserSummaryItem,
+} from '@/types/summary.type';
 import styled from 'styled-components';
 
 interface SummaryCheckFormProps {
-  summary: GenerateUserSummaryItem;
+  summary: GenerateUserSummaryItem | GenerateAISummaryFile;
 }
 
 function SummaryCheckForm({ summary }: SummaryCheckFormProps) {

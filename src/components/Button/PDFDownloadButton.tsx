@@ -28,7 +28,7 @@ function PDFDownloadButton({
 }: Props) {
   const handleClickDownload = async () => {
     if (type === 'AI') {
-      const convertPdfType = pdfType === 'QUIZ' ? 'PROBLEM' : 'ANSWER';
+      const convertPdfType = pdfType === 'QUIZ' ? 'PROBLEM' : pdfType;
       const data = await downloadAIQuizFile(fileId, convertPdfType);
       window.location.href = data.fileUrl;
       return;
@@ -43,9 +43,9 @@ function PDFDownloadButton({
     if (type === 'CATEGORY' && pdfType === 'ANSWER')
       pdfBlob = await FileApi.downloadCategoryAnswerFile(fileId);
     if (type === 'CATEGORY' && pdfType === 'SUMMARY')
-      pdfBlob = await FileApi.downloadCategorySummaryFile(fileId); */
+      pdfBlob = await FileApi.downloadCategorySummaryFile(fileId);
 
-    /* fileDownload(pdfBlob, `${fileName}.pdf`); */
+    fileDownload(pdfBlob, `${fileName}.pdf`); */
   };
 
   if (variant === 1)

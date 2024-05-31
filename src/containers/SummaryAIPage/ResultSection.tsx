@@ -5,74 +5,67 @@ import ShareLinkButton from '@/components/Button/ShareLinkButton';
 import SummaryCheckForm from '@/components/Form/SummaryCheckForm';
 import SaveToCategoryModal from '@/components/Modal/SaveToCategoryModal';
 import Sidebar from '@/components/Sidebar/Sidebar';
+import { useGetAISummaryFile } from '@/hooks/useGetSummary';
 import authState from '@/recoils/atoms/authState';
-import { useCallback, useEffect, useState } from 'react';
+import { SummaryType } from '@/types/summary.type';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 function ResultSection() {
+  const [searchParams] = useSearchParams();
+  const fileId = Number(searchParams.get('id'));
   const isAuthenticated = useRecoilValue(authState);
   const [showModal, setShowModal] = useState(false);
-  const [summaryType, setSummaryType] = useState<'AI' | 'USER' | null>(null);
-  const [summary, setSummary] = useState({
-    summaryTitle: '요약 제목',
-    summaryContent: '요약 내용',
-  });
-  const [qs] = useSearchParams();
-  const summaryId = Number(qs.get('id'));
-
-  const getSummary = useCallback(
-    async (id: number) => {
-      console.log(id);
-      // TODO: 요약 조회 API 연동
-      /* let data;
-      if (type === 'ai')
-        data = await SummaryApi.getAISummary(id, isAuthenticated);
-      if (type === 'user')
-        data = await SummaryApi.getUserSummary(id, isAuthenticated);
-
-      if (data.isWriter) setIsWriter(true);
-      setSummary(data.response); */
-    },
-    [summaryType]
-  );
+  const [summary, setSummary] = useState<SummaryType>();
+  const [isWriter, setIsWriter] = useState(false);
+  const { data: fetchedSummaryList, isLoading } = useGetAISummaryFile(fileId);
 
   useEffect(() => {
-    const currentPath = window.location.pathname;
-    if (currentPath.includes('ai')) setSummaryType('AI');
-    if (currentPath.includes('user')) setSummaryType('USER');
-  }, []);
+    if (fetchedSummaryList) {
+      setSummary(fetchedSummaryList.response);
+      setIsWriter(fetchedSummaryList.isWriter);
+    }
+  }, [fetchedSummaryList]);
 
-  useEffect(() => {
-    getSummary(summaryId);
-  }, [getSummary, summaryId]);
+  if (isLoading) return <div>Loading...</div>;
 
-  if (!summary) return null;
-
-  return (
-    <>
-      <StyledContent>
-        <SummaryCheckForm summary={summary} />
-      </StyledContent>
-      <Sidebar>
-        <SidebarContentContainer>
-          <StyledButtonContainer>
-            <CopySummaryButton text={summary.summaryContent} />
-            <ShareLinkButton link={window.location.href} />
-            {isAuthenticated && (
-              <PDFDownloadButton variant={1} pdfType="SUMMARY" />
-            )}
-          </StyledButtonContainer>
-          <SaveToCategoryButton
-            disabled={!isAuthenticated}
-            onClick={() => setShowModal(true)}
+  if (summary)
+    return (
+      <>
+        <StyledContent>
+          <SummaryCheckForm summary={summary} />
+        </StyledContent>
+        <Sidebar>
+          <SidebarContentContainer>
+            <StyledButtonContainer>
+              <CopySummaryButton text={summary.summaryContent} />
+              <ShareLinkButton link={window.location.href} />
+              {isAuthenticated && isWriter && (
+                <PDFDownloadButton
+                  variant={1}
+                  pdfType="SUMMARY"
+                  type="AI"
+                  fileId={fileId}
+                />
+              )}
+            </StyledButtonContainer>
+            <SaveToCategoryButton
+              disabled={!isAuthenticated}
+              onClick={() => setShowModal(true)}
+            />
+          </SidebarContentContainer>
+        </Sidebar>
+        {showModal && (
+          <SaveToCategoryModal
+            categoryType="SUMMARY"
+            contentId={summary.aiGeneratedSummaryId}
+            onClose={() => setShowModal(false)}
           />
-        </SidebarContentContainer>
-      </Sidebar>
-      {showModal && <SaveToCategoryModal onClose={() => setShowModal(false)} />}
-    </>
-  );
+        )}
+      </>
+    );
 }
 
 export default ResultSection;

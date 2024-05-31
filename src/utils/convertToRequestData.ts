@@ -1,4 +1,5 @@
 import { GenerateQuizOption } from '@/types/quiz.type';
+import { GenerateSummaryOption } from '@/types/summary.type';
 
 interface ConvertType {
   [key: string]: string;
@@ -35,6 +36,20 @@ export const convertToQuizRequestData = (inputOption: GenerateQuizOption) => {
 
   if (inputOption.difficulty) {
     convert.difficulty = DIFFICULTY[inputOption.difficulty];
+  }
+
+  return convert;
+};
+
+export const convertToSummaryRequestData = (
+  inputOption: GenerateSummaryOption
+) => {
+  const convert: GenerateSummaryOption = {
+    fileName: inputOption.fileName,
+  };
+
+  if (inputOption.amount) {
+    convert.amount = AMOUNT[inputOption.amount];
   }
 
   return convert;
