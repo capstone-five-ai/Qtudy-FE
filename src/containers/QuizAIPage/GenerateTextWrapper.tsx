@@ -45,8 +45,6 @@ function GenerateTextWrapper({
 export default GenerateTextWrapper;
 
 const StyledContainer = styled.div`
-  padding: 24px 36px;
-  padding-right: 20px;
   height: 100%;
 `;
 

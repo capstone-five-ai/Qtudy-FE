@@ -24,6 +24,7 @@ function QuizCheckForm({ quiz }: QuizCheckFormProps) {
           <div className="choices">
             {quiz.problemChoices.map((choice, index) => (
               <span
+                key={`${choice}-${index}`}
                 className={
                   quiz.problemAnswer === index + 1 && showComment
                     ? 'answer'

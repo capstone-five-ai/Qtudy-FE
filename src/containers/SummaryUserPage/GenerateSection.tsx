@@ -51,4 +51,7 @@ const StyledContent = styled.div`
 
   overflow-y: scroll;
   ${Scrollbar}
+
+  padding: 24px 36px;
+  padding-right: 20px;
 `;

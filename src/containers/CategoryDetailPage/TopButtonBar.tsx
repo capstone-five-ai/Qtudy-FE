@@ -1,34 +1,25 @@
-import styled from 'styled-components';
+import { ReactComponent as CheckIcon } from '@/assets/icons/complete.svg';
+import { ReactComponent as EditIcon } from '@/assets/icons/edit.svg';
+import Typography from '@/components/Typography/Typography';
 import { useNavigate } from 'react-router-dom';
-import Typography from '../Typography';
-import { ReactComponent as EditIcon } from '../../assets/icons/edit_mint.svg';
-import { ReactComponent as CheckIcon } from '../../assets/icons/complete.svg';
+import styled from 'styled-components';
 
-interface CategoryItemButtonBarProps {
+interface TopButtonBarProps {
   isEdit?: boolean;
   handleComplete?: () => void;
   handleReturnToList?: () => void;
   handleEdit?: () => void;
+  handleCancel?: () => void;
 }
 
-CategoryItemButtonBar.defaultProps = {
-  isEdit: false,
-  handleComplete: () => {},
-  handleReturnToList: () => {},
-  handleEdit: () => {},
-};
-
-function CategoryItemButtonBar({
+function TopButtonBar({
   isEdit = false,
   handleComplete,
   handleReturnToList,
   handleEdit,
-}: CategoryItemButtonBarProps) {
+  handleCancel,
+}: TopButtonBarProps) {
   const navigate = useNavigate();
-
-  const handleCancel = () => {
-    navigate(-1);
-  };
 
   return (
     <StyledContainer>
@@ -54,7 +45,7 @@ function CategoryItemButtonBar({
             </Typography>
           </StyledButton>
           <StyledButton type="button" onClick={handleEdit}>
-            <EditIcon />
+            <EditIcon className="icon" />
             <Typography variant="button" color="grayScale03">
               편집하기
             </Typography>
@@ -65,12 +56,12 @@ function CategoryItemButtonBar({
   );
 }
 
-export default CategoryItemButtonBar;
+export default TopButtonBar;
 
 const StyledContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-right: 36px;
+  margin-right: 16px;
   margin-bottom: 24px;
 `;
 
@@ -78,4 +69,10 @@ const StyledButton = styled.button`
   display: flex;
   align-items: center;
   gap: 8px;
+
+  .icon {
+    path {
+      fill: ${({ theme }) => theme.colors.mainMintDark};
+    }
+  }
 `;

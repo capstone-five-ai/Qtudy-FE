@@ -2,10 +2,9 @@ import CopySummaryButton from '@/components/Button/CopySummaryButton';
 import PDFDownloadButton from '@/components/Button/PDFDownloadButton';
 import SaveToCategoryButton from '@/components/Button/SaveToCategoryButton';
 import ShareLinkButton from '@/components/Button/ShareLinkButton';
+import SummaryCheckForm from '@/components/Form/SummaryCheckForm';
 import SaveToCategoryModal from '@/components/Modal/SaveToCategoryModal';
-import Scrollbar from '@/components/Scrollbar/Scrollbar';
 import Sidebar from '@/components/Sidebar/Sidebar';
-import Typography from '@/components/Typography/Typography';
 import authState from '@/recoils/atoms/authState';
 import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -54,17 +53,7 @@ function ResultSection() {
   return (
     <>
       <StyledContent>
-        <StyledTitleWrapper>
-          <Typography variant="subtitle" color="mainMintDark">
-            제목
-          </Typography>
-          <Typography variant="subtitle" color="grayScale02">
-            {summary.summaryTitle}
-          </Typography>
-        </StyledTitleWrapper>
-        <StyledContentWrapper>
-          <div className="content">{summary.summaryContent}</div>
-        </StyledContentWrapper>
+        <SummaryCheckForm summary={summary} />
       </StyledContent>
       <Sidebar>
         <SidebarContentContainer>
@@ -95,24 +84,6 @@ const StyledContent = styled.div`
   flex-direction: column;
   padding: 40px;
   padding-right: 20px;
-`;
-
-const StyledTitleWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-`;
-
-const StyledContentWrapper = styled.div`
-  overflow-y: scroll;
-  ${Scrollbar};
-
-  .content {
-    ${({ theme }) => theme.typography.body3};
-    color: ${({ theme }) => theme.colors.grayScale02};
-    white-space: pre-wrap;
-  }
 `;
 
 const SidebarContentContainer = styled.div`

@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 
 interface SidebarProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  className?: string;
 }
 
-function Sidebar({ children }: SidebarProps) {
-  return <StyledContainer>{children}</StyledContainer>;
+function Sidebar({ children, className }: SidebarProps) {
+  return <StyledContainer className={className}>{children}</StyledContainer>;
 }
 
 export default Sidebar;

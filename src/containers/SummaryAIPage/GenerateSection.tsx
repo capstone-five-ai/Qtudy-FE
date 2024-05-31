@@ -65,11 +65,13 @@ function GenerateSection() {
           />
         )}
         {method === 'text' && (
-          <GenerateTextWrapper
-            type="SUMMARY"
-            inputText={text}
-            setInputText={setText}
-          />
+          <GenerateTextWrapperContainer>
+            <GenerateTextWrapper
+              type="SUMMARY"
+              inputText={text}
+              setInputText={setText}
+            />
+          </GenerateTextWrapperContainer>
         )}
       </StyledContent>
       <GenerateSidebar
@@ -98,4 +100,10 @@ const StyledContent = styled.div`
 
   overflow-y: scroll;
   ${Scrollbar}
+`;
+
+const GenerateTextWrapperContainer = styled.div`
+  height: 100%;
+  padding: 24px 36px;
+  padding-right: 20px;
 `;

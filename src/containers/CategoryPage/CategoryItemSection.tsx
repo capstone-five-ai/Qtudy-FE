@@ -63,9 +63,9 @@ function CategoryItemSection({
 
   return (
     <StyledContainer>
-      <StyledPDFButtonWrapper>
+      {/* <StyledPDFButtonWrapper>
         <PDFDownloadButton pdfType="SUMMARY" variant={2} />
-      </StyledPDFButtonWrapper>
+  </StyledPDFButtonWrapper> */}
       {summaryItems.map((item) => (
         <CategorySummaryItem
           summaryItem={item}
