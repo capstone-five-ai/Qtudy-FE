@@ -1,11 +1,12 @@
 import { CommentDefaultInputField } from '@/components/InputField/CommentInputField';
-import { GenerateUserQuizItem, ProblemsOfAIQuizFile } from '@/types/quiz.type';
+import { QuizType } from '@/types/quiz.type';
 import getCircleNum from '@/utils/getCircleNum';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 interface QuizCheckFormProps {
-  quiz: ProblemsOfAIQuizFile | GenerateUserQuizItem;
+  /* quiz: ProblemsOfAIQuizFile | GenerateUserQuizItem; */
+  quiz: QuizType;
 }
 
 function QuizCheckForm({ quiz }: QuizCheckFormProps) {

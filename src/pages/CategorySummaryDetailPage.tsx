@@ -1,4 +1,3 @@
-import SummaryCheckForm from '@/components/Form/SummaryCheckForm';
 import Scrollbar from '@/components/Scrollbar/Scrollbar';
 import ContentWrapper from '@/components/Wrapper/ContentWrapper';
 import CategorySidebar from '@/containers/CategoryDetailPage/CategorySidebar';
@@ -15,7 +14,7 @@ function CategorySummaryDetailPage() {
       <StyledContent $isAuthenticated={isAuthenticated}>
         {isAuthenticated && <TopButtonBar />}
         <StyledInnerContainer>
-          <SummaryCheckForm summary={summary} />
+          {/* <SummaryCheckForm summary={summary} /> */}
         </StyledInnerContainer>
       </StyledContent>
       <CategorySidebar isAuthenticated={isAuthenticated} />

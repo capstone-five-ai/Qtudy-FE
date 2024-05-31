@@ -1,7 +1,6 @@
 import { ReactComponent as CheckIcon } from '@/assets/icons/complete.svg';
 import { ReactComponent as EditIcon } from '@/assets/icons/edit.svg';
 import Typography from '@/components/Typography/Typography';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface TopButtonBarProps {
@@ -19,7 +18,7 @@ function TopButtonBar({
   handleEdit,
   handleCancel,
 }: TopButtonBarProps) {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   return (
     <StyledContainer>

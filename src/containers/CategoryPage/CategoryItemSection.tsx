@@ -1,10 +1,7 @@
-import PDFDownloadButton from '@/components/Button/PDFDownloadButton';
 import Scrollbar from '@/components/Scrollbar/Scrollbar';
-import CategoryQuizItem from '@/containers/CategoryPage/CategoryItem/CategoryQuizItem';
-import CategorySummaryItem from '@/containers/CategoryPage/CategoryItem/CategorySummaryItem';
 import NoItemSection from '@/containers/CategoryPage/NoItemSection';
 import { ServiceType } from '@/types/category.type';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 interface CategoryItemSectionProps {
@@ -16,30 +13,32 @@ function CategoryItemSection({
   activeType,
   activeCategoryId,
 }: CategoryItemSectionProps) {
-  const [quizItems, setQuizItems] = useState([{}]);
-  const [summaryItems, setSummaryItems] = useState([{}]);
+  //const [quizItems, setQuizItems] = useState([{}]);
+  const quizItems = [{}];
+  //const [summaryItems, setSummaryItems] = useState([{}]);
+  const summaryItems = [{}];
 
   useEffect(() => {
     /* fetchItems(activeType, activeCategoryId); */
   }, [activeType, activeCategoryId]);
 
-  const handleDeleteQuizItem = async (quizId: number) => {
-    /* await QuizCategoryApi.delete(quizId).then(() => {
+  /* const handleDeleteQuizItem = async (quizId: number) => {
+    await QuizCategoryApi.delete(quizId).then(() => {
       const newQuizItems = activeCategoryQuizItems.filter(
         (item) => item.categorizedProblemId !== quizId
       );
       setActiveCategoryQuizItems(newQuizItems);
-    }); */
-  };
+    });
+  }; */
 
-  const handleDeleteSummaryItem = async (summaryId: number) => {
-    /* await SummaryCategoryApi.delete(summaryId).then(() => {
+  /* const handleDeleteSummaryItem = async (summaryId: number) => {
+    await SummaryCategoryApi.delete(summaryId).then(() => {
       const newSummaryItems = activeCategorySummaryItems.filter(
         (item) => item.categorizedSummaryId !== summaryId
       );
       setActiveCategorySummaryItems(newSummaryItems);
-    }); */
-  };
+    });
+  }; */
 
   if (quizItems.length + summaryItems.length === 0) {
     return <NoItemSection categoryType={activeType} />;
@@ -49,15 +48,15 @@ function CategoryItemSection({
     return (
       <StyledContainer>
         <StyledPDFButtonWrapper>
-          <PDFDownloadButton pdfType="QUIZ" variant={2} />
-          <PDFDownloadButton pdfType="ANSWER" variant={2} />
+          {/* <PDFDownloadButton pdfType="QUIZ" variant={2} />
+          <PDFDownloadButton pdfType="ANSWER" variant={2} /> */}
         </StyledPDFButtonWrapper>
-        {quizItems.map((item) => (
+        {/* {quizItems.map((item) => (
           <CategoryQuizItem
             quizItem={item}
             handleDeleteItem={handleDeleteQuizItem}
           />
-        ))}
+        ))} */}
       </StyledContainer>
     );
 
@@ -66,12 +65,12 @@ function CategoryItemSection({
       {/* <StyledPDFButtonWrapper>
         <PDFDownloadButton pdfType="SUMMARY" variant={2} />
   </StyledPDFButtonWrapper> */}
-      {summaryItems.map((item) => (
+      {/* {summaryItems.map((item) => (
         <CategorySummaryItem
           summaryItem={item}
           handleDeleteItem={handleDeleteSummaryItem}
         />
-      ))}
+      ))} */}
     </StyledContainer>
   );
 }

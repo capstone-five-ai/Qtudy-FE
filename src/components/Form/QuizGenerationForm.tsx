@@ -45,7 +45,7 @@ function QuizGenerationForm({
 
   const handleDeleteChoice = (index: number) => {
     const updatedChoices = [...quizContent.problemChoices];
-    const choiceToRemove = updatedChoices[index];
+    //const choiceToRemove = updatedChoices[index];
     let updatedAnswer = quizContent.problemAnswer;
     updatedChoices.splice(index, 1);
 

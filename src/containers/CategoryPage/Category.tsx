@@ -3,13 +3,13 @@ import { ReactComponent as EditIcon } from '@/assets/icons/edit.svg';
 import { ReactComponent as DeleteIcon } from '@/assets/icons/trash.svg';
 import DeleteItemModal from '@/components/Modal/DeleteItemModal';
 import Typography from '@/components/Typography/Typography';
-import { CategoryInfoType } from '@/types/category.type';
+import { CategoryType } from '@/types/category.type';
 import { useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 // 버튼 타입 확장
 interface CategoryProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  category: CategoryInfoType;
+  category: CategoryType;
   active?: boolean;
   handleEditCategory: (id: number, name: string) => void;
   handleDeleteCategory: (id: number) => void;

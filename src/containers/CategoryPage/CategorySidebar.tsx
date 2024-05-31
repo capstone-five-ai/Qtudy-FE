@@ -5,7 +5,7 @@ import Typography from '@/components/Typography/Typography';
 import { CATEGORY_TYPE } from '@/constants';
 import Category from '@/containers/CategoryPage/Category';
 import CategoryTabBar from '@/containers/CategoryPage/CategoryTabBar';
-import { CategoryInfoType, ServiceType } from '@/types/category.type';
+import { CategoryType, ServiceType } from '@/types/category.type';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -13,7 +13,7 @@ import styled from 'styled-components';
 interface CategorySidebarProps {
   // TODO: 타입 수정
   currentType: ServiceType;
-  categories: CategoryInfoType[];
+  categories: CategoryType[];
   activeCategoryId: string | null;
 }
 
@@ -29,7 +29,7 @@ function CategorySidebar({
     setShowCategoryModal(true);
   };
 
-  const handleEditCategory = async (id: number, name: string) => {
+  const handleEditCategory = async (/* id: number, name: string */) => {
     /* await CategoryApi.editCategory(id, name).then((data) => {
       const updatedCategoryList = categoryList.map((category) => {
         if (category.categoryId === data.categoryId) {
@@ -41,7 +41,7 @@ function CategorySidebar({
     }); */
   };
 
-  const handleDeleteCategory = async (id: number) => {
+  const handleDeleteCategory = async (/* id: number */) => {
     /* await CategoryApi.deleteCategory(id).then(() => {
       const updatedCategoryList = categoryList.filter(
         (category) => category.categoryId !== id

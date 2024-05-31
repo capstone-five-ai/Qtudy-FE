@@ -3,24 +3,24 @@ import Scrollbar from '@/components/Scrollbar/Scrollbar';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import ContentWrapper from '@/components/Wrapper/ContentWrapper';
 import TopButtonBar from '@/containers/CategoryDetailPage/TopButtonBar';
-import { GenerateQuizData } from '@/types/quiz.type';
+import { QuizType } from '@/types/quiz.type';
 import { useState } from 'react';
 import styled from 'styled-components';
 
-const initialQuizContent: GenerateQuizData = {
+const initialQuizContent: QuizType = {
   problemName: '',
-  problemAnswer: -1,
+  problemAnswer: '-1',
   problemCommentary: '',
   problemChoices: [''],
 };
 
 function CategoryQuizEditPage() {
-  const [quizContent, setQuizContent] =
-    useState<GenerateQuizData>(initialQuizContent);
-  const [inputOption, setInputOption] = useState<{ [key: string]: string }>({
+  const [quizContent, setQuizContent] = useState<QuizType>(initialQuizContent);
+  /* const [inputOption, setInputOption] = useState<{ [key: string]: string }>({
     type: '객관식',
     fileName: '',
-  });
+  }); */
+  const inputOption = { type: '객관식', fileName: '' };
 
   return (
     <ContentWrapper>

@@ -16,7 +16,7 @@ const GENERATED_BY: { [key: string]: string } = {
 };
 
 // TODO: 임시 타입
-type QuizType = 'SUBJECTIVE' | 'MULTIPLE';
+//type QuizType = 'SUBJECTIVE' | 'MULTIPLE';
 
 interface CategorySummaryItemsType {
   categorizedSummaryId: number;

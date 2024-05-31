@@ -4,27 +4,41 @@ import ContentWrapper from '@/components/Wrapper/ContentWrapper';
 import CategorySidebar from '@/containers/CategoryDetailPage/CategorySidebar';
 import TopButtonBar from '@/containers/CategoryDetailPage/TopButtonBar';
 import authState from '@/recoils/atoms/authState';
-import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 function CategoryQuizDetailPage() {
   const isAuthenticated = useRecoilValue(authState);
-  const [quiz, setQuiz] = useState({
+  /* const [quiz, setQuiz] = useState({
     problemName: '문제 이름',
     problemContent: '문제 내용',
     problemAnswer: 2,
     problemCommentary: '문제 해설',
     problemType: 'MULTIPLE',
     problemChoices: ['선택지1', '선택지2', '선택지3', '선택지4'],
-  });
+  }); */
+  const quiz = {
+    problemName: '문제 이름',
+    problemContent: '문제 내용',
+    problemAnswer: '2',
+    problemCommentary: '문제 해설',
+    problemType: 'MULTIPLE',
+    problemChoices: ['선택지1', '선택지2', '선택지3', '선택지4'],
+  };
 
   return (
     <ContentWrapper>
       <StyledContent $isAuthenticated={isAuthenticated}>
         {isAuthenticated && <TopButtonBar />}
         <StyledInnerContainer>
-          <QuizCheckForm quiz={quiz} />
+          <QuizCheckForm
+            quiz={{
+              problemName: quiz?.problemName,
+              problemChoices: quiz?.problemChoices,
+              problemAnswer: quiz?.problemAnswer,
+              problemCommentary: quiz?.problemCommentary,
+            }}
+          />
         </StyledInnerContainer>
       </StyledContent>
       <CategorySidebar isAuthenticated={isAuthenticated} />

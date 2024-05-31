@@ -4,8 +4,7 @@ import { CATEGORY_TYPE } from '@/constants';
 import CategoryItemSection from '@/containers/CategoryPage/CategoryItemSection';
 import CategorySidebar from '@/containers/CategoryPage/CategorySidebar';
 import NoCategorySection from '@/containers/CategoryPage/NoCategorySection';
-import { CategoryInfoType, ServiceType } from '@/types/category.type';
-import { useState } from 'react';
+import { CategoryType, ServiceType } from '@/types/category.type';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -13,13 +12,15 @@ function CategoryPage() {
   const [params] = useSearchParams();
   const type = params.get('type')?.toUpperCase() as ServiceType | undefined;
   const activeCategoryId = params.get('categoryId');
-  const [quizCategories, setQuizCategories] = useState<CategoryInfoType[]>([
+  /* const [quizCategories, setQuizCategories] = useState<CategoryType[]>([
     { categoryId: 1, categoryName: '카테고리', categoryType: '퀴즈' },
     { categoryId: 2, categoryName: '카테고리2', categoryType: '요약' },
-  ]);
-  const [summaryCategories, setSummaryCategories] = useState<
-    CategoryInfoType[]
-  >([]);
+  ]); */
+  const quizCategories: CategoryType[] = [];
+  /* const [summaryCategories, setSummaryCategories] = useState<CategoryType[]>(
+    []
+  ); */
+  const summaryCategories: CategoryType[] = [];
   const navigate = useNavigate();
 
   if (!type && quizCategories.length + summaryCategories.length === 0)
