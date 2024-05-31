@@ -1,6 +1,8 @@
+import { ServiceType } from '@/types/category.type';
+
 export interface HistoryType {
   fileId: number;
   fileName: string;
-  dtype: 'QUIZ' | 'SUMMARY';
+  dtype: ServiceType;
   createTime: string;
 }

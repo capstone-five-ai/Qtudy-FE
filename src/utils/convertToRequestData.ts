@@ -1,5 +1,4 @@
-import { QuizOptionType } from '../types/quiz.type';
-import { SummaryOptionType } from '../types/summary.type';
+import { GenerateAIQuizOption } from '@/types/quiz.type';
 
 interface ConvertType {
   [key: string]: string;
@@ -9,8 +8,8 @@ const AMOUNT: ConvertType = {
   적게: 'FEW',
   적당히: 'MEDIUM',
   많이: 'MANY',
-  짧게: 'FEW',
-  길게: 'MANY',
+  //짧게: 'FEW',
+  //길게: 'MANY',
 };
 
 const DIFFICULTY: ConvertType = {
@@ -24,18 +23,18 @@ const TYPE: ConvertType = {
   주관식: 'SUBJECTIVE',
 };
 
-export const convertToRequestData = (inputOption: ConvertType) => {
-  const convert: QuizOptionType = {
+export const convertToQuizRequestData = (inputOption: GenerateAIQuizOption) => {
+  const convert: GenerateAIQuizOption = {
     type: TYPE[inputOption.type],
     amount: AMOUNT[inputOption.amount],
     difficulty: DIFFICULTY[inputOption.difficulty],
-    fileName: inputOption.file,
+    fileName: inputOption.fileName,
   };
 
   return convert;
 };
 
-export const convertToSummaryData = (inputOption: ConvertType) => {
+/* export const convertToSummaryData = (inputOption: ConvertType) => {
   const convert: SummaryOptionType = {
     amount: AMOUNT[inputOption.amount],
     fileName: inputOption.file,
@@ -43,3 +42,4 @@ export const convertToSummaryData = (inputOption: ConvertType) => {
 
   return convert;
 };
+ */

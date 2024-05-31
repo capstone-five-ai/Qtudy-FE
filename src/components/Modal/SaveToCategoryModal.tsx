@@ -1,121 +1,42 @@
+import { postNewCategory } from '@/apis/categoryApi';
+import { postQuizToCategory } from '@/apis/quizCategoryApi';
+import { postSummaryToCategory } from '@/apis/summaryCategoryApi';
+import { ReactComponent as SaveIcon } from '@/assets/icons/save.svg';
 import PlainButton from '@/components/Button/PlainButton';
 import CheckBox from '@/components/CheckBox/CheckBox';
 import NewCategoryInputField from '@/components/InputField/CategoryInputFieldContainer';
 import DefaultModal from '@/components/Modal/DefaultModal';
 import Scrollbar from '@/components/Scrollbar/Scrollbar';
-import { CategoryInfoType } from '@/types/category.type';
-import { useState } from 'react';
+import { useGetCategoryList } from '@/hooks/useGetCategory';
+import useToast from '@/hooks/useToast';
+import { CategoryType, ServiceType } from '@/types/category.type';
+import { AxiosError } from 'axios';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 interface SaveToCategoryModalProps {
+  categoryType: ServiceType;
+  contentId: number;
   onClose: () => void;
 }
 
-// TODO: 저장 성공 시 토스트 메시지 띄우기
-function SaveToCategoryModal({ onClose }: SaveToCategoryModalProps) {
-  const [categories, setCategories] = useState<CategoryInfoType[]>([]);
+function SaveToCategoryModal({
+  categoryType,
+  contentId,
+  onClose,
+}: SaveToCategoryModalProps) {
+  const [showWarn, setShowWarn] = useState(false);
+  const [categories, setCategories] = useState<CategoryType[]>([]);
   const [newCategory, setNewCategory] = useState('');
   const [saveCategoryIds, setSaveCategoryIds] = useState<number[]>([]);
-  /* const [categories, setCategories] = useState<CategoryInfoType[]>([]);
-
-  
-  const [saveCategoryIds, setSaveCategoryIds] = useState<number[]>([]);
-  const [showWarn, setShowWarn] = useState(false);
-  const [showInput, setShowInput] = useState(false);
-
-  const getCategories = useCallback(async () => {
-    const data = await CategoryApi.getCategoryList(categoryType);
-    setCategories(data.data);
-  }, [categoryType]);
+  const { data: fetchedCategoryList } = useGetCategoryList(categoryType);
+  const { fireToast } = useToast();
 
   useEffect(() => {
-    getCategories();
-  }, [categoryType, getCategories]);
-
-  const handleChangeCategory = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewCategory(e.target.value);
-  };
-
-  const handlePostCategory = async () => {
-    try {
-      const data = await CategoryApi.createCategory(newCategory, categoryType);
-      setCategories([...categories, data]);
-      setShowWarn(false);
-    } catch (e) {
-      if (e instanceof AxiosError && e.response?.status === 400)
-        setShowWarn(true);
+    if (fetchedCategoryList) {
+      setCategories(fetchedCategoryList.data);
     }
-  }; */
-
-  /* const handleClickSave = async () => {
-    if (categoryType === 'summary')
-      await CategoryApi.saveSummaryToCategory(
-        saveCategoryIds,
-        contentId,
-        generateType
-      );
-    if (categoryType === 'quiz')
-      await CategoryApi.saveProblemToCategory(
-        saveCategoryIds,
-        contentId,
-        generateType
-      );
-
-    onClose();
-  }; */
-
-  /* return (
-    <ModalContainer onClose={onClose}>
-      <Wrapper>
-        <Header>
-          <Typography variant="button">
-            나만의 카테고리에 저장하고 관리할 수 있어요
-          </Typography>
-        </Header>
-        {categories.length > 0 && (
-          <CategoryWrapper>
-            <CategoryList
-              categories={categories}
-              saveCategoryIds={saveCategoryIds}
-              setSaveCategoryIds={setSaveCategoryIds}
-            />
-          </CategoryWrapper>
-        )}
-        <NewCategoryWrapper>
-          <NewCategoryButton onClick={() => setShowInput((prev) => !prev)}>
-            <AddCategory />
-            <Typography variant="caption2">카테고리 추가</Typography>
-          </NewCategoryButton>
-          <>
-            {showInput && (
-              <FormWrapper>
-                <InputWrapper>
-                  <InputField
-                    error={showWarn}
-                    value={newCategory}
-                    onChange={handleChangeCategory}
-                    placeholder="카테고리명을 입력해주세요."
-                  />
-                </InputWrapper>
-                <CompleteButton onClick={handlePostCategory} />
-              </FormWrapper>
-            )}
-            {showWarn && (
-              <Typography variant="caption4" color="errorRed">
-                중복되는 카테고리입니다.
-              </Typography>
-            )}
-          </>
-        </NewCategoryWrapper>
-
-        <ButtonWrapper>
-          <CTAButton size="small" onClick={handleClickSave}>
-            저장
-          </CTAButton>
-        </ButtonWrapper>
-      </Wrapper>
-    </ModalContainer>
-  ); */
+  }, [fetchedCategoryList]);
 
   const handleCheckCategory = (newId: number) => {
     const exist = saveCategoryIds.indexOf(newId);
@@ -131,6 +52,32 @@ function SaveToCategoryModal({ onClose }: SaveToCategoryModalProps) {
     const idArr = Array.from(idSet);
 
     setSaveCategoryIds(idArr);
+  };
+
+  const handleGenerateNewCategory = async () => {
+    try {
+      const convertType = categoryType === 'QUIZ' ? 'PROBLEM' : categoryType;
+
+      const data = await postNewCategory(newCategory, convertType);
+      setCategories([...categories, data]);
+      setNewCategory('');
+      setShowWarn(false);
+    } catch (e) {
+      if (e instanceof AxiosError && e.response?.status === 400)
+        setShowWarn(true);
+    }
+  };
+
+  const handlePostCategory = () => {
+    try {
+      if (categoryType === 'SUMMARY')
+        postSummaryToCategory(saveCategoryIds, contentId);
+      if (categoryType === 'QUIZ')
+        postQuizToCategory(saveCategoryIds, contentId);
+
+      onClose();
+      fireToast({ icon: <SaveIcon />, message: '카테고리에 저장되었습니다!' });
+    } catch (e) {}
   };
 
   return (
@@ -163,10 +110,13 @@ function SaveToCategoryModal({ onClose }: SaveToCategoryModalProps) {
               setNewCategory(e.target.value);
             }}
             initialOpen={false}
-            handleSubmit={() => {}}
+            handleSubmit={handleGenerateNewCategory}
+            isError={showWarn}
           />
         </StyledModalContent>
-        <PlainButton size="small">저장</PlainButton>
+        <PlainButton size="small" onClick={handlePostCategory}>
+          저장
+        </PlainButton>
       </StyledModalContentContainer>
     </DefaultModal>
   );
@@ -227,67 +177,3 @@ const StyledCategoryItem = styled.div`
     color: ${({ theme }) => theme.colors.grayScale02};
   }
 `;
-
-/* const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 60px 32px 20px 32px;
-  width: 100%;
-`;
-
-const Header = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  gap: 16px;
-
-  margin-bottom: 40px;
-`;
-
-const CategoryWrapper = styled.div`
-  margin-bottom: 24px;
-  width: 100%;
-`;
-
-const NewCategoryWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-`;
-
-const NewCategoryButton = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  background: inherit;
-  border: none;
-  box-shadow: none;
-  border-radius: 0;
-  padding: 0;
-  overflow: visible;
-
-  width: fit-content;
-`;
-
-const FormWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  gap: 12px;
-`;
-
-const InputWrapper = styled.div`
-  display: flex;
-  flex: 1;
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: end;
-  margin-top: 40px;
-`; */

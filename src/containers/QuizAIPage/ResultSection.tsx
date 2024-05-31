@@ -5,55 +5,90 @@ import QuizCheckForm from '@/components/Form/QuizCheckForm';
 import SaveToCategoryModal from '@/components/Modal/SaveToCategoryModal';
 import NumberPanel from '@/components/NumberPanel/NumberPanel';
 import Sidebar from '@/components/Sidebar/Sidebar';
+import { useGetAIQuizFile } from '@/hooks/useGetQuiz';
 import authState from '@/recoils/atoms/authState';
-import { useState } from 'react';
+import { ProblemsOfAIQuizFile } from '@/types/quiz.type';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 function ResultSection() {
+  //const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const fileId = Number(searchParams.get('id'));
   const isAuthenticated = useRecoilValue(authState);
   const [showModal, setShowModal] = useState(false);
   const [quizNum, setQuizNum] = useState(1);
+  const [quizList, setQuizList] = useState<ProblemsOfAIQuizFile[]>([]);
+  const [currentQuiz, setCurrentQuiz] = useState<ProblemsOfAIQuizFile>();
   const [isWriter, setIsWriter] = useState(false);
-  const [quiz, setQuiz] = useState({
-    problemName: '문제 이름',
-    problemContent: '문제 내용',
-    problemAnswer: 2,
-    problemCommentary: '문제 해설',
-    problemType: 'MULTIPLE',
-    problemChoices: ['선택지1', '선택지2', '선택지3', '선택지4'],
-  });
+  const { data: fetchedQuizList, isLoading } = useGetAIQuizFile(fileId);
 
-  return (
-    <>
-      <StyledContent>
-        <QuizCheckForm quiz={quiz} />
-      </StyledContent>
-      <Sidebar>
-        <SidebarContentContainer>
-          <ContentInnerContainer>
-            <NumberPanel
-              numOfQuiz={10}
-              questionNum={quizNum}
-              setQuestionNum={setQuizNum}
+  useEffect(() => {
+    if (fetchedQuizList) {
+      setQuizList(fetchedQuizList.problems);
+      setCurrentQuiz(fetchedQuizList.problems[0]);
+      setIsWriter(fetchedQuizList.isWriter);
+    }
+  }, [fetchedQuizList]);
+
+  useEffect(() => {
+    if (!fileId) return;
+    setCurrentQuiz(quizList[quizNum - 1]);
+  }, [quizNum, quizList, fileId]);
+
+  if (isLoading) return <div>Loading...</div>;
+
+  // TODO: 에러 핸들링
+
+  if (currentQuiz)
+    return (
+      <>
+        <StyledContent>
+          <QuizCheckForm quiz={currentQuiz} />
+        </StyledContent>
+        <Sidebar>
+          <SidebarContentContainer>
+            <ContentInnerContainer>
+              <NumberPanel
+                numOfQuiz={quizList.length}
+                questionNum={quizNum}
+                setQuestionNum={setQuizNum}
+              />
+              <ShareLinkButton link={window.location.href} />
+              {isWriter && (
+                <PDFButtonWrapper>
+                  <PDFDownloadButton
+                    pdfType="QUIZ"
+                    variant={1}
+                    type="AI"
+                    fileId={fileId}
+                  />
+                  <PDFDownloadButton
+                    pdfType="ANSWER"
+                    variant={1}
+                    type="AI"
+                    fileId={fileId}
+                  />
+                </PDFButtonWrapper>
+              )}
+            </ContentInnerContainer>
+            <SaveToCategoryButton
+              disabled={!isAuthenticated}
+              onClick={() => setShowModal(true)}
             />
-            <ShareLinkButton link={window.location.href} />
-            {isWriter && (
-              <PDFButtonWrapper>
-                <PDFDownloadButton pdfType="QUIZ" variant={1} />
-                <PDFDownloadButton pdfType="ANSWER" variant={1} />
-              </PDFButtonWrapper>
-            )}
-          </ContentInnerContainer>
-          <SaveToCategoryButton
-            disabled={!isAuthenticated}
-            onClick={() => setShowModal(true)}
+          </SidebarContentContainer>
+        </Sidebar>
+        {showModal && (
+          <SaveToCategoryModal
+            categoryType="QUIZ"
+            contentId={fileId}
+            onClose={() => setShowModal(false)}
           />
-        </SidebarContentContainer>
-      </Sidebar>
-      {showModal && <SaveToCategoryModal onClose={() => setShowModal(false)} />}
-    </>
-  );
+        )}
+      </>
+    );
 }
 
 export default ResultSection;

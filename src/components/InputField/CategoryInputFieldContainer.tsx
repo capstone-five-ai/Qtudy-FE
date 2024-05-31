@@ -7,11 +7,13 @@ interface NewCategoryInputFieldProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   initialOpen?: boolean;
   handleSubmit: () => void;
+  isError?: boolean;
 }
 
 function CategoryInputFieldContainer({
   initialOpen = true,
   handleSubmit,
+  isError = false,
   ...props
 }: NewCategoryInputFieldProps) {
   const [openInput, setOpenInput] = useState(initialOpen);
@@ -26,6 +28,7 @@ function CategoryInputFieldContainer({
           <NameInputField
             placeholder="카테고리명을 입력해주세요."
             errorMessage="중복되는 카테고리입니다."
+            isError={isError}
             {...props}
           />
           <button type="button" onClick={handleSubmit}>

@@ -1,32 +1,31 @@
 import { CommentDefaultInputField } from '@/components/InputField/CommentInputField';
+import { ProblemsOfAIQuizFile } from '@/types/quiz.type';
 import getCircleNum from '@/utils/getCircleNum';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 interface QuizCheckFormProps {
-  quiz: {
-    problemName: string;
-    problemType: string;
-    problemChoices: string[];
-    problemAnswer: number;
-    problemCommentary: string;
-  };
+  quiz: ProblemsOfAIQuizFile;
 }
 
 function QuizCheckForm({ quiz }: QuizCheckFormProps) {
   const [showComment, setShowComment] = useState(false);
 
+  useEffect(() => {
+    setShowComment(false);
+  }, [quiz]);
+
   return (
     <StyledContainer>
       <StyledQuizContent>
         <div className="name">Q. {quiz.problemName}</div>
-        {quiz.problemType === 'MULTIPLE' && (
+        {quiz.problemAnswer && (
           <div className="choices">
             {quiz.problemChoices.map((choice, index) => (
               <span
                 key={`${choice}-${index}`}
                 className={
-                  quiz.problemAnswer === index + 1 && showComment
+                  Number(quiz.problemAnswer) === index + 1 && showComment
                     ? 'answer'
                     : ''
                 }
@@ -39,10 +38,14 @@ function QuizCheckForm({ quiz }: QuizCheckFormProps) {
       </StyledQuizContent>
       <CommentDefaultInputField
         commentary={quiz.problemCommentary}
-        answer={quiz.problemAnswer > 0 ? quiz.problemAnswer : undefined}
+        answer={
+          quiz.problemAnswer && Number(quiz.problemAnswer) > 0
+            ? Number(quiz.problemAnswer)
+            : undefined
+        }
         isCommentOpen={showComment}
         setIsCommentOpen={setShowComment}
-        isMultiple={quiz.problemType === 'MULTIPLE'}
+        isMultiple={!!quiz.problemAnswer}
       />
     </StyledContainer>
   );

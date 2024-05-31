@@ -1,12 +1,11 @@
 import RadioInputField from '@/components/InputField/RadioInputField';
+import { GenerateAIQuizOption } from '@/types/quiz.type';
 import styled from 'styled-components';
 
 interface RadioInputFieldContainerProps {
-  optionInputKey: string;
-  inputOption: { [key: string]: string };
-  setInputOption: React.Dispatch<
-    React.SetStateAction<{ [key: string]: string }>
-  >;
+  optionInputKey: keyof GenerateAIQuizOption;
+  inputOption: GenerateAIQuizOption;
+  setInputOption: React.Dispatch<React.SetStateAction<GenerateAIQuizOption>>;
   inputFieldLabel: string;
   inputFieldList: string[];
   disabled?: boolean;

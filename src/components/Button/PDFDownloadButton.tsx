@@ -1,16 +1,15 @@
 import styled from 'styled-components';
 //import fileDownload from 'js-file-download';
-//import FileApi from '../../api/FileApi';
+import { downloadAIQuizFile } from '@/apis/fileApi';
 import { ReactComponent as PDFIcon } from '@/assets/icons/download.svg';
 import { ServiceType } from '@/types/category.type';
-//import Typography from '../Typography';
 
 type Props = {
-  //fileId: number; // 카테고리에서는 카테고리 id값
+  fileId: number; // 카테고리에서는 카테고리 id값
   pdfType: ServiceType | 'ANSWER';
   variant?: 1 | 2;
-  //type: 'ai' | 'user' | 'category';
-  //fileName: string;
+  type: 'AI' | 'USER' | 'CATEGORY';
+  fileName?: string;
 };
 
 const BUTTON_LABEL = {
@@ -22,29 +21,31 @@ const BUTTON_LABEL = {
 // TODO: PDF 다운로드 버튼 기능 구현
 function PDFDownloadButton({
   variant = 1,
-  //fileId,
+  fileId,
   pdfType,
-  //type,
-  //fileName,
+  type,
+  fileName,
 }: Props) {
   const handleClickDownload = async () => {
-    /* if (type === 'ai') {
-      const data = await FileApi.downloadAIFile(fileId, pdfType);
+    if (type === 'AI') {
+      const convertPdfType = pdfType === 'QUIZ' ? 'PROBLEM' : 'ANSWER';
+      const data = await downloadAIQuizFile(fileId, convertPdfType);
       window.location.href = data.fileUrl;
       return;
-    } */
+    }
+
     /* let pdfBlob;
 
-    if (type === 'user' && pdfType === 'SUMMARY')
+    if (type === 'USER' && pdfType === 'SUMMARY')
       pdfBlob = await FileApi.downloadUserSummaryFile(fileId);
-    if (type === 'category' && pdfType === 'PROBLEM')
+    if (type === 'CATEGORY' && pdfType === 'PROBLEM')
       pdfBlob = await FileApi.downloadCategoryProblemFile(fileId);
-    if (type === 'category' && pdfType === 'ANSWER')
+    if (type === 'CATEGORY' && pdfType === 'ANSWER')
       pdfBlob = await FileApi.downloadCategoryAnswerFile(fileId);
-    if (type === 'category' && pdfType === 'SUMMARY')
-      pdfBlob = await FileApi.downloadCategorySummaryFile(fileId);
+    if (type === 'CATEGORY' && pdfType === 'SUMMARY')
+      pdfBlob = await FileApi.downloadCategorySummaryFile(fileId); */
 
-    fileDownload(pdfBlob, `${fileName}.pdf`); */
+    /* fileDownload(pdfBlob, `${fileName}.pdf`); */
   };
 
   if (variant === 1)
