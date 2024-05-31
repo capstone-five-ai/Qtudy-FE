@@ -2,24 +2,23 @@ import GenerateButton from '@/components/Button/GenerateButton';
 import FileNameInputField from '@/components/InputField/FileNameInputField';
 import RadioInputFieldContainer from '@/components/InputField/RadioInputFieldContainer';
 import Sidebar from '@/components/Sidebar/Sidebar';
-import { GenerateQuizOption } from '@/types/quiz.type';
 import styled from 'styled-components';
 
-interface GenerateSidebarProps {
+interface GenerateSidebarProps<T> {
   optionList: {
-    key: keyof GenerateQuizOption;
+    key: keyof T;
     label: string;
     options: string[];
   }[];
-  inputOption: GenerateQuizOption;
-  setInputOption: React.Dispatch<React.SetStateAction<GenerateQuizOption>>;
+  inputOption: T;
+  setInputOption: React.Dispatch<React.SetStateAction<T>>;
   handleFileNameChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: () => void;
   generateButtonDisabled?: boolean;
   inputFieldDisabled?: boolean;
 }
 
-function GenerateSidebar({
+function GenerateSidebar<T extends object>({
   optionList,
   inputOption,
   setInputOption,
@@ -27,14 +26,14 @@ function GenerateSidebar({
   handleSubmit,
   generateButtonDisabled = false,
   inputFieldDisabled = false,
-}: GenerateSidebarProps) {
+}: GenerateSidebarProps<T>) {
   return (
     <Sidebar>
       <StyledSidebarContentContainer>
         <StyledOptionContainer>
           {optionList.map((option) => (
             <RadioInputFieldContainer
-              key={option.key}
+              key={String(option.key)}
               optionInputKey={option.key}
               inputOption={inputOption}
               setInputOption={setInputOption}
@@ -46,7 +45,7 @@ function GenerateSidebar({
           {'fileName' in inputOption && (
             <FileNameInputField
               name="fileName"
-              value={inputOption.fileName}
+              value={inputOption.fileName as string}
               onChange={handleFileNameChange}
               disabled={inputFieldDisabled}
             />

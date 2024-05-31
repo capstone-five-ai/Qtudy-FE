@@ -1,24 +1,23 @@
 import RadioInputField from '@/components/InputField/RadioInputField';
-import { GenerateQuizOption } from '@/types/quiz.type';
 import styled from 'styled-components';
 
-interface RadioInputFieldContainerProps {
-  optionInputKey: keyof GenerateQuizOption;
-  inputOption: GenerateQuizOption;
-  setInputOption: React.Dispatch<React.SetStateAction<GenerateQuizOption>>;
+interface RadioInputFieldContainerProps<T> {
+  optionInputKey: keyof T;
+  inputOption: T;
+  setInputOption: React.Dispatch<React.SetStateAction<T>>;
   inputFieldLabel: string;
   inputFieldList: string[];
   disabled?: boolean;
 }
 
-function RadioInputFieldContainer({
+function RadioInputFieldContainer<T>({
   optionInputKey,
   inputOption,
   setInputOption,
   inputFieldLabel,
   inputFieldList,
   disabled = false,
-}: RadioInputFieldContainerProps) {
+}: RadioInputFieldContainerProps<T>) {
   return (
     <StyledContainer>
       <div className="label">{inputFieldLabel}</div>

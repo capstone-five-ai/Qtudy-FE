@@ -3,12 +3,19 @@ import GenerateSidebar from '@/components/Sidebar/GenerateSidebar';
 import GenerateMethodWrapper from '@/components/Wrapper/GenerateMethodWrapper';
 import GenerateTextWrapper from '@/containers/QuizAIPage/GenerateTextWrapper';
 import GenerateUploadWrapper from '@/containers/QuizAIPage/GenerateUploadWrapper';
+import { GenerateSummaryOption } from '@/types/summary.type';
 import uploadFile, { UploadedFileType } from '@/utils/uploadFile';
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-const GENERATE_OPTIONS = [
+export interface GenerateOptionsType {
+  key: keyof GenerateSummaryOption;
+  label: string;
+  options: string[];
+}
+
+const GENERATE_OPTIONS: GenerateOptionsType[] = [
   { key: 'amount', label: '요약량', options: ['짧게', '적당히', '길게'] },
 ];
 
