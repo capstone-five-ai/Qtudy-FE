@@ -18,7 +18,7 @@ function ToastMessage() {
     const setClosingTimeout = setTimeout(() => {
       setIsClosing(true);
       clearTimeout(setClosingTimeout);
-    }, 1000);
+    }, toast.duration ?? 1000);
 
     setIsClosing(false);
     setShow(false);
