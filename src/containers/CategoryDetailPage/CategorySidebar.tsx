@@ -1,6 +1,6 @@
-import { ReactComponent as DeleteIcon } from '@/assets/icons/trash.svg';
 import SaveToCategoryButton from '@/components/Button/SaveToCategoryButton';
 import ShareLinkButton from '@/components/Button/ShareLinkButton';
+import DeleteIcon from '@/components/Icon/DeleteIcon';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import styled from 'styled-components';
 

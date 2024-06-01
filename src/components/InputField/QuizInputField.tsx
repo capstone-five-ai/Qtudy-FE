@@ -1,5 +1,5 @@
 import { ReactComponent as EditIcon } from '@/assets/icons/edit.svg';
-import { ReactComponent as DeleteIcon } from '@/assets/icons/trash.svg';
+import DeleteIcon from '@/components/Icon/DeleteIcon';
 import styled, { css } from 'styled-components';
 
 const PLACEHOLDER = {

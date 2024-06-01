@@ -1,7 +1,7 @@
-import { ReactComponent as DeleteIcon } from '@/assets/icons/trash.svg';
 import PlainButton from '@/components/Button/PlainButton';
 import DefaultModal from '@/components/Modal/DefaultModal';
 import styled from 'styled-components';
+import DeleteIcon from '../Icon/DeleteIcon';
 
 interface DeleteItemModalProps {
   onConfirm: () => void;
