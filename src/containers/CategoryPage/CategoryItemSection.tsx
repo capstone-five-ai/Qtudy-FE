@@ -1,46 +1,51 @@
+import PDFDownloadButton from '@/components/Button/PDFDownloadButton';
 import Scrollbar from '@/components/Scrollbar/Scrollbar';
+import CategoryQuizItem from '@/containers/CategoryPage/CategoryItem/CategoryQuizItem';
+import CategorySummaryItem from '@/containers/CategoryPage/CategoryItem/CategorySummaryItem';
 import NoItemSection from '@/containers/CategoryPage/NoItemSection';
-import { ServiceType } from '@/types/category.type';
-import { useEffect } from 'react';
+import {
+  QuizCategoryItemType,
+  ServiceType,
+  SummaryCategoryItemType,
+} from '@/types/category.type';
 import styled from 'styled-components';
 
 interface CategoryItemSectionProps {
   activeType: ServiceType;
-  activeCategoryId: string;
+  activeCategoryId: string | null;
+  activeCategoryItems: (QuizCategoryItemType | SummaryCategoryItemType)[]; // 타입 수정해야 함.
 }
 
 function CategoryItemSection({
   activeType,
   activeCategoryId,
+  activeCategoryItems,
 }: CategoryItemSectionProps) {
-  //const [quizItems, setQuizItems] = useState([{}]);
-  const quizItems = [{}];
-  //const [summaryItems, setSummaryItems] = useState([{}]);
-  const summaryItems = [{}];
+  function isQuizItemType(
+    item: QuizCategoryItemType | SummaryCategoryItemType
+  ): item is QuizCategoryItemType {
+    return (item as QuizCategoryItemType).categorizedProblemId !== undefined;
+  }
 
-  useEffect(() => {
-    /* fetchItems(activeType, activeCategoryId); */
-  }, [activeType, activeCategoryId]);
-
-  /* const handleDeleteQuizItem = async (quizId: number) => {
-    await QuizCategoryApi.delete(quizId).then(() => {
+  const handleDeleteQuizItem = async (/* quizId: number */) => {
+    /* await QuizCategoryApi.delete(quizId).then(() => {
       const newQuizItems = activeCategoryQuizItems.filter(
         (item) => item.categorizedProblemId !== quizId
       );
       setActiveCategoryQuizItems(newQuizItems);
-    });
-  }; */
+    }); */
+  };
 
-  /* const handleDeleteSummaryItem = async (summaryId: number) => {
-    await SummaryCategoryApi.delete(summaryId).then(() => {
+  const handleDeleteSummaryItem = async (/* summaryId: number */) => {
+    /* await SummaryCategoryApi.delete(summaryId).then(() => {
       const newSummaryItems = activeCategorySummaryItems.filter(
         (item) => item.categorizedSummaryId !== summaryId
       );
       setActiveCategorySummaryItems(newSummaryItems);
-    });
-  }; */
+    }); */
+  };
 
-  if (quizItems.length + summaryItems.length === 0) {
+  if (activeCategoryId && activeCategoryItems.length === 0) {
     return <NoItemSection categoryType={activeType} />;
   }
 
@@ -48,31 +53,49 @@ function CategoryItemSection({
     return (
       <StyledContainer>
         <StyledPDFButtonWrapper>
-          {/* <PDFDownloadButton pdfType="QUIZ" variant={2} />
-          <PDFDownloadButton pdfType="ANSWER" variant={2} /> */}
+          <PDFDownloadButton
+            fileId={Number(activeCategoryId)}
+            pdfType="QUIZ"
+            variant={2}
+            type="CATEGORY"
+          />
+          <PDFDownloadButton
+            fileId={Number(activeCategoryId)}
+            pdfType="ANSWER"
+            variant={2}
+            type="CATEGORY"
+          />
         </StyledPDFButtonWrapper>
-        {/* {quizItems.map((item) => (
+        {activeCategoryItems.map((item, index) => (
           <CategoryQuizItem
-            quizItem={item}
+            key={isQuizItemType(item) ? item.categorizedProblemId : index}
+            quizItem={item as QuizCategoryItemType}
             handleDeleteItem={handleDeleteQuizItem}
           />
-        ))} */}
+        ))}
       </StyledContainer>
     );
 
-  return (
-    <StyledContainer>
-      {/* <StyledPDFButtonWrapper>
-        <PDFDownloadButton pdfType="SUMMARY" variant={2} />
-  </StyledPDFButtonWrapper> */}
-      {/* {summaryItems.map((item) => (
-        <CategorySummaryItem
-          summaryItem={item}
-          handleDeleteItem={handleDeleteSummaryItem}
-        />
-      ))} */}
-    </StyledContainer>
-  );
+  if (activeType === 'SUMMARY')
+    return (
+      <StyledContainer>
+        <StyledPDFButtonWrapper>
+          <PDFDownloadButton
+            fileId={Number(activeCategoryId)}
+            pdfType="SUMMARY"
+            variant={2}
+            type="CATEGORY"
+          />
+        </StyledPDFButtonWrapper>
+        {activeCategoryItems.map((item, index) => (
+          <CategorySummaryItem
+            key={isQuizItemType(item) ? index : item.categorizedSummaryId}
+            summaryItem={item as SummaryCategoryItemType}
+            handleDeleteItem={handleDeleteSummaryItem}
+          />
+        ))}
+      </StyledContainer>
+    );
 }
 
 export default CategoryItemSection;
@@ -81,7 +104,7 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 9px 20px 9px 36px;
+  padding: 24px 20px 24px 36px;
 
   overflow-y: scroll;
   ${Scrollbar}

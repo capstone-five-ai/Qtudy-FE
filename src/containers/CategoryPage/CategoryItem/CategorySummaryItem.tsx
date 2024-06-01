@@ -7,6 +7,7 @@ import {
 } from '@/containers/CategoryPage/CategoryItem/CategoryItem.style';
 import CategoryItemDateInfo from '@/containers/CategoryPage/CategoryItem/CategoryItemDateInfo';
 import CategoryItemTitleInfo from '@/containers/CategoryPage/CategoryItem/CategoryItemTitleInfo';
+import { SummaryCategoryItemType } from '@/types/category.type';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -15,20 +16,8 @@ const GENERATED_BY: { [key: string]: string } = {
   AI: 'AI',
 };
 
-// TODO: 임시 타입
-//type QuizType = 'SUBJECTIVE' | 'MULTIPLE';
-
-interface CategorySummaryItemsType {
-  categorizedSummaryId: number;
-  summaryGeneratedBy: string;
-  summaryTitle: string;
-  summaryContent: string;
-  createTime: string;
-  updateTime: string;
-}
-
 interface CategorySummaryItemProps {
-  summaryItem: CategorySummaryItemsType;
+  summaryItem: SummaryCategoryItemType;
   handleDeleteItem: (id: number) => void;
 }
 function CategorySummaryItem({
@@ -78,7 +67,10 @@ function CategorySummaryItem({
             }}
           />
         </StyledCategoryItemInnerContainer>
-        <CategoryItemDateInfo createDate="" updateDate="" />
+        <CategoryItemDateInfo
+          createDate={summaryItem.createTime}
+          updateDate={summaryItem.updateTime}
+        />
       </StyledCategoryItemContainer>
     </>
   );
@@ -88,6 +80,7 @@ export default CategorySummaryItem;
 
 const ContentContainer = styled.div`
   height: 38px;
+  text-align: left;
 
   & > div {
     display: -webkit-box;

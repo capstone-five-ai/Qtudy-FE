@@ -4,7 +4,12 @@ import { CATEGORY_TYPE } from '@/constants';
 import CategoryItemSection from '@/containers/CategoryPage/CategoryItemSection';
 import CategorySidebar from '@/containers/CategoryPage/CategorySidebar';
 import NoCategorySection from '@/containers/CategoryPage/NoCategorySection';
+import {
+  useGetCategoryDetailList,
+  useGetCategoryList,
+} from '@/hooks/useGetCategory';
 import { CategoryType, ServiceType } from '@/types/category.type';
+import { useEffect, useState } from 'react';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -12,16 +17,30 @@ function CategoryPage() {
   const [params] = useSearchParams();
   const type = params.get('type')?.toUpperCase() as ServiceType | undefined;
   const activeCategoryId = params.get('categoryId');
-  /* const [quizCategories, setQuizCategories] = useState<CategoryType[]>([
-    { categoryId: 1, categoryName: '카테고리', categoryType: '퀴즈' },
-    { categoryId: 2, categoryName: '카테고리2', categoryType: '요약' },
-  ]); */
-  const quizCategories: CategoryType[] = [];
-  /* const [summaryCategories, setSummaryCategories] = useState<CategoryType[]>(
+  const [quizCategories, setQuizCategories] = useState<CategoryType[]>([]);
+  const [summaryCategories, setSummaryCategories] = useState<CategoryType[]>(
     []
-  ); */
-  const summaryCategories: CategoryType[] = [];
+  );
   const navigate = useNavigate();
+  const { data: fetchedQuizCategoryList } = useGetCategoryList('QUIZ');
+  const { data: fetchedSummaryCategoryList } = useGetCategoryList('SUMMARY');
+  const { data: currentCategoryDetailList, refetch } = useGetCategoryDetailList(
+    activeCategoryId ?? ''
+  );
+
+  useEffect(() => {
+    if (activeCategoryId) refetch();
+  }, [activeCategoryId]);
+
+  useEffect(() => {
+    if (fetchedQuizCategoryList)
+      setQuizCategories(fetchedQuizCategoryList.data);
+  }, [fetchedQuizCategoryList]);
+
+  useEffect(() => {
+    if (fetchedSummaryCategoryList)
+      setSummaryCategories(fetchedSummaryCategoryList.data);
+  }, [fetchedSummaryCategoryList]);
 
   if (!type && quizCategories.length + summaryCategories.length === 0)
     return <NoCategorySection />;
@@ -41,6 +60,16 @@ function CategoryPage() {
             <CategoryItemSection
               activeType={type}
               activeCategoryId={activeCategoryId}
+              activeCategoryItems={
+                currentCategoryDetailList
+                  ? type === 'QUIZ'
+                    ? currentCategoryDetailList.categorizedProblemResponses.data
+                    : type === 'SUMMARY'
+                      ? currentCategoryDetailList.categorizedSummaryResponses
+                          .data
+                      : []
+                  : []
+              }
             />
             <StyledButtonWrapper>
               <PlainButton

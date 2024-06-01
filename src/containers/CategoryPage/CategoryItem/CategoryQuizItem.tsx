@@ -6,6 +6,7 @@ import {
 } from '@/containers/CategoryPage/CategoryItem/CategoryItem.style';
 import CategoryItemDateInfo from '@/containers/CategoryPage/CategoryItem/CategoryItemDateInfo';
 import CategoryItemTitleInfo from '@/containers/CategoryPage/CategoryItem/CategoryItemTitleInfo';
+import { QuizCategoryItemType } from '@/types/category.type';
 import { useState } from 'react';
 
 const QUIZ_TYPE = {
@@ -18,20 +19,8 @@ const GENERATED_BY: { [key: string]: string } = {
   AI: 'AI',
 };
 
-// TODO: 임시 타입
-type QuizType = 'SUBJECTIVE' | 'MULTIPLE';
-
-interface CategoryQuizItemsType {
-  categorizedProblemId: number;
-  problemGeneratedBy: string;
-  problemType: QuizType;
-  problemName: string;
-  createTime: string;
-  updateTime: string;
-}
-
 interface CategoryQuizItemProps {
-  quizItem: CategoryQuizItemsType;
+  quizItem: QuizCategoryItemType;
   handleDeleteItem: (id: number) => void;
 }
 function CategoryQuizItem({
@@ -63,7 +52,7 @@ function CategoryQuizItem({
         <StyledCategoryItemInnerContainer>
           <div className="children-container">
             <CategoryItemTitleInfo
-              createInfo={`${GENERATED_BY[quizItem.problemGeneratedBy]} 생성 / ${QUIZ_TYPE[quizItem.problemType]}`}
+              createInfo={`${GENERATED_BY[quizItem.problemGeneratedBy]} 생성 / ${Object.entries(QUIZ_TYPE).find(([_, value]) => value === quizItem.problemType)?.[0]}`}
               title={`Q. ${quizItem.problemName}`}
             />
           </div>
@@ -76,7 +65,10 @@ function CategoryQuizItem({
             }}
           />
         </StyledCategoryItemInnerContainer>
-        <CategoryItemDateInfo createDate="" updateDate="" />
+        <CategoryItemDateInfo
+          createDate={quizItem.createTime}
+          updateDate={quizItem.updateTime}
+        />
       </StyledCategoryItemContainer>
     </>
   );
