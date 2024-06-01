@@ -1,26 +1,35 @@
 import useToast from '@/hooks/useToast';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 function ToastMessage() {
   const { toast } = useToast();
+  const [isClosing, setIsClosing] = useState<boolean>(false);
+  const [show, setShow] = useState(toast.message?.length ? true : false);
 
   useEffect(() => {
     if (!toast.message) return;
 
     const setShowTimeout = setTimeout(() => {
+      setShow(true);
       clearTimeout(setShowTimeout);
     }, 100);
 
     const setClosingTimeout = setTimeout(() => {
+      setIsClosing(true);
       clearTimeout(setClosingTimeout);
     }, 1000);
+
+    setIsClosing(false);
+    setShow(false);
   }, [toast]);
 
   if (!toast.message) return null;
 
   return (
-    <StyledContainer>
+    <StyledContainer
+      className={isClosing ? 'closing show' : `${show && 'show'}`}
+    >
       <StyledInnerContainer>
         <StyledContent>
           {toast.icon}
@@ -29,7 +38,7 @@ function ToastMessage() {
         {toast.buttonText && (
           <StyledButton
             onClick={() => {
-              toast.buttonHandler && toast.buttonHandler();
+              toast.buttonHandler?.();
             }}
           >
             {toast.buttonText}
@@ -48,6 +57,16 @@ const StyledContainer = styled.div`
   bottom: 30px;
   transform: translateX(-50%);
   z-index: 10;
+
+  opacity: 0;
+  &.show {
+    opacity: 1;
+  }
+  &.closing {
+    opacity: 0;
+  }
+
+  transition: opacity 300ms ease-in-out;
 `;
 
 const StyledInnerContainer = styled.div`
