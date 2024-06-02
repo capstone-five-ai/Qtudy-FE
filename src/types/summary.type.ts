@@ -6,6 +6,7 @@ export interface GenerateUserSummaryOption {
 export interface GenerateSummaryOption {
   amount?: string;
   fileName: string;
+  isDuplicatedFileName?: boolean | null;
 }
 
 export interface GenerateAISummaryFile extends GenerateUserSummaryOption {

@@ -1,4 +1,5 @@
 import { authClient } from '@/apis/client';
+import { ServiceType } from '@/types/category.type';
 
 export const downloadAIFile = async (fileId: number, pdfType: string) => {
   const response = await authClient.post(`api/file/downloadPdf/${fileId}`, {
@@ -86,4 +87,15 @@ export const downloadAnswer = async (categoryId: number) => {
 export const downloadSummary = async (categoryId: number) => {
   // 카테고리별 요약(Categorized Summary)/카테고리별 요약 정리 PDF 다운
   await authClient.post(`api/categorized-summary/download-pdf/${categoryId}`);
+};
+
+export const checkDuplicateFileName = async (
+  fileName: string,
+  type: Extract<ServiceType, 'SUMMARY'> | 'PROBLEM'
+) => {
+  const response = await authClient.post(`/api/file/check-duplicate`, {
+    fileName,
+    type,
+  });
+  return response.data;
 };

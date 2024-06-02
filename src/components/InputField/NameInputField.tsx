@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-interface NameInputFieldProps
+export interface NameInputFieldProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   isError?: boolean;
   errorMessage?: string;
