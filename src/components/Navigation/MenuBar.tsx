@@ -51,6 +51,7 @@ function MenuBar() {
       <StyledContainer>
         {HEADER_MENU_LIST.map((menu) => (
           <StyledMenuButton
+            key={menu.path}
             $isActive={isActivePath(menu.path)}
             onClick={() => {
               if (isAuthenticated) {

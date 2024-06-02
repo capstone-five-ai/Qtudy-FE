@@ -7,7 +7,7 @@ import { useGetCategoryQuizItem } from '@/hooks/useGetQuiz';
 import authState from '@/recoils/atoms/authState';
 import { CategoryQuizItem } from '@/types/quiz.type';
 import { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
@@ -27,6 +27,13 @@ function CategoryQuizDetailPage() {
       setIsWriter(quizData.isWriter);
     }
   }, [quizData]);
+
+  if (isNaN(categoryId) || isNaN(quizId))
+    return <Navigate to="/management/category" />;
+
+  if (!quizData || !quizData.response) {
+    return <Navigate to="/management/category" />;
+  }
 
   return (
     <ContentWrapper>

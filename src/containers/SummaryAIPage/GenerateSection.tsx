@@ -14,7 +14,7 @@ import loadingState from '@/recoils/atoms/loadingState';
 import { GenerateSummaryOption } from '@/types/summary.type';
 import uploadFile, { UploadedFileType } from '@/utils/uploadFile';
 import { useEffect, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Navigate, useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
@@ -95,6 +95,9 @@ function GenerateSection() {
       });
     }
   };
+
+  if (method !== null && method !== 'upload' && method !== 'text')
+    return <Navigate to="/summary" />;
 
   return (
     <>

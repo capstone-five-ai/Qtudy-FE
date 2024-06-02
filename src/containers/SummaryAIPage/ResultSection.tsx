@@ -9,7 +9,7 @@ import { useGetAISummaryFile } from '@/hooks/useGetSummary';
 import authState from '@/recoils/atoms/authState';
 import { SummaryType } from '@/types/summary.type';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Navigate, useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
@@ -20,7 +20,11 @@ function ResultSection() {
   const [showModal, setShowModal] = useState(false);
   const [summary, setSummary] = useState<SummaryType>();
   const [isWriter, setIsWriter] = useState(false);
-  const { data: fetchedSummaryList, isLoading } = useGetAISummaryFile(fileId);
+  const {
+    data: fetchedSummaryList,
+    isLoading,
+    error,
+  } = useGetAISummaryFile(fileId);
 
   useEffect(() => {
     if (fetchedSummaryList) {
@@ -30,6 +34,8 @@ function ResultSection() {
   }, [fetchedSummaryList]);
 
   if (isLoading) return <div>Loading...</div>;
+
+  if (isNaN(fileId) || error) return <Navigate to="/summary/ai" />;
 
   if (summary)
     return (

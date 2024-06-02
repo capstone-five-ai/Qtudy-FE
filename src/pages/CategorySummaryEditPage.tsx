@@ -6,7 +6,12 @@ import TopButtonBar from '@/containers/CategoryDetailPage/TopButtonBar';
 import GenerateTextWrapper from '@/containers/QuizAIPage/GenerateTextWrapper';
 import { CategorySummaryItem } from '@/types/summary.type';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 import styled from 'styled-components';
 
 function CategorySummaryEditPage() {
@@ -25,6 +30,10 @@ function CategorySummaryEditPage() {
       const summary = state.summaryData as CategorySummaryItem;
       setSummaryContent(summary.summaryContent);
       setFileName(summary.summaryTitle);
+    } else {
+      navigate(
+        `/management/category/summary?categoryId=${categoryId}&id=${summaryId}`
+      );
     }
   }, []);
 
@@ -42,6 +51,9 @@ function CategorySummaryEditPage() {
       console.error(e);
     }
   };
+
+  if (isNaN(categoryId) || isNaN(summaryId))
+    return <Navigate to="/management/category" />;
 
   return (
     <ContentWrapper>

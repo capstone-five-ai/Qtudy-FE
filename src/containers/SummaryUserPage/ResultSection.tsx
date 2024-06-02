@@ -9,7 +9,7 @@ import { useGetUserSummaryItem } from '@/hooks/useGetSummary';
 import authState from '@/recoils/atoms/authState';
 import { GenerateUserSummaryItem } from '@/types/summary.type';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Navigate, useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
@@ -20,7 +20,11 @@ function ResultSection() {
   const [showModal, setShowModal] = useState(false);
   const [isWriter, setIsWriter] = useState(false);
   const [summary, setSummary] = useState<GenerateUserSummaryItem>();
-  const { data: fetchedSummary, isLoading } = useGetUserSummaryItem(summaryId);
+  const {
+    data: fetchedSummary,
+    error,
+    isLoading,
+  } = useGetUserSummaryItem(summaryId);
 
   useEffect(() => {
     if (fetchedSummary) {
@@ -28,6 +32,8 @@ function ResultSection() {
       setIsWriter(fetchedSummary.isWriter);
     }
   }, [fetchedSummary]);
+
+  if (isNaN(summaryId) || error) return <Navigate to="/quiz/user" />;
 
   if (isLoading) return <div>Loading...</div>;
 

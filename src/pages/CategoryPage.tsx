@@ -35,8 +35,13 @@ function CategoryPage() {
 
   useEffect(() => {
     if (activeCategoryId) {
+      console.log('1');
       refetchCurrentCategoryDetailList().then((result) => {
+        console.log('2');
+        console.log(result);
         if (result.error) {
+          console.log('3');
+          console.log(result.error);
           navigate(`/management/category?type=${type?.toLowerCase()}`, {
             replace: true,
           });
@@ -47,18 +52,19 @@ function CategoryPage() {
 
   useEffect(() => {
     if (fetchedQuizCategoryList)
-      setQuizCategories(fetchedQuizCategoryList.data);
+      setQuizCategories(fetchedQuizCategoryList?.data || []);
   }, [fetchedQuizCategoryList]);
 
   useEffect(() => {
     if (fetchedSummaryCategoryList)
-      setSummaryCategories(fetchedSummaryCategoryList.data);
+      setSummaryCategories(fetchedSummaryCategoryList?.data || []);
   }, [fetchedSummaryCategoryList]);
 
-  if (!type && quizCategories.length + summaryCategories.length === 0)
-    return <NoCategorySection />;
+  if (type !== 'QUIZ' && type !== 'SUMMARY')
+    return <Navigate to="/management/category?type=quiz" replace />;
 
-  if (!type) return <Navigate to="/management/category?type=quiz" replace />;
+  if (quizCategories.length + summaryCategories.length === 0)
+    return <NoCategorySection />;
 
   return (
     <StyledContainer>

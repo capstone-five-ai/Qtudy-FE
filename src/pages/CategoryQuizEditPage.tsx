@@ -7,7 +7,12 @@ import TopButtonBar from '@/containers/CategoryDetailPage/TopButtonBar';
 import { CategoryQuizItem, QuizType } from '@/types/quiz.type';
 import { QUIZ_TYPE } from '@/utils/convertToRequestData';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 import styled from 'styled-components';
 
 const initialQuizContent: QuizType = {
@@ -42,6 +47,10 @@ function CategoryQuizEditPage() {
         problemCommentary: quiz.problemCommentary,
         problemChoices: quiz.problemChoices ?? [],
       });
+    } else {
+      navigate(
+        `/management/category/quiz?categoryId=${categoryId}&id=${quizId}`
+      );
     }
   }, []);
 
@@ -57,6 +66,9 @@ function CategoryQuizEditPage() {
       console.error(e);
     }
   };
+
+  if (isNaN(categoryId) || isNaN(quizId))
+    return <Navigate to="/management/category" />;
 
   return (
     <ContentWrapper>

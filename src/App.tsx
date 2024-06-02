@@ -7,7 +7,13 @@ import { RouterProvider } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 0, // 모든 쿼리 재시도 X
+    },
+  },
+});
 
 function App() {
   return (

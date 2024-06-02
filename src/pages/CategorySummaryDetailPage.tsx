@@ -6,7 +6,7 @@ import { useGetCategorySummaryItem } from '@/hooks/useGetSummary';
 import authState from '@/recoils/atoms/authState';
 import { CategorySummaryItem } from '@/types/summary.type';
 import { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
@@ -26,6 +26,13 @@ function CategorySummaryDetailPage() {
       setIsWriter(summaryData.isWriter);
     }
   }, [summaryData]);
+
+  if (isNaN(categoryId) || isNaN(summaryId))
+    return <Navigate to="/management/category" />;
+
+  if (!summaryData || !summaryData.response) {
+    return <Navigate to="/management/category" />;
+  }
 
   return (
     <ContentWrapper>

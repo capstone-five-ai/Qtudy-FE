@@ -8,7 +8,7 @@ import { useGetUserQuizItem } from '@/hooks/useGetQuiz';
 import authState from '@/recoils/atoms/authState';
 import { GenerateUserQuizItem } from '@/types/quiz.type';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Navigate, useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
@@ -18,7 +18,7 @@ function ResultSection() {
   const isAuthenticated = useRecoilValue(authState);
   const [showModal, setShowModal] = useState(false);
   const [quiz, setQuiz] = useState<GenerateUserQuizItem>();
-  const { data: fetchedQuiz, isLoading } = useGetUserQuizItem(quizId);
+  const { data: fetchedQuiz, isLoading, error } = useGetUserQuizItem(quizId);
 
   useEffect(() => {
     if (fetchedQuiz) {
@@ -27,6 +27,8 @@ function ResultSection() {
   }, [fetchedQuiz]);
 
   if (isLoading) return <div>Loading...</div>;
+
+  if (isNaN(quizId) || error) return <Navigate to="/quiz/user" />;
 
   if (quiz)
     return (

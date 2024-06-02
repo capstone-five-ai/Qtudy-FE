@@ -10,7 +10,7 @@ import { useGetAIQuizFile } from '@/hooks/useGetQuiz';
 import authState from '@/recoils/atoms/authState';
 import { ProblemsOfAIQuizFile } from '@/types/quiz.type';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Navigate, useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
@@ -23,7 +23,7 @@ function ResultSection() {
   const [quizList, setQuizList] = useState<ProblemsOfAIQuizFile[]>([]);
   const [currentQuiz, setCurrentQuiz] = useState<ProblemsOfAIQuizFile>();
   const [isWriter, setIsWriter] = useState(false);
-  const { data: fetchedQuizList, isLoading } = useGetAIQuizFile(fileId);
+  const { data: fetchedQuizList, isLoading, error } = useGetAIQuizFile(fileId);
 
   useEffect(() => {
     if (fetchedQuizList) {
@@ -40,7 +40,7 @@ function ResultSection() {
 
   if (isLoading) return <div>Loading...</div>;
 
-  // TODO: 에러 핸들링
+  if (isNaN(fileId) || error) return <Navigate to="/quiz/ai" />;
 
   if (currentQuiz)
     return (
