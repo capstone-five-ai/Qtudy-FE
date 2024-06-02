@@ -14,9 +14,10 @@ const useToast = () => {
     message,
     buttonText = undefined,
     buttonHandler = undefined,
+    duration = buttonHandler ? 4000 : 1000,
   }: ToastStateType) => {
-    setToast({ icon, message, buttonText, buttonHandler });
-    setTimeout(() => removeToast(), 1600);
+    setToast({ icon, message, buttonText, buttonHandler, duration });
+    setTimeout(() => removeToast(), duration + 600);
   };
 
   return { fireToast, toast };

@@ -3,9 +3,12 @@ import RadioButton from '@/components/Button/RadioButton';
 import { CommentEditInputField } from '@/components/InputField/CommentInputField';
 import QuizInputField from '@/components/InputField/QuizInputField';
 import Typography from '@/components/Typography/Typography';
+import useToast from '@/hooks/useToast';
+import colors from '@/styles/color';
 import { QuizType } from '@/types/quiz.type';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import DeleteIcon from '../Icon/DeleteIcon';
 
 interface QuizFormProps {
   quizType: string;
@@ -21,6 +24,7 @@ function QuizGenerationForm({
   setQuizContent,
 }: QuizFormProps) {
   const [isCommentOpen, setIsCommentOpen] = useState(false);
+  const { fireToast } = useToast();
 
   useEffect(() => {
     setIsCommentOpen(false);
@@ -43,13 +47,15 @@ function QuizGenerationForm({
     setQuizContent({ ...quizContent, problemChoices: updatedChoices });
   };
 
-  const handleDeleteChoice = (index: number) => {
+  const handleDeleteChoice = (deleteIndex: number) => {
+    const beforeChoices = [...quizContent.problemChoices];
     const updatedChoices = [...quizContent.problemChoices];
-    //const choiceToRemove = updatedChoices[index];
+    const beforeAnswer = quizContent.problemAnswer;
     let updatedAnswer = quizContent.problemAnswer;
-    updatedChoices.splice(index, 1);
+    updatedChoices.splice(deleteIndex, 1);
 
-    if (quizContent.problemAnswer === `${index + 1}`) updatedAnswer = '-1';
+    if (quizContent.problemAnswer === `${deleteIndex + 1}`)
+      updatedAnswer = '-1';
 
     setQuizContent({
       ...quizContent,
@@ -58,20 +64,24 @@ function QuizGenerationForm({
     });
 
     // 토스트 메시지와 함께 되돌리기 함수 제공
-    //showToast(`"${choiceToRemove}" 항목이 삭제되었습니다.`, () =>
-    //  undoDelete(index, choiceToRemove)
-    //);
+    fireToast({
+      icon: <DeleteIcon width={20} height={20} stroke={colors.grayScale05} />,
+      message: `항목이 삭제되었습니다.`,
+      buttonText: '되돌리기',
+      buttonHandler: () => undoDelete(beforeChoices, beforeAnswer),
+    });
   };
 
-  /* const undoDelete = () => {
-    const updatedChoices = [...quizContent.problemChoices];
-    updatedChoices.splice(index, 0, choice); // 원래 위치에 다시 삽입
+  const undoDelete = (
+    beforeChoices: QuizType['problemChoices'],
+    beforeAnswer: QuizType['problemAnswer']
+  ) => {
     setQuizContent({
       ...quizContent,
-      problemChoices: updatedChoices,
+      problemChoices: beforeChoices,
+      problemAnswer: beforeAnswer,
     });
-    hideToast(); // 토스트 메시지 숨기기
-  }; */
+  };
 
   const handleAddOption = () => {
     setQuizContent({

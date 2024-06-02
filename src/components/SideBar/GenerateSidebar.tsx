@@ -42,14 +42,17 @@ function GenerateSidebar<T extends object>({
               disabled={inputFieldDisabled}
             />
           ))}
-          {'fileName' in inputOption && (
-            <FileNameInputField
-              name="fileName"
-              value={inputOption.fileName as string}
-              onChange={handleFileNameChange}
-              disabled={inputFieldDisabled}
-            />
-          )}
+          {'fileName' in inputOption &&
+            'isDuplicatedFileName' in inputOption && (
+              <FileNameInputField
+                name="fileName"
+                value={inputOption.fileName as string}
+                onChange={handleFileNameChange}
+                disabled={inputFieldDisabled}
+                errorMessage="중복되는 파일명입니다."
+                isError={inputOption.isDuplicatedFileName === true}
+              />
+            )}
         </StyledOptionContainer>
         <GenerateButton
           onClick={handleSubmit}

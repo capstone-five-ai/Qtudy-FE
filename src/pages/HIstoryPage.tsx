@@ -16,14 +16,7 @@ interface HistoryPageType {
 const HistoryPage = () => {
   const [filter, setFilter] = useState<ServiceType>('QUIZ');
   const [quizzes, setQuizzes] = useState<HistoryPageType>({
-    histories: [
-      {
-        fileId: 1,
-        fileName: '파일이름',
-        dtype: 'QUIZ',
-        createTime: '둥둥둥',
-      },
-    ],
+    histories: [],
     totalPages: 0,
   });
   const [summaries, setSummaries] = useState<HistoryPageType>({

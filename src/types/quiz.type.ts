@@ -13,6 +13,7 @@ export interface GenerateQuizOption {
   amount?: string;
   difficulty?: string;
   fileName?: string;
+  isDuplicatedFileName?: boolean | null;
 }
 
 export interface ProblemsOfAIQuizFile extends QuizType {

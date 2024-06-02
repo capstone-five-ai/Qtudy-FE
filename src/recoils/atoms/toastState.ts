@@ -5,6 +5,7 @@ export interface ToastStateType {
   message: undefined | string;
   buttonText?: undefined | string;
   buttonHandler?: undefined | (() => void);
+  duration?: undefined | number;
 }
 
 const toastState = atom<ToastStateType>({
@@ -14,6 +15,7 @@ const toastState = atom<ToastStateType>({
     message: undefined,
     buttonText: undefined,
     buttonHandler: undefined,
+    duration: undefined,
   },
 });
 

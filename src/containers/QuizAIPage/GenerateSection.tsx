@@ -4,6 +4,8 @@ import GenerateSidebar from '@/components/Sidebar/GenerateSidebar';
 import GenerateMethodWrapper from '@/components/Wrapper/GenerateMethodWrapper';
 import GenerateTextWrapper from '@/containers/QuizAIPage/GenerateTextWrapper';
 import GenerateUploadWrapper from '@/containers/QuizAIPage/GenerateUploadWrapper';
+import useDebouncedValue from '@/hooks/useDebouncedValue';
+import useDuplicatedFileName from '@/hooks/useDuplicatedFileName';
 import {
   usePostQuizByImage,
   usePostQuizByPdf,
@@ -34,6 +36,7 @@ const initialInputOption = {
   amount: '',
   difficulty: '',
   fileName: '',
+  isDuplicatedFileName: null,
 };
 
 function GenerateSection() {
@@ -49,10 +52,20 @@ function GenerateSection() {
   const { mutate: generateByText, status: textStatus } = usePostQuizByText();
   const { mutate: generateByPdf, status: pdfStatus } = usePostQuizByPdf();
   const { mutate: generateByImage, status: imageStatus } = usePostQuizByImage();
+  const { debouncedInputValue: debouncedFileName } = useDebouncedValue({
+    inputValue: inputOption.fileName,
+  });
 
   useEffect(() => {
     setInputOption(initialInputOption);
   }, [method]);
+
+  useDuplicatedFileName({
+    fileName: debouncedFileName,
+    checkType: 'PROBLEM',
+    duplicateHandler: (isDuplicatedFileName) =>
+      setInputOption({ ...inputOption, isDuplicatedFileName }),
+  });
 
   const handleFileNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputOption({ ...inputOption, [e.target.name]: e.target.value });
@@ -137,7 +150,8 @@ function GenerateSection() {
         generateButtonDisabled={
           !method ||
           Object.values(inputOption).includes('') ||
-          (pdfFile === null && imageFiles.length === 0 && text === '')
+          (pdfFile === null && imageFiles.length === 0 && text === '') ||
+          inputOption.isDuplicatedFileName !== false
         }
       />
     </>

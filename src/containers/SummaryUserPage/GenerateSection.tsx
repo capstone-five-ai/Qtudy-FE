@@ -2,6 +2,8 @@ import GenerateLoader from '@/components/Loader/GenerateLoader';
 import Scrollbar from '@/components/Scrollbar/Scrollbar';
 import GenerateSidebar from '@/components/Sidebar/GenerateSidebar';
 import GenerateTextWrapper from '@/containers/QuizAIPage/GenerateTextWrapper';
+import useDebouncedValue from '@/hooks/useDebouncedValue';
+import useDuplicatedFileName from '@/hooks/useDuplicatedFileName';
 import { usePostSummaryByUser } from '@/hooks/usePostSummary';
 import loadingState from '@/recoils/atoms/loadingState';
 import { GenerateSummaryOption } from '@/types/summary.type';
@@ -14,13 +16,27 @@ function GenerateSection() {
   const [summaryContent, setSummaryContent] = useState<string>('');
   const [inputOption, setInputOption] = useState<GenerateSummaryOption>({
     fileName: '',
+    isDuplicatedFileName: null,
   });
   const { mutate: generateByUser, status: generateStatus } =
     usePostSummaryByUser();
-
+  const { debouncedInputValue: debouncedFileName } = useDebouncedValue({
+    inputValue: inputOption.fileName,
+  });
   const handleFileNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputOption({ ...inputOption, [e.target.name]: e.target.value });
+    setInputOption({
+      ...inputOption,
+      isDuplicatedFileName: null,
+      [e.target.name]: e.target.value,
+    });
   };
+
+  useDuplicatedFileName({
+    fileName: debouncedFileName,
+    checkType: 'SUMMARY',
+    duplicateHandler: (isDuplicatedFileName) =>
+      setInputOption({ ...inputOption, isDuplicatedFileName }),
+  });
 
   return (
     <>
@@ -46,7 +62,9 @@ function GenerateSection() {
           });
         }}
         generateButtonDisabled={
-          Object.values(inputOption).includes('') || summaryContent === ''
+          Object.values(inputOption).includes('') ||
+          summaryContent === '' ||
+          inputOption.isDuplicatedFileName !== false
         }
       />
     </>

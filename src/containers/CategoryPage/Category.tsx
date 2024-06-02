@@ -1,6 +1,6 @@
 import { ReactComponent as CompleteIcon } from '@/assets/icons/complete.svg';
 import { ReactComponent as EditIcon } from '@/assets/icons/edit.svg';
-import { ReactComponent as DeleteIcon } from '@/assets/icons/trash.svg';
+import DeleteIcon from '@/components/Icon/DeleteIcon';
 import DeleteItemModal from '@/components/Modal/DeleteItemModal';
 import Typography from '@/components/Typography/Typography';
 import { CategoryType } from '@/types/category.type';

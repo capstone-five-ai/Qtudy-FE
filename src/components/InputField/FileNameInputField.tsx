@@ -1,16 +1,14 @@
-import TextInputField, {
-  TextInputFieldProps,
-} from '@/components/InputField/TextInputField';
 import Typography from '@/components/Typography/Typography';
 import styled from 'styled-components';
+import NameInputField, { NameInputFieldProps } from './NameInputField';
 
-function FileNameInputField(props: TextInputFieldProps) {
+function FileNameInputField(props: NameInputFieldProps) {
   return (
     <StyledContainer>
       <Typography variant="subtitle" color="grayScale02">
         파일명
       </Typography>
-      <TextInputField placeholder="파일명을 입력해주세요." {...props} />
+      <NameInputField placeholder="파일명을 입력해주세요." {...props} />
     </StyledContainer>
   );
 }

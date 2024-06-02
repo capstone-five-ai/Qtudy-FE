@@ -1,7 +1,7 @@
 import { deleteFile, updateFileName } from '@/apis/fileApi';
 import { ReactComponent as EditIcon } from '@/assets/icons/edit.svg';
-import { ReactComponent as DeleteIcon } from '@/assets/icons/trash.svg';
 import PDFDownloadButton from '@/components/Button/PDFDownloadButton';
+import DeleteIcon from '@/components/Icon/DeleteIcon';
 import DeleteItemModal from '@/components/Modal/DeleteItemModal';
 import Typography from '@/components/Typography/Typography';
 import {

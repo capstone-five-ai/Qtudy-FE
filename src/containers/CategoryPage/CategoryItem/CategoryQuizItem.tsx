@@ -1,4 +1,4 @@
-import { ReactComponent as DeleteIcon } from '@/assets/icons/trash.svg';
+import DeleteIcon from '@/components/Icon/DeleteIcon';
 import DeleteItemModal from '@/components/Modal/DeleteItemModal';
 import {
   StyledCategoryItemContainer,
