@@ -38,9 +38,9 @@ function CategoryQuizEditPage() {
       );
       setQuizContent({
         problemName: quiz.problemName,
-        problemAnswer: quiz.problemAnswer ?? undefined,
+        problemAnswer: quiz.problemAnswer ?? '',
         problemCommentary: quiz.problemCommentary,
-        problemChoices: quiz.problemChoices ?? undefined,
+        problemChoices: quiz.problemChoices ?? [],
       });
     }
   }, []);

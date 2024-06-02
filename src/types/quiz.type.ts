@@ -1,7 +1,7 @@
 export interface QuizType {
   problemName: string;
-  problemChoices?: string[];
-  problemAnswer?: string;
+  problemChoices: string[];
+  problemAnswer: string;
   problemCommentary: string;
 }
 

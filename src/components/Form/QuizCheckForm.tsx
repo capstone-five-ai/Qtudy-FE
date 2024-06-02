@@ -22,6 +22,7 @@ function QuizCheckForm({ quiz }: QuizCheckFormProps) {
         {quiz.problemAnswer && (
           <div className="choices">
             {quiz.problemChoices &&
+              quiz.problemChoices.length > 0 &&
               quiz.problemChoices.map((choice, index) => (
                 <span
                   key={`${choice}-${index}`}

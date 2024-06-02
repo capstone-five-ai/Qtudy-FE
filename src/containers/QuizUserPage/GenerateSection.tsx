@@ -47,7 +47,11 @@ function GenerateSection() {
       payload = quizContent;
     } else {
       const { problemChoices, problemAnswer, ...rest } = quizContent;
-      payload = rest;
+      payload = {
+        problemAnswer: '',
+        problemChoices: [],
+        ...rest,
+      };
     }
 
     generateByUser({
