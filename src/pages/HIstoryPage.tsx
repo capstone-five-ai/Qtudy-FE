@@ -15,7 +15,7 @@ interface HistoryPageType {
 
 const HistoryPage = () => {
   const [filter, setFilter] = useState<ServiceType>('QUIZ');
-  const [quizes, setQuizes] = useState<HistoryPageType>({
+  const [quizzes, setQuizzes] = useState<HistoryPageType>({
     histories: [],
     totalPages: 0,
   });
@@ -30,7 +30,7 @@ const HistoryPage = () => {
       item.dtype === 'PROBLEM' ? { ...item, dtype: 'QUIZ' } : item
     );
 
-    setQuizes({ histories: newHistories, totalPages: response.totalPages });
+    setQuizzes({ histories: newHistories, totalPages: response.totalPages });
   };
 
   const getSummaries = async (summaryPage: number) => {
@@ -55,7 +55,7 @@ const HistoryPage = () => {
   return (
     <Wrapper>
       <Header>
-        {(filter === 'QUIZ' && quizes.histories.length > 0) ||
+        {(filter === 'QUIZ' && quizzes.histories.length > 0) ||
         (filter === 'SUMMARY' && summaries.histories.length > 0) ? (
           <Title>
             <Typography variant="button">
@@ -65,7 +65,7 @@ const HistoryPage = () => {
         ) : (
           <div />
         )}
-        {quizes.histories.length + summaries.histories.length > 0 && (
+        {quizzes.histories.length + summaries.histories.length > 0 && (
           <ChipWrapper>
             <FileTypeChip
               selected={filter === 'QUIZ'}
@@ -84,14 +84,14 @@ const HistoryPage = () => {
       </Header>
       <HistoryPagination
         type={
-          quizes.histories.length + summaries.histories.length === 0
+          quizzes.histories.length + summaries.histories.length === 0
             ? 'ALL'
             : filter
         }
         fetchPage={updateList}
-        histories={filter === 'QUIZ' ? quizes.histories : summaries.histories}
+        histories={filter === 'QUIZ' ? quizzes.histories : summaries.histories}
         totalPages={
-          filter === 'QUIZ' ? quizes.totalPages : summaries.totalPages
+          filter === 'QUIZ' ? quizzes.totalPages : summaries.totalPages
         }
       />
     </Wrapper>
