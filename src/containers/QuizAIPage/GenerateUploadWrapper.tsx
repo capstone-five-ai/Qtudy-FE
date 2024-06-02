@@ -1,5 +1,6 @@
 import { ReactComponent as ExitIcon } from '@/assets/icons/exit.svg';
 import { ReactComponent as UploadIcon } from '@/assets/icons/upload-file.svg';
+import Scrollbar from '@/components/Scrollbar/Scrollbar';
 import Typography from '@/components/Typography/Typography';
 import uploadFile, { UploadedFileType } from '@/utils/uploadFile';
 import { useMemo } from 'react';
@@ -112,12 +113,13 @@ const StyledTextContainer = styled.div`
 `;
 
 const StyledPreviewContainer = styled.div`
-  margin: 12px;
-  margin-right: 0px;
-
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+
+  height: 100%;
+  overflow-y: scroll;
+  ${Scrollbar}
 `;
 
 const DeleteButton = styled.button`

@@ -124,6 +124,7 @@ const StyledContainer = styled.button<{ $active: boolean }>`
 
   display: flex;
   justify-content: space-between;
+  gap: 10px;
   align-items: center;
 
   text-align: left;

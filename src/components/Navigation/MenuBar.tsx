@@ -1,34 +1,35 @@
 import AnnouncementTooltip from '@/components/Tooltip/AnnouncementTooltip';
 import { HEADER_MENU_LIST } from '@/constants';
 import tooltipState from '@/recoils/atoms/tooltipState';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled, { css } from 'styled-components';
 
 function MenuBar() {
-  const [currentPath, setCurrentPath] = useState<string | null>(null);
-  const [showTooltip, setShowTooltip] = useRecoilState(tooltipState);
   const location = useLocation();
+  const [showTooltip, setShowTooltip] = useRecoilState(tooltipState);
 
   useEffect(() => {
-    let timeout: number;
-    if (currentPath === null || !location.pathname.includes(currentPath)) {
+    const majorPaths = ['quiz', 'summary', 'management'];
+    const isMajorPath = majorPaths.some((path) =>
+      location.pathname.startsWith(`${path}`)
+    );
+
+    if (isMajorPath) {
+      let timeout: number;
       setShowTooltip(true);
       timeout = setTimeout(() => {
         setShowTooltip(false);
       }, 2000);
-      handleChangeCurrentPath(location.pathname);
+
+      return () => clearTimeout(timeout);
     }
+  }, [location.pathname]);
 
-    return () => clearTimeout(timeout);
-  }, []);
-
-  // TODO: path에 맞춰 수정
-  const handleChangeCurrentPath = (pathname: string) => {
-    if (pathname.includes('quiz')) setCurrentPath('quiz');
-    else if (pathname.includes('summary')) setCurrentPath('summary');
-    else if (pathname.includes('management')) setCurrentPath('management');
+  const isActivePath = (menuPath: string) => {
+    const currentPath = location.pathname;
+    return currentPath === menuPath || currentPath.startsWith(`${menuPath}/`);
   };
 
   return (
@@ -39,11 +40,9 @@ function MenuBar() {
           to={menu.path}
           style={{ textDecoration: 'none' }}
         >
-          <StyledMenuButton $isActive={location.pathname.includes(menu.path)}>
+          <StyledMenuButton $isActive={isActivePath(menu.path)}>
             {menu.header.title}
-            <StyledActiveIcon
-              $isActive={location.pathname.includes(menu.path)}
-            />
+            <StyledActiveIcon $isActive={isActivePath(menu.path)} />
           </StyledMenuButton>
         </Link>
       ))}

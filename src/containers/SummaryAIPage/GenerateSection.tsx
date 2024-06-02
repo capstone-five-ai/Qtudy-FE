@@ -1,5 +1,4 @@
 import GenerateLoader from '@/components/Loader/GenerateLoader';
-import Scrollbar from '@/components/Scrollbar/Scrollbar';
 import GenerateSidebar from '@/components/Sidebar/GenerateSidebar';
 import GenerateMethodWrapper from '@/components/Wrapper/GenerateMethodWrapper';
 import GenerateTextWrapper from '@/containers/QuizAIPage/GenerateTextWrapper';
@@ -108,9 +107,13 @@ function GenerateSection() {
           }
         />
       )}
-      <StyledContent>
-        {!method && <GenerateMethodWrapper type="SUMMARY" />}
-        {method === 'upload' && (
+      {!method && (
+        <StyledContent>
+          <GenerateMethodWrapper type="SUMMARY" />
+        </StyledContent>
+      )}
+      {method === 'upload' && (
+        <StyledUploadContent>
           <GenerateUploadWrapper
             inputRef={inputRef}
             pdfFile={pdfFile}
@@ -133,17 +136,17 @@ function GenerateSection() {
               )
             }
           />
-        )}
-        {method === 'text' && (
-          <GenerateTextWrapperContainer>
-            <GenerateTextWrapper
-              type="SUMMARY"
-              inputText={text}
-              setInputText={setText}
-            />
-          </GenerateTextWrapperContainer>
-        )}
-      </StyledContent>
+        </StyledUploadContent>
+      )}
+      {method === 'text' && (
+        <StyledTextContent>
+          <GenerateTextWrapper
+            type="SUMMARY"
+            inputText={text}
+            setInputText={setText}
+          />
+        </StyledTextContent>
+      )}
       <GenerateSidebar
         optionList={GENERATE_OPTIONS}
         inputOption={inputOption}
@@ -166,13 +169,15 @@ export default GenerateSection;
 
 const StyledContent = styled.div`
   flex: 1;
-
-  overflow-y: scroll;
-  ${Scrollbar}
 `;
 
-const GenerateTextWrapperContainer = styled.div`
+const StyledUploadContent = styled(StyledContent)`
+  padding: 12px;
+  padding-right: 1px;
   height: 100%;
+`;
+
+const StyledTextContent = styled(StyledContent)`
   padding: 24px 36px;
   padding-right: 20px;
 `;

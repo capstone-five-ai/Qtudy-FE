@@ -35,6 +35,7 @@ export interface CategoryOtherSummaryItem {
 
 export interface CategorySummaryItem {
   categorizedSummaryId: number;
+  summaryId: number;
   summaryTitle: string;
   summaryContent: string;
   categoryName: string;

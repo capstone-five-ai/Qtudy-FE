@@ -4,12 +4,13 @@ import SaveToCategoryButton from '@/components/Button/SaveToCategoryButton';
 import ShareLinkButton from '@/components/Button/ShareLinkButton';
 import DeleteIcon from '@/components/Icon/DeleteIcon';
 import DeleteItemModal from '@/components/Modal/DeleteItemModal';
+import SaveToCategoryModal from '@/components/Modal/SaveToCategoryModal';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import useToast from '@/hooks/useToast';
 import { ServiceType } from '@/types/category.type';
 import { CategoryQuizItem } from '@/types/quiz.type';
 import { CategorySummaryItem } from '@/types/summary.type';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -19,6 +20,12 @@ interface CategorySidebarProps {
   contentQuiz?: CategoryQuizItem | undefined;
   contentSummary?: CategorySummaryItem | undefined;
   categoryId: number;
+  contentId: number;
+}
+
+interface DetailItem {
+  title: string;
+  path: string | null;
 }
 
 function CategorySidebar({
@@ -27,10 +34,49 @@ function CategorySidebar({
   contentQuiz,
   contentSummary,
   categoryId,
+  contentId,
 }: CategorySidebarProps) {
   const navigate = useNavigate();
+  const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [currentItem, setCurrentItem] = useState<DetailItem>();
+  const [prevItem, setPrevItem] = useState<DetailItem>();
+  const [nextItem, setNextItem] = useState<DetailItem>();
   const { fireToast } = useToast();
+
+  useEffect(() => {
+    if (contentType === 'QUIZ' && contentQuiz) {
+      setCurrentItem({ title: contentQuiz.problemName, path: null });
+      setPrevItem({
+        title: contentQuiz.previousProblem?.categorizedProblemName ?? ' ',
+        path: contentQuiz.previousProblem
+          ? `/management/category/quiz?id=${contentQuiz.previousProblem.categorizedProblemId}`
+          : null,
+      });
+      setNextItem({
+        title: contentQuiz.nextProblem?.categorizedProblemName ?? ' ',
+        path: contentQuiz.nextProblem
+          ? `/management/category/quiz?id=${contentQuiz.nextProblem.categorizedProblemId}`
+          : null,
+      });
+    }
+
+    if (contentType === 'SUMMARY' && contentSummary) {
+      setCurrentItem({ title: contentSummary.summaryTitle, path: null });
+      setPrevItem({
+        title: contentSummary.previousSummary?.categorizedSummaryName ?? '',
+        path: contentSummary.previousSummary
+          ? `/management/category/summary?id=${contentSummary.previousSummary.categorizedSummaryId}`
+          : null,
+      });
+      setNextItem({
+        title: contentSummary.nextSummary?.categorizedSummaryName ?? '',
+        path: contentSummary.nextSummary
+          ? `/management/category/summary?id=${contentSummary.nextSummary.categorizedSummaryId}`
+          : null,
+      });
+    }
+  }, [contentQuiz, contentSummary]);
 
   const handleDeleteItem = async () => {
     try {
@@ -49,6 +95,11 @@ function CategorySidebar({
           message: '항목이 삭제되었습니다',
         });
       }
+
+      setShowDeleteModal(false);
+      navigate(
+        `/management/category?type=${contentType.toLowerCase()}&categoryId=${categoryId}`
+      );
     } catch (e) {
       console.error(e);
     }
@@ -59,114 +110,56 @@ function CategorySidebar({
       {showDeleteModal && (
         <DeleteItemModal
           title={`${contentType === 'QUIZ' ? '퀴즈를' : '요약을'} 삭제하시겠습니까?`}
-          onConfirm={() => {
-            handleDeleteItem();
-            setShowDeleteModal(false);
-            navigate(
-              `/management/category?type=${contentType.toLowerCase()}&categoryId=${categoryId}`
-            );
-          }}
+          onConfirm={handleDeleteItem}
           onCancel={() => setShowDeleteModal(false)}
+        />
+      )}
+      {showAddCategoryModal && (
+        <SaveToCategoryModal
+          categoryType={contentType}
+          contentId={contentId}
+          currentCategoryId={categoryId}
+          onClose={() => setShowAddCategoryModal(false)}
         />
       )}
       <StyledSidebar>
         <StyledContentContainer>
-          {contentType === 'QUIZ' && contentQuiz && (
-            <StyledOtherItemContainer>
-              {contentQuiz.previousProblem && (
-                <button
-                  type="button"
-                  className="other-item"
-                  onClick={() =>
-                    navigate(
-                      `/management/category/quiz?id=${contentQuiz.previousProblem?.categorizedProblemId}`
-                    )
-                  }
-                >
-                  <span className="title">Pre</span>
-                  <p className="content">
-                    Q. {contentQuiz.previousProblem.categorizedProblemName}
-                  </p>
-                </button>
-              )}
-              <div className="current-item">
-                <p className="content">Q. {contentQuiz.problemName}</p>
-                <DeleteIcon
-                  width={20}
-                  height={20}
-                  cursor="pointer"
-                  onClick={() => setShowDeleteModal(true)}
-                />
-              </div>
-              {contentQuiz.nextProblem && (
-                <button
-                  type="button"
-                  className="other-item"
-                  onClick={() =>
-                    navigate(
-                      `/management/category/quiz?id=${contentQuiz.nextProblem?.categorizedProblemId}`
-                    )
-                  }
-                >
-                  <span className="title">Next</span>
-                  <p className="content">
-                    Q. {contentQuiz.nextProblem.categorizedProblemName}
-                  </p>
-                </button>
-              )}
-            </StyledOtherItemContainer>
-          )}
-          {contentType === 'SUMMARY' && contentSummary && (
-            <StyledOtherItemContainer>
-              {contentSummary.previousSummary && (
-                <button
-                  type="button"
-                  className="other-item"
-                  onClick={() =>
-                    navigate(
-                      `/management/category/summary?id=${contentSummary.previousSummary?.categorizedSummaryId}`
-                    )
-                  }
-                >
-                  <span className="title">Pre</span>
-                  <p className="content">
-                    {contentSummary.previousSummary.categorizedSummaryName}
-                  </p>
-                </button>
-              )}
-              <div className="current-item">
-                <p className="content">{contentSummary.summaryTitle}</p>
-                <DeleteIcon
-                  width={20}
-                  height={20}
-                  cursor="pointer"
-                  onClick={() => setShowDeleteModal(true)}
-                />
-              </div>
-              {contentSummary.nextSummary && (
-                <button
-                  type="button"
-                  className="other-item"
-                  onClick={() =>
-                    navigate(
-                      `/management/category/summary?id=${contentSummary.nextSummary?.categorizedSummaryId}`
-                    )
-                  }
-                >
-                  <span className="title">Next</span>
-                  <p className="content">
-                    {contentSummary.nextSummary.categorizedSummaryName}
-                  </p>
-                </button>
-              )}
-            </StyledOtherItemContainer>
-          )}
-          <StyledButtonContainer>
-            <ShareLinkButton link="" />
-            <SaveToCategoryButton
+          <StyledOtherItemContainer>
+            <button
+              type="button"
+              className="other-item"
               onClick={() => {
-                // TODO: 카테고리 저장
+                if (prevItem?.path) navigate(prevItem.path);
               }}
+            >
+              <span className="title">Pre</span>
+              <p className="content">{prevItem?.title}</p>
+            </button>
+
+            <div className="current-item">
+              <p className="content">{currentItem?.title}</p>
+              <DeleteIcon
+                width={20}
+                height={20}
+                cursor="pointer"
+                onClick={() => setShowDeleteModal(true)}
+              />
+            </div>
+            <button
+              type="button"
+              className="other-item"
+              onClick={() => {
+                if (nextItem?.path) navigate(nextItem.path);
+              }}
+            >
+              <span className="title">Next</span>
+              <p className="content">{nextItem?.title}</p>
+            </button>
+          </StyledOtherItemContainer>
+          <StyledButtonContainer>
+            <ShareLinkButton link={window.location.href} />
+            <SaveToCategoryButton
+              onClick={() => setShowAddCategoryModal(true)}
               disabled={!isAuthenticated}
             />
           </StyledButtonContainer>
@@ -198,6 +191,7 @@ const StyledOtherItemContainer = styled.div`
 
   p {
     width: 276px;
+    min-height: 19.5px;
     padding-left: 28px;
 
     ${({ theme }) => theme.typography.caption3};

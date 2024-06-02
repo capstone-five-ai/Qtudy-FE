@@ -1,5 +1,4 @@
 import SummaryCheckForm from '@/components/Form/SummaryCheckForm';
-import Scrollbar from '@/components/Scrollbar/Scrollbar';
 import ContentWrapper from '@/components/Wrapper/ContentWrapper';
 import CategorySidebar from '@/containers/CategoryDetailPage/CategorySidebar';
 import TopButtonBar from '@/containers/CategoryDetailPage/TopButtonBar';
@@ -48,15 +47,14 @@ function CategorySummaryDetailPage() {
             }}
           />
         )}
-        <StyledInnerContainer>
-          {currentSummary && <SummaryCheckForm summary={currentSummary} />}
-        </StyledInnerContainer>
+        {currentSummary && <SummaryCheckForm summary={currentSummary} />}
       </StyledContent>
       <CategorySidebar
         isAuthenticated={isAuthenticated}
         contentType="SUMMARY"
         contentSummary={currentSummary}
         categoryId={categoryId}
+        contentId={currentSummary ? currentSummary.summaryId : -1}
       />
     </ContentWrapper>
   );
@@ -68,9 +66,7 @@ const StyledContent = styled.div<{ $isWriter: boolean }>`
   flex: 1;
   padding: 0 20px 40px 40px;
   padding-top: ${({ $isWriter }) => ($isWriter ? '24px' : '40px')};
-`;
 
-const StyledInnerContainer = styled.div`
-  overflow-y: scroll;
-  ${Scrollbar}
+  display: flex;
+  flex-direction: column;
 `;

@@ -8,10 +8,6 @@ type Props = {
   children: ReactNode;
 };
 
-LoginButton.defaultProps = {
-  onClick() {},
-};
-
 function LoginButton({ onClick, children }: Props) {
   return (
     <Container>

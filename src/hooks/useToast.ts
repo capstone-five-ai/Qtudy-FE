@@ -20,7 +20,7 @@ const useToast = () => {
     setTimeout(() => removeToast(), duration + 600);
   };
 
-  return { fireToast, toast };
+  return { fireToast, toast, removeToast };
 };
 
 export default useToast;

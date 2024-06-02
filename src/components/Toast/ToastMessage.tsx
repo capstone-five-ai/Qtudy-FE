@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 function ToastMessage() {
-  const { toast } = useToast();
+  const { toast, removeToast } = useToast();
   const [isClosing, setIsClosing] = useState<boolean>(false);
   const [show, setShow] = useState(toast.message?.length ? true : false);
 
@@ -39,6 +39,7 @@ function ToastMessage() {
           <StyledButton
             onClick={() => {
               toast.buttonHandler?.();
+              removeToast();
             }}
           >
             {toast.buttonText}

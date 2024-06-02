@@ -17,12 +17,14 @@ import styled from 'styled-components';
 interface SaveToCategoryModalProps {
   categoryType: ServiceType;
   contentId: number;
+  currentCategoryId?: number;
   onClose: () => void;
 }
 
 function SaveToCategoryModal({
   categoryType,
   contentId,
+  currentCategoryId = -1,
   onClose,
 }: SaveToCategoryModalProps) {
   const [showWarn, setShowWarn] = useState(false);
@@ -68,16 +70,19 @@ function SaveToCategoryModal({
     }
   };
 
-  const handlePostCategory = () => {
+  const handlePostCategory = async () => {
     try {
       if (categoryType === 'SUMMARY')
-        postSummaryToCategory(saveCategoryIds, contentId);
+        await postSummaryToCategory(saveCategoryIds, contentId);
       if (categoryType === 'QUIZ')
-        postQuizToCategory(saveCategoryIds, contentId);
+        await postQuizToCategory(saveCategoryIds, contentId);
 
       onClose();
       fireToast({ icon: <SaveIcon />, message: '카테고리에 저장되었습니다!' });
-    } catch (e) {}
+    } catch (e) {
+      if (e instanceof AxiosError)
+        fireToast({ message: e.response?.data.errorMessage });
+    }
   };
 
   return (
@@ -89,19 +94,22 @@ function SaveToCategoryModal({
           </div>
           {categories.length > 0 && (
             <div className="category-list">
-              {categories.map((category) => (
-                <StyledCategoryItem
-                  key={category.categoryId}
-                  onClick={() => {
-                    handleCheckCategory(category.categoryId);
-                  }}
-                >
-                  <CheckBox
-                    checked={saveCategoryIds.includes(category.categoryId)}
-                  />
-                  <span>{category.categoryName}</span>
-                </StyledCategoryItem>
-              ))}
+              {categories.map((category) => {
+                if (category.categoryId !== currentCategoryId)
+                  return (
+                    <StyledCategoryItem
+                      key={category.categoryId}
+                      onClick={() => {
+                        handleCheckCategory(category.categoryId);
+                      }}
+                    >
+                      <CheckBox
+                        checked={saveCategoryIds.includes(category.categoryId)}
+                      />
+                      <span>{category.categoryName}</span>
+                    </StyledCategoryItem>
+                  );
+              })}
             </div>
           )}
           <NewCategoryInputField

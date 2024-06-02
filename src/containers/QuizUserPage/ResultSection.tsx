@@ -2,6 +2,7 @@ import SaveToCategoryButton from '@/components/Button/SaveToCategoryButton';
 import ShareLinkButton from '@/components/Button/ShareLinkButton';
 import QuizCheckForm from '@/components/Form/QuizCheckForm';
 import SaveToCategoryModal from '@/components/Modal/SaveToCategoryModal';
+import Scrollbar from '@/components/Scrollbar/Scrollbar';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import { useGetUserQuizItem } from '@/hooks/useGetQuiz';
 import authState from '@/recoils/atoms/authState';
@@ -31,7 +32,9 @@ function ResultSection() {
     return (
       <>
         <StyledContent>
-          <QuizCheckForm quiz={quiz} />
+          <StyledInnerContent>
+            <QuizCheckForm quiz={quiz} />
+          </StyledInnerContent>
         </StyledContent>
         <Sidebar>
           <SidebarContentContainer>
@@ -59,11 +62,19 @@ export default ResultSection;
 
 const StyledContent = styled.div`
   flex: 1;
+  height: 100%;
 
   display: flex;
   flex-direction: column;
   padding: 40px;
   padding-right: 20px;
+`;
+
+const StyledInnerContent = styled.div`
+  height: 100%;
+
+  overflow-y: scroll;
+  ${Scrollbar}
 `;
 
 const SidebarContentContainer = styled.div`

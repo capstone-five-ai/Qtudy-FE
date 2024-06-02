@@ -20,6 +20,7 @@ export default MainLayout;
 const MainContainer = styled.div`
   width: 100%;
   min-width: 1200px;
+  height: 572px;
 `;
 
 const OutletContainer = styled.div`

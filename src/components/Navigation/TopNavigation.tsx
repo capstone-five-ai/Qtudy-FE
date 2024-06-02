@@ -3,17 +3,16 @@ import { ReactComponent as Logo } from '@/assets/logo/qtudy.svg';
 import KakaoLoginSmallButton from '@/components/Button/KakaoLoginSmallButton';
 import MenuBar from '@/components/Navigation/MenuBar';
 import authState from '@/recoils/atoms/authState';
-import navigateToLogin from '@/utils/navigateToLogin';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 function TopNavigation() {
-  const [isAuthenticated, setIsAuthenticated] = useRecoilState(authState); // [1
+  const [isAuthenticated, setIsAuthenticated] = useRecoilState(authState);
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    navigateToLogin();
+    navigate('/login');
   };
 
   const handleLogout = async () => {

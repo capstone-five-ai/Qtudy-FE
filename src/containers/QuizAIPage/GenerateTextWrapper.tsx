@@ -28,16 +28,14 @@ function GenerateTextWrapper({
 
   return (
     <StyledContainer>
-      <TextFieldContainer>
-        <StyledTextArea
-          ref={textareaRef}
-          placeholder={PLACEHOLDER[type]}
-          value={inputText}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            setInputText(e.target.value);
-          }}
-        />
-      </TextFieldContainer>
+      <StyledTextArea
+        ref={textareaRef}
+        placeholder={PLACEHOLDER[type]}
+        value={inputText}
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+          setInputText(e.target.value);
+        }}
+      />
     </StyledContainer>
   );
 }
@@ -46,13 +44,9 @@ export default GenerateTextWrapper;
 
 const StyledContainer = styled.div`
   height: 100%;
-`;
-
-const TextFieldContainer = styled.div`
   padding: 16px;
   padding-right: 0px;
   border-radius: 4px;
-  height: 100%;
   background: ${(props) => props.theme.colors.grayScale09};
 
   overflow-y: scroll;

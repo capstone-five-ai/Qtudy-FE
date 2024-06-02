@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 
 export interface ToastStateType {
-  icon: undefined | React.ReactNode;
+  icon?: undefined | React.ReactNode;
   message: undefined | string;
   buttonText?: undefined | string;
   buttonHandler?: undefined | (() => void);

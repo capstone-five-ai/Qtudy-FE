@@ -57,6 +57,7 @@ function CategoryQuizDetailPage() {
         contentType="QUIZ"
         contentQuiz={currentQuiz}
         categoryId={categoryId}
+        contentId={currentQuiz ? currentQuiz.problemId : -1}
       />
     </ContentWrapper>
   );
@@ -68,6 +69,9 @@ const StyledContent = styled.div<{ $isWriter: boolean }>`
   flex: 1;
   padding: 0 20px 40px 40px;
   padding-top: ${({ $isWriter }) => ($isWriter ? '24px' : '40px')};
+
+  display: flex;
+  flex-direction: column;
 `;
 
 const StyledInnerContainer = styled.div`

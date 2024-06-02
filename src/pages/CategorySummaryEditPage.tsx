@@ -1,6 +1,5 @@
 import { editSummaryToCategory } from '@/apis/summaryCategoryApi';
 import FileNameInputField from '@/components/InputField/FileNameInputField';
-import Scrollbar from '@/components/Scrollbar/Scrollbar';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import ContentWrapper from '@/components/Wrapper/ContentWrapper';
 import TopButtonBar from '@/containers/CategoryDetailPage/TopButtonBar';
@@ -52,13 +51,11 @@ function CategorySummaryEditPage() {
           handleCancel={handleCancel}
           handleComplete={handleEdit}
         />
-        <StyledInnerContainer>
-          <GenerateTextWrapper
-            type="SUMMARY"
-            inputText={summaryContent}
-            setInputText={setSummaryContent}
-          />
-        </StyledInnerContainer>
+        <GenerateTextWrapper
+          type="SUMMARY"
+          inputText={summaryContent}
+          setInputText={setSummaryContent}
+        />
       </StyledContent>
       <Sidebar>
         <FileNameInputField
@@ -78,10 +75,4 @@ const StyledContent = styled.div`
 
   display: flex;
   flex-direction: column;
-`;
-
-const StyledInnerContainer = styled.div`
-  flex: 1;
-  overflow-y: scroll;
-  ${Scrollbar}
 `;

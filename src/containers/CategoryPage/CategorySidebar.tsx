@@ -100,6 +100,7 @@ const StyledContainer = styled.div`
   gap: 16px;
 
   width: 340px;
+  height: 572px;
 `;
 
 const StyleTitleContainer = styled.div`
@@ -123,9 +124,9 @@ const StyledCategoryListContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  height: 100%;
   overflow-y: scroll;
   ${Scrollbar}
+  flex: 1;
 
   .no-category {
     ${({ theme }) => theme.typography.detail};

@@ -1,5 +1,4 @@
 import GenerateLoader from '@/components/Loader/GenerateLoader';
-import Scrollbar from '@/components/Scrollbar/Scrollbar';
 import GenerateSidebar from '@/components/Sidebar/GenerateSidebar';
 import GenerateTextWrapper from '@/containers/QuizAIPage/GenerateTextWrapper';
 import useDebouncedValue from '@/hooks/useDebouncedValue';
@@ -75,10 +74,6 @@ export default GenerateSection;
 
 const StyledContent = styled.div`
   flex: 1;
-
-  overflow-y: scroll;
-  ${Scrollbar}
-
   padding: 24px 36px;
   padding-right: 20px;
 `;

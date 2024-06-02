@@ -44,6 +44,7 @@ export interface CategoryOtherQuizItem {
 }
 export interface CategoryQuizItem {
   categorizedProblemId: number;
+  problemId: number;
   problemName: string;
   problemAnswer: string | null | undefined;
   problemCommentary: string;
