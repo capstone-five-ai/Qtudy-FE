@@ -1,6 +1,6 @@
 import MainLayout from '@/components/Layout/MainLayout';
 import CategoryPage from '@/pages/CategoryPage';
-import HistoryPage from '@/pages/HIstoryPage';
+/* import HistoryPage from '@/pages/HistoryPage'; */
 import LoginPage from '@/pages/LoginPage';
 import QuizAIPage from '@/pages/QuizAIPage';
 import QuizUserPage from '@/pages/QuizUserPage';
@@ -38,7 +38,7 @@ const routes = [
         path: 'management',
         children: [
           { path: '', element: <Navigate replace to="history" /> },
-          { path: 'history', element: <HistoryPage /> },
+          /* { path: 'history', element: <HistoryPage /> }, */
           { path: 'category', element: <CategoryPage /> },
           /* { path: 'category/quiz', element: <CategoryQuizDetailPage /> },
           { path: 'category/summary', element: <CategorySummaryDetailPage /> },
