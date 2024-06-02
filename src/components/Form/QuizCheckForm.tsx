@@ -1,12 +1,11 @@
 import { CommentDefaultInputField } from '@/components/InputField/CommentInputField';
-import { QuizType } from '@/types/quiz.type';
+import { CategoryQuizItem, QuizType } from '@/types/quiz.type';
 import getCircleNum from '@/utils/getCircleNum';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 interface QuizCheckFormProps {
-  /* quiz: ProblemsOfAIQuizFile | GenerateUserQuizItem; */
-  quiz: QuizType;
+  quiz: QuizType | CategoryQuizItem;
 }
 
 function QuizCheckForm({ quiz }: QuizCheckFormProps) {
@@ -22,18 +21,19 @@ function QuizCheckForm({ quiz }: QuizCheckFormProps) {
         <div className="name">Q. {quiz.problemName}</div>
         {quiz.problemAnswer && (
           <div className="choices">
-            {quiz.problemChoices.map((choice, index) => (
-              <span
-                key={`${choice}-${index}`}
-                className={
-                  Number(quiz.problemAnswer) === index + 1 && showComment
-                    ? 'answer'
-                    : ''
-                }
-              >
-                {getCircleNum(index + 1)} {choice}
-              </span>
-            ))}
+            {quiz.problemChoices &&
+              quiz.problemChoices.map((choice, index) => (
+                <span
+                  key={`${choice}-${index}`}
+                  className={
+                    Number(quiz.problemAnswer) === index + 1 && showComment
+                      ? 'answer'
+                      : ''
+                  }
+                >
+                  {getCircleNum(index + 1)} {choice}
+                </span>
+              ))}
           </div>
         )}
       </StyledQuizContent>

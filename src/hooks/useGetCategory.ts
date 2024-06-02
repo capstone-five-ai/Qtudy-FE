@@ -17,5 +17,6 @@ export const useGetCategoryDetailList = (categoryId: string) => {
     queryKey: ['getCategoryDetailList', categoryId],
     queryFn: () => getCategoryDetailList(categoryId),
     enabled: false,
+    retry: 0,
   });
 };

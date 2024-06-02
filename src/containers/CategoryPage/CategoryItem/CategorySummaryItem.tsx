@@ -9,6 +9,7 @@ import CategoryItemDateInfo from '@/containers/CategoryPage/CategoryItem/Categor
 import CategoryItemTitleInfo from '@/containers/CategoryPage/CategoryItem/CategoryItemTitleInfo';
 import { SummaryCategoryItemType } from '@/types/category.type';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const GENERATED_BY: { [key: string]: string } = {
@@ -17,14 +18,17 @@ const GENERATED_BY: { [key: string]: string } = {
 };
 
 interface CategorySummaryItemProps {
+  activeCategoryId: string;
   summaryItem: SummaryCategoryItemType;
   handleDeleteItem: (id: number) => void;
 }
 function CategorySummaryItem({
+  activeCategoryId,
   summaryItem,
   handleDeleteItem,
 }: CategorySummaryItemProps) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -34,15 +38,16 @@ function CategorySummaryItem({
             setShowDeleteModal(false);
           }}
           onConfirm={() => {
-            // TODO: index 반영
-            handleDeleteItem(1);
+            handleDeleteItem(summaryItem.categorizedSummaryId);
           }}
           title="요약을 삭제하시겠습니까?"
         />
       )}
       <StyledCategoryItemContainer
         onClick={() => {
-          // TODO: 상세 요약 페이지로 이동
+          navigate(
+            `/management/category/summary?categoryId=${activeCategoryId}&id=${summaryItem.categorizedSummaryId}`
+          );
         }}
         $itemType="SUMMARY"
       >

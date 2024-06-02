@@ -7,6 +7,9 @@ import styled from 'styled-components';
 import Gradation from '@/assets/images/gradation-ellipse.png';
 import Typography from '@/components/Typography/Typography';
 import Card from '@/containers/SelectServicePage/Card';
+import authState from '@/recoils/atoms/authState';
+import { Navigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
 type MenuType = {
   icon: JSX.Element;
@@ -17,9 +20,9 @@ type MenuType = {
   path: string;
 };
 
-// TODO: path 변경
 function SelectServicePage() {
   const [selectedIdx, setSelectedIdx] = useState(-1);
+  const isAuthenticated = useRecoilValue(authState);
 
   const menus: MenuType[] = [
     {
@@ -47,6 +50,8 @@ function SelectServicePage() {
       path: '/management/history',
     },
   ];
+
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
     <Container>

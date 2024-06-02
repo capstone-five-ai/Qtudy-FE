@@ -1,7 +1,7 @@
 export interface QuizType {
   problemName: string;
-  problemChoices: string[];
-  problemAnswer: string | null;
+  problemChoices?: string[];
+  problemAnswer?: string;
   problemCommentary: string;
 }
 
@@ -36,4 +36,21 @@ export interface AIQuizFile {
 export interface UserQuizItem {
   response: GenerateUserQuizItem;
   isWriter: boolean;
+}
+
+export interface CategoryOtherQuizItem {
+  categorizedProblemId: number;
+  categorizedProblemName: string;
+}
+export interface CategoryQuizItem {
+  categorizedProblemId: number;
+  problemName: string;
+  problemAnswer: string | null | undefined;
+  problemCommentary: string;
+  problemType: string;
+  problemChoices: string[] | null | undefined;
+  categoryName: string;
+  categoryId: number;
+  previousProblem: CategoryOtherQuizItem | null;
+  nextProblem: CategoryOtherQuizItem | null;
 }

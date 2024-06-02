@@ -1,3 +1,5 @@
+import { deleteQuizFromCategory } from '@/apis/quizCategoryApi';
+import { deleteSummaryFromCategory } from '@/apis/summaryCategoryApi';
 import PDFDownloadButton from '@/components/Button/PDFDownloadButton';
 import Scrollbar from '@/components/Scrollbar/Scrollbar';
 import CategoryQuizItem from '@/containers/CategoryPage/CategoryItem/CategoryQuizItem';
@@ -13,36 +15,40 @@ import styled from 'styled-components';
 interface CategoryItemSectionProps {
   activeType: ServiceType;
   activeCategoryId: string | null;
-  activeCategoryItems: (QuizCategoryItemType | SummaryCategoryItemType)[]; // 타입 수정해야 함.
+  activeCategoryName: string;
+  activeCategoryItems: (QuizCategoryItemType | SummaryCategoryItemType)[];
+  refetchCategoryDetail: () => void;
 }
 
 function CategoryItemSection({
   activeType,
   activeCategoryId,
+  activeCategoryName,
   activeCategoryItems,
+  refetchCategoryDetail,
 }: CategoryItemSectionProps) {
-  function isQuizItemType(
+  const isQuizItemType = (
     item: QuizCategoryItemType | SummaryCategoryItemType
-  ): item is QuizCategoryItemType {
+  ): item is QuizCategoryItemType => {
     return (item as QuizCategoryItemType).categorizedProblemId !== undefined;
-  }
-
-  const handleDeleteQuizItem = async (/* quizId: number */) => {
-    /* await QuizCategoryApi.delete(quizId).then(() => {
-      const newQuizItems = activeCategoryQuizItems.filter(
-        (item) => item.categorizedProblemId !== quizId
-      );
-      setActiveCategoryQuizItems(newQuizItems);
-    }); */
   };
 
-  const handleDeleteSummaryItem = async (/* summaryId: number */) => {
-    /* await SummaryCategoryApi.delete(summaryId).then(() => {
-      const newSummaryItems = activeCategorySummaryItems.filter(
-        (item) => item.categorizedSummaryId !== summaryId
-      );
-      setActiveCategorySummaryItems(newSummaryItems);
-    }); */
+  const handleDeleteQuizItem = async (quizId: number | string) => {
+    try {
+      await deleteQuizFromCategory(quizId);
+      refetchCategoryDetail();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleDeleteSummaryItem = async (summaryId: number | string) => {
+    try {
+      await deleteSummaryFromCategory(summaryId);
+      refetchCategoryDetail();
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   if (activeCategoryId && activeCategoryItems.length === 0) {
@@ -58,17 +64,20 @@ function CategoryItemSection({
             pdfType="QUIZ"
             variant={2}
             type="CATEGORY"
+            fileName={`${activeCategoryName}-QUIZ`}
           />
           <PDFDownloadButton
             fileId={Number(activeCategoryId)}
             pdfType="ANSWER"
             variant={2}
             type="CATEGORY"
+            fileName={`${activeCategoryName}-ANSWER`}
           />
         </StyledPDFButtonWrapper>
         {activeCategoryItems.map((item, index) => (
           <CategoryQuizItem
             key={isQuizItemType(item) ? item.categorizedProblemId : index}
+            activeCategoryId={activeCategoryId ?? ''}
             quizItem={item as QuizCategoryItemType}
             handleDeleteItem={handleDeleteQuizItem}
           />
@@ -85,11 +94,13 @@ function CategoryItemSection({
             pdfType="SUMMARY"
             variant={2}
             type="CATEGORY"
+            fileName={`${activeCategoryName}-SUMMARY`}
           />
         </StyledPDFButtonWrapper>
         {activeCategoryItems.map((item, index) => (
           <CategorySummaryItem
             key={isQuizItemType(item) ? index : item.categorizedSummaryId}
+            activeCategoryId={activeCategoryId ?? ''}
             summaryItem={item as SummaryCategoryItemType}
             handleDeleteItem={handleDeleteSummaryItem}
           />

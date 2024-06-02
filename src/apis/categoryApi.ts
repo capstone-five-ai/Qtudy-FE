@@ -36,3 +36,20 @@ export const postNewCategory = async (
   });
   return response.data;
 };
+
+export const editCategoryName = async (
+  categoryId: string,
+  categoryType: string,
+  categoryName: string
+) => {
+  const response = await authClient.patch(`api/category/edit/${categoryId}`, {
+    categoryName,
+    categoryType,
+  });
+  return response.data;
+};
+
+export const deleteCategory = async (categoryId: string) => {
+  const response = await authClient.delete(`api/category/delete/${categoryId}`);
+  return response.data;
+};

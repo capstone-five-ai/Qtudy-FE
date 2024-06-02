@@ -8,8 +8,9 @@ import CategoryItemDateInfo from '@/containers/CategoryPage/CategoryItem/Categor
 import CategoryItemTitleInfo from '@/containers/CategoryPage/CategoryItem/CategoryItemTitleInfo';
 import { QuizCategoryItemType } from '@/types/category.type';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const QUIZ_TYPE = {
+const QUIZ_TYPE: { [key: string]: string } = {
   MULTIPLE: '객관식',
   SUBJECTIVE: '주관식',
 };
@@ -20,14 +21,17 @@ const GENERATED_BY: { [key: string]: string } = {
 };
 
 interface CategoryQuizItemProps {
+  activeCategoryId: string;
   quizItem: QuizCategoryItemType;
   handleDeleteItem: (id: number) => void;
 }
 function CategoryQuizItem({
+  activeCategoryId,
   quizItem,
   handleDeleteItem,
 }: CategoryQuizItemProps) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -37,22 +41,23 @@ function CategoryQuizItem({
             setShowDeleteModal(false);
           }}
           onConfirm={() => {
-            // TODO: index 반영
-            handleDeleteItem(1);
+            handleDeleteItem(quizItem.categorizedProblemId);
           }}
           title="퀴즈를 삭제하시겠습니까?"
         />
       )}
       <StyledCategoryItemContainer
         onClick={() => {
-          // TODO: 상세 퀴즈 페이지로 이동
+          navigate(
+            `/management/category/quiz?categoryId=${activeCategoryId}&id=${quizItem.categorizedProblemId}`
+          );
         }}
         $itemType="QUIZ"
       >
         <StyledCategoryItemInnerContainer>
           <div className="children-container">
             <CategoryItemTitleInfo
-              createInfo={`${GENERATED_BY[quizItem.problemGeneratedBy]} 생성 / ${Object.entries(QUIZ_TYPE).find(([_, value]) => value === quizItem.problemType)?.[0]}`}
+              createInfo={`${GENERATED_BY[quizItem.problemGeneratedBy]} 생성 / ${QUIZ_TYPE[quizItem.problemType]}`}
               title={`Q. ${quizItem.problemName}`}
             />
           </div>

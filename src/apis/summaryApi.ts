@@ -96,3 +96,6 @@ export const postSummaryByUser = async (
   );
   return response.data;
 };
+
+// 8. 회원 저장 요약 - 요약 수정 => 이게 왜 필요?
+// 8. 회원 저장 요약 - 요약 삭제 => 이게 왜 필요?

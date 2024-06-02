@@ -40,6 +40,22 @@ function GenerateSection() {
     setInputOption({ ...inputOption });
   }, [inputOption.type]);
 
+  const handleSubmit = () => {
+    let payload;
+
+    if (inputOption.type === '객관식') {
+      payload = quizContent;
+    } else {
+      const { problemChoices, problemAnswer, ...rest } = quizContent;
+      payload = rest;
+    }
+
+    generateByUser({
+      newQuizData: payload,
+      quizType: inputOption.type as GenerateQuizType,
+    });
+  };
+
   return (
     <>
       {showLoading && (
@@ -58,17 +74,14 @@ function GenerateSection() {
         optionList={GENERATE_OPTIONS}
         inputOption={inputOption}
         setInputOption={setInputOption}
-        handleSubmit={() => {
-          generateByUser({
-            newQuizData: quizContent,
-            quizType: inputOption.type as GenerateQuizType,
-          });
-        }}
+        handleSubmit={handleSubmit}
         generateButtonDisabled={
           Object.values(inputOption).includes('') ||
           quizContent.problemName === '' ||
-          quizContent.problemAnswer === '-1' ||
-          quizContent.problemChoices.length === 0
+          (inputOption.type === '객관식' &&
+            quizContent.problemAnswer === '-1') ||
+          (inputOption.type === '객관식' &&
+            quizContent.problemChoices?.length === 0)
         }
       />
     </>

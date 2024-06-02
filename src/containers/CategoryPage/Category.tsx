@@ -1,3 +1,4 @@
+import { deleteCategory, editCategoryName } from '@/apis/categoryApi';
 import { ReactComponent as CompleteIcon } from '@/assets/icons/complete.svg';
 import { ReactComponent as EditIcon } from '@/assets/icons/edit.svg';
 import DeleteIcon from '@/components/Icon/DeleteIcon';
@@ -5,27 +6,52 @@ import DeleteItemModal from '@/components/Modal/DeleteItemModal';
 import Typography from '@/components/Typography/Typography';
 import { CategoryType } from '@/types/category.type';
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 // 버튼 타입 확장
 interface CategoryProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   category: CategoryType;
   active?: boolean;
-  handleEditCategory: (id: number, name: string) => void;
-  handleDeleteCategory: (id: number) => void;
+  refetchCategory: () => void;
 }
 
 function Category({
   category,
   active = false,
-  handleEditCategory,
-  handleDeleteCategory,
+  refetchCategory,
   ...props
 }: CategoryProps) {
   const [editMode, setEditMode] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+
+  const handleSubmitCategoryName = async () => {
+    try {
+      await editCategoryName(
+        String(category.categoryId),
+        category.categoryType,
+        newCategoryName
+      );
+      setEditMode(false);
+      refetchCategory();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleDeleteCategory = async () => {
+    try {
+      await deleteCategory(String(category.categoryId));
+      setShowDeleteModal(true);
+      refetchCategory();
+      navigate(
+        `/management/category?type=${category.categoryType.toLowerCase()}`
+      );
+    } catch (e) {}
+  };
 
   return (
     <StyledContainer type="button" $active={active} {...props}>
@@ -39,9 +65,7 @@ function Category({
           />
           <div className="icon-list">
             <CompleteIcon
-              onClick={() =>
-                handleEditCategory(category.categoryId, newCategoryName)
-              }
+              onClick={handleSubmitCategoryName}
               style={{ cursor: 'pointer' }}
             />
           </div>
@@ -51,7 +75,7 @@ function Category({
           {showDeleteModal && (
             <DeleteItemModal
               onCancel={() => setShowDeleteModal(false)}
-              onConfirm={() => handleDeleteCategory(category.categoryId)}
+              onConfirm={handleDeleteCategory}
               title="카테고리를 삭제하시겠습니까?"
             />
           )}

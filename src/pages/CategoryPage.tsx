@@ -22,14 +22,27 @@ function CategoryPage() {
     []
   );
   const navigate = useNavigate();
-  const { data: fetchedQuizCategoryList } = useGetCategoryList('QUIZ');
-  const { data: fetchedSummaryCategoryList } = useGetCategoryList('SUMMARY');
-  const { data: currentCategoryDetailList, refetch } = useGetCategoryDetailList(
-    activeCategoryId ?? ''
-  );
+  const { data: fetchedQuizCategoryList, refetch: refetchQuizCategoryList } =
+    useGetCategoryList('QUIZ');
+  const {
+    data: fetchedSummaryCategoryList,
+    refetch: refetchSummaryCategoryList,
+  } = useGetCategoryList('SUMMARY');
+  const {
+    data: currentCategoryDetailList,
+    refetch: refetchCurrentCategoryDetailList,
+  } = useGetCategoryDetailList(activeCategoryId ?? '');
 
   useEffect(() => {
-    if (activeCategoryId) refetch();
+    if (activeCategoryId) {
+      refetchCurrentCategoryDetailList().then((result) => {
+        if (result.error) {
+          navigate(`/management/category?type=${type?.toLowerCase()}`, {
+            replace: true,
+          });
+        }
+      });
+    }
   }, [activeCategoryId]);
 
   useEffect(() => {
@@ -53,13 +66,16 @@ function CategoryPage() {
         currentType={type}
         categories={type === 'QUIZ' ? quizCategories : summaryCategories}
         activeCategoryId={activeCategoryId}
+        refetchQuizCategory={refetchQuizCategoryList}
+        refetchSummaryCategory={refetchSummaryCategoryList}
       />
       <StyledContentWrapper>
-        {activeCategoryId && type ? (
+        {activeCategoryId && type && currentCategoryDetailList ? (
           <>
             <CategoryItemSection
               activeType={type}
               activeCategoryId={activeCategoryId}
+              activeCategoryName={currentCategoryDetailList.categoryName}
               activeCategoryItems={
                 currentCategoryDetailList
                   ? type === 'QUIZ'
@@ -70,6 +86,7 @@ function CategoryPage() {
                       : []
                   : []
               }
+              refetchCategoryDetail={refetchCurrentCategoryDetailList}
             />
             <StyledButtonWrapper>
               <PlainButton

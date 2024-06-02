@@ -27,3 +27,18 @@ export interface UserSummaryItem {
   response: GenerateUserSummaryItem;
   isWriter: boolean;
 }
+
+export interface CategoryOtherSummaryItem {
+  categorizedSummaryId: number;
+  categorizedSummaryName: string;
+}
+
+export interface CategorySummaryItem {
+  categorizedSummaryId: number;
+  summaryTitle: string;
+  summaryContent: string;
+  categoryName: string;
+  categoryId: number;
+  previousSummary: CategoryOtherSummaryItem | null;
+  nextSummary: CategoryOtherSummaryItem | null;
+}

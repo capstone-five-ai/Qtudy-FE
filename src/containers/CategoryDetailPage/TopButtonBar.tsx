@@ -18,8 +18,6 @@ function TopButtonBar({
   handleEdit,
   handleCancel,
 }: TopButtonBarProps) {
-  //const navigate = useNavigate();
-
   return (
     <StyledContainer>
       {isEdit ? (

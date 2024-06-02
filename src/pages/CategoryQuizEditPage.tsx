@@ -1,10 +1,13 @@
+import { editQuizToCategory } from '@/apis/quizCategoryApi';
 import QuizGenerationForm from '@/components/Form/QuizGenerationForm';
 import Scrollbar from '@/components/Scrollbar/Scrollbar';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import ContentWrapper from '@/components/Wrapper/ContentWrapper';
 import TopButtonBar from '@/containers/CategoryDetailPage/TopButtonBar';
-import { QuizType } from '@/types/quiz.type';
-import { useState } from 'react';
+import { CategoryQuizItem, QuizType } from '@/types/quiz.type';
+import { QUIZ_TYPE } from '@/utils/convertToRequestData';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 const initialQuizContent: QuizType = {
@@ -15,20 +18,57 @@ const initialQuizContent: QuizType = {
 };
 
 function CategoryQuizEditPage() {
+  const [params] = useSearchParams();
+  const categoryId = Number(params.get('categoryId'));
+  const quizId = Number(params.get('id'));
   const [quizContent, setQuizContent] = useState<QuizType>(initialQuizContent);
-  /* const [inputOption, setInputOption] = useState<{ [key: string]: string }>({
-    type: '객관식',
-    fileName: '',
-  }); */
-  const inputOption = { type: '객관식', fileName: '' };
+  const [quizType, setQuizType] = useState('객관식');
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const { state } = location;
+
+    if (state.quizData) {
+      const quiz = state.quizData as CategoryQuizItem;
+      setQuizType(
+        Object.entries(QUIZ_TYPE).find(
+          ([_, value]) => value === quiz.problemType
+        )?.[0] ?? '객관식'
+      );
+      setQuizContent({
+        problemName: quiz.problemName,
+        problemAnswer: quiz.problemAnswer ?? undefined,
+        problemCommentary: quiz.problemCommentary,
+        problemChoices: quiz.problemChoices ?? undefined,
+      });
+    }
+  }, []);
+
+  const handleCancel = () => {
+    navigate(`/management/category/quiz?categoryId=${categoryId}&id=${quizId}`);
+  };
+
+  const handleEdit = async () => {
+    try {
+      await editQuizToCategory(quizId, quizContent);
+      handleCancel();
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <ContentWrapper>
       <StyledContent>
-        <TopButtonBar isEdit />
+        <TopButtonBar
+          isEdit
+          handleCancel={handleCancel}
+          handleComplete={handleEdit}
+        />
         <StyledInnerContainer>
           <QuizGenerationForm
-            quizType={inputOption.type}
+            quizType={quizType}
             quizContent={quizContent}
             setQuizContent={setQuizContent}
           />

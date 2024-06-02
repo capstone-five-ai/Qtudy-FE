@@ -15,44 +15,22 @@ interface CategorySidebarProps {
   currentType: ServiceType;
   categories: CategoryType[];
   activeCategoryId: string | null;
+  refetchQuizCategory: () => void;
+  refetchSummaryCategory: () => void;
 }
 
 function CategorySidebar({
   currentType,
   categories,
   activeCategoryId,
+  refetchQuizCategory,
+  refetchSummaryCategory,
 }: CategorySidebarProps) {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const navigate = useNavigate();
 
   const handleAddCategory = () => {
     setShowCategoryModal(true);
-  };
-
-  const handleEditCategory = async (/* id: number, name: string */) => {
-    /* await CategoryApi.editCategory(id, name).then((data) => {
-      const updatedCategoryList = categoryList.map((category) => {
-        if (category.categoryId === data.categoryId) {
-          return data;
-        }
-        return category;
-      });
-      setCategoryList(updatedCategoryList);
-    }); */
-  };
-
-  const handleDeleteCategory = async (/* id: number */) => {
-    /* await CategoryApi.deleteCategory(id).then(() => {
-      const updatedCategoryList = categoryList.filter(
-        (category) => category.categoryId !== id
-      );
-      setCategoryList(updatedCategoryList);
-
-      const searchParams = new URLSearchParams(location.search);
-      searchParams.delete('categoryId');
-
-      navigate(`${location.pathname}?${searchParams.toString()}`);
-    }); */
   };
 
   return (
@@ -86,8 +64,11 @@ function CategorySidebar({
                   searchParams.set('categoryId', String(category.categoryId));
                   navigate(`${location.pathname}?${searchParams.toString()}`);
                 }}
-                handleEditCategory={handleEditCategory}
-                handleDeleteCategory={handleDeleteCategory}
+                refetchCategory={() => {
+                  currentType === 'QUIZ'
+                    ? refetchQuizCategory()
+                    : refetchSummaryCategory();
+                }}
               />
             ))
           ) : (
@@ -100,6 +81,12 @@ function CategorySidebar({
           onClose={() => {
             setShowCategoryModal(false);
           }}
+          onSubmit={() => {
+            currentType === 'QUIZ'
+              ? refetchQuizCategory()
+              : refetchSummaryCategory();
+          }}
+          categoryType={currentType}
         />
       )}
     </>
