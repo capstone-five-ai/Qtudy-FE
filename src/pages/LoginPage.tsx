@@ -1,17 +1,10 @@
 import LoginButton from '@/components/Button/LoginButton';
 import Typography from '@/components/Typography/Typography';
 import BrandMotion from '@/containers/LoginPage/BrandMotion';
-import authState from '@/recoils/atoms/authState';
 import navigateToLogin from '@/utils/navigateToLogin';
-import { Navigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 import styled, { keyframes } from 'styled-components';
 
 function LoginPage() {
-  const isAuthenticated = useRecoilValue(authState);
-
-  if (isAuthenticated) return <Navigate to="/" replace />;
-
   return (
     <>
       <BrandWrapper>

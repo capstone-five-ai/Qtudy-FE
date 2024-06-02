@@ -1,14 +1,19 @@
+import LoginModal from '@/components/Modal/LoginModal';
 import AnnouncementTooltip from '@/components/Tooltip/AnnouncementTooltip';
 import { HEADER_MENU_LIST } from '@/constants';
+import authState from '@/recoils/atoms/authState';
 import tooltipState from '@/recoils/atoms/tooltipState';
-import { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled, { css } from 'styled-components';
 
 function MenuBar() {
+  const isAuthenticated = useRecoilValue(authState);
   const location = useLocation();
   const [showTooltip, setShowTooltip] = useRecoilState(tooltipState);
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const majorPaths = ['quiz', 'summary', 'management'];
@@ -33,21 +38,35 @@ function MenuBar() {
   };
 
   return (
-    <StyledContainer>
-      {HEADER_MENU_LIST.map((menu) => (
-        <Link
-          key={menu.header.title}
-          to={menu.path}
-          style={{ textDecoration: 'none' }}
-        >
-          <StyledMenuButton $isActive={isActivePath(menu.path)}>
+    <>
+      {showModal && (
+        <LoginModal
+          onConfirm={() => {
+            setShowModal(false);
+            navigate('/login');
+          }}
+          onCancel={() => setShowModal(false)}
+        />
+      )}
+      <StyledContainer>
+        {HEADER_MENU_LIST.map((menu) => (
+          <StyledMenuButton
+            $isActive={isActivePath(menu.path)}
+            onClick={() => {
+              if (isAuthenticated) {
+                navigate(menu.path);
+              } else {
+                setShowModal(true);
+              }
+            }}
+          >
             {menu.header.title}
             <StyledActiveIcon $isActive={isActivePath(menu.path)} />
           </StyledMenuButton>
-        </Link>
-      ))}
-      {showTooltip && <AnnouncementTooltip />}
-    </StyledContainer>
+        ))}
+        {showTooltip && <AnnouncementTooltip />}
+      </StyledContainer>
+    </>
   );
 }
 

@@ -12,12 +12,21 @@ import RedirectPage from '@/pages/RedirectPage';
 import SelectServicePage from '@/pages/SelectServicePage';
 import SummaryAIPage from '@/pages/SummaryAIPage';
 import SummaryUserPage from '@/pages/SummaryUserPage';
+import ProtectedRoute from '@/routers/ProtectedRoute';
 import { Navigate, createBrowserRouter } from 'react-router-dom';
 
 const routes = [
-  { path: '/', element: <SelectServicePage /> },
-  { path: '/login', element: <LoginPage /> },
-  { path: '/oauth/kakao/callback', element: <RedirectPage /> },
+  {
+    element: <ProtectedRoute auth="NO_AUTH" />,
+    children: [
+      { path: '/login', element: <LoginPage /> },
+      { path: '/oauth/kakao/callback', element: <RedirectPage /> },
+    ],
+  },
+  {
+    element: <ProtectedRoute auth="AUTH" />,
+    children: [{ path: '/', element: <SelectServicePage /> }],
+  },
   {
     path: '/',
     element: <MainLayout />,
@@ -42,14 +51,22 @@ const routes = [
         path: 'management',
         children: [
           { path: '', element: <Navigate replace to="history" /> },
-          { path: 'history', element: <HistoryPage /> },
-          { path: 'category', element: <CategoryPage /> },
-          { path: 'category/quiz', element: <CategoryQuizDetailPage /> },
-          { path: 'category/summary', element: <CategorySummaryDetailPage /> },
-          { path: 'category/edit/quiz', element: <CategoryQuizEditPage /> },
           {
-            path: 'category/edit/summary',
-            element: <CategorySummaryEditPage />,
+            element: <ProtectedRoute auth="AUTH" />,
+            children: [
+              { path: 'history', element: <HistoryPage /> },
+              { path: 'category', element: <CategoryPage /> },
+              { path: 'category/edit/quiz', element: <CategoryQuizEditPage /> },
+              {
+                path: 'category/edit/summary',
+                element: <CategorySummaryEditPage />,
+              },
+            ],
+          },
+          { path: 'category/quiz', element: <CategoryQuizDetailPage /> },
+          {
+            path: 'category/summary',
+            element: <CategorySummaryDetailPage />,
           },
         ],
       },
