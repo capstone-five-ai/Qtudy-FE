@@ -49,7 +49,6 @@ function QuizInputField({
           <DeleteIcon
             className="icon"
             onClick={() => {
-              // TODO: 삭제 토스트 구현
               onDelete && onDelete(index);
             }}
           />

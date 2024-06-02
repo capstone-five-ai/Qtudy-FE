@@ -19,9 +19,7 @@ function RedirectPage() {
       localStorage.setItem('refreshToken', loginRes.refreshToken);
       setIsAuthenticated(true);
       navigate('/');
-    } catch (error) {
-      // TODO: 오류 처리 로직 추가 (예: 오류 페이지로 이동, 메시지 표시 등)
-    }
+    } catch (error) {}
   }, [code, navigate, setIsAuthenticated]);
 
   useEffect(() => {

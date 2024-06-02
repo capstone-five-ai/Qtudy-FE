@@ -79,7 +79,6 @@ function GenerateUploadWrapper({
           <PreviewCard key={image.name}>
             <DeleteButton
               onClick={() => {
-                console.log('test');
                 handleDelete(index);
               }}
             >

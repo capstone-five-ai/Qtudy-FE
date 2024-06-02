@@ -11,6 +11,7 @@ import {
   Filter,
   PDFDown,
 } from '@/containers/HistoryPage/HistoryList.style';
+import useToast from '@/hooks/useToast';
 import { HistoryType } from '@/types/history.type';
 import { convertToKRTime } from '@/utils/convertToKRTime';
 import { FormEvent, useEffect, useRef, useState } from 'react';
@@ -29,6 +30,7 @@ function HistoryItem({ history, updateList }: Props) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [fileName, setFileName] = useState(history.fileName);
   const [newFileName, setNewFileName] = useState(fileName);
+  const { fireToast } = useToast();
 
   useEffect(() => {
     if (inputRef.current === null) return;
@@ -37,7 +39,6 @@ function HistoryItem({ history, updateList }: Props) {
   }, [editMode]);
 
   const getDateFormat = (dateStr: string) => {
-    //const date = dateStr.slice(0, 16).replace(/-/g, '.').replace(/T/g, ' ');
     const date = convertToKRTime(dateStr);
     return date;
   };
@@ -70,6 +71,10 @@ function HistoryItem({ history, updateList }: Props) {
 
   const deleteFileItem = async () => {
     await deleteFile(history.fileId);
+    fireToast({
+      icon: <DeleteIcon width={20} height={20} />,
+      message: '항목이 삭제되었습니다',
+    });
     setShowDeleteModal(false);
     updateList(1);
   };
@@ -150,8 +155,8 @@ function HistoryItem({ history, updateList }: Props) {
         <DeleteItemModal
           onCancel={() => setShowDeleteModal(false)}
           onConfirm={() => {
-            setShowDeleteModal(false);
             deleteFileItem();
+            setShowDeleteModal(false);
           }}
           title={`${history.dtype === 'QUIZ' ? '퀴즈를' : '요약을'} 삭제하시겠습니까?`}
         />

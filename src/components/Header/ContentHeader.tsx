@@ -10,8 +10,9 @@ function ContentHeader() {
   const location = useLocation();
   const navigate = useNavigate();
   const isAuthenticated = useRecoilValue(authState);
+
   const currentContent = HEADER_MENU_LIST.find((menu) =>
-    location.pathname.includes(menu.path)
+    location.pathname.startsWith(menu.path)
   );
   const [showModal, setShowModal] = useState(false);
 

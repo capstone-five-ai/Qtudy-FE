@@ -14,7 +14,6 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 function ResultSection() {
-  //const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const fileId = Number(searchParams.get('id'));
   const isAuthenticated = useRecoilValue(authState);

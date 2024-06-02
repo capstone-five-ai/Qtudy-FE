@@ -1,10 +1,12 @@
 import { deleteQuizFromCategory } from '@/apis/quizCategoryApi';
 import { deleteSummaryFromCategory } from '@/apis/summaryCategoryApi';
 import PDFDownloadButton from '@/components/Button/PDFDownloadButton';
+import DeleteIcon from '@/components/Icon/DeleteIcon';
 import Scrollbar from '@/components/Scrollbar/Scrollbar';
 import CategoryQuizItem from '@/containers/CategoryPage/CategoryItem/CategoryQuizItem';
 import CategorySummaryItem from '@/containers/CategoryPage/CategoryItem/CategorySummaryItem';
 import NoItemSection from '@/containers/CategoryPage/NoItemSection';
+import useToast from '@/hooks/useToast';
 import {
   QuizCategoryItemType,
   ServiceType,
@@ -27,6 +29,8 @@ function CategoryItemSection({
   activeCategoryItems,
   refetchCategoryDetail,
 }: CategoryItemSectionProps) {
+  const { fireToast } = useToast();
+
   const isQuizItemType = (
     item: QuizCategoryItemType | SummaryCategoryItemType
   ): item is QuizCategoryItemType => {
@@ -36,6 +40,10 @@ function CategoryItemSection({
   const handleDeleteQuizItem = async (quizId: number | string) => {
     try {
       await deleteQuizFromCategory(quizId);
+      fireToast({
+        icon: <DeleteIcon width={20} height={20} />,
+        message: '항목이 삭제되었습니다',
+      });
       refetchCategoryDetail();
     } catch (e) {
       console.error(e);
@@ -45,6 +53,10 @@ function CategoryItemSection({
   const handleDeleteSummaryItem = async (summaryId: number | string) => {
     try {
       await deleteSummaryFromCategory(summaryId);
+      fireToast({
+        icon: <DeleteIcon width={20} height={20} />,
+        message: '항목이 삭제되었습니다',
+      });
       refetchCategoryDetail();
     } catch (e) {
       console.error(e);

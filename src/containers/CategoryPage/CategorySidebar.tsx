@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface CategorySidebarProps {
-  // TODO: 타입 수정
   currentType: ServiceType;
   categories: CategoryType[];
   activeCategoryId: string | null;

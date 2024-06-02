@@ -4,12 +4,12 @@ import { ReactComponent as EditIcon } from '@/assets/icons/edit.svg';
 import DeleteIcon from '@/components/Icon/DeleteIcon';
 import DeleteItemModal from '@/components/Modal/DeleteItemModal';
 import Typography from '@/components/Typography/Typography';
+import useToast from '@/hooks/useToast';
 import { CategoryType } from '@/types/category.type';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-// 버튼 타입 확장
 interface CategoryProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   category: CategoryType;
   active?: boolean;
@@ -27,6 +27,7 @@ function Category({
   const [newCategoryName, setNewCategoryName] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const { fireToast } = useToast();
 
   const handleSubmitCategoryName = async () => {
     try {
@@ -45,6 +46,10 @@ function Category({
   const handleDeleteCategory = async () => {
     try {
       await deleteCategory(String(category.categoryId));
+      fireToast({
+        icon: <DeleteIcon width={20} height={20} />,
+        message: '항목이 삭제되었습니다',
+      });
       setShowDeleteModal(true);
       refetchCategory();
       navigate(

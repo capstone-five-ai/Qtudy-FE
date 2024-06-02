@@ -1,6 +1,5 @@
 import { authClient } from '@/apis/client';
 
-// 한 번에 가져올 수 있도록 해야함
 const PAGE = 1;
 const SIZE = 100;
 
