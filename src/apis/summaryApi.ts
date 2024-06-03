@@ -53,7 +53,6 @@ export const postSummaryByText = async (
   return response.data;
 };
 
-// TODO: 문제 없는지 확인 필요
 export const postSummaryByPdf = async (
   option: GenerateSummaryOption,
   file: FormData
@@ -71,7 +70,6 @@ export const postSummaryByPdf = async (
   return response.data;
 };
 
-// TODO: 문제 없는지 확인 필요
 export const postSummaryByImage = async (
   option: GenerateSummaryOption,
   file: FormData

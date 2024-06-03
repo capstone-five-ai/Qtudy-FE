@@ -19,7 +19,6 @@ type MenuType = {
 
 function SelectServicePage() {
   const [selectedIdx, setSelectedIdx] = useState(-1);
-  //const isAuthenticated = useRecoilValue(authState);
 
   const menus: MenuType[] = [
     {
