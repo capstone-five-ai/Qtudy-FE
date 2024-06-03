@@ -1,7 +1,7 @@
 import { editQuizToCategory } from '@/apis/quizCategoryApi';
 import QuizGenerationForm from '@/components/Form/QuizGenerationForm';
 import Scrollbar from '@/components/Scrollbar/Scrollbar';
-import Sidebar from '@/components/Sidebar/Sidebar';
+import DefaultSidebar from '@/components/Sidebar/DefaultSidebar';
 import ContentWrapper from '@/components/Wrapper/ContentWrapper';
 import TopButtonBar from '@/containers/CategoryDetailPage/TopButtonBar';
 import useRedirect from '@/hooks/useRedirect';
@@ -86,7 +86,7 @@ function CategoryQuizEditPage() {
           />
         </StyledInnerContainer>
       </StyledContent>
-      <Sidebar />
+      <DefaultSidebar />
     </ContentWrapper>
   );
 }

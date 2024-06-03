@@ -1,7 +1,7 @@
 import GenerateButton from '@/components/Button/GenerateButton';
 import FileNameInputField from '@/components/InputField/FileNameInputField';
 import RadioInputFieldContainer from '@/components/InputField/RadioInputFieldContainer';
-import Sidebar from '@/components/Sidebar/Sidebar';
+import DefaultSidebar from '@/components/Sidebar/DefaultSidebar';
 import styled from 'styled-components';
 
 interface GenerateSidebarProps<T> {
@@ -28,7 +28,7 @@ function GenerateSidebar<T extends object>({
   inputFieldDisabled = false,
 }: GenerateSidebarProps<T>) {
   return (
-    <Sidebar>
+    <DefaultSidebar>
       <StyledSidebarContentContainer>
         <StyledOptionContainer>
           {optionList.map((option) => (
@@ -59,7 +59,7 @@ function GenerateSidebar<T extends object>({
           disabled={generateButtonDisabled}
         />
       </StyledSidebarContentContainer>
-    </Sidebar>
+    </DefaultSidebar>
   );
 }
 
