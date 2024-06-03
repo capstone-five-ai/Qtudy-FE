@@ -3,7 +3,7 @@ import ShareLinkButton from '@/components/Button/ShareLinkButton';
 import QuizCheckForm from '@/components/Form/QuizCheckForm';
 import SaveToCategoryModal from '@/components/Modal/SaveToCategoryModal';
 import Scrollbar from '@/components/Scrollbar/Scrollbar';
-import Sidebar from '@/components/Sidebar/Sidebar';
+import DefaultSidebar from '@/components/Sidebar/DefaultSidebar';
 import { useGetUserQuizItem } from '@/hooks/useGetQuiz';
 import useRedirect from '@/hooks/useRedirect';
 import authState from '@/recoils/atoms/authState';
@@ -44,7 +44,7 @@ function ResultSection() {
             <QuizCheckForm quiz={quiz} />
           </StyledInnerContent>
         </StyledContent>
-        <Sidebar>
+        <DefaultSidebar>
           <SidebarContentContainer>
             <StyledButtonContainer>
               <ShareLinkButton link={window.location.href} />
@@ -54,7 +54,7 @@ function ResultSection() {
               onClick={() => setShowModal(true)}
             />
           </SidebarContentContainer>
-        </Sidebar>
+        </DefaultSidebar>
         {showModal && (
           <SaveToCategoryModal
             categoryType="QUIZ"

@@ -4,7 +4,7 @@ import SaveToCategoryButton from '@/components/Button/SaveToCategoryButton';
 import ShareLinkButton from '@/components/Button/ShareLinkButton';
 import SummaryCheckForm from '@/components/Form/SummaryCheckForm';
 import SaveToCategoryModal from '@/components/Modal/SaveToCategoryModal';
-import Sidebar from '@/components/Sidebar/Sidebar';
+import DefaultSidebar from '@/components/Sidebar/DefaultSidebar';
 import { useGetAISummaryFile } from '@/hooks/useGetSummary';
 import useRedirect from '@/hooks/useRedirect';
 import authState from '@/recoils/atoms/authState';
@@ -49,7 +49,7 @@ function ResultSection() {
         <StyledContent>
           <SummaryCheckForm summary={summary} />
         </StyledContent>
-        <Sidebar>
+        <DefaultSidebar>
           <SidebarContentContainer>
             <StyledButtonContainer>
               <CopySummaryButton text={summary.summaryContent} />
@@ -68,7 +68,7 @@ function ResultSection() {
               onClick={() => setShowModal(true)}
             />
           </SidebarContentContainer>
-        </Sidebar>
+        </DefaultSidebar>
         {showModal && (
           <SaveToCategoryModal
             categoryType="SUMMARY"
