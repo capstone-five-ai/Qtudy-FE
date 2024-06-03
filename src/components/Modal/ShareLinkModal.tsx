@@ -1,12 +1,11 @@
+import { ReactComponent as CheckIcon } from '@/assets/icons/complete.svg';
+import { ReactComponent as CopyIcon } from '@/assets/icons/copy-link.svg';
+import { ReactComponent as LinkIcon } from '@/assets/icons/link.svg';
+import LinkInputField from '@/components/InputField/LinkInputField';
+import DefaultModal from '@/components/Modal/DefaultModal';
+import useToast from '@/hooks/useToast';
+import { useRef } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as CheckIcon } from '../../assets/icons/complete.svg';
-import { ReactComponent as CopyIcon } from '../../assets/icons/copy.svg';
-import { ReactComponent as LinkIcon } from '../../assets/icons/link_white.svg';
-
-import useToast from '../../hooks/useToast';
-import LinkInput from '../Input/LinkInput';
-import Typography from '../Typography';
-import ModalContainer from './ModalContainer';
 
 type Props = {
   onClose: () => void;
@@ -15,98 +14,120 @@ type Props = {
 
 function ShareLinkModal({ onClose, link }: Props) {
   const { fireToast } = useToast();
+  const linkRef = useRef<HTMLDivElement>(null);
+
+  const handleFocus = () => {
+    if (!linkRef.current) return;
+    linkRef.current.style.border = '1px solid rgba(62, 215, 205, 0.4)';
+  };
+
+  const handleBlur = () => {
+    if (!linkRef.current) return;
+    linkRef.current.style.border = '1px solid transparent';
+  };
+
   const handleCopyClipBoard = async () => {
     await navigator.clipboard.writeText(link);
-    fireToast('링크 복사 완료!', <CheckIcon />);
+    fireToast({ icon: <CheckIcon />, message: '링크 복사 완료!' });
   };
 
   return (
-    <ModalContainer onClose={onClose}>
-      <Wrapper>
-        <Header>
-          <LinkCircle>
-            <LinkIcon />
-          </LinkCircle>
-          <Typography variant="button">링크를 공유하고 함께 학습하세요</Typography>
-        </Header>
-        <LinkWrapper>
-          <UrlWrapper>
-            <LinkInput link={link} />
+    <DefaultModal height="192px" onClose={onClose} closeButton>
+      <StyledModalContentContainer>
+        <StyledLinkIcon>
+          <LinkIcon />
+        </StyledLinkIcon>
+        <div className="title">링크를 공유하고 함께 학습하세요</div>
+        <div className="link-container">
+          <UrlWrapper
+            tabIndex={0}
+            ref={linkRef}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+          >
+            <LinkInputField link={link} />
           </UrlWrapper>
-          <Copy type="button" onClick={async () => handleCopyClipBoard()}>
+          <StyledLinkButton onClick={handleCopyClipBoard}>
             <CopyIcon />
-            <Typography variant="caption3" color="grayScale03" hoverVariant="caption1">
-              링크 복사
-            </Typography>
-          </Copy>
-        </LinkWrapper>
-      </Wrapper>
-    </ModalContainer>
+            <span>링크 복사</span>
+          </StyledLinkButton>
+        </div>
+      </StyledModalContentContainer>
+    </DefaultModal>
   );
 }
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 32px 20px;
+export default ShareLinkModal;
 
-  gap: 32px;
-
-  width: 100%;
-`;
-
-const Header = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  gap: 16px;
-`;
-
-const LinkCircle = styled.div`
-  display: flex;
+const StyledLinkIcon = styled.div`
   width: 36px;
   height: 36px;
+
+  display: flex;
   justify-content: center;
   align-items: center;
+
   border-radius: 18px;
-  background: ${(props) => props.theme.colors.mainMint};
+  background: ${({ theme }) => theme.colors.mainMint};
   box-shadow: 0px 4px 8px 0px rgba(54, 189, 180, 0.24);
+
+  svg {
+    width: 24px;
+    height: 24px;
+    path {
+      stroke: ${({ theme }) => theme.colors.grayScale09};
+    }
+  }
 `;
 
-const LinkWrapper = styled.div`
+const StyledModalContentContainer = styled.div`
+  height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
-  width: 100%;
+  justify-content: center;
+
+  .title {
+    ${({ theme }) => theme.typography.button};
+    color: ${({ theme }) => theme.colors.grayScale02};
+    margin-top: 16px;
+  }
+
+  .link-container {
+    margin-top: 32px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
 `;
 
 const UrlWrapper = styled.div`
-  width: 347px;
+  width: 349px;
 
   display: flex;
   padding: 5px 10px;
   align-items: center;
 
   border-radius: 4px;
+  border: 1px solid transparent;
   background: ${(props) => props.theme.colors.grayScale07};
   word-break: break-all;
 `;
 
-const Copy = styled.button`
+const StyledLinkButton = styled.button`
   display: flex;
   align-items: center;
   gap: 8px;
 
-  background: inherit;
-  border: none;
-  box-shadow: none;
-  border-radius: 0;
-  padding: 0;
-  overflow: visible;
+  span {
+    ${({ theme }) => theme.typography.caption3};
+    color: ${({ theme }) => theme.colors.grayScale03};
+  }
 
-  cursor: pointer;
+  &:hover {
+    span {
+      ${({ theme }) => theme.typography.caption1};
+    }
+  }
 `;
-
-export default ShareLinkModal;

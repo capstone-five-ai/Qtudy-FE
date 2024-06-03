@@ -1,40 +1,45 @@
-export interface SummaryType {
-  memberSavedSummaryId?: number;
-  aiGeneratedSummaryId?: number;
+export interface GenerateUserSummaryOption {
   summaryTitle: string;
   summaryContent: string;
 }
 
-export interface SummaryOptionType {
-  amount: string;
+export interface GenerateSummaryOption {
+  amount?: string;
   fileName: string;
+  isDuplicatedFileName?: boolean | null;
 }
 
-export interface SummaryCreationByFileType {
-  option: SummaryOptionType;
-  file: FormData;
+export interface GenerateAISummaryFile extends GenerateUserSummaryOption {
+  aiGeneratedSummaryId: number;
 }
 
-export interface SummaryCreationByTextType {
-  option: SummaryOptionType;
-  text: string;
+export interface GenerateUserSummaryItem extends GenerateUserSummaryOption {
+  summaryId: number;
 }
 
-export interface SummaryCreationByUserType {
-  summaryTitle: string;
-  summaryContent: string;
-}
-
-export interface CategorySummaryItemsType {
-  categorizedSummaryId: number;
-  summaryGeneratedBy: string;
-  summaryTitle: string;
-  summaryContent: string;
+export interface SummaryType extends GenerateAISummaryFile {
+  fileId: number;
   createTime: string;
   updateTime: string;
 }
 
-export interface CategoryOtherSummary {
+export interface UserSummaryItem {
+  response: GenerateUserSummaryItem;
+  isWriter: boolean;
+}
+
+export interface CategoryOtherSummaryItem {
   categorizedSummaryId: number;
   categorizedSummaryName: string;
+}
+
+export interface CategorySummaryItem {
+  categorizedSummaryId: number;
+  summaryId: number;
+  summaryTitle: string;
+  summaryContent: string;
+  categoryName: string;
+  categoryId: number;
+  previousSummary: CategoryOtherSummaryItem | null;
+  nextSummary: CategoryOtherSummaryItem | null;
 }

@@ -1,9 +1,25 @@
-interface MappingData {
-  key: string;
-  apiKey: string;
+export interface CategoryType {
+  categoryId: number;
+  categoryName: string;
+  categoryType: string;
 }
 
-export interface CategoryType {
-  quiz: MappingData;
-  summary: MappingData;
+export type ServiceType = 'QUIZ' | 'SUMMARY';
+
+export interface QuizCategoryItemType {
+  categorizedProblemId: number;
+  problemGeneratedBy: string;
+  problemType: string;
+  problemName: string;
+  createTime: string;
+  updateTime: string;
+}
+
+export interface SummaryCategoryItemType {
+  categorizedSummaryId: number;
+  summaryGeneratedBy: string;
+  summaryTitle: string;
+  summaryContent: string;
+  createTime: string;
+  updateTime: string;
 }
