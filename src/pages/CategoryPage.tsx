@@ -63,11 +63,10 @@ function CategoryPage() {
   }, [fetchedSummaryCategoryList]);
 
   useEffect(() => {
-    if (type !== 'QUIZ' && type !== 'SUMMARY')
-      redirect('/management/category?type=quiz');
+    if (type !== 'QUIZ' && type !== 'SUMMARY') redirect('/management/category');
   }, [type]);
 
-  if (quizCategories.length + summaryCategories.length === 0)
+  if (!type && quizCategories.length + summaryCategories.length === 0)
     return <NoCategorySection />;
 
   return (
