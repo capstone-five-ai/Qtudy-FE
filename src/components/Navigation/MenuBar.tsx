@@ -3,7 +3,7 @@ import AnnouncementTooltip from '@/components/Tooltip/AnnouncementTooltip';
 import { HEADER_MENU_LIST } from '@/constants';
 import authState from '@/recoils/atoms/authState';
 import tooltipState from '@/recoils/atoms/tooltipState';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled, { css } from 'styled-components';
@@ -11,26 +11,23 @@ import styled, { css } from 'styled-components';
 function MenuBar() {
   const isAuthenticated = useRecoilValue(authState);
   const location = useLocation();
-  const [showTooltip, setShowTooltip] = useRecoilState(tooltipState);
+  const [, setShowTooltip] = useRecoilState(tooltipState);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const lastMajorPath = useRef('');
 
   useEffect(() => {
-    const majorPaths = ['quiz', 'summary', 'management'];
+    const majorPaths = ['/quiz', '/summary', '/management'];
     const isMajorPath = majorPaths.some((path) =>
-      location.pathname.startsWith(`${path}`)
+      location.pathname.startsWith(path)
     );
+    const currentPath = location.pathname.split('/')[1];
 
-    if (isMajorPath) {
-      let timeout: number;
+    if (isMajorPath && lastMajorPath.current !== currentPath) {
       setShowTooltip(true);
-      timeout = setTimeout(() => {
-        setShowTooltip(false);
-      }, 2000);
-
-      return () => clearTimeout(timeout);
+      lastMajorPath.current = currentPath;
     }
-  }, [location.pathname]);
+  }, [location, setShowTooltip]);
 
   const isActivePath = (menuPath: string) => {
     const currentPath = location.pathname;
@@ -65,7 +62,7 @@ function MenuBar() {
             <StyledActiveIcon $isActive={isActivePath(menu.path)} />
           </StyledMenuButton>
         ))}
-        {showTooltip && <AnnouncementTooltip />}
+        <AnnouncementTooltip />
       </StyledContainer>
     </>
   );

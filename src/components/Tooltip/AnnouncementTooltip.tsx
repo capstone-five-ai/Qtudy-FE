@@ -1,18 +1,35 @@
 import TooltipTail from '@/assets/images/tooltip-tail.svg';
+import tooltipState from '@/recoils/atoms/tooltipState';
 import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import styled, { keyframes } from 'styled-components';
 
 function AnnouncementTooltip() {
-  const [show, setShow] = useState(true);
+  const [showTooltip, setShowTooltip] = useRecoilState(tooltipState);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
-      setShow(false);
-    }, 5000);
-  }, []);
+    if (showTooltip) {
+      setIsVisible(true);
+      // Reset timeout to hide tooltip state after all animations have completed
+      const timeout = setTimeout(() => {
+        setShowTooltip(false);
+      }, 4000);
+      return () => clearTimeout(timeout);
+    }
+  }, [showTooltip, setShowTooltip]);
+
+  useEffect(() => {
+    if (isVisible) {
+      const fadeOutTimeout = setTimeout(() => {
+        setIsVisible(false);
+      }, 3700);
+      return () => clearTimeout(fadeOutTimeout);
+    }
+  }, [isVisible]);
 
   return (
-    <StyledContainer $isVisible={show}>
+    <StyledContainer $showTooltip={showTooltip} $isVisible={isVisible}>
       <StyledInnerContainer>
         <TooltipText>생성 후에는 여기서 편집이 가능해요!</TooltipText>
       </StyledInnerContainer>
@@ -25,7 +42,7 @@ export default AnnouncementTooltip;
 const fadeIn = keyframes`
   from {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(-5px);
   }
   to {
     opacity: 1;
@@ -40,11 +57,16 @@ const fadeOut = keyframes`
   }
   to {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(-5px);
   }
 `;
 
-const StyledContainer = styled.div<{ $isVisible: boolean }>`
+const StyledContainer = styled.div<{
+  $showTooltip: boolean;
+  $isVisible: boolean;
+}>`
+  display: ${(props) =>
+    props.$showTooltip ? 'block' : 'none'}; /* display 관리 추가 */
   opacity: 0;
   animation: ${(props) => (props.$isVisible ? fadeIn : fadeOut)} 0.3s
     ease-in-out forwards;
