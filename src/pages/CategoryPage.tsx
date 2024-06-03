@@ -19,22 +19,20 @@ function CategoryPage() {
   } = useGetCategoryList('SUMMARY');
 
   useEffect(() => {
-    if (
-      !type &&
-      fetchedQuizCategoryList.data.length +
-        fetchedSummaryCategoryList.data.length !==
-        0
-    )
+    const quizLength = fetchedQuizCategoryList?.data?.length || 0;
+    const summaryLength = fetchedSummaryCategoryList?.data?.length || 0;
+
+    if (!type && quizLength + summaryLength !== 0)
       redirect('/management/category?type=quiz');
 
     if (type && type !== 'QUIZ' && type !== 'SUMMARY')
       redirect('/management/category');
-  }, [type, fetchedQuizCategoryList.data, fetchedSummaryCategoryList.data]);
+  }, [type, fetchedQuizCategoryList, fetchedSummaryCategoryList]);
 
   if (
     !type &&
-    fetchedQuizCategoryList.data.length +
-      fetchedSummaryCategoryList.data.length ===
+    (fetchedQuizCategoryList?.data?.length || 0) +
+      (fetchedSummaryCategoryList?.data?.length || 0) ===
       0
   )
     return <NoCategorySection />;
@@ -44,8 +42,8 @@ function CategoryPage() {
       <CategorySection
         refetchQuizCategoryList={refetchQuizCategoryList}
         refetchSummaryCategoryList={refetchSummaryCategoryList}
-        quizCategories={fetchedQuizCategoryList.data}
-        summaryCategories={fetchedSummaryCategoryList.data}
+        quizCategories={fetchedQuizCategoryList?.data || []}
+        summaryCategories={fetchedSummaryCategoryList?.data || []}
       />
     );
 }
