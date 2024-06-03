@@ -1,13 +1,16 @@
+import Typography from '@/components/Typography/Typography';
+import { TypographyProps } from '@/types/typography.type';
 import { ReactNode } from 'react';
 import { styled } from 'styled-components';
-import Typography from '.';
-import { TypographyProps } from '../../types/typography';
 
 interface HighlightedProps {
   children: ReactNode;
 }
 
-function Highlighted({ children, ...props }: HighlightedProps & TypographyProps) {
+function Highlighted({
+  children,
+  ...props
+}: HighlightedProps & TypographyProps) {
   return (
     <Wrapper>
       <Typography {...props}>{children}</Typography>
