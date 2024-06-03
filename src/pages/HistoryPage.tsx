@@ -15,14 +15,8 @@ interface HistoryPageType {
 
 const HistoryPage = () => {
   const [filter, setFilter] = useState<ServiceType>('QUIZ');
-  const [quizes, setQuizes] = useState<HistoryPageType>({
-    histories: [],
-    totalPages: 0,
-  });
-  const [summaries, setSummaries] = useState<HistoryPageType>({
-    histories: [],
-    totalPages: 0,
-  });
+  const [quizes, setQuizes] = useState<HistoryPageType>();
+  const [summaries, setSummaries] = useState<HistoryPageType>();
 
   const getQuizes = async (quizPage: number) => {
     const response = await getAIQuizAllFile(quizPage);
@@ -51,6 +45,8 @@ const HistoryPage = () => {
     getQuizes(1);
     getSummaries(1);
   }, []);
+
+  if (!quizes || !summaries) return null;
 
   return (
     <Wrapper>

@@ -29,6 +29,8 @@ function CategoryPage() {
       redirect('/management/category');
   }, [type, fetchedQuizCategoryList, fetchedSummaryCategoryList]);
 
+  if (!fetchedQuizCategoryList || !fetchedSummaryCategoryList) return null;
+
   if (
     !type &&
     (fetchedQuizCategoryList?.data?.length || 0) +
