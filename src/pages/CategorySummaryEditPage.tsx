@@ -1,6 +1,6 @@
 import { editSummaryToCategory } from '@/apis/summaryCategoryApi';
 import FileNameInputField from '@/components/InputField/FileNameInputField';
-import Sidebar from '@/components/Sidebar/Sidebar';
+import DefaultSidebar from '@/components/Sidebar/DefaultSidebar';
 import ContentWrapper from '@/components/Wrapper/ContentWrapper';
 import TopButtonBar from '@/containers/CategoryDetailPage/TopButtonBar';
 import GenerateTextWrapper from '@/containers/QuizAIPage/GenerateTextWrapper';
@@ -67,12 +67,12 @@ function CategorySummaryEditPage() {
           setInputText={setSummaryContent}
         />
       </StyledContent>
-      <Sidebar>
+      <DefaultSidebar>
         <FileNameInputField
           value={fileName}
           onChange={(e) => setFileName(e.target.value)}
         />
-      </Sidebar>
+      </DefaultSidebar>
     </ContentWrapper>
   );
 }

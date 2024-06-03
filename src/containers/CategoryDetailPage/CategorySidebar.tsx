@@ -5,7 +5,7 @@ import ShareLinkButton from '@/components/Button/ShareLinkButton';
 import DeleteIcon from '@/components/Icon/DeleteIcon';
 import DeleteItemModal from '@/components/Modal/DeleteItemModal';
 import SaveToCategoryModal from '@/components/Modal/SaveToCategoryModal';
-import Sidebar from '@/components/Sidebar/Sidebar';
+import Sidebar from '@/components/Sidebar/DefaultSidebar';
 import useToast from '@/hooks/useToast';
 import { ServiceType } from '@/types/category.type';
 import { CategoryQuizItem } from '@/types/quiz.type';

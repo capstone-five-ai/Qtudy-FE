@@ -5,7 +5,7 @@ import QuizCheckForm from '@/components/Form/QuizCheckForm';
 import SaveToCategoryModal from '@/components/Modal/SaveToCategoryModal';
 import NumberPanel from '@/components/NumberPanel/NumberPanel';
 import Scrollbar from '@/components/Scrollbar/Scrollbar';
-import Sidebar from '@/components/Sidebar/Sidebar';
+import DefaultSidebar from '@/components/Sidebar/DefaultSidebar';
 import { useGetAIQuizFile } from '@/hooks/useGetQuiz';
 import useRedirect from '@/hooks/useRedirect';
 import authState from '@/recoils/atoms/authState';
@@ -58,7 +58,7 @@ function ResultSection() {
             <QuizCheckForm quiz={currentQuiz} />
           </StyledInnerContent>
         </StyledContent>
-        <Sidebar>
+        <DefaultSidebar>
           <SidebarContentContainer>
             <ContentInnerContainer>
               <NumberPanel
@@ -89,7 +89,7 @@ function ResultSection() {
               onClick={() => setShowModal(true)}
             />
           </SidebarContentContainer>
-        </Sidebar>
+        </DefaultSidebar>
         {showModal && (
           <SaveToCategoryModal
             categoryType="QUIZ"

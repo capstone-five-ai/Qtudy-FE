@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 
-interface SidebarProps {
+interface DefaultSidebarProps {
   children?: React.ReactNode;
   className?: string;
 }
 
-function Sidebar({ children, className }: SidebarProps) {
+function DefaultSidebar({ children, className }: DefaultSidebarProps) {
   return <StyledContainer className={className}>{children}</StyledContainer>;
 }
 
-export default Sidebar;
+export default DefaultSidebar;
 
 const StyledContainer = styled.div`
   width: 360px;
