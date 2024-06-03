@@ -71,7 +71,6 @@ export const postQuizByImage = async (
   option: GenerateQuizOption,
   file: FormData
 ) => {
-  console.log(file);
   const response = await authClient.post(
     'api/problemFile/generateProblemFileByImage',
     file,

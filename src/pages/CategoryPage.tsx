@@ -37,13 +37,8 @@ function CategoryPage() {
 
   useEffect(() => {
     if (activeCategoryId) {
-      console.log('1');
       refetchCurrentCategoryDetailList().then((result) => {
-        console.log('2');
-        console.log(result);
         if (result.error) {
-          console.log('3');
-          console.log(result.error);
           navigate(`/management/category?type=${type?.toLowerCase()}`, {
             replace: true,
           });
