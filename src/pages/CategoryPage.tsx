@@ -8,12 +8,14 @@ import {
   useGetCategoryDetailList,
   useGetCategoryList,
 } from '@/hooks/useGetCategory';
+import useRedirect from '@/hooks/useRedirect';
 import { CategoryType, ServiceType } from '@/types/category.type';
 import { useEffect, useState } from 'react';
-import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 function CategoryPage() {
+  const redirect = useRedirect();
   const [params] = useSearchParams();
   const type = params.get('type')?.toUpperCase() as ServiceType | undefined;
   const activeCategoryId = params.get('categoryId');
@@ -60,8 +62,10 @@ function CategoryPage() {
       setSummaryCategories(fetchedSummaryCategoryList?.data || []);
   }, [fetchedSummaryCategoryList]);
 
-  if (type !== 'QUIZ' && type !== 'SUMMARY')
-    return <Navigate to="/management/category?type=quiz" replace />;
+  useEffect(() => {
+    if (type !== 'QUIZ' && type !== 'SUMMARY')
+      redirect('/management/category?type=quiz');
+  }, [type]);
 
   if (quizCategories.length + summaryCategories.length === 0)
     return <NoCategorySection />;
@@ -69,7 +73,7 @@ function CategoryPage() {
   return (
     <StyledContainer>
       <CategorySidebar
-        currentType={type}
+        currentType={type ?? 'QUIZ'}
         categories={type === 'QUIZ' ? quizCategories : summaryCategories}
         activeCategoryId={activeCategoryId}
         refetchQuizCategory={refetchQuizCategoryList}

@@ -3,10 +3,11 @@ import ContentWrapper from '@/components/Wrapper/ContentWrapper';
 import CategorySidebar from '@/containers/CategoryDetailPage/CategorySidebar';
 import TopButtonBar from '@/containers/CategoryDetailPage/TopButtonBar';
 import { useGetCategorySummaryItem } from '@/hooks/useGetSummary';
+import useRedirect from '@/hooks/useRedirect';
 import authState from '@/recoils/atoms/authState';
 import { CategorySummaryItem } from '@/types/summary.type';
 import { useEffect, useState } from 'react';
-import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
@@ -15,10 +16,11 @@ function CategorySummaryDetailPage() {
   const [params] = useSearchParams();
   const categoryId = Number(params.get('categoryId'));
   const summaryId = Number(params.get('id'));
-  const { data: summaryData } = useGetCategorySummaryItem(summaryId);
+  const { data: summaryData, error } = useGetCategorySummaryItem(summaryId);
   const [currentSummary, setCurrentSummary] = useState<CategorySummaryItem>();
   const [isWriter, setIsWriter] = useState(false);
   const navigate = useNavigate();
+  const redirect = useRedirect();
 
   useEffect(() => {
     if (summaryData) {
@@ -27,12 +29,10 @@ function CategorySummaryDetailPage() {
     }
   }, [summaryData]);
 
-  if (isNaN(categoryId) || isNaN(summaryId))
-    return <Navigate to="/management/category" />;
-
-  if (!summaryData || !summaryData.response) {
-    return <Navigate to="/management/category" />;
-  }
+  useEffect(() => {
+    if (isNaN(categoryId) || isNaN(summaryId) || error)
+      redirect('/management/category');
+  }, []);
 
   return (
     <ContentWrapper>

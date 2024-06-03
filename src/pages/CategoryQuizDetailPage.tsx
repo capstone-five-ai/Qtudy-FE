@@ -4,19 +4,21 @@ import ContentWrapper from '@/components/Wrapper/ContentWrapper';
 import CategorySidebar from '@/containers/CategoryDetailPage/CategorySidebar';
 import TopButtonBar from '@/containers/CategoryDetailPage/TopButtonBar';
 import { useGetCategoryQuizItem } from '@/hooks/useGetQuiz';
+import useRedirect from '@/hooks/useRedirect';
 import authState from '@/recoils/atoms/authState';
 import { CategoryQuizItem } from '@/types/quiz.type';
 import { useEffect, useState } from 'react';
-import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 function CategoryQuizDetailPage() {
+  const redirect = useRedirect();
   const isAuthenticated = useRecoilValue(authState);
   const [params] = useSearchParams();
   const categoryId = Number(params.get('categoryId'));
   const quizId = Number(params.get('id'));
-  const { data: quizData } = useGetCategoryQuizItem(quizId);
+  const { data: quizData, error } = useGetCategoryQuizItem(quizId);
   const [currentQuiz, setCurrentQuiz] = useState<CategoryQuizItem>();
   const [isWriter, setIsWriter] = useState(false);
   const navigate = useNavigate();
@@ -28,12 +30,10 @@ function CategoryQuizDetailPage() {
     }
   }, [quizData]);
 
-  if (isNaN(categoryId) || isNaN(quizId))
-    return <Navigate to="/management/category" />;
-
-  if (!quizData || !quizData.response) {
-    return <Navigate to="/management/category" />;
-  }
+  useEffect(() => {
+    if (isNaN(categoryId) || isNaN(quizId) || error)
+      redirect('/management/category');
+  }, [categoryId, quizId, error, redirect]);
 
   return (
     <ContentWrapper>

@@ -6,10 +6,11 @@ import SummaryCheckForm from '@/components/Form/SummaryCheckForm';
 import SaveToCategoryModal from '@/components/Modal/SaveToCategoryModal';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import { useGetUserSummaryItem } from '@/hooks/useGetSummary';
+import useRedirect from '@/hooks/useRedirect';
 import authState from '@/recoils/atoms/authState';
 import { GenerateUserSummaryItem } from '@/types/summary.type';
 import { useEffect, useState } from 'react';
-import { Navigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
@@ -20,6 +21,7 @@ function ResultSection() {
   const [showModal, setShowModal] = useState(false);
   const [isWriter, setIsWriter] = useState(false);
   const [summary, setSummary] = useState<GenerateUserSummaryItem>();
+  const redirect = useRedirect();
   const {
     data: fetchedSummary,
     error,
@@ -27,13 +29,17 @@ function ResultSection() {
   } = useGetUserSummaryItem(summaryId);
 
   useEffect(() => {
+    if (isNaN(summaryId) || error) {
+      redirect('/summary/user');
+    }
+  }, [summaryId, error, redirect]);
+
+  useEffect(() => {
     if (fetchedSummary) {
       setSummary(fetchedSummary.response);
       setIsWriter(fetchedSummary.isWriter);
     }
   }, [fetchedSummary]);
-
-  if (isNaN(summaryId) || error) return <Navigate to="/quiz/user" />;
 
   if (isLoading) return <div>Loading...</div>;
 

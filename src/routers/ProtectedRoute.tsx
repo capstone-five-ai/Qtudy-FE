@@ -17,7 +17,7 @@ function ProtectedRoute({ auth }: Props) {
     return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
   }
   if (auth === 'NO_AUTH')
-    return isAuthenticated ? <Navigate to="/select" /> : <Outlet />;
+    return isAuthenticated ? <Navigate to="/" /> : <Outlet />;
   return <Outlet />;
 }
 

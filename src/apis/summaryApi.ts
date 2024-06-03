@@ -39,7 +39,6 @@ export const getUserSummaryItem = async (
   return response.data;
 };
 
-// TODO: 문제 없는지 확인 필요
 export const postSummaryByText = async (
   option: GenerateSummaryOption,
   text: string

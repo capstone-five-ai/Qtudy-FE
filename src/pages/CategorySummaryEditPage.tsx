@@ -4,14 +4,10 @@ import Sidebar from '@/components/Sidebar/Sidebar';
 import ContentWrapper from '@/components/Wrapper/ContentWrapper';
 import TopButtonBar from '@/containers/CategoryDetailPage/TopButtonBar';
 import GenerateTextWrapper from '@/containers/QuizAIPage/GenerateTextWrapper';
+import useRedirect from '@/hooks/useRedirect';
 import { CategorySummaryItem } from '@/types/summary.type';
 import { useEffect, useState } from 'react';
-import {
-  Navigate,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 function CategorySummaryEditPage() {
@@ -22,6 +18,7 @@ function CategorySummaryEditPage() {
   const [summaryContent, setSummaryContent] = useState<string>('');
   const location = useLocation();
   const navigate = useNavigate();
+  const redirect = useRedirect();
 
   useEffect(() => {
     const { state } = location;
@@ -37,6 +34,10 @@ function CategorySummaryEditPage() {
     }
   }, []);
 
+  useEffect(() => {
+    if (isNaN(categoryId) || isNaN(summaryId)) redirect('/management/category');
+  }, [categoryId, summaryId]);
+
   const handleCancel = () => {
     navigate(
       `/management/category/summary?categoryId=${categoryId}&id=${summaryId}`
@@ -51,9 +52,6 @@ function CategorySummaryEditPage() {
       console.error(e);
     }
   };
-
-  if (isNaN(categoryId) || isNaN(summaryId))
-    return <Navigate to="/management/category" />;
 
   return (
     <ContentWrapper>

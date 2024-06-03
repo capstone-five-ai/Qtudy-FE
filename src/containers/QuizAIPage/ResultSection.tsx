@@ -7,10 +7,11 @@ import NumberPanel from '@/components/NumberPanel/NumberPanel';
 import Scrollbar from '@/components/Scrollbar/Scrollbar';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import { useGetAIQuizFile } from '@/hooks/useGetQuiz';
+import useRedirect from '@/hooks/useRedirect';
 import authState from '@/recoils/atoms/authState';
 import { ProblemsOfAIQuizFile } from '@/types/quiz.type';
 import { useEffect, useState } from 'react';
-import { Navigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
@@ -23,13 +24,22 @@ function ResultSection() {
   const [quizList, setQuizList] = useState<ProblemsOfAIQuizFile[]>([]);
   const [currentQuiz, setCurrentQuiz] = useState<ProblemsOfAIQuizFile>();
   const [isWriter, setIsWriter] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
+  const redirect = useRedirect();
   const { data: fetchedQuizList, isLoading, error } = useGetAIQuizFile(fileId);
 
   useEffect(() => {
-    if (fetchedQuizList) {
+    if (isNaN(fileId) || error) {
+      redirect('/quiz/ai');
+    }
+  }, [fileId, error, redirect]);
+
+  useEffect(() => {
+    if (!isInitialized && fetchedQuizList) {
       setQuizList(fetchedQuizList.problems);
       setCurrentQuiz(fetchedQuizList.problems[0]);
       setIsWriter(fetchedQuizList.isWriter);
+      setIsInitialized(true);
     }
   }, [fetchedQuizList]);
 
@@ -39,8 +49,6 @@ function ResultSection() {
   }, [quizNum, quizList, fileId]);
 
   if (isLoading) return <div>Loading...</div>;
-
-  if (isNaN(fileId) || error) return <Navigate to="/quiz/ai" />;
 
   if (currentQuiz)
     return (

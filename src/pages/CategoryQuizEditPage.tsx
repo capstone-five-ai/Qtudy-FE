@@ -4,15 +4,11 @@ import Scrollbar from '@/components/Scrollbar/Scrollbar';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import ContentWrapper from '@/components/Wrapper/ContentWrapper';
 import TopButtonBar from '@/containers/CategoryDetailPage/TopButtonBar';
+import useRedirect from '@/hooks/useRedirect';
 import { CategoryQuizItem, QuizType } from '@/types/quiz.type';
 import { QUIZ_TYPE } from '@/utils/convertToRequestData';
 import { useEffect, useState } from 'react';
-import {
-  Navigate,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 const initialQuizContent: QuizType = {
@@ -30,6 +26,7 @@ function CategoryQuizEditPage() {
   const [quizType, setQuizType] = useState('객관식');
   const location = useLocation();
   const navigate = useNavigate();
+  const redirect = useRedirect();
 
   useEffect(() => {
     const { state } = location;
@@ -54,6 +51,12 @@ function CategoryQuizEditPage() {
     }
   }, []);
 
+  useEffect(() => {
+    if (isNaN(categoryId) || isNaN(quizId)) {
+      redirect('/management/category');
+    }
+  }, [categoryId, quizId]);
+
   const handleCancel = () => {
     navigate(`/management/category/quiz?categoryId=${categoryId}&id=${quizId}`);
   };
@@ -66,9 +69,6 @@ function CategoryQuizEditPage() {
       console.error(e);
     }
   };
-
-  if (isNaN(categoryId) || isNaN(quizId))
-    return <Navigate to="/management/category" />;
 
   return (
     <ContentWrapper>

@@ -10,11 +10,12 @@ import {
   usePostQuizByPdf,
   usePostQuizByText,
 } from '@/hooks/usePostQuiz';
+import useRedirect from '@/hooks/useRedirect';
 import loadingState from '@/recoils/atoms/loadingState';
 import { GenerateQuizOption } from '@/types/quiz.type';
 import uploadFile, { UploadedFileType } from '@/utils/uploadFile';
 import { useEffect, useRef, useState } from 'react';
-import { Navigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
@@ -39,6 +40,7 @@ const initialInputOption = {
 };
 
 function GenerateSection() {
+  const redirect = useRedirect();
   const [searchParams] = useSearchParams();
   const method = searchParams.get('method');
   const [inputOption, setInputOption] =
@@ -57,6 +59,9 @@ function GenerateSection() {
 
   useEffect(() => {
     setInputOption(initialInputOption);
+
+    if (method !== null && method !== 'upload' && method !== 'text')
+      redirect('/quiz');
   }, [method]);
 
   useDuplicatedFileName({
@@ -93,9 +98,6 @@ function GenerateSection() {
       });
     }
   };
-
-  if (method !== null && method !== 'upload' && method !== 'text')
-    return <Navigate to="/quiz" />;
 
   return (
     <>

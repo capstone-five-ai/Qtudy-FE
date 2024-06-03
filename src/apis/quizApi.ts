@@ -36,7 +36,6 @@ export const getUserQuizItem = async (
   return response.data;
 };
 
-// TODO: 문제 없는지 확인 필요
 export const postQuizByText = async (
   option: GenerateQuizOption,
   text: string
@@ -51,7 +50,6 @@ export const postQuizByText = async (
   return response.data;
 };
 
-// TODO: 문제 없는지 확인 필요
 export const postQuizByPdf = async (
   option: GenerateQuizOption,
   file: FormData
@@ -69,11 +67,11 @@ export const postQuizByPdf = async (
   return response.data;
 };
 
-// TODO: 문제 없는지 확인 필요
 export const postQuizByImage = async (
   option: GenerateQuizOption,
   file: FormData
 ) => {
+  console.log(file);
   const response = await authClient.post(
     'api/problemFile/generateProblemFileByImage',
     file,
