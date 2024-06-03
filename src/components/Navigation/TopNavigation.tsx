@@ -21,6 +21,8 @@ function TopNavigation() {
 
       if (response) {
         setIsAuthenticated(false);
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
         navigate('/login');
       }
     } catch (error) {
