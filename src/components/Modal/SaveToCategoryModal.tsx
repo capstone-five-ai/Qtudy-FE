@@ -78,10 +78,14 @@ function SaveToCategoryModal({
         await postQuizToCategory(saveCategoryIds, contentId);
 
       onClose();
-      fireToast({ icon: <SaveIcon />, message: '카테고리에 저장되었습니다!' });
+      fireToast({
+        icon: <SaveIcon />,
+        message: '카테고리에 저장되었습니다!',
+        duration: 3000,
+      });
     } catch (e) {
       if (e instanceof AxiosError)
-        fireToast({ message: e.response?.data.errorMessage });
+        fireToast({ message: e.response?.data.errorMessage, duration: 3000 });
     }
   };
 
