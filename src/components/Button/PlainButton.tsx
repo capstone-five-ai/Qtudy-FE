@@ -64,12 +64,11 @@ const getVariantStyle = ($variant: PlainButtonVariant) => {
         color: ${({ theme }) => theme.colors.grayScale03};
         background: ${({ theme }) => theme.colors.grayScale08};
         box-shadow: 4px 2px 16px 0px rgba(189, 189, 189, 0.28);
-        border: 1px solid ${({ theme }) => theme.colors.grayScale06};
+        border: 0.8px solid ${({ theme }) => theme.colors.grayScale06};
 
         &:hover {
           color: ${({ theme }) => theme.colors.grayScale02};
-          background: ${({ theme }) => theme.colors.grayScale06};
-          box-shadow: 4px 2px 16px 0px rgba(142, 142, 142, 0.28);
+          box-shadow: 4px 2px 16px 0px rgba(142, 142, 142, 0.12);
         }
       `;
   }
@@ -93,5 +92,6 @@ const StyledButton = styled.button<{
     background: ${({ theme }) => theme.colors.grayScale06};
     color: ${({ theme }) => theme.colors.grayScale09};
     box-shadow: none;
+    cursor: default;
   }
 `;
