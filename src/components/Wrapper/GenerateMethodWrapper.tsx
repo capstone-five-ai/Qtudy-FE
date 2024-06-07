@@ -30,7 +30,7 @@ const StyledContainer = styled.div`
   margin-top: 86px;
 
   .text {
-    ${({ theme }) => theme.typography.caption2};
+    ${({ theme }) => theme.typography.h4};
     color: ${({ theme }) => theme.colors.grayScale03};
     text-align: center;
     margin-bottom: 52px;

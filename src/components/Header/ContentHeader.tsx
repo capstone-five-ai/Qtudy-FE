@@ -68,7 +68,7 @@ const StyledContentContainer = styled.div`
   padding: 28px 0px 20px;
 
   .title {
-    ${({ theme }) => theme.typography.h3};
+    ${({ theme }) => theme.typography.h2};
     color: ${({ theme }) => theme.colors.grayScale02};
   }
 

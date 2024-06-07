@@ -42,7 +42,8 @@ const typography = {
   h4: TYPOGRAPHY({
     font: 'Noto Sans KR',
     weight: 500,
-    size: 16,
+    size: 15,
+    lineHeight: 160,
   }),
   subtitle: TYPOGRAPHY({
     font: 'Noto Sans KR',

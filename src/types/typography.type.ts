@@ -38,9 +38,9 @@ export const typographies: Style[] = [
   {
     type: 'h4',
     font: 'Noto Sans KR',
-    size: 16,
+    size: 15,
     weight: 500,
-    lineHeight: 'auto',
+    lineHeight: '160%',
     letterSpacing: 0,
   },
   {

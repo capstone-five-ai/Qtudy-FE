@@ -110,7 +110,7 @@ const StyledContentWrapper = styled(ContentWrapper)`
 
   .no-category {
     width: 100%;
-    ${({ theme }) => theme.typography.detail};
+    ${({ theme }) => theme.typography.h3};
     color: ${({ theme }) => theme.colors.grayScale04};
 
     display: flex;
