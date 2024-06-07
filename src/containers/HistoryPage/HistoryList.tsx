@@ -26,7 +26,7 @@ function HistoryList({ histories, updateList }: Props) {
         </Filter>
         <FileName>
           <Typography variant="button" color="grayScale03">
-            파일명
+            제목
           </Typography>
         </FileName>
         <CreatedTime>

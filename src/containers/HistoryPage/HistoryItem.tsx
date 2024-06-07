@@ -79,7 +79,7 @@ function HistoryItem({ history, updateList }: Props) {
             <Input
               value={newFileName}
               onChange={(e) => setNewFileName(e.target.value)}
-              placeholder="파일명을 입력해주세요."
+              placeholder="제목을 입력해주세요."
             />
             <CheckIcon onClick={handleEditFileName} cursor="pointer" />
           </>

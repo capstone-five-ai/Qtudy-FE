@@ -6,9 +6,9 @@ function FileNameInputField(props: NameInputFieldProps) {
   return (
     <StyledContainer>
       <Typography variant="subtitle" color="grayScale02">
-        파일명
+        제목
       </Typography>
-      <NameInputField placeholder="파일명을 입력해주세요." {...props} />
+      <NameInputField placeholder="제목을 입력해주세요." {...props} />
     </StyledContainer>
   );
 }
