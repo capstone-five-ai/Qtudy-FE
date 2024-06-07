@@ -179,6 +179,7 @@ const StyledQuizContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  padding-top: 4px;
 `;
 
 const StyledChoiceListContainer = styled.div`

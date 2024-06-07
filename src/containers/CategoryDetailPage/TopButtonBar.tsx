@@ -10,6 +10,7 @@ interface TopButtonBarProps {
   handleReturnToList?: () => void;
   handleEdit?: () => void;
   handleCancel?: () => void;
+  margin?: string;
 }
 
 function TopButtonBar({
@@ -19,9 +20,10 @@ function TopButtonBar({
   handleReturnToList,
   handleEdit,
   handleCancel,
+  margin,
 }: TopButtonBarProps) {
   return (
-    <StyledContainer>
+    <StyledContainer $margin={margin}>
       {isEdit ? (
         <>
           <StyledButton type="button" onClick={handleCancel}>
@@ -61,11 +63,11 @@ function TopButtonBar({
 
 export default TopButtonBar;
 
-const StyledContainer = styled.div`
+const StyledContainer = styled.div<{ $margin: string | undefined }>`
   display: flex;
   justify-content: space-between;
-  margin-right: 16px;
-  margin-bottom: 24px;
+  width: 724px;
+  margin-bottom: ${({ $margin }) => $margin || '24px'};
 `;
 
 const StyledButton = styled.button`

@@ -108,13 +108,13 @@ export default GenerateSection;
 
 const StyledContent = styled.div`
   flex: 1;
-  padding: 40px 0;
+  padding: 36px 0;
+  padding-top: 36px;
 `;
 
 const StyledInnerContent = styled.div`
   height: 100%;
-  padding-left: 40px;
-  padding-right: 20px;
+  padding: 0 20px 4px 40px;
 
   overflow-y: scroll;
   ${Scrollbar}

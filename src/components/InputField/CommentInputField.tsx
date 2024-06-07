@@ -178,6 +178,10 @@ const StyledEditContent = styled(StyledContent)<{ $warning: boolean }>`
   background: ${({ theme }) => theme.colors.grayScale09};
   border: 0.5px solid transparent;
 
+  &:hover {
+    box-shadow: 0px 0px 4px 0px rgba(117, 117, 117, 0.32);
+  }
+
   ${({ $warning, theme }) =>
     $warning &&
     css`
