@@ -27,6 +27,7 @@ const initialQuizContent: QuizType = {
 };
 
 function GenerateSection() {
+  const [showWarning, setShowWarning] = useState(false);
   const showLoading = useRecoilValue(loadingState);
   const [quizContent, setQuizContent] = useState<QuizType>(initialQuizContent);
   const [inputOption, setInputOption] = useState<GenerateQuizOption>({
@@ -41,6 +42,17 @@ function GenerateSection() {
   }, [inputOption.type]);
 
   const handleSubmit = () => {
+    if (
+      quizContent.problemName === '' ||
+      quizContent.problemCommentary === '' ||
+      quizContent.problemChoices.includes('')
+    ) {
+      setShowWarning(true);
+      return;
+    }
+
+    setShowWarning(false);
+
     let payload;
 
     if (inputOption.type === '객관식') {
@@ -71,6 +83,7 @@ function GenerateSection() {
             quizType={inputOption.type}
             quizContent={quizContent}
             setQuizContent={setQuizContent}
+            showWarning={showWarning}
           />
         </StyledInnerContent>
       </StyledContent>
@@ -81,7 +94,6 @@ function GenerateSection() {
         handleSubmit={handleSubmit}
         generateButtonDisabled={
           Object.values(inputOption).includes('') ||
-          quizContent.problemName === '' ||
           (inputOption.type === '객관식' &&
             quizContent.problemAnswer === '-1') ||
           (inputOption.type === '객관식' &&

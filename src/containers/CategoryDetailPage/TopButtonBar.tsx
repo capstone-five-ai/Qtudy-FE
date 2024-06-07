@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 interface TopButtonBarProps {
   isEdit?: boolean;
+  disabledComplete?: boolean;
   handleComplete?: () => void;
   handleReturnToList?: () => void;
   handleEdit?: () => void;
@@ -13,6 +14,7 @@ interface TopButtonBarProps {
 
 function TopButtonBar({
   isEdit = false,
+  disabledComplete = false,
   handleComplete,
   handleReturnToList,
   handleEdit,
@@ -27,7 +29,11 @@ function TopButtonBar({
               편집 취소
             </Typography>
           </StyledButton>
-          <StyledButton type="button" onClick={handleComplete}>
+          <StyledButton
+            type="button"
+            onClick={handleComplete}
+            disabled={disabledComplete}
+          >
             <CheckIcon />
             <Typography variant="button" color="grayScale03">
               편집 완료
@@ -71,5 +77,10 @@ const StyledButton = styled.button`
     path {
       fill: ${({ theme }) => theme.colors.mainMintDark};
     }
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.4;
   }
 `;

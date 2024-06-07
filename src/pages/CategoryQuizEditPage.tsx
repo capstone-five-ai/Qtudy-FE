@@ -77,6 +77,12 @@ function CategoryQuizEditPage() {
           isEdit
           handleCancel={handleCancel}
           handleComplete={handleEdit}
+          disabledComplete={
+            quizContent.problemName === '' ||
+            quizContent.problemCommentary === '' ||
+            quizContent.problemChoices.includes('') ||
+            (quizContent.problemAnswer === '-1' && quizType === '객관식')
+          }
         />
         <StyledInnerContainer>
           <QuizGenerationForm

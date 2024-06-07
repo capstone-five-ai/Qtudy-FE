@@ -12,6 +12,8 @@ interface QuizInputFieldProps
   type: 'question' | 'choice';
   index: number;
   isEdit?: boolean;
+  showWarning?: boolean;
+  warningMessage?: string;
   setIsEdit?: (value: boolean) => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>, index: number) => void;
   onDelete?: (index: number) => void;
@@ -21,46 +23,54 @@ function QuizInputField({
   type,
   index,
   isEdit,
+  showWarning = false,
+  warningMessage,
   setIsEdit,
   onChange,
   onDelete,
   ...props
 }: QuizInputFieldProps) {
   return (
-    <StyledContainer $type={type}>
-      <StyledInput
-        placeholder={PLACEHOLDER[type]}
-        onChange={(event) => {
-          onChange(event, index);
-        }}
-        disabled={!isEdit}
-        {...props}
-      />
-      <StyledIconContainer>
-        {!isEdit && (
-          <EditIcon
-            className="icon"
-            onClick={() => {
-              setIsEdit && setIsEdit(true);
-            }}
-          />
-        )}
-        {type === 'choice' && (
-          <DeleteIcon
-            className="icon"
-            onClick={() => {
-              onDelete && onDelete(index);
-            }}
-          />
-        )}
-      </StyledIconContainer>
-    </StyledContainer>
+    <div style={{ width: '100%' }}>
+      <StyledContainer $type={type} $warning={showWarning}>
+        <StyledInput
+          placeholder={PLACEHOLDER[type]}
+          onChange={(event) => {
+            onChange(event, index);
+          }}
+          disabled={!isEdit}
+          {...props}
+        />
+        <StyledIconContainer>
+          {!isEdit && (
+            <EditIcon
+              className="icon"
+              onClick={() => {
+                setIsEdit && setIsEdit(true);
+              }}
+            />
+          )}
+          {type === 'choice' && (
+            <DeleteIcon
+              className="icon"
+              onClick={() => {
+                onDelete && onDelete(index);
+              }}
+            />
+          )}
+        </StyledIconContainer>
+      </StyledContainer>
+      <ErrorMessage $show={showWarning}>{warningMessage}</ErrorMessage>
+    </div>
   );
 }
 
 export default QuizInputField;
 
-const StyledContainer = styled.div<{ $type: 'question' | 'choice' }>`
+const StyledContainer = styled.div<{
+  $type: 'question' | 'choice';
+  $warning: boolean;
+}>`
   display: flex;
   align-items: center;
   ${({ $type }) =>
@@ -72,6 +82,13 @@ const StyledContainer = styled.div<{ $type: 'question' | 'choice' }>`
   background: ${(props) => props.theme.colors.grayScale09};
   padding: 12px 16px;
   border-radius: 8px;
+  border: 0.5px solid transparent;
+
+  ${({ $warning, theme }) =>
+    $warning &&
+    css`
+      border-color: ${theme.colors.errorRed};
+    `}
 `;
 
 const StyledInput = styled.input`
@@ -94,4 +111,11 @@ const StyledIconContainer = styled.div`
     height: 20px;
     cursor: pointer;
   }
+`;
+
+const ErrorMessage = styled.div<{ $show: boolean }>`
+  display: ${({ $show }) => ($show ? 'block' : 'none')};
+  color: ${({ theme }) => theme.colors.errorRed};
+  ${({ theme }) => theme.typography.caption3};
+  margin-top: 4px;
 `;
