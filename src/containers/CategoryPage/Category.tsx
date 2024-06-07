@@ -30,16 +30,20 @@ function Category({
   const { fireToast } = useToast();
 
   const handleSubmitCategoryName = async () => {
-    try {
-      await editCategoryName(
-        String(category.categoryId),
-        category.categoryType,
-        newCategoryName
-      );
+    if (category.categoryName !== newCategoryName) {
+      try {
+        await editCategoryName(
+          String(category.categoryId),
+          category.categoryType,
+          newCategoryName
+        );
+        setEditMode(false);
+        refetchCategory();
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
       setEditMode(false);
-      refetchCategory();
-    } catch (e) {
-      console.error(e);
     }
   };
 
