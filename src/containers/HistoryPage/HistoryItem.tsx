@@ -1,4 +1,5 @@
 import { deleteFile, updateFileName } from '@/apis/fileApi';
+import { ReactComponent as CheckIcon } from '@/assets/icons/complete.svg';
 import { ReactComponent as EditIcon } from '@/assets/icons/edit.svg';
 import PDFDownloadButton from '@/components/Button/PDFDownloadButton';
 import DeleteIcon from '@/components/Icon/DeleteIcon';
@@ -14,7 +15,7 @@ import {
 import useToast from '@/hooks/useToast';
 import { HistoryType } from '@/types/history.type';
 import { convertToKRTime } from '@/utils/convertToKRTime';
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
@@ -24,19 +25,12 @@ type Props = {
 };
 
 function HistoryItem({ history, updateList }: Props) {
-  const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [fileName, setFileName] = useState(history.fileName);
   const [newFileName, setNewFileName] = useState(fileName);
   const { fireToast } = useToast();
-
-  useEffect(() => {
-    if (inputRef.current === null) return;
-    inputRef.current.disabled = false;
-    inputRef.current.focus();
-  }, [editMode]);
 
   const getDateFormat = (dateStr: string) => {
     const date = convertToKRTime(dateStr);
@@ -57,13 +51,7 @@ function HistoryItem({ history, updateList }: Props) {
     setShowDeleteModal(true);
   };
 
-  const submitFileName = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    await editFileName();
-  };
-
-  const editFileName = async () => {
+  const handleEditFileName = async () => {
     await updateFileName(history.fileId, newFileName);
     setEditMode(false);
     setFileName(newFileName);
@@ -87,15 +75,14 @@ function HistoryItem({ history, updateList }: Props) {
       </Filter>
       <FileName>
         {editMode ? (
-          <Form onSubmit={submitFileName}>
+          <>
             <Input
-              ref={inputRef}
               value={newFileName}
               onChange={(e) => setNewFileName(e.target.value)}
-              placeholder="파일명을 입력해주세요."
-              onBlur={editFileName}
+              placeholder="제목을 입력해주세요."
             />
-          </Form>
+            <CheckIcon onClick={handleEditFileName} cursor="pointer" />
+          </>
         ) : (
           <>
             <FileNameWrapper type="button" onClick={handleClickFile}>
@@ -178,6 +165,9 @@ const Wrapper = styled.div`
 `;
 
 const FileNameWrapper = styled.button`
+  width: 200px;
+  text-align: left;
+
   border: none;
   padding: 0;
   margin: 0;
@@ -193,11 +183,8 @@ const FileNameWrapper = styled.button`
   }
 `;
 
-const Form = styled.form`
-  width: 100%;
-`;
-
 const Input = styled.input`
+  width: 200px;
   border: none;
   color: ${(props) => props.theme.colors.grayScale02};
   background-color: transparent;
@@ -208,8 +195,6 @@ const Input = styled.input`
     ${({ theme }) => theme.typography.caption3};
     color: ${(props) => props.theme.colors.grayScale05};
   }
-
-  width: 100%;
 `;
 
 export default HistoryItem;

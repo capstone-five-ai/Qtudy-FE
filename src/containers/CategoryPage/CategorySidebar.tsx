@@ -37,7 +37,7 @@ function CategorySidebar({
       <StyledContainer>
         <CategoryTabBar currentType={currentType} />
         <StyleTitleContainer>
-          <Typography variant="h4" color="grayScale02">
+          <Typography variant="h3" color="grayScale02">
             {CATEGORY_TYPE[currentType]}
           </Typography>
           <button
@@ -129,7 +129,7 @@ const StyledCategoryListContainer = styled.div`
   flex: 1;
 
   .no-category {
-    ${({ theme }) => theme.typography.detail};
+    ${({ theme }) => theme.typography.h3};
     color: ${({ theme }) => theme.colors.grayScale04};
     margin-top: 84px;
     text-align: center;

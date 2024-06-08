@@ -18,7 +18,7 @@ function FileTypeChip({
   return (
     <Wrapper type="button" {...props} $selected={selected}>
       <Typography
-        variant="detail"
+        variant="button"
         color={selected ? 'grayScale09' : 'mainMintDark'}
       >
         {children}

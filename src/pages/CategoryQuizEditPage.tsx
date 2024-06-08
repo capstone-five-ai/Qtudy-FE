@@ -77,6 +77,13 @@ function CategoryQuizEditPage() {
           isEdit
           handleCancel={handleCancel}
           handleComplete={handleEdit}
+          disabledComplete={
+            quizContent.problemName === '' ||
+            quizContent.problemCommentary === '' ||
+            quizContent.problemChoices.includes('') ||
+            (quizContent.problemAnswer === '-1' && quizType === '객관식')
+          }
+          margin="20px"
         />
         <StyledInnerContainer>
           <QuizGenerationForm
@@ -95,13 +102,17 @@ export default CategoryQuizEditPage;
 
 const StyledContent = styled.div`
   flex: 1;
-  padding: 24px 20px 24px 40px;
+  padding: 24px 0;
 
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 const StyledInnerContainer = styled.div`
   overflow-y: scroll;
   ${Scrollbar}
+
+  width: 100%;
+  padding: 0 20px 4px 40px;
 `;

@@ -30,16 +30,20 @@ function Category({
   const { fireToast } = useToast();
 
   const handleSubmitCategoryName = async () => {
-    try {
-      await editCategoryName(
-        String(category.categoryId),
-        category.categoryType,
-        newCategoryName
-      );
+    if (category.categoryName !== newCategoryName) {
+      try {
+        await editCategoryName(
+          String(category.categoryId),
+          category.categoryType,
+          newCategoryName
+        );
+        setEditMode(false);
+        refetchCategory();
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
       setEditMode(false);
-      refetchCategory();
-    } catch (e) {
-      console.error(e);
     }
   };
 
@@ -66,7 +70,6 @@ function Category({
             ref={inputRef}
             value={newCategoryName}
             onChange={(e) => setNewCategoryName(e.target.value)}
-            placeholder="파일명을 입력해주세요."
           />
           <div className="icon-list">
             <CompleteIcon
@@ -165,16 +168,11 @@ const StyledContainer = styled.button<{ $active: boolean }>`
 `;
 
 const StyledInput = styled.input`
+  width: 100%;
   border: none;
-  color: ${(props) => props.theme.colors.grayScale02};
   background-color: transparent;
   padding: 0;
 
   ${({ theme }) => theme.typography.body2};
-
-  &::placeholder {
-    color: ${(props) => props.theme.colors.grayScale05};
-  }
-
-  width: 100%;
+  color: ${(props) => props.theme.colors.grayScale02};
 `;
