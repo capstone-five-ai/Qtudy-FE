@@ -14,6 +14,7 @@ interface QuizFormProps {
   quizType: string;
   quizContent: QuizType;
   setQuizContent: (newQuizContent: QuizType) => void;
+  showWarning?: boolean;
 }
 
 const MAX_OPTION_COUNT = 10;
@@ -22,6 +23,7 @@ function QuizGenerationForm({
   quizType,
   quizContent,
   setQuizContent,
+  showWarning = false,
 }: QuizFormProps) {
   const [isCommentOpen, setIsCommentOpen] = useState(false);
   const { fireToast } = useToast();
@@ -106,6 +108,8 @@ function QuizGenerationForm({
           name="problemName"
           value={quizContent.problemName}
           onChange={handleChangeQuestion}
+          showWarning={showWarning && quizContent.problemName === ''}
+          warningMessage="입력 필수인 항목입니다."
         />
         {quizType === '객관식' && (
           <>
@@ -133,6 +137,8 @@ function QuizGenerationForm({
                     value={choice}
                     onChange={handleChangeChoice}
                     onDelete={handleDeleteChoice}
+                    showWarning={showWarning && choice === ''}
+                    warningMessage="빈 항목입니다."
                   />
                 </StyledChoiceWrapper>
               ))}
@@ -154,6 +160,8 @@ function QuizGenerationForm({
         setIsCommentOpen={setIsCommentOpen}
         isEdit
         onChange={handleCommentaryChange}
+        showWarning={showWarning && quizContent.problemCommentary === ''}
+        warningMessage="입력 필수인 항목입니다."
       />
     </StyledContainer>
   );
@@ -171,6 +179,7 @@ const StyledQuizContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  padding-top: 4px;
 `;
 
 const StyledChoiceListContainer = styled.div`

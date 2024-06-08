@@ -16,6 +16,8 @@ interface CommentInputFieldProps {
 
 interface CommentEditInputFieldProps extends CommentInputFieldProps {
   isEdit?: boolean;
+  showWarning?: boolean;
+  warningMessage?: string;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   setIsEdit?: (value: boolean) => void;
 }
@@ -66,6 +68,8 @@ export function CommentEditInputField({
   answer,
   commentary,
   isCommentOpen,
+  showWarning = false,
+  warningMessage,
   setIsCommentOpen,
   onChange,
   setIsEdit,
@@ -94,25 +98,28 @@ export function CommentEditInputField({
               <span className="answer">{answer && getCircleNum(answer)}</span>
             </div>
           )}
-          <StyledEditContent>
-            <StyledTextarea
-              ref={textareaRef}
-              placeholder="해설을 입력해주세요."
-              value={commentary}
-              onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
-                onChange && onChange(event);
-              }}
-              disabled={!isEdit}
-            />
-            {!isEdit && (
-              <EditIcon
-                className="icon"
-                onClick={() => {
-                  setIsEdit && setIsEdit(true);
+          <div>
+            <StyledEditContent $warning={showWarning}>
+              <StyledTextarea
+                ref={textareaRef}
+                placeholder="해설을 입력해주세요."
+                value={commentary}
+                onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+                  onChange && onChange(event);
                 }}
+                disabled={!isEdit}
               />
-            )}
-          </StyledEditContent>
+              {!isEdit && (
+                <EditIcon
+                  className="icon"
+                  onClick={() => {
+                    setIsEdit && setIsEdit(true);
+                  }}
+                />
+              )}
+            </StyledEditContent>
+            <ErrorMessage $show={showWarning}>{warningMessage}</ErrorMessage>
+          </div>
         </>
       )}
     </StyledContainer>
@@ -167,8 +174,19 @@ const StyledDefaultContent = styled(StyledContent)`
   background: ${({ theme }) => theme.colors.mainMintLight};
 `;
 
-const StyledEditContent = styled(StyledContent)`
+const StyledEditContent = styled(StyledContent)<{ $warning: boolean }>`
   background: ${({ theme }) => theme.colors.grayScale09};
+  border: 0.5px solid transparent;
+
+  &:hover {
+    box-shadow: 0px 0px 4px 0px rgba(117, 117, 117, 0.32);
+  }
+
+  ${({ $warning, theme }) =>
+    $warning &&
+    css`
+      border-color: ${theme.colors.errorRed};
+    `}
 `;
 
 const StyledTextarea = styled.textarea`
@@ -203,4 +221,11 @@ const StyledText = styled.div`
   color: ${({ theme }) => theme.colors.grayScale02};
   ${({ theme }) => theme.typography.body2};
   white-space: pre-wrap;
+`;
+
+const ErrorMessage = styled.div<{ $show: boolean }>`
+  display: ${({ $show }) => ($show ? 'block' : 'none')};
+  color: ${({ theme }) => theme.colors.errorRed};
+  ${({ theme }) => theme.typography.caption3};
+  margin-top: 4px;
 `;

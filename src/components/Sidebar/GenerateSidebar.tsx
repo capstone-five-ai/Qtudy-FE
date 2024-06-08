@@ -49,7 +49,7 @@ function GenerateSidebar<T extends object>({
                 value={inputOption.fileName as string}
                 onChange={handleFileNameChange}
                 disabled={inputFieldDisabled}
-                errorMessage="중복되는 파일명입니다."
+                errorMessage="중복되는 제목입니다."
                 isError={inputOption.isDuplicatedFileName === true}
               />
             )}
