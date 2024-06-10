@@ -42,6 +42,8 @@ const BrandWrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
+
+  background: ${({ theme }) => theme.colors.mainMintLight};
 `;
 
 const LoginWrapper = styled.div`
