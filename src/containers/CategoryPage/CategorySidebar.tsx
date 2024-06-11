@@ -108,6 +108,7 @@ const StyleTitleContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   padding-right: 16px;
+  margin-top: 16px;
 
   .plus-button {
     display: flex;
