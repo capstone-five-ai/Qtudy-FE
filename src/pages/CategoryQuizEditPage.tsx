@@ -90,6 +90,7 @@ function CategoryQuizEditPage() {
             quizType={quizType}
             quizContent={quizContent}
             setQuizContent={setQuizContent}
+            showWarning
           />
         </StyledInnerContainer>
       </StyledContent>
