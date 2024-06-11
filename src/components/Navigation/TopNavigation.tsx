@@ -80,8 +80,6 @@ const LogoutButton = styled.button`
   ${({ theme }) => theme.typography.subtitle};
   color: ${({ theme }) => theme.colors.grayScale04};
 
-  transition: all 0.5s;
-
   &:hover {
     color: ${({ theme }) => theme.colors.grayScale02};
   }

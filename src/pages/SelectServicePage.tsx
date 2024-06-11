@@ -90,7 +90,6 @@ const Container = styled.div`
   gap: 84px;
 
   height: calc(100vh - 64px);
-  background: ${({ theme }) => theme.colors.grayScale08};
 `;
 
 const Title = styled.div`

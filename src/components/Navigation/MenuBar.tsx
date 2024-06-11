@@ -106,8 +106,6 @@ const StyledMenuButton = styled.button<{ $isActive: boolean }>`
   color: ${({ $isActive, theme }) =>
     $isActive ? theme.colors.grayScale02 : theme.colors.grayScale03};
 
-  transition: all 0.5s;
-
   &:hover {
     color: ${({ theme }) => theme.colors.grayScale02};
     ${StyledActiveIcon} {
