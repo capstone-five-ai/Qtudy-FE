@@ -88,8 +88,6 @@ const StyledButton = styled.button<{
   ${({ $size }) => getSizeStyle($size)}
   ${({ $variant }) => getVariantStyle($variant)}
 
-  transition: all 0.5s;
-
   &:disabled {
     background: ${({ theme }) => theme.colors.grayScale06};
     color: ${({ theme }) => theme.colors.grayScale09};
