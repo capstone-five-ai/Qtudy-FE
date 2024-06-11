@@ -84,9 +84,11 @@ const StyledButton = styled.button<{
   gap: 10px;
 
   border-radius: 8px;
-  ${({ theme }) => theme.typography.button};
+  ${({ theme }) => theme.typography.button}
   ${({ $size }) => getSizeStyle($size)}
   ${({ $variant }) => getVariantStyle($variant)}
+
+  transition: all 0.5s;
 
   &:disabled {
     background: ${({ theme }) => theme.colors.grayScale06};
