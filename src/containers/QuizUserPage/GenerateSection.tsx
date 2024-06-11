@@ -45,7 +45,7 @@ function GenerateSection() {
     if (
       quizContent.problemName === '' ||
       quizContent.problemCommentary === '' ||
-      quizContent.problemChoices.includes('')
+      (inputOption.type === '객관식' && quizContent.problemChoices.includes(''))
     ) {
       setShowWarning(true);
       return;
