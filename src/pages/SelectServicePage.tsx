@@ -96,6 +96,10 @@ const Container = styled.div`
 const Title = styled.div`
   display: flex;
   position: relative;
+
+  & > span {
+    z-index: 1;
+  }
 `;
 
 const GradationContainer = styled.div`
