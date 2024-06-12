@@ -60,8 +60,6 @@ const StyledCard = styled.button`
   background: ${({ theme }) => theme.colors.grayScale09};
   box-shadow: 0px 0px 8px 0px rgba(189, 189, 189, 0.2);
 
-  transition: all 0.5s;
-
   &:hover {
     box-shadow: 0px 0px 8px 0px rgba(54, 189, 180, 0.24);
 

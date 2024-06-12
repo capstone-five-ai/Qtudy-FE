@@ -89,7 +89,7 @@ const Container = styled.div`
 
   gap: 84px;
 
-  height: calc(100vh - 64px);
+  height: 100vh;
   background: ${({ theme }) => theme.colors.grayScale08};
 `;
 
@@ -102,7 +102,6 @@ const GradationContainer = styled.div`
   position: absolute;
   bottom: -35px;
   right: -62px;
-  z-index: -1;
 `;
 
 const CardContainer = styled.div`

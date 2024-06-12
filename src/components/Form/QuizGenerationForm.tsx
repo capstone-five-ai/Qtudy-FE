@@ -7,7 +7,7 @@ import useToast from '@/hooks/useToast';
 import colors from '@/styles/color';
 import { QuizType } from '@/types/quiz.type';
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import DeleteIcon from '../Icon/DeleteIcon';
 
 interface QuizFormProps {
@@ -118,7 +118,10 @@ function QuizGenerationForm({
             </Typography>
             <StyledChoiceListContainer>
               {quizContent.problemChoices.map((choice, index) => (
-                <StyledChoiceWrapper key={`${index}`}>
+                <StyledChoiceWrapper
+                  key={`${index}`}
+                  $warning={showWarning && choice === ''}
+                >
                   <RadioButton
                     value={choice}
                     checked={quizContent.problemAnswer === `${index + 1}`}
@@ -188,8 +191,16 @@ const StyledChoiceListContainer = styled.div`
   gap: 8px;
 `;
 
-const StyledChoiceWrapper = styled.div`
+const StyledChoiceWrapper = styled.div<{ $warning: boolean }>`
   display: flex;
   gap: 12px;
   align-items: center;
+
+  ${({ $warning }) =>
+    $warning &&
+    css`
+      & > input {
+        margin-bottom: 23px;
+      }
+    `}
 `;
