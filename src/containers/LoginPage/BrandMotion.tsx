@@ -1,5 +1,4 @@
 import { ReactComponent as Logo } from '@/assets/logo/qtudy.svg';
-import Typography from '@/components/Typography/Typography';
 import styled, { keyframes } from 'styled-components';
 
 function BrandMotion() {
@@ -13,10 +12,10 @@ function BrandMotion() {
 function Brand() {
   return (
     <Wrapper>
-      <Typography variant="h4" color="mainMintDark">
+      <div className="description">
         AI가 생성한 퀴즈와 요약으로 효율적인 학습을 돕는
-      </Typography>
-      <Logo />
+      </div>
+      <Logo width={310.25} />
     </Wrapper>
   );
 }
@@ -37,6 +36,12 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .description {
+    ${({ theme }) => theme.typography.h4};
+    font-size: 18px;
+    color: ${({ theme }) => theme.colors.mainMintDark};
+  }
 `;
 
 const AnimatedLogo = styled(Brand)`
