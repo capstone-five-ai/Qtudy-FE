@@ -39,6 +39,7 @@ function GenerateSection() {
   useEffect(() => {
     setQuizContent(initialQuizContent);
     setInputOption({ ...inputOption });
+    setShowWarning(false);
   }, [inputOption.type]);
 
   const handleSubmit = () => {
