@@ -67,7 +67,7 @@ const getVariantStyle = ($variant: PlainButtonVariant) => {
 
         &:hover {
           color: ${({ theme }) => theme.colors.grayScale02};
-          box-shadow: 4px 2px 16px 0px rgba(142, 142, 142, 0.24);
+          box-shadow: 0px 2px 8px 0px rgba(142, 142, 142, 0.12);
         }
       `;
   }
