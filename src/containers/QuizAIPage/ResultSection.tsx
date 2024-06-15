@@ -85,6 +85,7 @@ function ResultSection() {
               )}
             </ContentInnerContainer>
             <SaveToCategoryButton
+              generateType="QUIZ"
               disabled={!isAuthenticated}
               onClick={() => setShowModal(true)}
             />

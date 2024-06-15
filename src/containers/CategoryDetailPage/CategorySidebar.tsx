@@ -159,6 +159,7 @@ function CategorySidebar({
           <StyledButtonContainer>
             <ShareLinkButton link={window.location.href} />
             <SaveToCategoryButton
+              generateType={contentType}
               onClick={() => setShowAddCategoryModal(true)}
               disabled={!isAuthenticated}
             />

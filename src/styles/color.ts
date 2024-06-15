@@ -6,7 +6,8 @@ const colors = {
   mainMintDarkGra:
     'linear-gradient(0deg, #36BDB4 0%, rgba(54, 189, 180, 0.60) 100%)',
   mainMintLight: '#FBFFFF',
-  mainMintShadow: 'rgba(54, 189, 180, 0.28)',
+  mainMintShadow: 'rgba(54, 189, 180, 0.24)',
+  mainMintMedium: '#29CCC2',
 
   grayScale01: '#000000',
   grayScale02: '#424242',

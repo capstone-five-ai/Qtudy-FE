@@ -32,6 +32,10 @@ function QuizGenerationForm({
     setIsCommentOpen(false);
   }, [quizType]);
 
+  useEffect(() => {
+    if (quizContent.problemCommentary === '') setIsCommentOpen(true);
+  }, [showWarning]);
+
   const handleChangeQuestion = (
     e: React.ChangeEvent<HTMLInputElement>,
     _: number

@@ -55,7 +55,7 @@ const StyledLinkIcon = styled.div`
 
   border-radius: 18px;
   background: ${({ theme }) => theme.colors.grayScale09};
-  box-shadow: 0px 4px 8px 0px rgba(54, 189, 180, 0.24);
+  box-shadow: 0px 4px 8px 0px ${({ theme }) => theme.colors.mainMintShadow};
 
   svg {
     width: 24px;

@@ -1,7 +1,14 @@
+import SuspenseLoading from '@/components/Loader/SuspenseLoading';
 import ContentWrapper from '@/components/Wrapper/ContentWrapper';
-import GenerateSection from '@/containers/QuizUserPage/GenerateSection';
-import ResultSection from '@/containers/QuizUserPage/ResultSection';
+import { Suspense, lazy } from 'react';
 import { useSearchParams } from 'react-router-dom';
+
+const ResultSection = lazy(
+  () => import('@/containers/QuizUserPage/ResultSection')
+);
+const GenerateSection = lazy(
+  () => import('@/containers/QuizUserPage/GenerateSection')
+);
 
 const QuizUserPage = () => {
   const [searchParams] = useSearchParams();
@@ -9,7 +16,9 @@ const QuizUserPage = () => {
 
   return (
     <ContentWrapper>
-      {complete === 'true' ? <ResultSection /> : <GenerateSection />}
+      <Suspense fallback={<SuspenseLoading />}>
+        {complete === 'true' ? <ResultSection /> : <GenerateSection />}
+      </Suspense>
     </ContentWrapper>
   );
 };
