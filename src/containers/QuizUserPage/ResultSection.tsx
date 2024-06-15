@@ -50,7 +50,6 @@ function ResultSection() {
               <ShareLinkButton link={window.location.href} />
             </StyledButtonContainer>
             <SaveToCategoryButton
-              generateType="QUIZ"
               disabled={!isAuthenticated}
               onClick={() => setShowModal(true)}
             />
