@@ -61,7 +61,7 @@ const StyledCard = styled.button`
   box-shadow: 0px 0px 8px 0px rgba(189, 189, 189, 0.2);
 
   &:hover {
-    box-shadow: 0px 0px 8px 0px rgba(54, 189, 180, 0.24);
+    box-shadow: 0px 0px 8px 0px ${({ theme }) => theme.colors.mainMintShadow};
 
     .upload-icon {
       path {

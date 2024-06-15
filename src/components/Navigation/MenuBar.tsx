@@ -93,7 +93,7 @@ const StyledActiveIcon = styled.div<{ $isActive: boolean }>`
     $isActive &&
     css`
       background: ${theme.colors.mainMint};
-      box-shadow: 2px 1px 4px rgba(54, 189, 180, 0.24);
+      box-shadow: 2px 1px 4px ${({ theme }) => theme.colors.mainMintShadow};
     `}
 `;
 
@@ -110,7 +110,7 @@ const StyledMenuButton = styled.button<{ $isActive: boolean }>`
     color: ${({ theme }) => theme.colors.grayScale02};
     ${StyledActiveIcon} {
       background: ${(props) => props.theme.colors.mainMint};
-      box-shadow: 2px 1px 4px rgba(54, 189, 180, 0.24);
+      box-shadow: 2px 1px 4px ${({ theme }) => theme.colors.mainMintShadow};
     }
   }
 `;
