@@ -8,18 +8,23 @@ interface NewCategoryInputFieldProps
   initialOpen?: boolean;
   handleSubmit: () => void;
   isError?: boolean;
+  disabledButton?: boolean;
 }
 
 function CategoryInputFieldContainer({
   initialOpen = true,
   handleSubmit,
   isError = false,
+  disabledButton = false,
   ...props
 }: NewCategoryInputFieldProps) {
   const [openInput, setOpenInput] = useState(initialOpen);
   return (
     <StyledContainer>
-      <StyledAddButton onClick={() => setOpenInput((prev) => !prev)}>
+      <StyledAddButton
+        onClick={() => setOpenInput((prev) => !prev)}
+        disabled={disabledButton}
+      >
         <AddIcon />
         <span>카테고리 추가</span>
       </StyledAddButton>

@@ -45,6 +45,7 @@ function NewCategoryModal({
           initialOpen
           handleSubmit={handleGenerateNewCategory}
           isError={showWarn}
+          disabledButton
         />
       </StyledModalContentContainer>
     </DefaultModal>
