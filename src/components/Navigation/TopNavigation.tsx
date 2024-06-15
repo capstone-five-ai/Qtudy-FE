@@ -35,7 +35,7 @@ function TopNavigation() {
       <StyledInnerContainer>
         <div className="menu-list">
           <Link to="/">
-            <Logo width="113px" height="60px" style={{ marginRight: '60px' }} />
+            <Logo width="87px" height="32px" style={{ marginRight: '61px' }} />
           </Link>
           <MenuBar />
         </div>

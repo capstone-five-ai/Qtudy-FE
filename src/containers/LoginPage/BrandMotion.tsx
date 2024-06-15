@@ -15,7 +15,7 @@ function Brand() {
       <div className="description">
         AI가 생성한 퀴즈와 요약으로 효율적인 학습을 돕는
       </div>
-      <Logo width={310.25} />
+      <Logo width={204} />
     </Wrapper>
   );
 }
@@ -41,6 +41,7 @@ const Wrapper = styled.div`
     ${({ theme }) => theme.typography.h4};
     font-size: 18px;
     color: ${({ theme }) => theme.colors.mainMintDark};
+    margin-bottom: 28px;
   }
 `;
 
