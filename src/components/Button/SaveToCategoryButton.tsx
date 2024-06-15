@@ -1,13 +1,21 @@
 import { ReactComponent as SaveIcon } from '@/assets/icons/save.svg';
 import PlainButton from '@/components/Button/PlainButton';
+import { CATEGORY_TYPE } from '@/constants';
+import { ServiceType } from '@/types/category.type';
 
-function SaveToCategoryButton(
-  props: React.ButtonHTMLAttributes<HTMLButtonElement>
-) {
+interface SaveToCategoryButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  generateType: ServiceType;
+}
+
+function SaveToCategoryButton({
+  generateType,
+  ...props
+}: SaveToCategoryButtonProps) {
   return (
     <PlainButton {...props}>
       <SaveIcon />
-      Save to Category
+      카테고리에 {CATEGORY_TYPE[generateType]} 추가
     </PlainButton>
   );
 }

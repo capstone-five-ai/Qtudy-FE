@@ -1,4 +1,3 @@
-import { ReactComponent as Arrow } from '@/assets/icons/long-arrow.svg';
 import Typography from '@/components/Typography/Typography';
 import { cloneElement } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -57,11 +56,6 @@ function Card({
           </Typography>
         </TextContainer>
       </Center>
-      {selected && (
-        <ArrowWrapper>
-          <Arrow />
-        </ArrowWrapper>
-      )}
     </Container>
   );
 }
@@ -134,12 +128,6 @@ const TextContainer = styled.div`
     text-align: center;
     white-space: pre-wrap;
   }
-`;
-
-const ArrowWrapper = styled.div`
-  position: absolute;
-  bottom: 24px;
-  right: 24px;
 `;
 
 export default Card;

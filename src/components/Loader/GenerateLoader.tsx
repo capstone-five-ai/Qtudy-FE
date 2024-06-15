@@ -121,7 +121,7 @@ const StyledImageContainer = styled.div`
   }
 
   .logo {
-    height: 53px;
+    height: 29px;
     position: absolute;
     top: 50%;
     left: 50%;

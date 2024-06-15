@@ -12,8 +12,7 @@ export const StyledCategoryItemContainer = styled.button<{
   padding: ${(props) =>
     props.$itemType === 'QUIZ' ? '18.5px' : '19.5px 19px'};
   border-radius: 8px;
-  border: 1px solid transparent;
-  box-shadow: 0px 0px 12px 0px rgba(189, 189, 189, 0.2);
+  border: 1px solid rgba(224, 224, 224, 0.8);
   background: ${(props) => props.theme.colors.grayScale09};
 
   .icon {
@@ -25,8 +24,7 @@ export const StyledCategoryItemContainer = styled.button<{
   }
 
   &:hover {
-    border-color: rgba(62, 215, 205, 0.4);
-    box-shadow: 0px 0px 12px 0px rgba(62, 215, 205, 0.12);
+    border-color: ${(props) => props.theme.colors.mainMint};
 
     path {
       stroke: ${(props) => props.theme.colors.grayScale04};

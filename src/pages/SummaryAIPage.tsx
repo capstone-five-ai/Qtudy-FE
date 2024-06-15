@@ -1,7 +1,14 @@
+import SuspenseLoading from '@/components/Loader/SuspenseLoading';
 import ContentWrapper from '@/components/Wrapper/ContentWrapper';
-import GenerateSection from '@/containers/SummaryAIPage/GenerateSection';
-import ResultSection from '@/containers/SummaryAIPage/ResultSection';
+import { Suspense, lazy } from 'react';
 import { useSearchParams } from 'react-router-dom';
+
+const ResultSection = lazy(
+  () => import('@/containers/SummaryAIPage/ResultSection')
+);
+const GenerateSection = lazy(
+  () => import('@/containers/SummaryAIPage/GenerateSection')
+);
 
 function SummaryAIPage() {
   const [searchParams] = useSearchParams();
@@ -9,7 +16,9 @@ function SummaryAIPage() {
 
   return (
     <ContentWrapper>
-      {complete === 'true' ? <ResultSection /> : <GenerateSection />}
+      <Suspense fallback={<SuspenseLoading />}>
+        {complete === 'true' ? <ResultSection /> : <GenerateSection />}
+      </Suspense>
     </ContentWrapper>
   );
 }

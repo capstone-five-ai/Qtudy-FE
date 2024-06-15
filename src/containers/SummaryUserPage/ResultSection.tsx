@@ -65,6 +65,7 @@ function ResultSection() {
               )}
             </StyledButtonContainer>
             <SaveToCategoryButton
+              generateType="SUMMARY"
               disabled={!isAuthenticated}
               onClick={() => setShowModal(true)}
             />

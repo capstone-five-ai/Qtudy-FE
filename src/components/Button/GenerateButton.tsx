@@ -5,7 +5,7 @@ function GenerateButton(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <PlainButton {...props}>
       <TwinkleIcon />
-      Generate
+      생성하기
     </PlainButton>
   );
 }
