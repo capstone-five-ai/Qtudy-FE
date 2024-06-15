@@ -1,7 +1,15 @@
+import SuspenseLoading from '@/components/Loader/SuspenseLoading';
 import ContentWrapper from '@/components/Wrapper/ContentWrapper';
-import GenerateSection from '@/containers/QuizAIPage/GenerateSection';
-import ResultSection from '@/containers/QuizAIPage/ResultSection';
+import { lazy, Suspense } from 'react';
 import { useSearchParams } from 'react-router-dom';
+
+// 동적으로 로드할 컴포넌트
+const ResultSection = lazy(
+  () => import('@/containers/QuizAIPage/ResultSection')
+);
+const GenerateSection = lazy(
+  () => import('@/containers/QuizAIPage/GenerateSection')
+);
 
 function QuizAIPage() {
   const [searchParams] = useSearchParams();
@@ -9,7 +17,9 @@ function QuizAIPage() {
 
   return (
     <ContentWrapper>
-      {complete === 'true' ? <ResultSection /> : <GenerateSection />}
+      <Suspense fallback={<SuspenseLoading />}>
+        {complete === 'true' ? <ResultSection /> : <GenerateSection />}
+      </Suspense>
     </ContentWrapper>
   );
 }

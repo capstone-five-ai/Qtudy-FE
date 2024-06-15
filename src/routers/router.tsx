@@ -1,19 +1,32 @@
 import MainLayout from '@/components/Layout/MainLayout';
-import CategoryPage from '@/pages/CategoryPage';
-import CategoryQuizDetailPage from '@/pages/CategoryQuizDetailPage';
-import CategoryQuizEditPage from '@/pages/CategoryQuizEditPage';
-import CategorySummaryDetailPage from '@/pages/CategorySummaryDetailPage';
-import CategorySummaryEditPage from '@/pages/CategorySummaryEditPage';
-import HistoryPage from '@/pages/HistoryPage';
-import LoginPage from '@/pages/LoginPage';
-import QuizAIPage from '@/pages/QuizAIPage';
-import QuizUserPage from '@/pages/QuizUserPage';
-import RedirectPage from '@/pages/RedirectPage';
-import SelectServicePage from '@/pages/SelectServicePage';
-import SummaryAIPage from '@/pages/SummaryAIPage';
-import SummaryUserPage from '@/pages/SummaryUserPage';
+import SuspenseLoading from '@/components/Loader/SuspenseLoading';
 import ProtectedRoute from '@/routers/ProtectedRoute';
-import { Navigate, createBrowserRouter } from 'react-router-dom';
+import React, { lazy, Suspense } from 'react';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
+
+const LoginPage = lazy(() => import('@/pages/LoginPage'));
+const RedirectPage = lazy(() => import('@/pages/RedirectPage'));
+const SelectServicePage = lazy(() => import('@/pages/SelectServicePage'));
+const QuizAIPage = lazy(() => import('@/pages/QuizAIPage'));
+const QuizUserPage = lazy(() => import('@/pages/QuizUserPage'));
+const SummaryAIPage = lazy(() => import('@/pages/SummaryAIPage'));
+const SummaryUserPage = lazy(() => import('@/pages/SummaryUserPage'));
+const HistoryPage = lazy(() => import('@/pages/HistoryPage'));
+const CategoryPage = lazy(() => import('@/pages/CategoryPage'));
+const CategoryQuizDetailPage = lazy(
+  () => import('@/pages/CategoryQuizDetailPage')
+);
+const CategoryQuizEditPage = lazy(() => import('@/pages/CategoryQuizEditPage'));
+const CategorySummaryDetailPage = lazy(
+  () => import('@/pages/CategorySummaryDetailPage')
+);
+const CategorySummaryEditPage = lazy(
+  () => import('@/pages/CategorySummaryEditPage')
+);
+
+const AppWrapper = ({ children }: { children: React.ReactNode }) => (
+  <Suspense fallback={<SuspenseLoading />}>{children}</Suspense>
+);
 
 const routes = [
   {
@@ -75,6 +88,11 @@ const routes = [
   { path: '*', element: <Navigate replace to="/" /> },
 ];
 
-const router = createBrowserRouter(routes);
+const router = createBrowserRouter(
+  routes.map((route) => ({
+    ...route,
+    element: <AppWrapper>{route.element}</AppWrapper>,
+  }))
+);
 
 export default router;
