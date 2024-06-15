@@ -57,11 +57,11 @@ const StyledCard = styled.button`
   align-items: center;
 
   border-radius: 12px;
+  border: 1px solid rgba(224, 224, 224, 0.8);
   background: ${({ theme }) => theme.colors.grayScale09};
-  box-shadow: 0px 0px 8px 0px rgba(189, 189, 189, 0.2);
 
   &:hover {
-    box-shadow: 0px 0px 8px 0px ${({ theme }) => theme.colors.mainMintShadow};
+    border-color: ${({ theme }) => theme.colors.mainMint};
 
     .upload-icon {
       path {
