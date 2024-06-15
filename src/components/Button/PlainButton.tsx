@@ -50,12 +50,12 @@ const getVariantStyle = ($variant: PlainButtonVariant) => {
     case 'primary':
       return css`
         color: ${({ theme }) => theme.colors.grayScale09};
-        background: ${({ theme }) => theme.colors.mainMintGra};
-        box-shadow: ${({ theme }) =>
-          `4px 2px 16px 0px ${theme.colors.mainMintShadow}`};
+        background: ${({ theme }) => theme.colors.mainMint};
 
         &:hover {
-          background: ${({ theme }) => theme.colors.mainMintDarkGra};
+          background: ${({ theme }) => theme.colors.mainMintMedium};
+          box-shadow: 0px 4px 12px 0px
+            ${({ theme }) => theme.colors.mainMintShadow};
         }
       `;
 
@@ -63,7 +63,6 @@ const getVariantStyle = ($variant: PlainButtonVariant) => {
       return css`
         color: ${({ theme }) => theme.colors.grayScale03};
         background: ${({ theme }) => theme.colors.grayScale08};
-        box-shadow: 4px 2px 16px 0px rgba(189, 189, 189, 0.28);
         border: 0.8px solid ${({ theme }) => theme.colors.grayScale06};
 
         &:hover {
@@ -87,6 +86,8 @@ const StyledButton = styled.button<{
   ${({ theme }) => theme.typography.button}
   ${({ $size }) => getSizeStyle($size)}
   ${({ $variant }) => getVariantStyle($variant)}
+
+  transition: all  0.3s ease;
 
   &:disabled {
     background: ${({ theme }) => theme.colors.grayScale06};
