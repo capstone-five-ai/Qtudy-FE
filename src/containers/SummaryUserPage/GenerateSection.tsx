@@ -75,5 +75,4 @@ export default GenerateSection;
 const StyledContent = styled.div`
   flex: 1;
   padding: 24px 36px;
-  padding-right: 20px;
 `;
