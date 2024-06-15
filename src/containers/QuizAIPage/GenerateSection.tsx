@@ -182,5 +182,4 @@ const StyledUploadContent = styled(StyledContent)`
 
 const StyledTextContent = styled(StyledContent)`
   padding: 24px 36px;
-  padding-right: 20px;
 `;
