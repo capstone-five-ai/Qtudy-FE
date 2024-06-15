@@ -25,15 +25,16 @@ function QuizGenerationForm({
   setQuizContent,
   showWarning = false,
 }: QuizFormProps) {
-  const [isCommentOpen, setIsCommentOpen] = useState(false);
+  const [isCommentOpen, setIsCommentOpen] = useState(true);
   const { fireToast } = useToast();
 
   useEffect(() => {
-    setIsCommentOpen(false);
+    setIsCommentOpen(true);
   }, [quizType]);
 
   useEffect(() => {
-    if (quizContent.problemCommentary === '') setIsCommentOpen(true);
+    if (showWarning && quizContent.problemCommentary === '')
+      setIsCommentOpen(true);
   }, [showWarning]);
 
   const handleChangeQuestion = (
