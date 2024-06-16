@@ -76,6 +76,4 @@ const StyledContent = styled.div<{ $isWriter: boolean }>`
 
   display: flex;
   flex-direction: column;
-
-  background: pink;
 `;

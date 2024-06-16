@@ -81,7 +81,7 @@ export default CategorySummaryEditPage;
 
 const StyledContent = styled.div`
   flex: 1;
-  padding: 24px 24px 40px;
+  padding: 24px 36px;
 
   display: flex;
   flex-direction: column;
