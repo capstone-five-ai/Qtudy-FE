@@ -1,4 +1,3 @@
-import { ReactComponent as EditIcon } from '@/assets/icons/edit.svg';
 import DeleteIcon from '@/components/Icon/DeleteIcon';
 import styled, { css } from 'styled-components';
 
@@ -14,7 +13,6 @@ interface QuizInputFieldProps
   isEdit?: boolean;
   showWarning?: boolean;
   warningMessage?: string;
-  setIsEdit?: (value: boolean) => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>, index: number) => void;
   onDelete?: (index: number) => void;
 }
@@ -25,7 +23,6 @@ function QuizInputField({
   isEdit,
   showWarning = false,
   warningMessage,
-  setIsEdit,
   onChange,
   onDelete,
   ...props
@@ -42,14 +39,6 @@ function QuizInputField({
           {...props}
         />
         <StyledIconContainer>
-          {!isEdit && (
-            <EditIcon
-              className="icon"
-              onClick={() => {
-                setIsEdit && setIsEdit(true);
-              }}
-            />
-          )}
           {type === 'choice' && (
             <DeleteIcon
               className="icon"

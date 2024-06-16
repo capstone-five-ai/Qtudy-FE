@@ -15,7 +15,7 @@ import {
 import useToast from '@/hooks/useToast';
 import { HistoryType } from '@/types/history.type';
 import { convertToKRTime } from '@/utils/convertToKRTime';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
@@ -25,6 +25,7 @@ type Props = {
 };
 
 function HistoryItem({ history, updateList }: Props) {
+  const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -45,6 +46,9 @@ function HistoryItem({ history, updateList }: Props) {
 
   const handleClickEdit = () => {
     setEditMode(true);
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 0);
   };
 
   const handleClickDelete = () => {
@@ -77,6 +81,7 @@ function HistoryItem({ history, updateList }: Props) {
         {editMode ? (
           <>
             <Input
+              ref={inputRef}
               value={newFileName}
               onChange={(e) => setNewFileName(e.target.value)}
               placeholder="제목을 입력해주세요."

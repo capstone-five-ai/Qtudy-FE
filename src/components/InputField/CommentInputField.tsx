@@ -1,6 +1,5 @@
 import { ReactComponent as ArrowIcon } from '@/assets/icons/arrow-up.svg';
 import { ReactComponent as CommentIcon } from '@/assets/icons/commentary.svg';
-import { ReactComponent as EditIcon } from '@/assets/icons/edit.svg';
 import getCircleNum from '@/utils/getCircleNum';
 import textareaAdjustHeight from '@/utils/textareaAdjustHeight';
 import { useEffect, useRef } from 'react';
@@ -19,7 +18,6 @@ interface CommentEditInputFieldProps extends CommentInputFieldProps {
   showWarning?: boolean;
   warningMessage?: string;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  setIsEdit?: (value: boolean) => void;
 }
 
 export function CommentDefaultInputField({
@@ -72,7 +70,6 @@ export function CommentEditInputField({
   warningMessage,
   setIsCommentOpen,
   onChange,
-  setIsEdit,
 }: CommentEditInputFieldProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -109,14 +106,6 @@ export function CommentEditInputField({
                 }}
                 disabled={!isEdit}
               />
-              {!isEdit && (
-                <EditIcon
-                  className="icon"
-                  onClick={() => {
-                    setIsEdit && setIsEdit(true);
-                  }}
-                />
-              )}
             </StyledEditContent>
             <ErrorMessage $show={showWarning}>{warningMessage}</ErrorMessage>
           </div>
