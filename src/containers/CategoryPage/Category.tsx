@@ -99,6 +99,7 @@ function Category({
                 onClick={() => {
                   setNewCategoryName(category.categoryName);
                   setEditMode(true);
+                  setTimeout(() => inputRef.current?.focus(), 0);
                 }}
                 style={{ cursor: 'pointer' }}
               />
