@@ -4,43 +4,24 @@ import EmptyHistory from '@/containers/HistoryPage/EmptyHistory';
 import HistoryList from '@/containers/HistoryPage/HistoryList';
 import { ServiceType } from '@/types/category.type';
 import { HistoryType } from '@/types/history.type';
-import { useCallback, useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import styled from 'styled-components';
 
 interface Props {
-  fetchPage: (page: number) => void;
   histories: HistoryType[];
   totalPages: number;
   type: 'ALL' | ServiceType;
+  page: number;
+  handlePageClick: ({ selected }: { selected: number }) => void;
 }
 
-function HistoryPagination({ fetchPage, histories, totalPages, type }: Props) {
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(true);
-
-  const updateList = useCallback(
-    (updatePage: number) => {
-      fetchPage(updatePage);
-      setLoading(false);
-    },
-    [fetchPage]
-  );
-
-  useEffect(() => {
-    if (loading) return;
-    updateList(page);
-  }, [loading, page, totalPages, updateList]);
-
-  useEffect(() => {
-    updateList(1);
-    setPage(1);
-  }, [updateList]);
-
-  const handlePageClick = ({ selected }: { selected: number }) => {
-    setPage(selected + 1);
-  };
-
+function HistoryPagination({
+  histories,
+  totalPages,
+  type,
+  page,
+  handlePageClick,
+}: Props) {
   if (type === 'ALL' || histories.length === 0) {
     return <EmptyHistory type={type} />;
   }
@@ -48,7 +29,7 @@ function HistoryPagination({ fetchPage, histories, totalPages, type }: Props) {
   return (
     <>
       <ListWrapper>
-        <HistoryList histories={histories} updateList={updateList} />
+        <HistoryList histories={histories} />
       </ListWrapper>
       <Pagination>
         <ReactPaginate

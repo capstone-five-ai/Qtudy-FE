@@ -1,4 +1,4 @@
-import { deleteFile, updateFileName } from '@/apis/fileApi';
+import { updateFileName } from '@/apis/fileApi';
 import { ReactComponent as CheckIcon } from '@/assets/icons/complete.svg';
 import { ReactComponent as EditIcon } from '@/assets/icons/edit.svg';
 import PDFDownloadButton from '@/components/Button/PDFDownloadButton';
@@ -12,7 +12,7 @@ import {
   Filter,
   PDFDown,
 } from '@/containers/HistoryPage/HistoryList.style';
-import useToast from '@/hooks/useToast';
+import { useDeleteHistory } from '@/hooks/useDeleteHistory';
 import { HistoryType } from '@/types/history.type';
 import { convertToKRTime } from '@/utils/convertToKRTime';
 import { useRef, useState } from 'react';
@@ -21,17 +21,19 @@ import { styled } from 'styled-components';
 
 type Props = {
   history: HistoryType;
-  updateList: (page: number) => void;
 };
 
-function HistoryItem({ history, updateList }: Props) {
+function HistoryItem({ history }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [fileName, setFileName] = useState(history.fileName);
   const [newFileName, setNewFileName] = useState(fileName);
-  const { fireToast } = useToast();
+
+  const { mutate: mutateHistory } = useDeleteHistory(
+    history.dtype === 'PROBLEM' ? 'QUIZ' : 'SUMMARY'
+  );
 
   const getDateFormat = (dateStr: string) => {
     const date = convertToKRTime(dateStr);
@@ -62,13 +64,8 @@ function HistoryItem({ history, updateList }: Props) {
   };
 
   const deleteFileItem = async () => {
-    await deleteFile(history.fileId);
-    fireToast({
-      icon: <DeleteIcon width={20} height={20} />,
-      message: '항목이 삭제되었습니다',
-    });
+    mutateHistory({ fileId: history.fileId });
     setShowDeleteModal(false);
-    updateList(1);
   };
 
   const filterName = history.dtype === 'QUIZ' ? '퀴즈' : '요약';

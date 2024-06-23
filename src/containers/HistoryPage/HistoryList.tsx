@@ -12,10 +12,9 @@ import styled from 'styled-components';
 
 type Props = {
   histories: HistoryType[];
-  updateList: (page: number) => void;
 };
 
-function HistoryList({ histories, updateList }: Props) {
+function HistoryList({ histories }: Props) {
   return (
     <Wrapper>
       <Header>
@@ -46,7 +45,7 @@ function HistoryList({ histories, updateList }: Props) {
         </Delete>
       </Header>
       {histories.map((v) => (
-        <HistoryItem key={v.fileId} history={v} updateList={updateList} />
+        <HistoryItem key={v.fileId} history={v} />
       ))}
     </Wrapper>
   );
