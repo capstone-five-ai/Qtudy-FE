@@ -7,11 +7,14 @@ import {
 import loadingState from '@/recoils/atoms/loadingState';
 import { GenerateSummaryOption } from '@/types/summary.type';
 import { convertToSummaryRequestData } from '@/utils/convertToRequestData';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
+import { HISTORY_SUMMARY_QUERY_KEY } from './queryKey';
 
 export const usePostSummaryByText = () => {
+  const queryClient = useQueryClient();
+
   const navigate = useNavigate();
   const setLoading = useSetRecoilState(loadingState);
 
@@ -27,6 +30,7 @@ export const usePostSummaryByText = () => {
         setLoading(true);
         const convertedOption = convertToSummaryRequestData(option);
         const response = await postSummaryByText(convertedOption, text);
+
         setTimeout(() => {
           navigate(`/summary/ai?complete=true&id=${response.fileId}`);
           setLoading(false);
@@ -37,12 +41,17 @@ export const usePostSummaryByText = () => {
         setLoading(false);
       }
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [HISTORY_SUMMARY_QUERY_KEY] });
+    },
   });
 
   return createByTextMutation;
 };
 
 export const usePostSummaryByPdf = () => {
+  const queryClient = useQueryClient();
+
   const navigate = useNavigate();
   const setLoading = useSetRecoilState(loadingState);
 
@@ -68,12 +77,17 @@ export const usePostSummaryByPdf = () => {
         setLoading(false);
       }
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [HISTORY_SUMMARY_QUERY_KEY] });
+    },
   });
 
   return createByPdfMutation;
 };
 
 export const usePostSummaryByImage = () => {
+  const queryClient = useQueryClient();
+
   const navigate = useNavigate();
   const setLoading = useSetRecoilState(loadingState);
 
@@ -98,6 +112,9 @@ export const usePostSummaryByImage = () => {
         // TODO: 에러 처리 로직
         setLoading(false);
       }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [HISTORY_SUMMARY_QUERY_KEY] });
     },
   });
 
