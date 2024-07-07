@@ -4,6 +4,7 @@ import {
   postQuizByText,
   postQuizByUser,
 } from '@/apis/quizApi';
+import { HISTORY_QUIZ_QUERY_KEY } from '@/constants/queryKey';
 import loadingState from '@/recoils/atoms/loadingState';
 import {
   GenerateQuizOption,
@@ -17,7 +18,6 @@ import {
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import { HISTORY_QUIZ_QUERY_KEY } from './queryKey';
 
 export const usePostQuizByText = () => {
   const queryClient = useQueryClient();

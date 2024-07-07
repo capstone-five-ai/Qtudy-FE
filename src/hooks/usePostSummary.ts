@@ -4,13 +4,13 @@ import {
   postSummaryByText,
   postSummaryByUser,
 } from '@/apis/summaryApi';
+import { HISTORY_SUMMARY_QUERY_KEY } from '@/constants/queryKey';
 import loadingState from '@/recoils/atoms/loadingState';
 import { GenerateSummaryOption } from '@/types/summary.type';
 import { convertToSummaryRequestData } from '@/utils/convertToRequestData';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import { HISTORY_SUMMARY_QUERY_KEY } from './queryKey';
 
 export const usePostSummaryByText = () => {
   const queryClient = useQueryClient();
