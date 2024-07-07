@@ -14,11 +14,14 @@ import {
   QUIZ_TYPE,
   convertToQuizRequestData,
 } from '@/utils/convertToRequestData';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
+import { HISTORY_QUIZ_QUERY_KEY } from './queryKey';
 
 export const usePostQuizByText = () => {
+  const queryClient = useQueryClient();
+
   const navigate = useNavigate();
   const setLoading = useSetRecoilState(loadingState);
 
@@ -44,12 +47,17 @@ export const usePostQuizByText = () => {
         setLoading(false);
       }
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [HISTORY_QUIZ_QUERY_KEY] });
+    },
   });
 
   return createByTextMutation;
 };
 
 export const usePostQuizByPdf = () => {
+  const queryClient = useQueryClient();
+
   const navigate = useNavigate();
   const setLoading = useSetRecoilState(loadingState);
 
@@ -75,12 +83,17 @@ export const usePostQuizByPdf = () => {
         setLoading(false);
       }
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [HISTORY_QUIZ_QUERY_KEY] });
+    },
   });
 
   return createByPdfMutation;
 };
 
 export const usePostQuizByImage = () => {
+  const queryClient = useQueryClient();
+
   const navigate = useNavigate();
   const setLoading = useSetRecoilState(loadingState);
 
@@ -105,6 +118,9 @@ export const usePostQuizByImage = () => {
         // TODO: 에러 처리 로직
         setLoading(false);
       }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [HISTORY_QUIZ_QUERY_KEY] });
     },
   });
 

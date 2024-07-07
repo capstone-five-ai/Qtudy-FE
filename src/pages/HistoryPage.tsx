@@ -1,57 +1,44 @@
-import { getAIQuizAllFile } from '@/apis/quizApi';
-import { getAISummaryAllFile } from '@/apis/summaryApi';
 import FileTypeChip from '@/components/Chip/FileTypeChip';
 import Typography from '@/components/Typography/Typography';
 import HistoryPagination from '@/containers/HistoryPage/HistoryPagination';
+import { useGetQuizHistory, useGetSummaryHistory } from '@/hooks/useGetHistory';
 import { ServiceType } from '@/types/category.type';
 import { HistoryType } from '@/types/history.type';
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-
-interface HistoryPageType {
-  histories: HistoryType[];
-  totalPages: number;
-}
 
 const HistoryPage = () => {
   const [filter, setFilter] = useState<ServiceType>('QUIZ');
-  const [quizes, setQuizes] = useState<HistoryPageType>();
-  const [summaries, setSummaries] = useState<HistoryPageType>();
+  const [page, setPage] = useState(1);
 
-  const getQuizes = async (quizPage: number) => {
-    const response = await getAIQuizAllFile(quizPage);
-    const newHistories = response.content.map((item: HistoryType) =>
-      item.dtype === 'PROBLEM' ? { ...item, dtype: 'QUIZ' } : item
-    );
+  const { data: quizData, isFetching: isQuizFetching } =
+    useGetQuizHistory(page);
+  const { data: summaryData, isFetching: isSummaryFetching } =
+    useGetSummaryHistory(page);
 
-    setQuizes({ histories: newHistories, totalPages: response.totalPages });
+  const initPage = (filterType: ServiceType) => {
+    setPage(1);
+    setFilter(filterType);
   };
 
-  const getSummaries = async (summaryPage: number) => {
-    const response = await getAISummaryAllFile(summaryPage);
-    const newHistories = response.content;
-    setSummaries({ histories: newHistories, totalPages: response.totalPages });
+  if (isQuizFetching || isSummaryFetching || !quizData || !summaryData)
+    return <div />;
+
+  const quizzes = {
+    histories: quizData.content.map((item: HistoryType) => {
+      return { ...item, dtype: 'QUIZ' };
+    }),
+    totalPages: quizData.totalPages,
   };
 
-  const updateList = useCallback(
-    (updatePage: number) => {
-      if (filter === 'QUIZ') getQuizes(updatePage);
-      if (filter === 'SUMMARY') getSummaries(updatePage);
-    },
-    [filter]
-  );
-
-  useEffect(() => {
-    getQuizes(1);
-    getSummaries(1);
-  }, []);
-
-  if (!quizes || !summaries) return null;
-
+  const summaries = {
+    histories: summaryData.content,
+    totalPages: summaryData.totalPages,
+  };
   return (
     <Wrapper>
       <Header>
-        {(filter === 'QUIZ' && quizes.histories.length > 0) ||
+        {(filter === 'QUIZ' && quizzes.histories.length > 0) ||
         (filter === 'SUMMARY' && summaries.histories.length > 0) ? (
           <Title>
             <Typography variant="button">
@@ -61,17 +48,17 @@ const HistoryPage = () => {
         ) : (
           <div />
         )}
-        {quizes.histories.length + summaries.histories.length > 0 && (
+        {quizzes.histories.length + summaries.histories.length > 0 && (
           <ChipWrapper>
             <FileTypeChip
               selected={filter === 'QUIZ'}
-              onClick={() => setFilter('QUIZ')}
+              onClick={() => initPage('QUIZ')}
             >
               퀴즈
             </FileTypeChip>
             <FileTypeChip
               selected={filter === 'SUMMARY'}
-              onClick={() => setFilter('SUMMARY')}
+              onClick={() => initPage('SUMMARY')}
             >
               요약
             </FileTypeChip>
@@ -79,15 +66,18 @@ const HistoryPage = () => {
         )}
       </Header>
       <HistoryPagination
+        page={page}
+        handlePageClick={({ selected }: { selected: number }) => {
+          setPage(selected + 1);
+        }}
         type={
-          quizes.histories.length + summaries.histories.length === 0
+          quizzes.histories.length + summaries.histories.length === 0
             ? 'ALL'
             : filter
         }
-        fetchPage={updateList}
-        histories={filter === 'QUIZ' ? quizes.histories : summaries.histories}
+        histories={filter === 'QUIZ' ? quizzes.histories : summaries.histories}
         totalPages={
-          filter === 'QUIZ' ? quizes.totalPages : summaries.totalPages
+          filter === 'QUIZ' ? quizzes.totalPages : summaries.totalPages
         }
       />
     </Wrapper>
