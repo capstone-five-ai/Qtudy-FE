@@ -1,8 +1,11 @@
 import { deleteFile } from '@/apis/fileApi';
 import DeleteIcon from '@/components/Icon/DeleteIcon';
+import {
+  HISTORY_QUIZ_QUERY_KEY,
+  HISTORY_SUMMARY_QUERY_KEY,
+} from '@/constants/queryKey';
 import { ServiceType } from '@/types/category.type';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { HISTORY_QUIZ_QUERY_KEY, HISTORY_SUMMARY_QUERY_KEY } from './queryKey';
 import useToast from './useToast';
 
 export const useDeleteHistory = (type: ServiceType) => {
